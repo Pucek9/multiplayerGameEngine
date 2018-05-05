@@ -1,0 +1,26 @@
+{
+  "name": "Robocop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot",
+    "start-server": "node dist/server/robocop.bundle.js",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michał Gruca",
+  "license": "ISC",
+  "devDependencies": {
+    "file-loader": "^1.1.11",
+    "webpack": "^4.7.0",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "file-system": "^2.2.2",
+    "html-webpack-plugin": "^3.2.0",
+    "socket.io": "^2.1.0"
+  }
+}
