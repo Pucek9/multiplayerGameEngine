@@ -44,19 +44,19 @@ window.onload = function () {
 
     function registerUser(data) {
         let name = prompt("Please enter your name", "Player");
-        if (name !== null) {
-            alert(name + ' joined the game!');
+        if (!(name === null || name === '')) {
             const player = new Player(data.socketId, name, randColor(), randX(), randY());
             socket.emit('CreatePlayer', player);
             return player;
         } else {
-            registerUser(data)
+            return registerUser(data)
         }
     }
 
     socket.on('HelloPlayer', function (data) {
         console.log(data);
         const user = registerUser(data);
+        alert(user.name + ' joined the game!');
         const loop = new Loop(socket, user, canvas, ctx, mouse, startImage, map);
         loop.run();
     });

@@ -7,7 +7,8 @@ export default class Player {
         this.name = name;
         this.color = color;
         this.active = false;
-        this.speed = 3;
+        this.score = 0;
+        this.speed = 5;
     }
 
     copy(obj) {
@@ -15,18 +16,18 @@ export default class Player {
     }
 
     goLeft() {
-        this.x = this.x-this.speed;
+        this.x = this.x - this.speed;
     }
 
     goRight() {
-        this.x = this.x+this.speed;
+        this.x = this.x + this.speed;
     }
 
     goDown() {
-        this.y = this.y+this.speed;
+        this.y = this.y + this.speed;
     }
 
     goUp() {
-        this.y = this.y-this.speed;
+        this.y = this.y - this.speed;
     }
 }
