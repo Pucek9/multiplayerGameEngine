@@ -35,15 +35,23 @@ socketIo.on('connection', function (socket) {
             const player = getPlayer(socket.id);
             switch (key) {
                 case 'w':
+                case 'W':
+                case 'ArrowUp':
                     player.goUp();
                     break;
                 case 's':
+                case 'S':
+                case 'ArrowDown':
                     player.goDown();
                     break;
                 case 'a':
+                case 'A':
+                case 'ArrowLeft':
                     player.goLeft();
                     break;
                 case 'd':
+                case 'D':
+                case 'ArrowRight':
                     player.goRight();
                     break;
                 default:

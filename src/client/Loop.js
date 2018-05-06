@@ -17,13 +17,21 @@ var config = {
 
 var players;
 
-function Loop(socket, player, canvas, ctx, startImage, mouse) {
+function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     const that = this;
 
+    this.renderMap = function (activePlayer, map) {
+        ctx.drawImage(map, 0 - activePlayer.x, 0 - activePlayer.y);
+    };
+
     this.renderPlayer = function (player) {
-        console.log('player', player);
         ctx.fillStyle = player.color;
-        ctx.fillRect(player.x, player.y, 50, 50)
+        ctx.fillRect(canvas.width / 2, canvas.height / 2, 50, 50)
+    };
+
+    this.renderEnemy = function (activePlayer, player) {
+        ctx.fillStyle = player.color;
+        ctx.fillRect(canvas.width / 2 - (activePlayer.x - player.x), canvas.height / 2 - (activePlayer.y - player.y), 50, 50)
     };
 
     this.clear = function () {
@@ -31,13 +39,15 @@ function Loop(socket, player, canvas, ctx, startImage, mouse) {
     };
 
     socket.on('getPlayers', function (_players) {
-        console.log('players', _players);
         players = _players;
     });
 
     this.render = function () {
-        console.log('game');
-        players.forEach(player => that.renderPlayer(player))
+        const activePlayer = players.find(player => player.id === user.id);
+        that.renderMap(activePlayer, map);
+        players.filter(player => player.id !== user.id)
+            .forEach(player => that.renderEnemy(activePlayer, player));
+        that.renderPlayer(activePlayer);
     };
 
     this.renderCursor = function () {
@@ -49,14 +59,13 @@ function Loop(socket, player, canvas, ctx, startImage, mouse) {
     };
 
     canvas.addEventListener('mousedown', function (e) {
-        if (config.flaga === false)       {
+        e.preventDefault();
+        if (config.flaga === false) {
             config.flaga = true;
             socket.emit('activePlayer');
-            console.log('start')
         } else {
-            console.log('shoot')
+            //shoot
         }
-
     });
 
     canvas.addEventListener("mousemove", function mouseMove(e) {
@@ -77,6 +86,7 @@ function Loop(socket, player, canvas, ctx, startImage, mouse) {
     }, false);
 
     window.addEventListener('keydown', function (e) {
+        e.preventDefault();
         socket.emit('keydown', e.key)
     });
 
@@ -86,7 +96,7 @@ function Loop(socket, player, canvas, ctx, startImage, mouse) {
         if (config.flaga) {
             that.render()
         } else {
-            console.log('menu');
+            // console.log('menu');
             that.renderMenu()
         }
 

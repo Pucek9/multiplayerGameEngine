@@ -1,24 +1,37 @@
-//const Mouse = require('../../objects/Pointer.js');
+
 import {Mouse} from '../../../objects/Pointer.js';
 import {Loop} from '../../Loop.js'
 import startImageJPG from "./obrazki/start.jpg";
 import io from 'socket.io-client';
 import startImageJPG2 from "./obrazki/magazynek.png";
-// import mapJPG from "./obrazki/mapa1.png";
+import mapJPG from "./obrazki/test.jpg";
 import cursor from "./obrazki/celownik.png";
 import Player from "../../../objects/Player";
 
-const socket = io.connect('http://localhost:3000/');
+const socket = io.connect('http://192.168.1.6:3000/');
 
 window.onload = function () {
     const canvas = document.getElementById("canvas");
+    canvas.style.cursor = "none";
+    const ctx = canvas.getContext('2d');
+
+    const startImage = new Image();
+    startImage.src = startImageJPG;
+
+    const startImage2 = new Image();
+    startImage2.src = startImageJPG2;
+
+    const map = new Image();
+    map.src = mapJPG;
+
+    const mouse = new Mouse(cursor);
 
     function randX() {
-        return Math.floor((Math.random() * canvas.width / 2) + 1);
+        return Math.floor((Math.random() * map.width) + 1);
     }
 
     function randY() {
-        return Math.floor((Math.random() * canvas.height / 2) + 1);
+        return Math.floor((Math.random() * map.height) + 1);
     }
 
     function randRGB() {
@@ -41,29 +54,10 @@ window.onload = function () {
         }
     }
 
-    // canvas.onmousedown = function (e) {
-    //     e.preventDefault();
-    // };
-    canvas.style.cursor = "none";
-    var ctx = canvas.getContext('2d');
-
-    var startImage = new Image();
-    startImage.src = startImageJPG;
-
-    var startImage2 = new Image();
-    startImage2.src = startImageJPG2;
-
-    // var map = new Image();
-    // map.src = mapJPG;
-
-    var mouse = new Mouse(cursor);
-
-
-    socket.emit('connection');
     socket.on('HelloPlayer', function (data) {
         console.log(data);
         const user = registerUser(data);
-        const loop = new Loop(socket, user, canvas, ctx, startImage, mouse);
+        const loop = new Loop(socket, user, canvas, ctx, mouse, startImage, map);
         loop.run();
     });
 
