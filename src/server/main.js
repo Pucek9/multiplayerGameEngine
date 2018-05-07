@@ -2,12 +2,14 @@ import express from 'express';
 import http from 'http';
 import io from 'socket.io'
 import Player from '../objects/Player'
+import Bullet from "../objects/Bullet";
 
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 
 const players = [];
+let bullets = [];
 
 app.get('/', function (req, res) {
     res.send('<h1>Hello world</h1>');
@@ -19,6 +21,19 @@ function getPlayer(id) {
 
 function activePlayers() {
     return players.filter(player => player.active === true)
+}
+
+function getPlayers() {
+    return players;
+}
+
+function getBullets() {
+    return bullets;
+}
+
+function updateBullets() {
+    bullets.forEach(bullet => bullet.update());
+    bullets = bullets.filter(bullet => bullet.length > -500);
 }
 
 socketIo.on('connection', function (socket) {
@@ -66,6 +81,17 @@ socketIo.on('connection', function (socket) {
             socketIo.emit('getPlayers', activePlayers());
         });
 
+        socket.on('pushBullet', function (bullet) {
+            Object.setPrototypeOf(bullet, Bullet.prototype);
+            bullets.push(bullet);
+            socketIo.emit('getBullets', getBullets());
+        });
+
+        socket.on('iteration', function () {
+            updateBullets()
+            socketIo.emit('getBullets', getBullets());
+        });
+
         socket.on('disconnect', function () {
             const disconnected = getPlayer(socket.id);
             console.log('Disconnected player: ', disconnected);
@@ -73,8 +99,8 @@ socketIo.on('connection', function (socket) {
             socketIo.emit('getPlayers', activePlayers());
         });
 
-    });
 
+    });
 
 });
 

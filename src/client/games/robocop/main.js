@@ -49,7 +49,7 @@ window.onload = function () {
             socket.emit('CreatePlayer', player);
             return player;
         } else {
-            return registerUser(data)
+            registerUser(data)
         }
     }
 

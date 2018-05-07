@@ -9,10 +9,7 @@ export default class Player {
         this.active = false;
         this.score = 0;
         this.speed = 5;
-    }
-
-    copy(obj) {
-        return obj && Object.assign(this, obj);
+        this.hp = 100;
     }
 
     goLeft() {
