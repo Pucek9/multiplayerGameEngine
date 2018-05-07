@@ -65,7 +65,6 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     this.renderBullet = function (bullet) {
         ctx.beginPath();
         ctx.arc(canvas.width / 2 - (activePlayer.x - bullet.actualX), canvas.height / 2 - (activePlayer.y - bullet.actualY), 2, 0, 2 * Math.PI);
-        // ctx.arc(bullet.actualX, bullet.actualY, 2, 0, 2 * Math.PI);
         ctx.fillStyle = "black";
         ctx.fill();
     };
@@ -102,6 +101,7 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     };
 
     this.renderCursor = function () {
+        ctx.fillText(mouse.x + ' ' + mouse.y,  mouse.x - mouse.img.width / 2,mouse.y - mouse.img.height / 2);
         ctx.drawImage(mouse.img, mouse.x - mouse.img.width / 2, mouse.y - mouse.img.height / 2);
     };
 
@@ -117,10 +117,10 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         } else {
             // const bullet = new Bullet(canvas.width / 2, canvas.height / 2, mouse.x - mouse.img.width / 2, mouse.y - mouse.img.height / 2, user.id);
             const bullet = new Bullet(
-                activePlayer.x,
-                activePlayer.y,
-                activePlayer.x + mouse.x,
-                activePlayer.y + mouse.y,
+                activePlayer.x + 25,
+                activePlayer.y + 25,
+                activePlayer.x + mouse.x - canvas.width / 2 ,
+                activePlayer.y + mouse.y - canvas.height / 2,
                 player.id);
             socket.emit('pushBullet', bullet);
         }
