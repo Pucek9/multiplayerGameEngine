@@ -6,14 +6,15 @@ export default class Bullet {
         this.targetX = targetX;
         this.targetY = targetY;
         this.owner = owner;
+        this.size = 1;
         this.length = -10;
     }
 
     update() {
         this.length -= 10;
         this.trajectory = Math.sqrt(Math.pow((this.targetX - this.fromX), 2) + Math.pow((this.targetY - this.fromY), 2));
-        this.actualX = this.targetX + ((this.trajectory + this.length) / this.trajectory) * (this.fromX - this.targetX);
-        this.actualY = this.targetY + ((this.trajectory + this.length) / this.trajectory) * (this.fromY - this.targetY);
+        this.x = this.targetX + ((this.trajectory + this.length) / this.trajectory) * (this.fromX - this.targetX);
+        this.y = this.targetY + ((this.trajectory + this.length) / this.trajectory) * (this.fromY - this.targetY);
     }
 
 }

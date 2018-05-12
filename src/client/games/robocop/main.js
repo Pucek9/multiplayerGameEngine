@@ -45,7 +45,7 @@ window.onload = function () {
     function registerUser(data) {
         let name = prompt("Please enter your name", "Player");
         if (!(name === null || name === '')) {
-            const player = new Player(data.socketId, name, randColor(), randX(), randY());
+            const player = new Player(data.socketId, name, randColor(), randX(), randY(), 50);
             socket.emit('CreatePlayer', player);
             return player;
         } else {
