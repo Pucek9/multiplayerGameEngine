@@ -15,10 +15,15 @@ export default class Player {
         this.hp = 100;
     }
 
-    getBullet() {
-        this.hp = this.hp - 10;
-        if (this.hp <= 0) {
-            this.alived = false
+    hitFromBullet(enemy) {
+        if (this.alived) {
+            this.hp = this.hp - 10;
+            if (this.hp <= 0) {
+                if (enemy) {
+                    enemy.score = enemy.score + 100;
+                }
+                this.alived = false;
+            }
         }
     }
 

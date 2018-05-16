@@ -1,24 +1,13 @@
 import Bullet from "../objects/Bullet";
 import Player from "../objects/Player";
 
-var magazyn = window.localStorage;
+// var magazyn = window.localStorage;
 // var sounds = magazyn.getItem("snd") === "true";
 
-var config = {
+const config = {
     menu: false,
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    skok: 3,
-    s: 0,
     fps: 50,
-    obrot: 0.2,
-    mouseBut: false,
-    przeladuj: false,
-    shooting: null,
-    d: canvas.width / 2 - 40, //dystans z jakiego widza nas wrogowie
 };
-
-let mouseBut = false;
 
 let players = [];
 let bullets = [];
@@ -37,6 +26,9 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
 
     socket.on('getBullets', function (_bullets) {
         bullets = _bullets;
+        bullets.forEach(bullet => {
+            Object.setPrototypeOf(bullet, Bullet.prototype);
+        })
     });
 
     this.renderMap = function (map) {
@@ -45,12 +37,17 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
 
     this.renderPlayer = function () {
         ctx.fillStyle = activePlayer.color;
-        ctx.fillRect(canvas.width / 2, canvas.height / 2, activePlayer.width, activePlayer.height)
+        ctx.fillRect(canvas.width / 2, canvas.height / 2, activePlayer.width, activePlayer.height);
+        ctx.font = '10pt Arial';
+        ctx.lineWitdh = 1;
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${activePlayer.name} ${activePlayer.hp}`, canvas.width / 2, canvas.height / 2 -5);
     };
 
     this.renderEnemy = function (enemy) {
         ctx.fillStyle = enemy.color;
-        ctx.fillRect(canvas.width / 2 - (activePlayer.x - enemy.x), canvas.height / 2 - (activePlayer.y - enemy.y),  enemy.width, enemy.height);
+        ctx.fillRect(canvas.width / 2 - (activePlayer.x - enemy.x), canvas.height / 2 - (activePlayer.y - enemy.y), enemy.width, enemy.height);
         ctx.font = '10pt Arial';
         ctx.lineWitdh = 1;
         ctx.fillStyle = 'black';
@@ -71,7 +68,6 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
 
     this.renderBullets = function () {
         bullets.forEach(bullet => {
-            Object.setPrototypeOf(bullet, Bullet.prototype);
             that.renderBullet(bullet);
         })
     };
@@ -80,7 +76,7 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         if (player) {
             that.renderMap(map);
             players.filter(_player => _player.id !== player.id)
-                .forEach(enemy => that.renderEnemy(enemy));
+                   .forEach(enemy => that.renderEnemy(enemy));
             that.renderPlayer();
             that.renderBullets();
 
@@ -117,8 +113,8 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
             // const bullet = new Bullet(canvas.width / 2, canvas.height / 2, mouse.x - mouse.img.width / 2, mouse.y - mouse.img.height / 2, user.id);
             const bullet = new Bullet(
                 activePlayer.x + activePlayer.width / 2,
-                activePlayer.y + activePlayer.height /2,
-                activePlayer.x + mouse.x - canvas.width / 2 ,
+                activePlayer.y + activePlayer.height / 2,
+                activePlayer.x + mouse.x - canvas.width / 2,
                 activePlayer.y + mouse.y - canvas.height / 2,
                 player.id);
             socket.emit('pushBullet', bullet);
@@ -128,7 +124,6 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
 
     canvas.addEventListener('mouseup', function (e) {
         e.preventDefault();
-        mouseBut = false;
     });
 
     canvas.addEventListener("mousemove", function mouseMove(e) {
