@@ -62,7 +62,8 @@ function detectBulletsCollision() {
     bullets.forEach((bullet, i) => {
         players.forEach(player => {
             if (bullet.owner !== player.id && detectRectangleCollision(player, bullet)) {
-                player.getBullet(bullet.owner);
+                const enemy = players.find(enemy => enemy.id === bullet.owner);
+                player.hitFromBullet(enemy);
                 bullets.splice(i, 1)
             }
         })
