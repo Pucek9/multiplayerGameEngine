@@ -1,7 +1,15 @@
 {
-  "name": "Robocop",
+  "name": "MultiplayerGameEngine",
   "version": "1.0.0",
   "description": "",
+  "keywords": [
+    "multiplayer",
+    "game",
+    "engine",
+    "online",
+    "javascript",
+    "socket"
+  ],
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --host 192.168.1.6",
@@ -10,7 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michał Gruca",
-  "license": "ISC",
+  "license": "beerware",
   "devDependencies": {
     "awesome-typescript-loader": "^5.0.0",
     "file-loader": "^1.1.11",
@@ -28,5 +36,12 @@
     "express": "^4.16.3",
     "file-system": "^2.2.2",
     "socket.io": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pucek9/multiplayerGameEngine.git"
   }
 }
