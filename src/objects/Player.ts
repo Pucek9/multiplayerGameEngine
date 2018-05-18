@@ -1,5 +1,18 @@
 export default class Player {
 
+    id: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    name: string;
+    color: string;
+    active: boolean;
+    alived: boolean;
+    score: number;
+    speed: number;
+    hp: number;
+
     constructor(id, name, color, x, y, size) {
         this.id = id;
         this.x = x;

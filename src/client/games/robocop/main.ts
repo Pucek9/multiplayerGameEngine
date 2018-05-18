@@ -1,17 +1,16 @@
-
-import {Mouse} from '../../../objects/Pointer.js';
-import {Loop} from '../../Loop.js'
-import startImageJPG from "./obrazki/start.jpg";
-import io from 'socket.io-client';
-import startImageJPG2 from "./obrazki/magazynek.png";
-import mapJPG from "./obrazki/test.jpg";
-import cursor from "./obrazki/celownik.png";
+const io = require('socket.io-client');
 import Player from "../../../objects/Player";
+import {Mouse} from '../../../objects/Pointer';
+import {Loop} from '../../Loop'
+const startImageJPG = require("./obrazki/start.jpg");
+const startImageJPG2 = require("./obrazki/magazynek.png");
+const mapJPG = require("./obrazki/test.jpg");
+const cursor = require("./obrazki/celownik.png");
 
 const socket = io.connect('http://192.168.1.6:3000/');
 
 window.onload = function () {
-    const canvas = document.getElementById("canvas");
+    const canvas = <HTMLCanvasElement>document.getElementById("canvas");
     canvas.style.cursor = "none";
     const ctx = canvas.getContext('2d');
 
@@ -27,11 +26,11 @@ window.onload = function () {
     const mouse = new Mouse(cursor);
 
     function randX() {
-        return Math.floor((Math.random() * map.width) + 1);
+        return Math.floor((Math.random() * map.width / 3) + 1);
     }
 
     function randY() {
-        return Math.floor((Math.random() * map.height) + 1);
+        return Math.floor((Math.random() * map.height / 3) + 1);
     }
 
     function randRGB() {

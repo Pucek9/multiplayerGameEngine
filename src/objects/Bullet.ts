@@ -1,5 +1,16 @@
 export default class Bullet {
 
+    x: number;
+    y: number;
+    fromX: number;
+    fromY: number;
+    targetX: number;
+    targetY: number;
+    owner: 'string';
+    size: number;
+    length: number;
+    trajectory: number;
+
     constructor(fromX, fromY, targetX, targetY, owner) {
         this.fromX = fromX;
         this.fromY = fromY;

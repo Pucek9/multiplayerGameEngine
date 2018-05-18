@@ -1,27 +1,29 @@
 const webpack = require('webpack');
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
+const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 const config = [{
 
-    context: __dirname + '/src/client/', // `__dirname` is root of project and `src` is source
+    context: __dirname + '/src/client/',
 
     entry: {
-        robocop: './games/robocop/main.js',
+        robocop: './games/robocop/main.ts',
     },
 
     output: {
-        path: __dirname + '/dist/client', // `dist` is the destination
+        path: __dirname + '/dist/client',
         // publicPath: "/assets/",
         filename: '[name].bundle.js',
     },
-
+    devtool: "source-map",
     mode: 'development',
 
     devServer: {
         port: 8080,
         stats: 'errors-only',
-        // open: true,
+        open: true,
         hot: true,
         contentBase: ['./dist/client'],
         watchContentBase: true
@@ -33,6 +35,7 @@ const config = [{
             template: 'index.html',
             hash: isProd
         }),
+        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" })
     ],
 
     module: {
@@ -42,21 +45,29 @@ const config = [{
                 use: [
                     'file-loader'
                 ]
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             }
         ]
     },
 
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
+    }
+
 }, {
 
-    context: __dirname + '/src/server/', // `__dirname` is root of project and `src` is source
+    context: __dirname + '/src/server/',
 
     entry: {
-        robocop: './main.js',
+        robocop: './main.ts',
     },
 
     output: {
-        path: __dirname + '/dist/server', // `dist` is the destination
-        // publicPath: "/assets/",
+        path: __dirname + '/dist/server',
         filename: '[name].bundle.js',
         libraryTarget: 'commonjs',
     },
@@ -70,12 +81,24 @@ const config = [{
                 use: [
                     'file-loader'
                 ]
+            }, {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             }
         ]
     },
     target: 'node',
     externals: [/^(?!\.|\/).+/i,],
 
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
+    },
+
+    plugins: [
+        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
+        new CheckerPlugin()
+    ],
 
 }];
 
