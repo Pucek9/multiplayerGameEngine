@@ -1,6 +1,7 @@
 const io = require('socket.io-client');
 import Player from "../../../objects/Player";
-import {Mouse} from '../../../objects/Pointer';
+import Cursor from '../../../objects/Cursor';
+import Map from '../../../objects/Map';
 import {Loop} from '../../Loop'
 const startImageJPG = require("./obrazki/start.jpg");
 const startImageJPG2 = require("./obrazki/magazynek.png");
@@ -20,10 +21,9 @@ window.onload = function () {
     const startImage2 = new Image();
     startImage2.src = startImageJPG2;
 
-    const map = new Image();
-    map.src = mapJPG;
+    const map = new Map(mapJPG);
 
-    const mouse = new Mouse(cursor);
+    const mouse = new Cursor(cursor);
 
     function randX() {
         return Math.floor((Math.random() * map.width / 3) + 1);

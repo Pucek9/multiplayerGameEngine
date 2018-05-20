@@ -1,23 +1,17 @@
 export default class Bullet {
 
-    x: number;
-    y: number;
-    fromX: number;
-    fromY: number;
-    targetX: number;
-    targetY: number;
-    owner: 'string';
-    size: number;
+    public x: number;
+    public y: number;
     length: number;
-    trajectory: number;
+    private trajectory: number;
 
-    constructor(fromX, fromY, targetX, targetY, owner) {
-        this.fromX = fromX;
-        this.fromY = fromY;
-        this.targetX = targetX;
-        this.targetY = targetY;
-        this.owner = owner;
-        this.size = 1;
+    constructor(public fromX: number,
+                public fromY: number,
+                public targetX: number,
+                public targetY: number,
+                public owner: string,
+                public size: number = 1,
+                public power = 10) {
         this.length = -10;
     }
 

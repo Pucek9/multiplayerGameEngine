@@ -1,41 +1,42 @@
 export default class Player {
 
-    id: number;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    name: string;
-    color: string;
-    active: boolean;
-    alived: boolean;
-    score: number;
-    speed: number;
-    hp: number;
+    public width: number;
+    public height: number;
+    public active: boolean;
+    public alive: boolean;
 
-    constructor(id, name, color, x, y, size) {
-        this.id = id;
-        this.x = x;
-        this.y = y;
+    constructor(public id: number,
+                public name: string,
+                public color: string,
+                public x: number,
+                public y: number,
+                size: number,
+                public speed: number = 5,
+                public score: number = 0,
+                public hp: number = 100,
+    ) {
         this.width = size;
         this.height = size;
-        this.name = name;
-        this.color = color;
         this.active = false;
-        this.alived = true;
-        this.score = 0;
-        this.speed = 5;
-        this.hp = 100;
+        this.alive = true;
     }
 
-    hitFromBullet(enemy) {
-        if (this.alived) {
+    isAlive() {
+        return this.alive;
+    }
+
+    die() {
+        this.alive = false;
+    }
+
+    hitFromBullet(enemy: Player) {
+        if (this.isAlive()) {
             this.hp = this.hp - 10;
             if (this.hp <= 0) {
                 if (enemy) {
                     enemy.score = enemy.score + 100;
                 }
-                this.alived = false;
+                this.die();
             }
         }
     }
