@@ -1,5 +1,6 @@
-import Bullet from "../objects/Bullet";
-import Player from "../objects/Player";
+import Bullet from "../server/models/Bullet";
+import Player from "../server/models/Player";
+import NewBullet from "../api/NewBullet";
 
 // var magazyn = window.localStorage;
 // var sounds = magazyn.getItem("snd") === "true";
@@ -14,11 +15,10 @@ let bullets = [];
 
 function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     const that = this;
-    const player = user;
     let activePlayer;
     socket.on('getPlayers', function (_players) {
         players = _players;
-        activePlayer = players.find(_player => _player.id === player.id);
+        activePlayer = players.find(_player => _player.id === user.id);
         if (activePlayer) {
             Object.setPrototypeOf(activePlayer, Player.prototype);
         }
@@ -42,7 +42,7 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         ctx.lineWitdh = 1;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(`${activePlayer.name} ${activePlayer.hp}`, canvas.width / 2, canvas.height / 2 -5);
+        ctx.fillText(`${activePlayer.name} ${activePlayer.hp}`, canvas.width / 2 + activePlayer.width / 2, canvas.height / 2 -5);
     };
 
     this.renderEnemy = function (enemy) {
@@ -73,9 +73,9 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     };
 
     this.render = function () {
-        if (player) {
+        if (user) {
             that.renderMap(map);
-            players.filter(_player => _player.id !== player.id)
+            players.filter(_player => _player.id !== user.id)
                    .forEach(enemy => that.renderEnemy(enemy));
             that.renderPlayer();
             that.renderBullets();
@@ -110,14 +110,13 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
             config.menu = true;
             socket.emit('activePlayer');
         } else {
-            // const bullet = new Bullet(canvas.width / 2, canvas.height / 2, mouse.x - mouse.img.width / 2, mouse.y - mouse.img.height / 2, user.id);
-            const bullet = new Bullet(
+            const newBullet = new NewBullet(
                 activePlayer.x + activePlayer.width / 2,
                 activePlayer.y + activePlayer.height / 2,
                 activePlayer.x + mouse.x - canvas.width / 2,
                 activePlayer.y + mouse.y - canvas.height / 2,
-                player.id);
-            socket.emit('pushBullet', bullet);
+                user.id);
+            socket.emit('pushBullet', newBullet);
         }
 
     });

@@ -1,5 +1,7 @@
+import NewPlayer from "../../../api/NewPlayer";
+
 const io = require('socket.io-client');
-import Player from "../../../objects/Player";
+import Player from "../../../server/models/Player";
 import Cursor from '../../../objects/Cursor';
 import Map from '../../../objects/Map';
 import {Loop} from '../../Loop'
@@ -25,14 +27,6 @@ window.onload = function () {
 
     const mouse = new Cursor(cursor);
 
-    function randX() {
-        return Math.floor((Math.random() * map.width / 3) + 1);
-    }
-
-    function randY() {
-        return Math.floor((Math.random() * map.height / 3) + 1);
-    }
-
     function randRGB() {
         return Math.floor(Math.random() * 255);
     }
@@ -44,9 +38,9 @@ window.onload = function () {
     function registerUser(data) {
         let name = prompt("Please enter your name", "Player");
         if (!(name === null || name === '')) {
-            const player = new Player(data.socketId, name, randColor(), randX(), randY(), 50);
-            socket.emit('CreatePlayer', player);
-            return player;
+            const newPlayer = new NewPlayer(data.socketId, name, randColor());
+            socket.emit('CreatePlayer', newPlayer);
+            return newPlayer;
         } else {
             registerUser(data)
         }
@@ -54,9 +48,9 @@ window.onload = function () {
 
     socket.on('HelloPlayer', function (data) {
         console.log(data);
-        const user = registerUser(data);
-        alert(user.name + ' joined the game!');
-        const loop = new Loop(socket, user, canvas, ctx, mouse, startImage, map);
+        const newPlayer = registerUser(data);
+        alert(newPlayer.name + ' joined the game!');
+        const loop = new Loop(socket, newPlayer, canvas, ctx, mouse, startImage, map);
         loop.run();
     });
 

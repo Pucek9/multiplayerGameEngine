@@ -1,17 +1,21 @@
 // import express from 'express';
+import NewPlayer from "../api/NewPlayer";
+
 const express = require('express');
 import * as http from 'http';
-const io = require( 'socket.io');
-import Player from '../objects/Player';
-import Bullet from "../objects/Bullet";
+
+const io = require('socket.io');
+import Player from './models/Player';
+import Bullet from "./models/Bullet";
 import CollisionDetector from './CollisionDetector'
+import NewBullet from "../api/NewBullet";
 
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 
-const players: any[] = [];
-let bullets = [];
+const players: Player[] = [];
+let bullets : Bullet[] = [] ;
 
 app.get('/', function (req, res) {
     res.send('<h1>Hello world</h1>');
@@ -38,13 +42,11 @@ function updateBullets() {
     bullets = bullets.filter(bullet => bullet.length > -500);
 }
 
-
 function detectBulletsCollision() {
     bullets.forEach((bullet, i) => {
         players.forEach(player => {
-            if (bullet.owner !== player.id && CollisionDetector.detectRectangleCollision(player, bullet)) {
-                const enemy = players.find(enemy => enemy.id === bullet.owner);
-                player.hitFromBullet(enemy);
+            if (bullet.owner !== player && CollisionDetector.detectRectangleCollision(player, bullet)) {
+                player.hitFromBullet(bullet);
                 bullets.splice(i, 1)
             }
         })
@@ -52,13 +54,19 @@ function detectBulletsCollision() {
 
 }
 
+
+function rand(x) {
+    return Math.floor((Math.random() * x) + 1);
+}
+
 socketIo.on('connection', function (socket) {
 
     socket.emit('HelloPlayer', {socketId: socket.id});
 
-    socket.on('CreatePlayer', function (player) {
-        console.log('Added new player: ', player);
-        Object.setPrototypeOf(player, Player.prototype);
+    socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
+        console.log('Added new player: ', newPlayer);
+        // Object.setPrototypeOf(player, Player.prototype);
+        const player = new Player(socket.id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 50);
         players.push(player);
         socketIo.emit('getPlayers', activePlayers());
 
@@ -97,8 +105,12 @@ socketIo.on('connection', function (socket) {
             socketIo.emit('getPlayers', activePlayers());
         });
 
-        socket.on('pushBullet', function (bullet) {
-            Object.setPrototypeOf(bullet, Bullet.prototype);
+        socket.on('pushBullet', function (newBullet: NewBullet) {
+            const bullet = new Bullet(newBullet.fromX,
+                newBullet.fromY,
+                newBullet.targetX,
+                newBullet.targetY,
+                getPlayer(newBullet.owner));
             bullets.push(bullet);
             socketIo.emit('getBullets', getBullets());
         });

@@ -1,15 +1,17 @@
 import Circle from '../objects/Circle';
 import Rectangle from '../objects/Rectangle';
+import Player from './Models/Player';
+import Bullet from './Models/Bullet';
 
 export default class CollisionDetector {
 
-    static detectCollision(object1, object2) {
-        if(object1 instanceof Circle && object2 instanceof Circle) {
-           return this.detectCircularCollision(object1, object2)
-        } else if (object1 instanceof Circle && object2 instanceof Rectangle || object1 instanceof Rectangle && object2 instanceof Circle) {
-            return this.detectRectangleCollision(object1, object2)
-        }
-    }
+    // static detectCollision(object1, object2) {
+    //     if(object1 instanceof Circle && object2 instanceof Circle) {
+    //        return this.detectCircularCollision(object1, object2)
+    //     } else if (object1 instanceof Circle && object2 instanceof Rectangle || object1 instanceof Rectangle && object2 instanceof Circle) {
+    //         return this.detectRectangleCollision(object1, object2)
+    //     }
+    // }
 
     static detectCircularCollision(o1, o2) {
         let dx = o1.x - o2.x;
@@ -18,7 +20,7 @@ export default class CollisionDetector {
         return distance < o1.size + o2.size;
     }
 
-    static detectRectangleCollision(player, bullet) {
+    static detectRectangleCollision(player : Player, bullet: Bullet) {
         return bullet.x - 1 < player.x + player.width &&
             bullet.x + 1 > player.x &&
             bullet.y - 1 < player.y + player.height &&

@@ -1,3 +1,5 @@
+import Bullet from "./Bullet";
+
 export default class Player {
 
     public width: number;
@@ -29,12 +31,12 @@ export default class Player {
         this.alive = false;
     }
 
-    hitFromBullet(enemy: Player) {
+    hitFromBullet(bullet: Bullet) {
         if (this.isAlive()) {
-            this.hp = this.hp - 10;
+            this.hp = this.hp - bullet.power;
             if (this.hp <= 0) {
-                if (enemy) {
-                    enemy.score = enemy.score + 100;
+                if (bullet.owner) {
+                    bullet.owner.score = bullet.owner.score + 100;
                 }
                 this.die();
             }

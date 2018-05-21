@@ -1,17 +1,19 @@
+import Player from "./Player";
+
 export default class Bullet {
 
     public x: number;
     public y: number;
-    length: number;
+    public length: number;
     private trajectory: number;
 
     constructor(public fromX: number,
                 public fromY: number,
                 public targetX: number,
                 public targetY: number,
-                public owner: string,
+                public owner: Player,
                 public size: number = 1,
-                public power = 10) {
+                public power: number = 10) {
         this.length = -10;
     }
 
