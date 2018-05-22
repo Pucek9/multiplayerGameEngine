@@ -1,6 +1,6 @@
-import Bullet from "../server/models/Bullet";
-import Player from "../server/models/Player";
 import NewBullet from "../api/NewBullet";
+import Player from "./models/Player";
+import Bullet from "./models/Bullet";
 
 // var magazyn = window.localStorage;
 // var sounds = magazyn.getItem("snd") === "true";
@@ -16,15 +16,15 @@ let bullets = [];
 function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     const that = this;
     let activePlayer;
-    socket.on('getPlayers', function (_players) {
+    socket.on('getPlayers', function (_players: Player[]) {
         players = _players;
         activePlayer = players.find(_player => _player.id === user.id);
-        if (activePlayer) {
-            Object.setPrototypeOf(activePlayer, Player.prototype);
-        }
+        players.forEach(player => {
+            Object.setPrototypeOf(player, Player.prototype);
+        });
     });
 
-    socket.on('getBullets', function (_bullets) {
+    socket.on('getBullets', function (_bullets: Bullet[]) {
         bullets = _bullets;
         bullets.forEach(bullet => {
             Object.setPrototypeOf(bullet, Bullet.prototype);
@@ -43,6 +43,7 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(`${activePlayer.name} ${activePlayer.hp}`, canvas.width / 2 + activePlayer.width / 2, canvas.height / 2 -5);
+        activePlayer.render()
     };
 
     this.renderEnemy = function (enemy) {
@@ -53,6 +54,7 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(`${enemy.name} ${enemy.hp}`, canvas.width / 2 - (activePlayer.x - enemy.x) + enemy.width / 2, canvas.height / 2 - (activePlayer.y - enemy.y) - 5);
+        enemy.render()
     };
 
     this.clear = function () {
