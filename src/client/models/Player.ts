@@ -1,28 +1,35 @@
-export default class Player {
+import PlayerModel from "../../api/PlayerModel";
+import IRenderable from "./IRenderable";
 
-    public width: number;
-    public height: number;
-    public active: boolean;
-    public alive: boolean;
+export default class Player extends PlayerModel implements IRenderable {
 
-    constructor(public id: number,
-                public name: string,
-                public color: string,
-                public x: number,
-                public y: number,
-                size: number,
-                public speed: number = 5,
-                public score: number = 0,
-                public hp: number = 100,
-    ) {
-        this.width = size;
-        this.height = size;
-        this.active = false;
-        this.alive = true;
+    public screen: { canvas: any, ctx: any };
+
+    renderBody(activePlayer: PlayerModel) {
+        this.screen.ctx.fillStyle = this.color;
+        this.screen.ctx.fillRect(
+            this.screen.canvas.width / 2 - (activePlayer.x - this.x),
+            this.screen.canvas.height / 2 - (activePlayer.y - this.y),
+            this.width,
+            this.height
+        );
     }
 
-    render() {
+    renderText(activePlayer: PlayerModel) {
+        this.screen.ctx.font = '10pt Arial';
+        this.screen.ctx.lineWitdh = 1;
+        this.screen.ctx.fillStyle = 'black';
+        this.screen.ctx.textAlign = 'center';
+        this.screen.ctx.fillText(
+            `${this.name} ${this.hp}`,
+            this.screen.canvas.width / 2 - (activePlayer.x - this.x) + this.width / 2,
+            this.screen.canvas.width / 2 - (activePlayer.y - this.y) - 5
+        );
+    }
 
+    render(activePlayer: PlayerModel) {
+        this.renderBody(activePlayer);
+        this.renderText(activePlayer);
     }
 
 }

@@ -1,5 +1,5 @@
-import Circle from '../objects/Circle';
-import Rectangle from '../objects/Rectangle';
+import Circle from './models/Circle';
+import Rectangle from './models/Rectangle';
 import Player from './Models/Player';
 import Bullet from './Models/Bullet';
 

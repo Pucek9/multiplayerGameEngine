@@ -1,18 +1,19 @@
-export default class Bullet {
+import BulletModel from "../../api/BulletModel";
+import PlayerModel from "../../api/PlayerModel";
+import IRenderable from "./IRenderable";
 
-    public x: number;
-    public y: number;
+export default class Bullet extends BulletModel implements IRenderable{
 
-    constructor(public fromX: number,
-                public fromY: number,
-                public targetX: number,
-                public targetY: number,
-                public owner: string,
-                public size: number = 1) {
-    }
+    public screen: { canvas: any, ctx: any };
 
-    render() {
-
+    render(activePlayer: PlayerModel) {
+        this.screen.ctx.beginPath();
+        this.screen.ctx.arc(
+            this.screen.canvas.width / 2 - (activePlayer.x - this.x),
+            this.screen.canvas.height / 2 - (activePlayer.y - this.y),
+            2, 0, 2 * Math.PI);
+        this.screen.ctx.fillStyle = "black";
+        this.screen.ctx.fill();
     }
 
 }

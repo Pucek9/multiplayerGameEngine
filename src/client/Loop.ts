@@ -1,6 +1,11 @@
 import NewBullet from "../api/NewBullet";
+import PlayerModel from "../api/PlayerModel";
 import Player from "./models/Player";
+import ActivePlayer from "./models/ActivePlayer";
 import Bullet from "./models/Bullet";
+import PlayerList from "./models/PlayersList";
+import Cleaner from "./models/Cleaner";
+
 
 // var magazyn = window.localStorage;
 // var sounds = magazyn.getItem("snd") === "true";
@@ -13,14 +18,22 @@ const config = {
 let players = [];
 let bullets = [];
 
-function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
+function Loop(socket, user, screen, cursor, menu, map) {
     const that = this;
     let activePlayer;
-    socket.on('getPlayers', function (_players: Player[]) {
+    const playersList = new PlayerList(screen);
+    const cleaner = new Cleaner(screen);
+
+    socket.on('getPlayers', function (_players: PlayerModel[]) {
         players = _players;
         activePlayer = players.find(_player => _player.id === user.id);
-        players.forEach(player => {
-            Object.setPrototypeOf(player, Player.prototype);
+        players.forEach(_player => {
+            if (_player.id !== user.id) {
+                Object.setPrototypeOf(_player, Player.prototype);
+            } else {
+                Object.setPrototypeOf(_player, ActivePlayer.prototype);
+            }
+            _player.screen = screen;
         });
     });
 
@@ -28,85 +41,11 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
         bullets = _bullets;
         bullets.forEach(bullet => {
             Object.setPrototypeOf(bullet, Bullet.prototype);
+            bullet.screen = screen;
         })
     });
 
-    this.renderMap = function (map) {
-        ctx.drawImage(map, 0 - activePlayer.x, 0 - activePlayer.y);
-    };
-
-    this.renderPlayer = function () {
-        ctx.fillStyle = activePlayer.color;
-        ctx.fillRect(canvas.width / 2, canvas.height / 2, activePlayer.width, activePlayer.height);
-        ctx.font = '10pt Arial';
-        ctx.lineWitdh = 1;
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${activePlayer.name} ${activePlayer.hp}`, canvas.width / 2 + activePlayer.width / 2, canvas.height / 2 -5);
-        activePlayer.render()
-    };
-
-    this.renderEnemy = function (enemy) {
-        ctx.fillStyle = enemy.color;
-        ctx.fillRect(canvas.width / 2 - (activePlayer.x - enemy.x), canvas.height / 2 - (activePlayer.y - enemy.y), enemy.width, enemy.height);
-        ctx.font = '10pt Arial';
-        ctx.lineWitdh = 1;
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${enemy.name} ${enemy.hp}`, canvas.width / 2 - (activePlayer.x - enemy.x) + enemy.width / 2, canvas.height / 2 - (activePlayer.y - enemy.y) - 5);
-        enemy.render()
-    };
-
-    this.clear = function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    };
-
-    this.renderBullet = function (bullet) {
-        ctx.beginPath();
-        ctx.arc(canvas.width / 2 - (activePlayer.x - bullet.x), canvas.height / 2 - (activePlayer.y - bullet.y), 2, 0, 2 * Math.PI);
-        ctx.fillStyle = "black";
-        ctx.fill();
-    };
-
-    this.renderBullets = function () {
-        bullets.forEach(bullet => {
-            that.renderBullet(bullet);
-        })
-    };
-
-    this.render = function () {
-        if (user) {
-            that.renderMap(map);
-            players.filter(_player => _player.id !== user.id)
-                   .forEach(enemy => that.renderEnemy(enemy));
-            that.renderPlayer();
-            that.renderBullets();
-
-        }
-        that.renderListOfPlayers()
-    };
-
-    this.renderListOfPlayers = function () {
-        ctx.font = '10pt Arial';
-        ctx.lineWitdh = 1;
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'left';
-        ctx.fillText('Active players:', 10, 15);
-        players.forEach((_player, i) => {
-            ctx.fillStyle = _player.color;
-            ctx.fillText(`${_player.name}: ${_player.score}`, 10, 30 + i * 15);
-        });
-    };
-
-    this.renderCursor = function () {
-        ctx.drawImage(mouse.img, mouse.x - mouse.img.width / 2, mouse.y - mouse.img.height / 2);
-    };
-
-    this.renderMenu = function () {
-        ctx.drawImage(startImage, 0, 0)
-    };
-
-    canvas.addEventListener('mousedown', function (e) {
+    screen.canvas.addEventListener('mousedown', function (e) {
         e.preventDefault();
         if (config.menu === false) {
             config.menu = true;
@@ -115,33 +54,33 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
             const newBullet = new NewBullet(
                 activePlayer.x + activePlayer.width / 2,
                 activePlayer.y + activePlayer.height / 2,
-                activePlayer.x + mouse.x - canvas.width / 2,
-                activePlayer.y + mouse.y - canvas.height / 2,
+                activePlayer.x + cursor.x - screen.canvas.width / 2,
+                activePlayer.y + cursor.y - screen.canvas.height / 2,
                 user.id);
             socket.emit('pushBullet', newBullet);
         }
 
     });
 
-    canvas.addEventListener('mouseup', function (e) {
+    screen.canvas.addEventListener('mouseup', function (e) {
         e.preventDefault();
     });
 
-    canvas.addEventListener("mousemove", function mouseMove(e) {
+    screen.canvas.addEventListener("mousemove", function mouseMove(e) {
         if (e.pageX) {
-            mouse.x = e.pageX;
+            cursor.x = e.pageX;
         }
         else if (e.clientX) {
-            mouse.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            cursor.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         }
-        mouse.x = mouse.x - canvas.offsetLeft;
+        cursor.x = cursor.x - screen.canvas.offsetLeft;
         if (e.pageY) {
-            mouse.y = e.pageY;
+            cursor.y = e.pageY;
         }
         else if (e.clientY) {
-            mouse.y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+            cursor.y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
         }
-        mouse.y = mouse.y - canvas.offsetTop;
+        cursor.y = cursor.y - screen.canvas.offsetTop;
     }, false);
 
     window.addEventListener('keydown', function (e) {
@@ -150,17 +89,20 @@ function Loop(socket, user, canvas, ctx, mouse, startImage, map) {
     });
 
     this.run = function () {
-        that.clear();
+        cleaner.render();
         socket.emit('iteration');
-        if (config.menu) {
-            that.render();
+        if (config.menu && activePlayer && map) {
+            map.render(activePlayer);
+            players.forEach(player => player.render(activePlayer));
+            bullets.forEach(bullet => bullet.render(activePlayer));
         } else {
-            that.renderMenu()
+            menu.render();
         }
+        playersList.render(players);
+        cursor.render();
 
-        that.renderCursor();
         setTimeout(that.run, 1000 / config.fps);
     }
 };
 
-export {Loop};
+export default Loop;

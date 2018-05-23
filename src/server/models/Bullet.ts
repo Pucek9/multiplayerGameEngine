@@ -1,19 +1,12 @@
-import Player from "./Player";
+import BulletModel from "../../api/BulletModel";
 
-export default class Bullet {
+export default class Bullet extends BulletModel {
 
-    public x: number;
-    public y: number;
     public length: number;
     private trajectory: number;
 
-    constructor(public fromX: number,
-                public fromY: number,
-                public targetX: number,
-                public targetY: number,
-                public owner: Player,
-                public size: number = 1,
-                public power: number = 10) {
+    constructor(fromX, fromY, targetX, targetY, owner, size?, power?) {
+        super(fromX, fromY, targetX, targetY, owner, size, power);
         this.length = -10;
     }
 

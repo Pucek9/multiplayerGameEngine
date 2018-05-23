@@ -1,27 +1,7 @@
 import Bullet from "./Bullet";
+import PlayerModel from "../../api/PlayerModel";
 
-export default class Player {
-
-    public width: number;
-    public height: number;
-    public active: boolean;
-    public alive: boolean;
-
-    constructor(public id: number,
-                public name: string,
-                public color: string,
-                public x: number,
-                public y: number,
-                size: number,
-                public speed: number = 5,
-                public score: number = 0,
-                public hp: number = 100,
-    ) {
-        this.width = size;
-        this.height = size;
-        this.active = false;
-        this.alive = true;
-    }
+export default class Player extends PlayerModel {
 
     isAlive() {
         return this.alive;
@@ -31,12 +11,16 @@ export default class Player {
         this.alive = false;
     }
 
+    addScore(score: number) {
+        this.score = this.score + score;
+    }
+
     hitFromBullet(bullet: Bullet) {
         if (this.isAlive()) {
             this.hp = this.hp - bullet.power;
             if (this.hp <= 0) {
                 if (bullet.owner) {
-                    bullet.owner.score = bullet.owner.score + 100;
+                    bullet.owner.addScore(100);
                 }
                 this.die();
             }
