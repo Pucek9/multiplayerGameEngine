@@ -106,11 +106,14 @@ socketIo.on('connection', function (socket) {
         });
 
         socket.on('pushBullet', function (newBullet: NewBullet) {
-            const bullet = new Bullet(newBullet.fromX,
-                newBullet.fromY,
+            let owner = getPlayer(newBullet.owner);
+            const bullet = new Bullet(
+                owner.x + owner.width / 2,
+                owner.y + owner.height / 2,
                 newBullet.targetX,
                 newBullet.targetY,
-                getPlayer(newBullet.owner));
+                owner
+            );
             bullets.push(bullet);
             socketIo.emit('getBullets', getBullets());
         });

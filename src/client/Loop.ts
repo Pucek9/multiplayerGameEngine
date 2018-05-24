@@ -52,8 +52,8 @@ function Loop(socket, user, screen, cursor, menu, map) {
             socket.emit('activePlayer');
         } else {
             const newBullet = new NewBullet(
-                activePlayer.x + activePlayer.width / 2,
-                activePlayer.y + activePlayer.height / 2,
+                // activePlayer.x + activePlayer.width / 2,
+                // activePlayer.y + activePlayer.height / 2,
                 activePlayer.x + cursor.x - screen.canvas.width / 2,
                 activePlayer.y + cursor.y - screen.canvas.height / 2,
                 user.id);
