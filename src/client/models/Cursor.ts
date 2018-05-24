@@ -1,12 +1,12 @@
 import IRenderable from "./IRenderable";
 
-export default class Cursor implements IRenderable{
+export default class Cursor implements IRenderable {
 
     public x: number;
     public y: number;
     public img: HTMLImageElement;
 
-    constructor(src : string, public screen: { canvas: any, ctx: any }) {
+    constructor(src: string, public screen: { canvas: any, ctx: any }) {
         this.img = new Image();
         this.img.src = src;
     };

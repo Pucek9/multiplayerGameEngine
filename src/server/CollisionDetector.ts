@@ -20,7 +20,7 @@ export default class CollisionDetector {
         return distance < o1.size + o2.size;
     }
 
-    static detectRectangleCollision(player : Player, bullet: Bullet) {
+    static detectRectangleCollision(player: Player, bullet: Bullet) {
         return bullet.x - 1 < player.x + player.width &&
             bullet.x + 1 > player.x &&
             bullet.y - 1 < player.y + player.height &&

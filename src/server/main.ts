@@ -15,7 +15,7 @@ const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 
 const players: Player[] = [];
-let bullets : Bullet[] = [] ;
+let bullets: Bullet[] = [];
 
 app.get('/', function (req, res) {
     res.send('<h1>Hello world</h1>');
@@ -66,7 +66,7 @@ socketIo.on('connection', function (socket) {
     socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
         // Object.setPrototypeOf(player, Player.prototype);
-        const player = new Player(socket.id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 50);
+        const player = new Player(socket.id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
         players.push(player);
         socketIo.emit('getPlayers', activePlayers());
 

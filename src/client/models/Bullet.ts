@@ -2,7 +2,7 @@ import BulletModel from "../../api/BulletModel";
 import PlayerModel from "../../api/PlayerModel";
 import IRenderable from "./IRenderable";
 
-export default class Bullet extends BulletModel implements IRenderable{
+export default class Bullet extends BulletModel implements IRenderable {
 
     public screen: { canvas: any, ctx: any };
 

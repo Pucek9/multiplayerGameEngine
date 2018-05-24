@@ -1,11 +1,11 @@
 import NewPlayer from "../../../api/NewPlayer";
-
-const io = require('socket.io-client');
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
 import Loop from '../../Loop'
 import Menu from "../../models/Menu";
+
+const io = require('socket.io-client');
 const startImageJPG = require("./obrazki/start.jpg");
 const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
