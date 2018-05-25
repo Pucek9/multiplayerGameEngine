@@ -1,7 +1,8 @@
-export default class PlayerModel {
+import ICircle from '../interfaces/ICircle'
 
-    public width: number;
-    public height: number;
+export default class PlayerModel implements ICircle {
+    public type = 'circle';
+
     public active: boolean;
     public alive: boolean;
 
@@ -10,13 +11,11 @@ export default class PlayerModel {
                 public color: string,
                 public x: number,
                 public y: number,
-                size: number,
+                public size: number = 32,
                 public speed: number = 5,
                 public score: number = 0,
                 public hp: number = 1000,
     ) {
-        this.width = size;
-        this.height = size;
         this.active = false;
         this.alive = true;
     }

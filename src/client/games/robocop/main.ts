@@ -1,4 +1,4 @@
-import NewPlayer from "../../../api/NewPlayer";
+import NewPlayer from "../../../api/models/NewPlayer";
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';

@@ -1,13 +1,17 @@
-import BulletModel from "../../api/BulletModel";
+import BulletModel from "../../api/models/BulletModel";
 
 export default class Bullet extends BulletModel {
 
-    public length: number;
+    private length: number;
     private trajectory: number;
 
     constructor(fromX, fromY, targetX, targetY, owner, size?, power?) {
         super(fromX, fromY, targetX, targetY, owner, size, power);
         this.length = -10;
+    }
+
+    isStillInAir() {
+        return this.length > -500;
     }
 
     update() {

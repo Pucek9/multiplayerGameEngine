@@ -1,4 +1,5 @@
-export default class Rectangle {
+export default interface IRectangle {
+    type: string;
     x: number;
     y: number;
     width: number;

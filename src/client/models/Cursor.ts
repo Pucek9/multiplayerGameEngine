@@ -1,4 +1,4 @@
-import IRenderable from "./IRenderable";
+import IRenderable from "../interfaces/IRenderable";
 
 export default class Cursor implements IRenderable {
 

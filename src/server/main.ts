@@ -1,5 +1,5 @@
 // import express from 'express';
-import NewPlayer from "../api/NewPlayer";
+import NewPlayer from "../api/models/NewPlayer";
 
 const express = require('express');
 import * as http from 'http';
@@ -7,8 +7,8 @@ import * as http from 'http';
 const io = require('socket.io');
 import Player from './models/Player';
 import Bullet from "./models/Bullet";
-import CollisionDetector from './CollisionDetector'
-import NewBullet from "../api/NewBullet";
+import CollisionDetector from './services/CollisionDetector'
+import NewBullet from "../api/models/NewBullet";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -39,13 +39,13 @@ function getBullets() {
 
 function updateBullets() {
     bullets.forEach(bullet => bullet.update());
-    bullets = bullets.filter(bullet => bullet.length > -500);
+    bullets = bullets.filter(bullet => bullet.isStillInAir());
 }
 
 function detectBulletsCollision() {
     bullets.forEach((bullet, i) => {
         players.forEach(player => {
-            if (bullet.owner !== player && CollisionDetector.detectRectangleCollision(player, bullet)) {
+            if (bullet.owner !== player && CollisionDetector.detectCollision(player, bullet)) {
                 player.hitFromBullet(bullet);
                 bullets.splice(i, 1)
             }
@@ -108,8 +108,8 @@ socketIo.on('connection', function (socket) {
         socket.on('pushBullet', function (newBullet: NewBullet) {
             let owner = getPlayer(newBullet.owner);
             const bullet = new Bullet(
-                owner.x + owner.width / 2,
-                owner.y + owner.height / 2,
+                owner.x + owner.size / 2,
+                owner.y + owner.size / 2,
                 newBullet.targetX,
                 newBullet.targetY,
                 owner
