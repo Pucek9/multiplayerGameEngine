@@ -3,7 +3,7 @@ import IRenderable from "../interfaces/IRenderable";
 export default class Cleaner implements IRenderable {
 
     constructor(
-        public screen: { canvas: any, ctx: any }) {
+        public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D }) {
     }
 
     render() {

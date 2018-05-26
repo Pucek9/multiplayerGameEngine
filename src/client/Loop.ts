@@ -7,10 +7,6 @@ import PlayerList from "./models/PlayersList";
 import Cleaner from "./models/Cleaner";
 import StaticCircularObject from "./models/StaticCircularObject";
 import StaticRectangleObject from "./models/StaticRectangleObject";
-import IRenderable from "./interfaces/IRenderable";
-
-// var magazyn = window.localStorage;
-// var sounds = magazyn.getItem("snd") === "true";
 
 const config = {
     menu: false,
@@ -106,10 +102,11 @@ function Loop(socket, user, screen, cursor, menu, map) {
         cleaner.render();
         socket.emit('iteration');
         if (config.menu && activePlayer && map) {
-            map.render(activePlayer);
-            bullets.forEach(bullet => bullet.render(activePlayer));
-            staticObjects.forEach(staticObject => staticObject.render(activePlayer))
-            players.forEach(player => player.render(activePlayer));
+            [].concat(map)
+                .concat(bullets)
+                .concat(staticObjects)
+                .concat(players)
+                .forEach(object => object.render(activePlayer));
         } else {
             menu.render();
         }

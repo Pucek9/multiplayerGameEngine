@@ -3,7 +3,7 @@ import IRenderable from "../interfaces/IRenderable";
 
 export default class Player extends PlayerModel implements IRenderable {
 
-    public screen: { canvas: any, ctx: any };
+    public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
 
     renderBody(activePlayer: PlayerModel) {
         this.screen.ctx.fillStyle = this.color;
@@ -20,7 +20,7 @@ export default class Player extends PlayerModel implements IRenderable {
 
     renderText(activePlayer: PlayerModel) {
         this.screen.ctx.font = '10pt Arial';
-        this.screen.ctx.lineWitdh = 1;
+        this.screen.ctx.lineWidth = 1;
         this.screen.ctx.fillStyle = 'black';
         this.screen.ctx.textAlign = 'center';
         this.screen.ctx.fillText(

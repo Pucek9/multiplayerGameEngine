@@ -6,7 +6,7 @@ export default class Cursor implements IRenderable {
     public y: number;
     public img: HTMLImageElement;
 
-    constructor(src: string, public screen: { canvas: any, ctx: any }) {
+    constructor(src: string, public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D }) {
         this.img = new Image();
         this.img.src = src;
     };

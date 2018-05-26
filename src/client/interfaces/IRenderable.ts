@@ -1,6 +1,6 @@
 export default interface IRenderable {
 
-    screen: { canvas: any, ctx: any };
+    screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
 
     render(any?): void;
 

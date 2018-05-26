@@ -5,7 +5,7 @@ export default class Map implements IRenderable {
 
     public img: HTMLImageElement;
 
-    constructor(src: string, public screen: { canvas: any, ctx: any }) {
+    constructor(src: string, public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D }) {
         this.img = new Image();
         this.img.src = src;
     };
