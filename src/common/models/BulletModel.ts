@@ -12,7 +12,9 @@ export default class BulletModel implements ICircle {
                 public targetY: number,
                 public owner: any,
                 public size: number = 1,
-                public power: number = 10) {
+                public power: number = 10,
+                protected range: number = 500
+    ) {
     }
 
 }
