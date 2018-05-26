@@ -7,7 +7,12 @@ export default class Cleaner implements IRenderable {
     }
 
     render() {
-        this.screen.ctx.clearRect(0, 0, this.screen.canvas.width, this.screen.canvas.height);
+        this.screen.ctx.clearRect(
+            0,
+            0,
+            this.screen.canvas.width,
+            this.screen.canvas.height
+        );
     }
 
 }

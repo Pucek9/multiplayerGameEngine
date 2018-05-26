@@ -11,6 +11,10 @@ export default class Map implements IRenderable {
     };
 
     render(activePlayer: PlayerModel) {
-        this.screen.ctx.drawImage(this.img, this.screen.canvas.width / 2 - activePlayer.x, this.screen.canvas.height / 2 - activePlayer.y);
+        this.screen.ctx.drawImage(
+            this.img,
+            this.screen.canvas.width / 2 - activePlayer.x,
+            this.screen.canvas.height / 2 - activePlayer.y
+        );
     }
 }

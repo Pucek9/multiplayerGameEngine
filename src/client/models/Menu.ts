@@ -10,7 +10,11 @@ export default class Menu implements IRenderable {
     }
 
     render() {
-        this.screen.ctx.drawImage(this.img, 0, 0)
+        this.screen.ctx.drawImage(
+            this.img,
+            0,
+            0
+        )
     }
 
 }

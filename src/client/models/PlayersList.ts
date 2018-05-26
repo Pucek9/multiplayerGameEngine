@@ -12,10 +12,18 @@ export default class PlayerList implements IRenderable {
         this.screen.ctx.lineWidth = 1;
         this.screen.ctx.fillStyle = 'black';
         this.screen.ctx.textAlign = 'left';
-        this.screen.ctx.fillText('Active players:', 10, 15);
+        this.screen.ctx.fillText(
+            'Active players:',
+            10,
+            15
+        );
         players.forEach((_player, i) => {
             this.screen.ctx.fillStyle = _player.color;
-            this.screen.ctx.fillText(`${_player.name}: ${_player.score}`, 10, 30 + i * 15);
+            this.screen.ctx.fillText(
+                `${_player.name}: ${_player.score}`,
+                10,
+                30 + i * 15
+            );
         });
     }
 
