@@ -1,4 +1,4 @@
-import BulletModel from "../../api/models/BulletModel";
+import BulletModel from "../../common/models/BulletModel";
 
 export default class Bullet extends BulletModel {
 

@@ -1,11 +1,13 @@
-import NewBullet from "../api/models/NewBullet";
-import PlayerModel from "../api/models/PlayerModel";
+import NewBullet from "../common/api/NewBullet";
+import PlayerModel from "../common/models/PlayerModel";
 import Player from "./models/Player";
 import ActivePlayer from "./models/ActivePlayer";
 import Bullet from "./models/Bullet";
 import PlayerList from "./models/PlayersList";
 import Cleaner from "./models/Cleaner";
-
+import StaticCircularObject from "./models/StaticCircularObject";
+import StaticRectangleObject from "./models/StaticRectangleObject";
+import IRenderable from "./interfaces/IRenderable";
 
 // var magazyn = window.localStorage;
 // var sounds = magazyn.getItem("snd") === "true";
@@ -17,6 +19,7 @@ const config = {
 
 let players = [];
 let bullets = [];
+let staticObjects: any [];
 
 function Loop(socket, user, screen, cursor, menu, map) {
     const that = this;
@@ -42,6 +45,18 @@ function Loop(socket, user, screen, cursor, menu, map) {
         bullets.forEach(bullet => {
             Object.setPrototypeOf(bullet, Bullet.prototype);
             bullet.screen = screen;
+        })
+    });
+
+    socket.on('getStaticObjects', function (_staticObjects: any[]) {
+        staticObjects = _staticObjects;
+        staticObjects.forEach(_staticObject => {
+            if (_staticObject.type === 'rectangle') {
+                Object.setPrototypeOf(_staticObject, StaticRectangleObject.prototype);
+            } else {
+                Object.setPrototypeOf(_staticObject, StaticCircularObject.prototype);
+            }
+            _staticObject.screen = screen;
         })
     });
 
@@ -92,8 +107,9 @@ function Loop(socket, user, screen, cursor, menu, map) {
         socket.emit('iteration');
         if (config.menu && activePlayer && map) {
             map.render(activePlayer);
-            players.forEach(player => player.render(activePlayer));
             bullets.forEach(bullet => bullet.render(activePlayer));
+            staticObjects.forEach(staticObject => staticObject.render(activePlayer))
+            players.forEach(player => player.render(activePlayer));
         } else {
             menu.render();
         }
@@ -102,6 +118,6 @@ function Loop(socket, user, screen, cursor, menu, map) {
 
         setTimeout(that.run, 1000 / config.fps);
     }
-};
+}
 
 export default Loop;

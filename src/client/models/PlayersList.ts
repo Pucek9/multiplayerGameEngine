@@ -1,4 +1,4 @@
-import PlayerModel from "../../api/models/PlayerModel";
+import PlayerModel from "../../common/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 
 export default class PlayerList implements IRenderable {

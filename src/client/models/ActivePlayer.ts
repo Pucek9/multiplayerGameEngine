@@ -1,4 +1,4 @@
-import PlayerModel from "../../api/models/PlayerModel";
+import PlayerModel from "../../common/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 
 export default class ActivePlayer extends PlayerModel implements IRenderable {
@@ -7,12 +7,22 @@ export default class ActivePlayer extends PlayerModel implements IRenderable {
 
     renderBody() {
         this.screen.ctx.fillStyle = this.color;
-        this.screen.ctx.fillRect(
+        // this.screen.ctx.fillRect(
+        //     this.screen.canvas.width / 2,
+        //     this.screen.canvas.height / 2,
+        //     this.size,
+        //     this.size
+        // );
+
+        this.screen.ctx.beginPath();
+        this.screen.ctx.arc(
             this.screen.canvas.width / 2,
             this.screen.canvas.height / 2,
             this.size,
-            this.size
+            0,
+            2 * Math.PI
         );
+        this.screen.ctx.fill();
     }
 
     renderText() {

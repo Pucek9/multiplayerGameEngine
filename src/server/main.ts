@@ -1,24 +1,32 @@
-// import express from 'express';
-import NewPlayer from "../api/models/NewPlayer";
-
 const express = require('express');
+const io = require('socket.io');
 import * as http from 'http';
 
-const io = require('socket.io');
+import CollisionDetector from './services/CollisionDetector'
+import NewPlayer from "../common/api/NewPlayer";
+import NewBullet from "../common/api/NewBullet";
 import Player from './models/Player';
 import Bullet from "./models/Bullet";
-import CollisionDetector from './services/CollisionDetector'
-import NewBullet from "../api/models/NewBullet";
+import StaticCircularObject from "./models/StaticCircularObject";
+import StaticRectangleObject from "./models/StaticRectangleObject";
 
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 
+const staticObjects: any[] = [];
 const players: Player[] = [];
 let bullets: Bullet[] = [];
 
+staticObjects.push(
+    new StaticCircularObject(100, 200, 100, 'red'),
+    new StaticCircularObject(1000, 200, 100, 'blue'),
+    new StaticRectangleObject(500, 300, 500, 100, 'green'),
+    new StaticRectangleObject(2300, 30, 100, 300, 'yellow'),
+);
+
 app.get('/', function (req, res) {
-    res.send('<h1>Hello world</h1>');
+    res.send('<h1>Hello player! Thats server api. Use port 8080 for connect client side!</h1>');
 });
 
 function getPlayer(id) {
@@ -37,21 +45,36 @@ function getBullets() {
     return bullets;
 }
 
+function getStaticObjects() {
+    return staticObjects;
+}
+
 function updateBullets() {
     bullets.forEach(bullet => bullet.update());
     bullets = bullets.filter(bullet => bullet.isStillInAir());
 }
 
+function detectPlayerCollision(player, direction: { x: number, y: number }) {
+    return staticObjects.concat(players).some(object => {
+        return player !== object && CollisionDetector.detectCollision(player, object, direction);
+    });
+}
+
 function detectBulletsCollision() {
     bullets.forEach((bullet, i) => {
-        players.forEach(player => {
-            if (bullet.owner !== player && CollisionDetector.detectCollision(player, bullet)) {
-                player.hitFromBullet(bullet);
+        // players.forEach(player => {
+        //     if (bullet.owner !== player && CollisionDetector.detectCollision(player, bullet)) {
+        //         player.hitFromBullet(bullet);
+        //         bullets.splice(i, 1)
+        //     }
+        // });
+        staticObjects.concat(players).forEach(object => {
+            if (bullet.owner !== object && CollisionDetector.detectCollision(object, bullet)) {
+                object.hitFromBullet(bullet);
                 bullets.splice(i, 1)
             }
         })
     })
-
 }
 
 
@@ -75,24 +98,33 @@ socketIo.on('connection', function (socket) {
             switch (key) {
                 case 'w':
                 case 'W':
-                case 'ArrowUp':
-                    player.goUp();
+                case 'ArrowUp': {
+                    if (!detectPlayerCollision(player, {x: 0, y: -player.speed}))
+                        player.goUp();
                     break;
+                }
                 case 's':
                 case 'S':
-                case 'ArrowDown':
-                    player.goDown();
+                case 'ArrowDown': {
+                    if (!detectPlayerCollision(player, {x: 0, y: player.speed}))
+                        player.goDown();
                     break;
+                }
                 case 'a':
                 case 'A':
-                case 'ArrowLeft':
-                    player.goLeft();
+                case 'ArrowLeft': {
+                    if (!detectPlayerCollision(player, {x: -player.speed, y: 0}))
+                        player.goLeft();
                     break;
+                }
                 case 'd':
                 case 'D':
-                case 'ArrowRight':
-                    player.goRight();
+                case 'ArrowRight': {
+                    if (!detectPlayerCollision(player, {x: player.speed, y: 0}))
+                        player.goRight();
                     break;
+                }
+
                 default:
                     break;
             }
@@ -108,8 +140,8 @@ socketIo.on('connection', function (socket) {
         socket.on('pushBullet', function (newBullet: NewBullet) {
             let owner = getPlayer(newBullet.owner);
             const bullet = new Bullet(
-                owner.x + owner.size / 2,
-                owner.y + owner.size / 2,
+                owner.x + owner.size / 4,
+                owner.y + owner.size / 4,
                 newBullet.targetX,
                 newBullet.targetY,
                 owner
@@ -123,6 +155,8 @@ socketIo.on('connection', function (socket) {
             detectBulletsCollision();
             socketIo.emit('getPlayers', activePlayers());
             socketIo.emit('getBullets', getBullets());
+            socketIo.emit('getStaticObjects', getStaticObjects());
+
         });
 
         socket.on('disconnect', function () {
