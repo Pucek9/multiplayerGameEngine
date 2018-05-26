@@ -62,12 +62,6 @@ function detectPlayerCollision(player, direction: { x: number, y: number }) {
 
 function detectBulletsCollision() {
     bullets.forEach((bullet, i) => {
-        // players.forEach(player => {
-        //     if (bullet.owner !== player && CollisionDetector.detectCollision(player, bullet)) {
-        //         player.hitFromBullet(bullet);
-        //         bullets.splice(i, 1)
-        //     }
-        // });
         staticObjects.concat(players).forEach(object => {
             if (bullet.owner !== object && CollisionDetector.detectCollision(object, bullet)) {
                 object.hitFromBullet(bullet);
@@ -88,7 +82,6 @@ socketIo.on('connection', function (socket) {
 
     socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
-        // Object.setPrototypeOf(player, Player.prototype);
         const player = new Player(socket.id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
         players.push(player);
         socketIo.emit('getPlayers', activePlayers());

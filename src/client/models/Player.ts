@@ -7,12 +7,6 @@ export default class Player extends PlayerModel implements IRenderable {
 
     renderBody(activePlayer: PlayerModel) {
         this.screen.ctx.fillStyle = this.color;
-        // this.screen.ctx.fillRect(
-        //     this.screen.canvas.width / 2 - (activePlayer.x - this.x),
-        //     this.screen.canvas.height / 2 - (activePlayer.y - this.y),
-        //     this.width,
-        //     this.height
-        // );
         this.screen.ctx.beginPath();
         this.screen.ctx.arc(
             this.screen.canvas.width / 2 - (activePlayer.x - this.x),
