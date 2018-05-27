@@ -3,12 +3,11 @@ import IRectangle from '../../common/interfaces/IRectangle';
 
 export default class CollisionDetector {
 
-    // static detectCollision(object1: ICircle, object2: ICircle, direction): boolean;
-    // static detectCollision(object1: IRectangle, object2: IRectangle, direction): boolean
-    // static detectCollision(object1: ICircle, object2: IRectangle, direction): boolean
-    // static detectCollision(object1: IRectangle, object2: ICircle, direction): boolean
-    static detectCollision(object1, object2, direction?: { x: number, y: number }) {
-        direction = direction || {x: 0, y: 0};
+    static detectCollision(object1: ICircle, object2: ICircle, direction?: { x: number, y: number }): boolean;
+    static detectCollision(object1: IRectangle, object2: IRectangle, direction?: { x: number, y: number }): boolean
+    static detectCollision(object1: ICircle, object2: IRectangle, direction?: { x: number, y: number }): boolean
+    static detectCollision(object1: IRectangle, object2: ICircle, direction?: { x: number, y: number }): boolean
+    static detectCollision(object1, object2, direction = {x: 0, y: 0}) {
         switch ([object1.type, object2.type].join()) {
             case 'circle,circle':
                 return this.detectCircularCollision(object1, object2, direction);
