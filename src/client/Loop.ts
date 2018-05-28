@@ -1,5 +1,5 @@
-import NewBullet from "../common/api/NewBullet";
-import PlayerModel from "../common/models/PlayerModel";
+import NewBullet from "../shared/api/NewBullet";
+import PlayerModel from "../shared/models/PlayerModel";
 import Player from "./models/Player";
 import ActivePlayer from "./models/ActivePlayer";
 import Bullet from "./models/Bullet";

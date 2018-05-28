@@ -1,5 +1,5 @@
 import Bullet from "./Bullet";
-import PlayerModel from "../../common/models/PlayerModel";
+import PlayerModel from "../../shared/models/PlayerModel";
 
 export default class Player extends PlayerModel {
 

@@ -1,5 +1,5 @@
-import BulletModel from "../../common/models/BulletModel";
-import PlayerModel from "../../common/models/PlayerModel";
+import BulletModel from "../../shared/models/BulletModel";
+import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 
 export default class Bullet extends BulletModel implements IRenderable {

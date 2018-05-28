@@ -1,4 +1,4 @@
-import BulletModel from "../../common/models/BulletModel";
+import BulletModel from "../../shared/models/BulletModel";
 
 export default class Bullet extends BulletModel {
 

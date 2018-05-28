@@ -1,5 +1,5 @@
-import ICircle from '../../common/interfaces/ICircle';
-import IRectangle from '../../common/interfaces/IRectangle';
+import ICircle from '../../shared/interfaces/ICircle';
+import IRectangle from '../../shared/interfaces/IRectangle';
 
 export default class CollisionDetector {
 
@@ -35,22 +35,55 @@ export default class CollisionDetector {
     }
 
     static detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
+        if (rect.deg === 0) {
+           return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
+        } else {
+            return this.detectRotatedRectangleAndCircleCollision(circle, rect, direction);
+        }
+    }
+
+    static detectUnRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
         let deltaX = circle.x + direction.x - Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width));
         let deltaY = circle.y + direction.y - Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height));
         return (deltaX * deltaX + deltaY * deltaY) < (circle.size * circle.size);
     }
 
-    // static detectRectangleCollision(o1: IRectangle, o2: IRectangle) {
-    //     return o1.x - 1 < o2.x + o2.width &&
-    //         o1.x + 1 > o2.x &&
-    //         o1.y - 1 < o2.y + o2.height &&
-    //         o1.y + 1 > o2.y;
-    // }
+    static detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction) {
 
-    // static detectPlayerCollision(o1, o2, cx, cy) {
-    //     return o1.x - o1.width / 2 < -o2.x + o2.width / 2 + cx &&
-    //         o1.x + o2.width / 2 + o1.width / 2 > -o2.x + cx &&
-    //         o1.y - o1.height / 2 < -o2.y + o2.height / 2 + cy &&
-    //         o1.y + o2.height / 2 + o1.height / 2 > -o2.y + cy;
-    // }
+        function distance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+        }
+
+        function degToRad(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        let cx, cy;
+        let angleOfRad = degToRad(-rect.deg);
+        let rectCenterX = rect.x + rect.width / 2;
+        let rectCenterY = rect.y + rect.height / 2;
+
+        let rotateCircleX = Math.cos(angleOfRad) * (circle.x + direction.x - rectCenterX) - Math.sin(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterX;
+        let rotateCircleY = Math.sin(angleOfRad) * (circle.x + direction.x - rectCenterX) + Math.cos(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterY;
+
+
+        if (rotateCircleX < rect.x) {
+            cx = rect.x;
+        } else if (rotateCircleX > rect.x + rect.width) {
+            cx = rect.x + rect.width;
+        } else {
+            cx = rotateCircleX;
+        }
+
+        if (rotateCircleY < rect.y) {
+            cy = rect.y;
+        } else if (rotateCircleY > rect.y + rect.height) {
+            cy = rect.y + rect.height;
+        } else {
+            cy = rotateCircleY;
+        }
+
+        return distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size;
+    }
+
 }

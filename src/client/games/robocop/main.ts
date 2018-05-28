@@ -1,4 +1,4 @@
-import NewPlayer from "../../../common/api/NewPlayer";
+import NewPlayer from "../../../shared/api/NewPlayer";
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
@@ -10,7 +10,11 @@ const startImageJPG = require("./obrazki/start.jpg");
 const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
 
-const socket = io.connect('http://192.168.1.6:3000/');
+let url = process.env.API_URL || 'localhost';
+url = 'http://' + process.env.API_URL.toString() + ':3000';
+const socket = io.connect(url);
+
+console.log('Connected with: ' + url);
 
 window.onload = function () {
     const canvas = <HTMLCanvasElement>document.getElementById("canvas");

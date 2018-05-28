@@ -1,6 +1,6 @@
-import StaticCircularObjectModel from "../../common/models/StaticCircularObjectModel";
+import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectModel";
 import IRenderable from "../interfaces/IRenderable";
-import PlayerModel from "../../common/models/PlayerModel";
+import PlayerModel from "../../shared/models/PlayerModel";
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
     public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };

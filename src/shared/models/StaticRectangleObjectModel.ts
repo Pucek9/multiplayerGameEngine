@@ -8,7 +8,8 @@ export default class StaticRectangleObjectModel implements IRectangle {
         public y: number,
         public width: number,
         public height: number,
-        public color: string
+        public color: string,
+        public deg: number = 0
     ) {
     }
 

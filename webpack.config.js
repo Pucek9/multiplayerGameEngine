@@ -5,7 +5,7 @@ const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPl
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
-
+const url = process.env.API_URL || 'localhost';
 const config = [{
 
     context: __dirname + '/src/client/',
@@ -24,6 +24,7 @@ const config = [{
 
     devServer: {
         port: 8080,
+        host: url,
         stats: 'errors-only',
         open: true,
         hot: true,
@@ -37,7 +38,12 @@ const config = [{
             template: 'index.html',
             hash: isProd
         }),
-        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" })
+        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'API_URL': JSON.stringify(url)
+            }
+        })
     ],
 
     module: {

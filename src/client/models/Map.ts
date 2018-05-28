@@ -1,4 +1,4 @@
-import PlayerModel from "../../common/models/PlayerModel";
+import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 
 export default class Map implements IRenderable {

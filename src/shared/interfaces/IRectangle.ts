@@ -4,4 +4,5 @@ export default interface IRectangle {
     y: number;
     width: number;
     height: number;
+    deg: number;
 }

@@ -2,15 +2,14 @@ const express = require('express');
 const io = require('socket.io');
 import * as http from 'http';
 
-import NewPlayer from "../common/api/NewPlayer";
-import NewBullet from "../common/api/NewBullet";
+import NewPlayer from "../shared/api/NewPlayer";
+import NewBullet from "../shared/api/NewBullet";
 import GameState from './services/GameState'
 
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 const gameState = new GameState();
-
 
 socketIo.on('connection', function (socket) {
 

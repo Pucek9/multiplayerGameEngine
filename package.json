@@ -12,8 +12,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --host 192.168.1.6",
-    "start-server": "nodemon dist/server/robocop.bundle.js",
+    "start:client": "webpack-dev-server --hot",
+    "start:server": "nodemon dist/server/robocop.bundle.js",
     "build": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

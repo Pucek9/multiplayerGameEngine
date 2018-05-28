@@ -3,8 +3,8 @@ import Bullet from "../models/Bullet";
 import StaticRectangleObject from "../models/StaticRectangleObject";
 import Player from "../models/Player";
 import StaticCircularObject from "../models/StaticCircularObject";
-import NewPlayer from "../../common/api/NewPlayer";
-import NewBullet from "../../common/api/NewBullet";
+import NewPlayer from "../../shared/api/NewPlayer";
+import NewBullet from "../../shared/api/NewBullet";
 
 export default class GameState {
 
@@ -15,7 +15,7 @@ export default class GameState {
         this.staticObjects.push(
             new StaticCircularObject(100, 200, 100, 'red'),
             new StaticCircularObject(1000, 200, 100, 'blue'),
-            new StaticRectangleObject(500, 300, 500, 100, 'green'),
+            new StaticRectangleObject(500, 300, 500, 100, 'green', 45),
             new StaticRectangleObject(2300, 30, 100, 300, 'yellow'),
         );
     }
