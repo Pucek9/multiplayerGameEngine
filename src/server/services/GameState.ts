@@ -52,9 +52,11 @@ export default class GameState {
     }
 
     detectPlayerCollision(player, direction: { x: number, y: number }) {
-        return this.staticObjects.concat(this.players).some(object => {
-            return player !== object && CollisionDetector.detectCollision(player, object, direction);
-        });
+        return [].concat(this.staticObjects)
+            .concat(this.players)
+            .some(object => {
+                return player !== object && CollisionDetector.detectCollision(player, object, direction);
+            });
     }
 
     detectBulletsCollision() {
@@ -83,8 +85,7 @@ export default class GameState {
     }
 
     setPlayerActive(id: number) {
-        const player = this.getPlayer(id);
-        player.active = true;
+        this.getPlayer(id).active = true;
     }
 
     connectPlayer(id: number, newPlayer: NewPlayer) {
@@ -94,6 +95,10 @@ export default class GameState {
 
     disconnectPlayer(disconnected) {
         this.players.splice(this.players.indexOf(disconnected), 1);
+    }
+
+    setKeys(id, keys) {
+        this.getPlayer(id).keys = new Set(keys);
     }
 
     move(id) {

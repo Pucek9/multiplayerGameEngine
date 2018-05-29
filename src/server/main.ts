@@ -25,9 +25,8 @@ socketIo.on('connection', function (socket) {
         gameState.connectPlayer(socket.id, newPlayer);
         socketIo.emit('getPlayers', gameState.activePlayers());
 
-        socket.on('keys', function (_keys: Array<string>) {
-            const player = gameState.getPlayer(socket.id);
-            player.keys = new Set(_keys);
+        socket.on('keys', function (keys: Array<string>) {
+            gameState.setKeys(socket.id,keys)
         });
 
         socket.on('activePlayer', function () {
