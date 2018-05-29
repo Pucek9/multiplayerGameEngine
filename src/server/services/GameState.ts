@@ -59,12 +59,14 @@ export default class GameState {
 
     detectBulletsCollision() {
         this.bullets.forEach((bullet, i) => {
-            this.staticObjects.concat(this.players).forEach(object => {
-                if (bullet.owner !== object && CollisionDetector.detectCollision(object, bullet)) {
-                    object.hitFromBullet(bullet);
-                    this.bullets.splice(i, 1)
-                }
-            });
+            [].concat(this.staticObjects)
+                .concat(this.players)
+                .forEach(object => {
+                    if (bullet.owner !== object && CollisionDetector.detectCollision(object, bullet)) {
+                        object.hitFromBullet(bullet);
+                        this.bullets.splice(i, 1)
+                    }
+                });
         });
     }
 
