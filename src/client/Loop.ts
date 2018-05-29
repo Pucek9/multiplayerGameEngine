@@ -10,7 +10,7 @@ import StaticRectangleObject from "./models/StaticRectangleObject";
 
 const config = {
     menu: false,
-    fps: 80,
+    fps: 100,
 };
 
 let players = [];

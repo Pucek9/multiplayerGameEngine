@@ -12,7 +12,7 @@ export default class PlayerModel implements ICircle {
                 public x: number,
                 public y: number,
                 public size: number = 32,
-                public speed: number = 5,
+                public speed: number = 3,
                 public score: number = 0,
                 public hp: number = 500,
     ) {
