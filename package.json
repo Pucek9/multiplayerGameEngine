@@ -12,6 +12,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/npm-run-all --parallel start:client start:server",
     "start:client": "webpack-dev-server --hot",
     "start:server": "nodemon dist/server/robocop.bundle.js",
     "build": "webpack --watch",
@@ -29,7 +30,8 @@
     "typescript": "^2.8.3",
     "webpack": "^4.7.0",
     "webpack-cli": "^2.1.2",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "npm-run-all": "^4.1.3"
   },
   "dependencies": {
     "@types/node": "^10.1.0",
