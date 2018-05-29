@@ -2,6 +2,7 @@ import Bullet from "./Bullet";
 import PlayerModel from "../../shared/models/PlayerModel";
 
 export default class Player extends PlayerModel {
+    public keys: Set<string> = new Set();
 
     isAlive() {
         return this.alive;

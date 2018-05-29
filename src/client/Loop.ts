@@ -10,11 +10,12 @@ import StaticRectangleObject from "./models/StaticRectangleObject";
 
 const config = {
     menu: false,
-    fps: 50,
+    fps: 100,
 };
 
 let players = [];
 let bullets = [];
+let keys: Set<string> = new Set([]);
 let staticObjects: any [];
 
 function Loop(socket, user, screen, cursor, menu, map) {
@@ -95,7 +96,16 @@ function Loop(socket, user, screen, cursor, menu, map) {
 
     window.addEventListener('keydown', function (e) {
         e.preventDefault();
-        socket.emit('keydown', e.key)
+        if (!e.repeat) {
+            keys.add(e.key);
+        }
+        socket.emit('keys', [...keys])
+    });
+
+    window.addEventListener('keyup', function (e) {
+        e.preventDefault();
+        keys.delete(e.key);
+        socket.emit('keys', [...keys])
     });
 
     this.run = function () {

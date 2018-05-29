@@ -1,3 +1,5 @@
+import Player from "../client/models/Player";
+
 const express = require('express');
 const io = require('socket.io');
 import * as http from 'http';
@@ -11,12 +13,11 @@ const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 const gameState = new GameState();
 
+app.get('/', function (req, res) {
+    res.send('<h1>Hello player! That\'s server api. Use port 8080 for connect client side!</h1>');
+});
+
 socketIo.on('connection', function (socket) {
-
-    app.get('/', function (req, res) {
-        res.send('<h1>Hello player! That\'s server api. Use port 8080 for connect client side!</h1>');
-    });
-
     socket.emit('HelloPlayer', {socketId: socket.id});
 
     socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
@@ -24,42 +25,9 @@ socketIo.on('connection', function (socket) {
         gameState.connectPlayer(socket.id, newPlayer);
         socketIo.emit('getPlayers', gameState.activePlayers());
 
-        socket.on('keydown', function (key) {
+        socket.on('keys', function (_keys: Array<string>) {
             const player = gameState.getPlayer(socket.id);
-            switch (key) {
-                case 'w':
-                case 'W':
-                case 'ArrowUp': {
-                    if (!gameState.detectPlayerCollision(player, {x: 0, y: -player.speed}))
-                        player.goUp();
-                    break;
-                }
-                case 's':
-                case 'S':
-                case 'ArrowDown': {
-                    if (!gameState.detectPlayerCollision(player, {x: 0, y: player.speed}))
-                        player.goDown();
-                    break;
-                }
-                case 'a':
-                case 'A':
-                case 'ArrowLeft': {
-                    if (!gameState.detectPlayerCollision(player, {x: -player.speed, y: 0}))
-                        player.goLeft();
-                    break;
-                }
-                case 'd':
-                case 'D':
-                case 'ArrowRight': {
-                    if (!gameState.detectPlayerCollision(player, {x: player.speed, y: 0}))
-                        player.goRight();
-                    break;
-                }
-
-                default:
-                    break;
-            }
-            socketIo.emit('getPlayers', gameState.activePlayers());
+            player.keys = new Set(_keys);
         });
 
         socket.on('activePlayer', function () {
@@ -73,13 +41,14 @@ socketIo.on('connection', function (socket) {
         });
 
         socket.on('iteration', function () {
+            gameState.move(socket.id);
             gameState.updateBullets();
             gameState.detectBulletsCollision();
             socketIo.emit('getPlayers', gameState.activePlayers());
             socketIo.emit('getBullets', gameState.getBullets());
-            socketIo.emit('getStaticObjects', gameState.getStaticObjects());
-
         });
+
+        socketIo.emit('getStaticObjects', gameState.getStaticObjects());
 
         socket.on('disconnect', function () {
             const disconnected = gameState.getPlayer(socket.id);

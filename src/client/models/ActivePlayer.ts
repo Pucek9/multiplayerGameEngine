@@ -25,8 +25,8 @@ export default class ActivePlayer extends PlayerModel implements IRenderable {
         this.screen.ctx.textAlign = 'center';
         this.screen.ctx.fillText(
             `${this.name} ${this.hp}`,
-            this.screen.canvas.width / 2 + this.size / 2,
-            this.screen.canvas.width / 2 - 5
+            this.screen.canvas.width / 2,
+            this.screen.canvas.height / 2 - (this.size + 16)
         );
     }
 

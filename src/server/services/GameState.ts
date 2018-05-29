@@ -14,8 +14,10 @@ export default class GameState {
 
         this.staticObjects.push(
             new StaticCircularObject(100, 200, 100, 'red'),
-            new StaticCircularObject(1000, 200, 100, 'blue'),
+            new StaticCircularObject(1000, 200, 90, 'blue'),
+            new StaticCircularObject(500, 400, 30, 'purple'),
             new StaticRectangleObject(500, 300, 500, 100, 'green', 45),
+            new StaticRectangleObject(230, 170, 200, 80, 'aqua', -30),
             new StaticRectangleObject(2300, 30, 100, 300, 'yellow'),
         );
     }
@@ -90,6 +92,30 @@ export default class GameState {
 
     disconnectPlayer(disconnected) {
         this.players.splice(this.players.indexOf(disconnected), 1);
+    }
+
+    move(id) {
+        const player = this.getPlayer(id);
+        if (player.keys.has('w') || player.keys.has('W') || player.keys.has('ArrowUp')) {
+            if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
+                player.goUp();
+            }
+        }
+        if (player.keys.has('s') || player.keys.has('S') || player.keys.has('ArrowDown')) {
+            if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
+                player.goDown();
+            }
+        }
+        if (player.keys.has('a') || player.keys.has('A') || player.keys.has('ArrowLeft')) {
+            if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
+                player.goLeft();
+            }
+        }
+        if (player.keys.has('d') || player.keys.has('D') || player.keys.has('ArrowRight')) {
+            if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
+                player.goRight();
+            }
+        }
     }
 
     static rand(x) {
