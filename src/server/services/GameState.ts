@@ -64,9 +64,18 @@ export default class GameState {
             [].concat(this.staticObjects)
                 .concat(this.players)
                 .forEach(object => {
-                    if (bullet.owner !== object && CollisionDetector.detectCollision(object, bullet)) {
-                        object.hitFromBullet(bullet);
-                        this.bullets.splice(i, 1)
+                    if (bullet.owner !== object) {
+                        if (CollisionDetector.detectCollision(object, bullet)) {
+                            object.hitFromBullet(bullet);
+                            this.bullets.splice(i, 1)
+                        }
+                        if (object.aura) {
+                            if (CollisionDetector.detectCollision(object.aura, bullet)) {
+                                bullet.decreaseSpeed();
+                            } else {
+                                bullet.increaseSpeed();
+                            }
+                        }
                     }
                 });
         });
@@ -123,6 +132,13 @@ export default class GameState {
                 player.goRight();
             }
         }
+        if (player.keys.has('Shift')) {
+            player.getAura();
+        }
+        else {
+            player.removeAura();
+        }
+
     }
 
     static rand(x) {

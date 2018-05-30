@@ -1,6 +1,7 @@
 import BulletModel from "../../shared/models/BulletModel";
 
 export default class Bullet extends BulletModel {
+    private defaultSpeed: number;
     private speed: number;
     private length: number;
     private trajectory: number;
@@ -9,7 +10,24 @@ export default class Bullet extends BulletModel {
         super(fromX, fromY, targetX, targetY, owner, size, power, range);
         this.length = 10;
         this.range = 500;
-        this.speed = 5;
+        this.defaultSpeed = 5;
+        this.speed = this.defaultSpeed;
+    }
+
+    decreaseSpeed(value = 1) {
+        if(this.speed > value) {
+            this.speed -= value;
+        } else {
+            this.speed = 1
+        }
+    }
+
+    increaseSpeed(value = 1) {
+        if(this.defaultSpeed > this.speed + value) {
+            this.speed += value;
+        } else {
+            this.speed = this.defaultSpeed;
+        }
     }
 
     isStillInAir() {

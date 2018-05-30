@@ -1,8 +1,10 @@
 import Bullet from "./Bullet";
 import PlayerModel from "../../shared/models/PlayerModel";
+import Aura from "./Aura";
 
 export default class Player extends PlayerModel {
     public keys: Set<string> = new Set();
+    public aura: Aura;
 
     isAlive() {
         return this.alive;
@@ -10,6 +12,14 @@ export default class Player extends PlayerModel {
 
     die() {
         this.alive = false;
+    }
+
+    getAura() {
+        this.aura = new Aura(this.x, this.y);
+    }
+
+    removeAura() {
+        this.aura = null;
     }
 
     addScore(score: number) {
@@ -30,17 +40,29 @@ export default class Player extends PlayerModel {
 
     goLeft() {
         this.x = this.x - this.speed;
+        if (this.aura) {
+            this.aura.x = this.x;
+        }
     }
 
     goRight() {
         this.x = this.x + this.speed;
+        if (this.aura) {
+            this.aura.x = this.x;
+        }
     }
 
     goDown() {
         this.y = this.y + this.speed;
+        if (this.aura) {
+            this.aura.y = this.y;
+        }
     }
 
     goUp() {
         this.y = this.y - this.speed;
+        if (this.aura) {
+            this.aura.y = this.y;
+        }
     }
 }
