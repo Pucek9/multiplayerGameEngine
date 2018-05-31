@@ -112,22 +112,22 @@ export default class GameState {
 
     move(id) {
         const player = this.getPlayer(id);
-        if (player.keys.has('w') || player.keys.has('W') || player.keys.has('ArrowUp')) {
+        if (player.keys.has('W') || player.keys.has('ArrowUp')) {
             if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
                 player.goUp();
             }
         }
-        if (player.keys.has('s') || player.keys.has('S') || player.keys.has('ArrowDown')) {
+        if (player.keys.has('S') || player.keys.has('ArrowDown')) {
             if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
                 player.goDown();
             }
         }
-        if (player.keys.has('a') || player.keys.has('A') || player.keys.has('ArrowLeft')) {
+        if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
             if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
                 player.goLeft();
             }
         }
-        if (player.keys.has('d') || player.keys.has('D') || player.keys.has('ArrowRight')) {
+        if (player.keys.has('D') || player.keys.has('ArrowRight')) {
             if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
                 player.goRight();
             }

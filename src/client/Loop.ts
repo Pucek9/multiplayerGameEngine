@@ -97,14 +97,14 @@ function Loop(socket, user, screen, cursor, menu, map) {
     window.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!e.repeat) {
-            keys.add(e.key);
+            keys.add(e.key.toUpperCase());
+            socket.emit('keys', [...keys])
         }
-        socket.emit('keys', [...keys])
     });
 
     window.addEventListener('keyup', function (e) {
         e.preventDefault();
-        keys.delete(e.key);
+        keys.delete(e.key.toUpperCase());
         socket.emit('keys', [...keys])
     });
 
