@@ -18,6 +18,10 @@ let bullets = [];
 let keys: Set<string> = new Set([]);
 let staticObjects: any [];
 
+function normalizeKey(key) {
+    return (key.length !== 1) ? key : key.toUpperCase()
+}
+
 function Loop(socket, user, screen, cursor, menu, map) {
     const that = this;
     let activePlayer;
@@ -97,16 +101,28 @@ function Loop(socket, user, screen, cursor, menu, map) {
     window.addEventListener('keydown', function (e) {
         e.preventDefault();
         if (!e.repeat) {
-            keys.add(e.key.toUpperCase());
+            keys.add(normalizeKey(e.key));
             socket.emit('keys', [...keys])
         }
     });
 
     window.addEventListener('keyup', function (e) {
         e.preventDefault();
-        keys.delete(e.key.toUpperCase());
+        keys.delete(normalizeKey(e.key));
         socket.emit('keys', [...keys])
     });
+
+    // window.addEventListener("wheel", function (e) {
+    //     e.preventDefault();
+    // - 100 up
+    // 100 down
+    // if (e.deltaY > 0) {
+    //     //up
+    // } else {
+    //
+    // }
+    // console.log(e)
+    // });
 
     this.run = function () {
         cleaner.render();
