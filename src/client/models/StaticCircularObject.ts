@@ -1,9 +1,10 @@
 import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectModel";
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
+import {screen} from "../types/screen";
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
-    public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
+    public screen: screen;
 
     render(activePlayer: PlayerModel) {
         this.screen.ctx.fillStyle = this.color;

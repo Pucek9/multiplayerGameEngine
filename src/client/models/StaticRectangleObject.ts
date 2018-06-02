@@ -1,9 +1,10 @@
 import StaticRectangleObjectModel from "../../shared/models/StaticRectangleObjectModel";
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
+import {screen} from "../types/screen";
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements IRenderable {
-    public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
+    public screen: screen;
 
     render(activePlayer: PlayerModel) {
         if (this.deg === 0) {

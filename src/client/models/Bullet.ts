@@ -1,10 +1,11 @@
 import BulletModel from "../../shared/models/BulletModel";
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
+import {screen} from "../types/screen";
 
 export default class Bullet extends BulletModel implements IRenderable {
 
-    public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
+    public screen: screen;
 
     render(activePlayer: PlayerModel) {
         this.screen.ctx.beginPath();

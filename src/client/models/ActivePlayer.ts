@@ -1,9 +1,10 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
+import {screen} from "../types/screen";
 
 export default class ActivePlayer extends PlayerModel implements IRenderable {
 
-    public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
+    public screen: screen;
 
     renderBody() {
         this.screen.ctx.fillStyle = this.color;

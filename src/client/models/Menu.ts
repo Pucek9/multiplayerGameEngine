@@ -1,10 +1,11 @@
 import IRenderable from "../interfaces/IRenderable";
+import {screen} from "../types/screen";
 
 export default class Menu implements IRenderable {
 
     public img: HTMLImageElement;
 
-    constructor(src: string, public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D }) {
+    constructor(src: string,     public screen: screen) {
         this.img = new Image();
         this.img.src = src;
     }

@@ -1,9 +1,10 @@
 import IRenderable from "../interfaces/IRenderable";
+import {screen} from "../types/screen";
 
 export default class Cleaner implements IRenderable {
 
     constructor(
-        public screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D }) {
+        public screen: screen) {
     }
 
     render() {

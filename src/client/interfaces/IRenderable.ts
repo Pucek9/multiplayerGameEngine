@@ -1,6 +1,8 @@
+import {screen} from "../types/screen";
+
 export default interface IRenderable {
 
-    screen: { canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D };
+    screen: screen;
 
     render(any?): void;
 
