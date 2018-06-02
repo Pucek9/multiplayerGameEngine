@@ -52,32 +52,28 @@ export default class GameState {
     }
 
     detectPlayerCollision(player, direction: { x: number, y: number }) {
-        return [].concat(this.staticObjects)
-            .concat(this.players)
-            .some(object => {
-                return player !== object && CollisionDetector.detectCollision(player, object, direction);
-            });
+        return [...this.staticObjects, ...this.players].some(object => {
+            return player !== object && CollisionDetector.detectCollision(player, object, direction);
+        });
     }
 
     detectBulletsCollision() {
         this.bullets.forEach((bullet, i) => {
-            [].concat(this.staticObjects)
-                .concat(this.players)
-                .forEach(object => {
-                    if (bullet.owner !== object) {
-                        if (CollisionDetector.detectCollision(object, bullet)) {
-                            object.hitFromBullet(bullet);
-                            this.bullets.splice(i, 1)
-                        }
-                        if (object.aura) {
-                            if (CollisionDetector.detectCollision(object.aura, bullet)) {
-                                bullet.decreaseSpeed();
-                            } else {
-                                bullet.increaseSpeed();
-                            }
+            [...this.staticObjects, ...this.players].forEach(object => {
+                if (bullet.owner !== object) {
+                    if (CollisionDetector.detectCollision(object, bullet)) {
+                        object.hitFromBullet(bullet);
+                        this.bullets.splice(i, 1)
+                    }
+                    if (object.aura) {
+                        if (CollisionDetector.detectCollision(object.aura, bullet)) {
+                            bullet.decreaseSpeed();
+                        } else {
+                            bullet.increaseSpeed();
                         }
                     }
-                });
+                }
+            });
         });
     }
 

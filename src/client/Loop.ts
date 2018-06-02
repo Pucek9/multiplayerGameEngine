@@ -128,11 +128,7 @@ function Loop(socket, user, screen, cursor, menu, map) {
         cleaner.render();
         socket.emit('iteration');
         if (config.menu && activePlayer && map) {
-            [].concat(map)
-                .concat(bullets)
-                .concat(staticObjects)
-                .concat(players)
-                .forEach(object => object.render(activePlayer));
+            [map, ...bullets, ...staticObjects, ...players].forEach(object => object.render(activePlayer));
         } else {
             menu.render();
         }
