@@ -96,6 +96,7 @@ export default class GameState {
     connectPlayer(id: number, newPlayer: NewPlayer) {
         const player = new Player(id, newPlayer.name, newPlayer.color, GameState.rand(1000), GameState.rand(1000), 20);
         this.players.push(player);
+        return player;
     }
 
     disconnectPlayer(disconnected) {
@@ -109,13 +110,13 @@ export default class GameState {
     move(id) {
         const player = this.getPlayer(id);
         if (player.keys.has('W') || player.keys.has('ArrowUp')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
-                player.goUp();
+            if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
+                player.goDown();
             }
         }
         if (player.keys.has('S') || player.keys.has('ArrowDown')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
-                player.goDown();
+            if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
+                player.goUp();
             }
         }
         if (player.keys.has('A') || player.keys.has('ArrowLeft')) {

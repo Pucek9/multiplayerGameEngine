@@ -1,4 +1,10 @@
+// export type screen = {
+//     canvas: HTMLCanvasElement,
+//     ctx: CanvasRenderingContext2D
+// };
+
 export type screen = {
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
+    camera: any,
+    scene: any,
+    renderer: any
 };

@@ -12,6 +12,7 @@ const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 const gameState = new GameState();
+let player;
 
 app.get('/', function (req, res) {
     res.send('<h1>Hello player! That\'s server api. Use port 8080 for connect client side!</h1>');
@@ -22,8 +23,9 @@ socketIo.on('connection', function (socket) {
 
     socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
-        gameState.connectPlayer(socket.id, newPlayer);
+        player = gameState.connectPlayer(socket.id, newPlayer);
         socketIo.emit('getPlayers', gameState.activePlayers());
+        socketIo.emit('addPlayers', gameState.activePlayers());
 
         socket.on('keys', function (keys: Array<string>) {
             gameState.setKeys(socket.id,keys)
@@ -31,7 +33,7 @@ socketIo.on('connection', function (socket) {
 
         socket.on('activePlayer', function () {
             gameState.setPlayerActive(socket.id);
-            socketIo.emit('getPlayers', gameState.activePlayers());
+            socketIo.emit('addPlayer', player);
         });
 
         socket.on('pushBullet', function (newBullet: NewBullet) {
@@ -53,7 +55,7 @@ socketIo.on('connection', function (socket) {
             const disconnected = gameState.getPlayer(socket.id);
             console.log('Disconnected player: ', disconnected);
             gameState.disconnectPlayer(disconnected);
-            socketIo.emit('getPlayers', gameState.activePlayers());
+            socketIo.emit('disconnectPlayer', socket.id);
         });
 
     });
