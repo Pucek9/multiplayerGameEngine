@@ -1,14 +1,14 @@
 import StaticRectangleObjectModel from "../../shared/models/StaticRectangleObjectModel";
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 
 const THREE = require('three');
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements IRenderable {
-    private cube;
+    private object;
 
-    init(screen: screen) {
+    init(screen: Screen) {
 
         function degToRad(deg) {
             return deg * Math.PI / 180;
@@ -16,14 +16,14 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
 
         const geometry = new THREE.BoxGeometry(this.width, this.height, 50);
         const material = new THREE.MeshBasicMaterial({color: this.color});
-        this.cube = new THREE.Mesh(geometry, material);
-        this.cube.rotation.z = degToRad(this.deg);
-        this.cube.position.x = this.x + this.width / 2;
-        this.cube.position.y = this.y + this.height / 2;
-        screen.scene.add(this.cube);
+        this.object = new THREE.Mesh(geometry, material);
+        this.object.rotation.z = degToRad(this.deg);
+        this.object.position.x = this.x + this.width / 2;
+        this.object.position.y = this.y + this.height / 2;
+        screen.scene.add(this.object);
     }
 
-    render(activePlayer: PlayerModel) {
+    render() {
 
     }
 

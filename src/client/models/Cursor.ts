@@ -1,5 +1,5 @@
 import IRenderable from "../interfaces/IRenderable";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 const THREE = require('three');
 
 export default class Cursor implements IRenderable {
@@ -7,23 +7,25 @@ export default class Cursor implements IRenderable {
     public x: number;
     public y: number;
     // public img: HTMLImageElement;
-    private img;
+    // private img;
+    public img;
 
     constructor(public src: string) {
         // this.img = new Image();
         // this.img.src = src;
+
+
+        // this.img.material.depthTest = false;
+        // this.img.material.depthWrite = false;
+    };
+
+    init(screen: Screen) {
         this.img = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30, 0),
             new THREE.MeshBasicMaterial({
                 map: new THREE.TextureLoader().load(this.src)
             })
         );
-
-        // this.img.material.depthTest = false;
-        // this.img.material.depthWrite = false;
-    };
-
-    init(screen: screen) {
         screen.scene.add(this.img);
     }
 

@@ -6,6 +6,8 @@ import PlayerList from "./models/PlayersList";
 import Camera from "./models/Camera";
 import StaticCircularObject from "./models/StaticCircularObject";
 import StaticRectangleObject from "./models/StaticRectangleObject";
+import Cursor from "./models/Cursor";
+import BulletUpdate from "../shared/api/BulletUpdate";
 
 const config = {
     menu: false,
@@ -13,7 +15,7 @@ const config = {
 };
 
 const players = [];
-const bullets = [];
+let bullets = [];
 let keys: Set<string> = new Set([]);
 let staticObjects: any [];
 
@@ -21,11 +23,10 @@ function normalizeKey(key) {
     return (key.length !== 1) ? key : key.toUpperCase()
 }
 
-function Loop(socket, user, screen, cursor, menu, map) {
+function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     const that = this;
-    cursor.init(screen);
     let activePlayer;
-    let camera: Camera
+    let camera: Camera;
     const playersList = new PlayerList(screen);
 
     socket.on('addPlayer', function (newPlayer) {
@@ -47,8 +48,18 @@ function Loop(socket, user, screen, cursor, menu, map) {
             });
     });
 
-    socket.on('getPlayers', function (_players: PlayerModel[]) {
+    socket.on('addBullet', function (newBullet: Bullet) {
+        if (newBullet) {
+            const bullet = new Bullet(
+                newBullet.id,
+                newBullet.size,
+            );
+            bullet.init(screen);
+            bullets.push(bullet);
+        }
+    });
 
+    socket.on('getPlayers', function (_players: PlayerModel[]) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
@@ -56,17 +67,25 @@ function Loop(socket, user, screen, cursor, menu, map) {
                     player.x = _player.x;
                     player.y = _player.y;
                     player.active = _player.active;
+                    player.hp = _player.hp;
+                    player.score = _player.score;
                 }
             });
         activePlayer = players.find(player => player.id === user.id);
     });
 
-    socket.on('getBullets', function (_bullets: Bullet[]) {
-        // bullets = _bullets;
-        // bullets.forEach(bullet => {
-        //     Object.setPrototypeOf(bullet, Bullet.prototype);
-        //     bullet.screen = screen;
-        // })
+    socket.on('getBullets', function (_bullets: BulletUpdate[]) {
+        bullets
+            .forEach(bullet => {
+                const _bullet = _bullets.find(_bullet => bullet.id === _bullet.id);
+                if (_bullet) {
+                    bullet.x = _bullet.x;
+                    bullet.y = _bullet.y;
+                } else {
+                    bullet.remove(screen);
+                    bullets.splice(bullets.indexOf(bullet), 1);
+                }
+            });
     });
 
     socket.on('getStaticObjects', function (_staticObjects: any[]) {
@@ -84,8 +103,10 @@ function Loop(socket, user, screen, cursor, menu, map) {
 
     socket.on('disconnectPlayer', function (id: string) {
         const disconnected = players.find(player => player.id === id);
-        disconnected.remove(screen);
-        players.splice(players.indexOf(disconnected), 1);
+        if (disconnected) {
+            disconnected.remove(screen);
+            players.splice(players.indexOf(disconnected), 1);
+        }
     });
 
 // screen.canvas.addEventListener('mousedown', function (e) {
@@ -95,13 +116,15 @@ function Loop(socket, user, screen, cursor, menu, map) {
             config.menu = true;
             socket.emit('activePlayer');
         } else {
-            //         const newBullet = new NewBullet(
-            //             activePlayer.x + cursor.x - screen.canvas.width / 2,
-            //             activePlayer.y + cursor.y - screen.canvas.height / 2,
-            //             user.id
-            //         );
-            //         socket.emit('pushBullet', newBullet);
-            console.log(cursor.x,cursor.y)
+            const newBullet = new NewBullet(
+                // activePlayer.x + cursor.x - screen.canvas.width / 2,
+                // activePlayer.y + cursor.y - screen.canvas.height / 2,
+                cursor.x,
+                cursor.y,
+                user.id
+            );
+            socket.emit('pushBullet', newBullet);
+            // console.log(activePlayer.cylinder.position, cursor.img.position)
 
         }
         //
@@ -111,24 +134,28 @@ function Loop(socket, user, screen, cursor, menu, map) {
 //     e.preventDefault();
 // });
 //
-window.addEventListener("mousemove", function mouseMove(e) {
-    cursor.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-    cursor.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-    // if (e.pageX) {
-    //     cursor.x = e.pageX;
-    // }
-    // else if (e.clientX) {
-    //     cursor.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-    // }
-    // cursor.x = cursor.x - screen.canvas.offsetLeft;
-    // if (e.pageY) {
-    //     cursor.y = e.pageY;
-    // }
-    // else if (e.clientY) {
-    //     cursor.y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    // }
-    // cursor.y = cursor.y - screen.canvas.offsetTop;
-}, false);
+    window.addEventListener("mousemove", function mouseMove(e) {
+        // cursor.x = (e.clientX / window.innerWidth) * 2 - 1;
+        // cursor.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        if (activePlayer) {
+            cursor.x = e.clientX + activePlayer.x - window.innerWidth / 2;
+            cursor.y = -e.clientY + activePlayer.y + window.innerHeight / 2
+        }
+        // if (e.pageX) {
+        //     cursor.x = e.pageX;
+        // }
+        // else if (e.clientX) {
+        //     cursor.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        // }
+        // cursor.x = cursor.x - screen.canvas.offsetLeft;
+        // if (e.pageY) {
+        //     cursor.y = e.pageY;
+        // }
+        // else if (e.clientY) {
+        //     cursor.y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+        // }
+        // cursor.y = cursor.y - screen.canvas.offsetTop;
+    }, false);
 
     window.addEventListener('keydown', function (e) {
         e.preventDefault();
@@ -144,25 +171,30 @@ window.addEventListener("mousemove", function mouseMove(e) {
         socket.emit('keys', [...keys])
     });
 
-// window.addEventListener("wheel", function (e) {
-//     e.preventDefault();
-// - 100 up
-// 100 down
-// if (e.deltaY > 0) {
-//     //up
-// } else {
-//
-// }
-// console.log(e)
-// });
+
+    // window.addEventListener("wheel", function (e) {
+    //     e.preventDefault();
+    //     if (e.deltaY > 0) {
+    //         //up
+    //         screen.camera.rotation.x += 0.1
+    //     } else {
+    //         screen.camera.rotation.x -= 0.1
+    //     }
+    // });
+
+
     if (camera) {
         camera.init(screen);
     }
     map.init(screen);
 
-    socket.emit('iteration');
+    cursor.init(screen)
+    // socket.emit('iteration');
     screen.renderer.autoClear = true;
-
+    if (activePlayer) {
+        cursor.x = activePlayer.x
+        cursor.y = activePlayer.y
+    }
 
     this.run = function () {
         socket.emit('iteration');
@@ -171,6 +203,7 @@ window.addEventListener("mousemove", function mouseMove(e) {
                 camera,
                 map,
                 ...staticObjects,
+                ...bullets,
                 ...players.filter(player => player.active),
                 cursor
             ].forEach(object => object.render());

@@ -1,25 +1,25 @@
 import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectModel";
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 
 const THREE = require('three');
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
-    private cylinder;
+    private object;
 
-    init(screen: screen) {
+    init(screen: Screen) {
         function degToRad(deg) {
             return deg * Math.PI / 180;
         }
 
-        const geometry = new THREE.CylinderGeometry(20 ,this.size, 80, 32);
+        const geometry = new THREE.CylinderGeometry(this.size ,this.size, 80, 32);
         const material = new THREE.MeshBasicMaterial({color: this.color});
-        this.cylinder = new THREE.Mesh(geometry, material);
-        this.cylinder.rotation.x = degToRad(90)
-        this.cylinder.position.x = this.x;
-        this.cylinder.position.y = this.y;
-        screen.scene.add(this.cylinder);
+        this.object = new THREE.Mesh(geometry, material);
+        this.object.rotation.x = degToRad(90);
+        this.object.position.x = this.x;
+        this.object.position.y = this.y;
+        screen.scene.add(this.object);
     }
 
     render() {

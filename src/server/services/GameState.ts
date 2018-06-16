@@ -22,6 +22,10 @@ export default class GameState {
         );
     }
 
+    generateId() {
+        return Date.now() + Math.floor(Math.random() * 100)
+    }
+
     getPlayer(id) {
         return this.players.find(player => player.id === id);
     }
@@ -35,7 +39,9 @@ export default class GameState {
     }
 
     getBullets() {
-        return this.bullets;
+        return this.bullets.map(bullet => {
+            return {id: bullet.id, x: bullet.x, y: bullet.y}
+        });
     }
 
     getStaticObjects() {
@@ -79,14 +85,19 @@ export default class GameState {
 
     addBullet(newBullet: NewBullet) {
         const owner = this.getPlayer(newBullet.owner);
-        const bullet = new Bullet(
-            owner.x + owner.size / 4,
-            owner.y + owner.size / 4,
-            newBullet.targetX,
-            newBullet.targetY,
-            owner
-        );
-        this.bullets.push(bullet);
+        if (owner) {
+            const bullet = new Bullet(
+                this.generateId(),
+                owner,
+                owner.x + owner.size / 4,
+                owner.y + owner.size / 4,
+                newBullet.targetX,
+                newBullet.targetY,
+                1.5
+            );
+            this.bullets.push(bullet);
+            return {id: bullet.id, size: bullet.size};
+        }
     }
 
     setPlayerActive(id: number) {
@@ -109,33 +120,34 @@ export default class GameState {
 
     move(id) {
         const player = this.getPlayer(id);
-        if (player.keys.has('W') || player.keys.has('ArrowUp')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
-                player.goDown();
+        if (player) {
+            if (player.keys.has('W') || player.keys.has('ArrowUp')) {
+                if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
+                    player.goDown();
+                }
+            }
+            if (player.keys.has('S') || player.keys.has('ArrowDown')) {
+                if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
+                    player.goUp();
+                }
+            }
+            if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
+                if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
+                    player.goLeft();
+                }
+            }
+            if (player.keys.has('D') || player.keys.has('ArrowRight')) {
+                if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
+                    player.goRight();
+                }
+            }
+            if (player.keys.has('Shift')) {
+                player.getAura();
+            }
+            else {
+                player.removeAura();
             }
         }
-        if (player.keys.has('S') || player.keys.has('ArrowDown')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
-                player.goUp();
-            }
-        }
-        if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
-            if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
-                player.goLeft();
-            }
-        }
-        if (player.keys.has('D') || player.keys.has('ArrowRight')) {
-            if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
-                player.goRight();
-            }
-        }
-        if (player.keys.has('Shift')) {
-            player.getAura();
-        }
-        else {
-            player.removeAura();
-        }
-
     }
 
     static rand(x) {

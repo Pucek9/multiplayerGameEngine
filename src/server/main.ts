@@ -19,6 +19,7 @@ app.get('/', function (req, res) {
 });
 
 socketIo.on('connection', function (socket) {
+    console.log(socket.id);
     socket.emit('HelloPlayer', {socketId: socket.id});
 
     socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
@@ -34,20 +35,28 @@ socketIo.on('connection', function (socket) {
         socket.on('activePlayer', function () {
             gameState.setPlayerActive(socket.id);
             socketIo.emit('addPlayer', player);
+
+            setInterval(() => {
+                gameState.move(socket.id);
+                gameState.updateBullets();
+                gameState.detectBulletsCollision();
+                socketIo.emit('getPlayers', gameState.activePlayers());
+                socketIo.emit('getBullets', gameState.getBullets());
+            },1000 / 60);
         });
 
         socket.on('pushBullet', function (newBullet: NewBullet) {
-            gameState.addBullet(newBullet);
-            socketIo.emit('getBullets', gameState.getBullets());
+            const bullet = gameState.addBullet(newBullet);
+            socketIo.emit('addBullet', bullet);
         });
 
-        socket.on('iteration', function () {
-            gameState.move(socket.id);
-            gameState.updateBullets();
-            gameState.detectBulletsCollision();
-            socketIo.emit('getPlayers', gameState.activePlayers());
-            socketIo.emit('getBullets', gameState.getBullets());
-        });
+        // socket.on('iteration', function () {
+        //     gameState.move(socket.id);
+        //     gameState.updateBullets();
+        //     gameState.detectBulletsCollision();
+        //     socketIo.emit('getPlayers', gameState.activePlayers());
+        //     socketIo.emit('getBullets', gameState.getBullets());
+        // });
 
         socketIo.emit('getStaticObjects', gameState.getStaticObjects());
 

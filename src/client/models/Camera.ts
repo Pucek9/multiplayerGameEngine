@@ -1,7 +1,7 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 
 export default class Camera implements IRenderable {
     private screen;
@@ -10,7 +10,7 @@ export default class Camera implements IRenderable {
 
     };
 
-    init(screen: screen) {
+    init(screen: Screen) {
         this.screen = screen;
     }
 

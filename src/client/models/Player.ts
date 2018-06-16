@@ -1,27 +1,27 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 const THREE = require('three');
 
 export default class Player extends PlayerModel implements IRenderable {
 
-    private cylinder;
+    public object;
 
-    init(screen: screen) {
+    init(screen: Screen) {
         function degToRad(deg) {
             return deg * Math.PI / 180;
         }
 
-        const geometry = new THREE.CylinderGeometry(20 ,this.size, 80, 32);
+        const geometry = new THREE.SphereGeometry(20 ,10, 10, 1);
         const material = new THREE.MeshBasicMaterial({color: this.color});
-        this.cylinder = new THREE.Mesh(geometry, material);
-        this.cylinder.rotation.x = degToRad(90);
-        screen.scene.add(this.cylinder);
+        this.object = new THREE.Mesh(geometry, material);
+
+        screen.scene.add(this.object);
     }
 
     renderBody() {
-        this.cylinder.position.x = this.x;
-        this.cylinder.position.y = this.y;
+        this.object.position.x = this.x;
+        this.object.position.y = this.y;
     }
 
     render() {
@@ -29,8 +29,8 @@ export default class Player extends PlayerModel implements IRenderable {
         // this.renderText();
     }
 
-    remove(screen: screen) {
-        screen.scene.remove(this.cylinder)
+    remove(screen: Screen) {
+        screen.scene.remove(this.object)
     }
     // renderBody(activePlayer: PlayerModel) {
         // this.screen.ctx.fillStyle = this.color;

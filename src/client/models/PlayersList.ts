@@ -1,11 +1,11 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 
 export default class PlayerList implements IRenderable {
 
     constructor(
-        public screen: screen) {
+        public screen: Screen) {
     }
 
     render(players: PlayerModel[]) {

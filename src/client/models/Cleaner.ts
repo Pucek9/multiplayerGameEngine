@@ -1,10 +1,10 @@
 import IRenderable from "../interfaces/IRenderable";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 
 export default class Cleaner implements IRenderable {
 
     constructor(
-        public screen: screen) {
+        public screen: Screen) {
     }
 
     render() {

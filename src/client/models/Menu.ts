@@ -1,12 +1,12 @@
 import IRenderable from "../interfaces/IRenderable";
-import {screen} from "../types/screen";
+import {Screen} from "../types/Screen";
 const THREE = require('three');
 
 export default class Menu implements IRenderable {
 
     public img: HTMLImageElement;
 
-    constructor(src: string, public screen: screen) {
+    constructor(src: string, public screen: Screen) {
         // this.img = new Image();
         // this.img.src = src;
     }
