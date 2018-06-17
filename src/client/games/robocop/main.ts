@@ -24,11 +24,11 @@ window.onload = function () {
     // const screen = {ctx: ctx, canvas: canvas};
 
     const camera = new THREE.PerspectiveCamera(
-        100,
+        50,
         window.innerWidth / window.innerHeight,
         0.01,
-        200);
-    camera.position.z = 200;
+        2000);
+    camera.position.z = 400;
 
     const scene = new THREE.Scene();
 

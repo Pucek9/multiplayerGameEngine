@@ -3,6 +3,8 @@ import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
 import {Screen} from "../types/Screen";
 
+const box = require("../games/robocop/obrazki/box.png");
+
 const THREE = require('three');
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements IRenderable {
@@ -14,8 +16,10 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
             return deg * Math.PI / 180;
         }
 
+        const texture = new THREE.TextureLoader().load(box);
         const geometry = new THREE.BoxGeometry(this.width, this.height, 50);
-        const material = new THREE.MeshBasicMaterial({color: this.color});
+        // const material = new THREE.MeshBasicMaterial({color: this.color});
+        const material = new THREE.MeshBasicMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
         this.object.rotation.z = degToRad(this.deg);
         this.object.position.x = this.x + this.width / 2;
