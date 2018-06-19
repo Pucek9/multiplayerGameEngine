@@ -17,13 +17,15 @@ export default class Map implements IRenderable {
     init(screen: Screen) {
         this.object = new THREE.Mesh(
             new THREE.PlaneGeometry(2920, 2004, 0),
-            new THREE.MeshBasicMaterial({
+            new THREE.MeshPhongMaterial({
                 map: new THREE.TextureLoader().load(this.src)
             })
         );
 
-        this.object.material.depthTest = false;
-        this.object.material.depthWrite = false;
+        // this.object.material.depthTest = false;
+        // this.object.material.depthWrite = false;
+        this.object.receiveShadow =  true;
+
         screen.scene.add(this.object);
     }
 

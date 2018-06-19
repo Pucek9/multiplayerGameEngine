@@ -7,24 +7,24 @@ const THREE = require('three');
 export default class Bullet extends BulletModel implements IRenderable {
 
     public screen: Screen;
-    private ball;
+    private object;
 
     init(screen: Screen) {
         const geometry = new THREE.SphereGeometry(this.size ,10, 10, 3);
         const material = new THREE.MeshBasicMaterial({color: 'black'});
-        this.ball = new THREE.Mesh(geometry, material);
+        this.object = new THREE.Mesh(geometry, material);
 
-        this.ball.position.z = 10;
-        screen.scene.add(this.ball);
+        this.object.position.z = 10;
+        screen.scene.add(this.object);
     }
 
     remove(screen: Screen) {
-        screen.scene.remove(this.ball)
+        screen.scene.remove(this.object)
     }
 
     render(activePlayer: PlayerModel) {
-        this.ball.position.x = this.x;
-        this.ball.position.y = this.y;
+        this.object.position.x = this.x;
+        this.object.position.y = this.y;
         // this.screen.ctx.beginPath();
         // this.screen.ctx.arc(
         //     this.screen.canvas.width / 2 - (activePlayer.x - this.x),

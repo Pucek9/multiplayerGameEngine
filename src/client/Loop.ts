@@ -8,6 +8,7 @@ import StaticCircularObject from "./models/StaticCircularObject";
 import StaticRectangleObject from "./models/StaticRectangleObject";
 import Cursor from "./models/Cursor";
 import BulletUpdate from "../shared/api/BulletUpdate";
+import Light from "./models/Light";
 
 const config = {
     menu: false,
@@ -27,6 +28,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     const that = this;
     let activePlayer;
     let camera: Camera;
+    let light = new Light(screen);
     const playersList = new PlayerList(screen);
 
     socket.on('addPlayer', function (newPlayer) {
@@ -35,6 +37,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         players.push(player);
         activePlayer = players.find(player => player.id === user.id);
         camera = new Camera(activePlayer);
+        light.init(activePlayer, cursor);
         camera.init(screen);
     });
 
@@ -193,11 +196,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
 
     cursor.init(screen)
     // socket.emit('iteration');
-    screen.renderer.autoClear = true;
     if (activePlayer) {
         cursor.x = activePlayer.x
         cursor.y = activePlayer.y
     }
+
+    screen.renderer.autoClear = true;
+    screen.renderer.toneMappingExposure = Math.pow( 0.68, 5.0 ); // to allow for very bright scenes.
+    screen.renderer.shadowMap.enabled = true;
 
     this.run = function () {
         socket.emit('iteration');
@@ -208,7 +214,8 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
                 ...staticObjects,
                 ...bullets,
                 ...players.filter(player => player.active),
-                cursor
+                cursor,
+                light,
             ].forEach(object => object.render());
         }
         requestAnimationFrame(that.run);

@@ -17,12 +17,18 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
         }
 
         const texture = new THREE.TextureLoader().load(box);
-        const geometry = new THREE.BoxGeometry(this.width, this.height, 50);
-        const material = new THREE.MeshBasicMaterial({map: texture, color: this.color});
+        const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
+        const material = new THREE.MeshPhongMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
+
         this.object.rotation.z = degToRad(this.deg);
+
         this.object.position.x = this.x + this.width / 2;
         this.object.position.y = this.y + this.height / 2;
+        this.object.position.z = this.z + this.depth / 2;
+
+        this.object.castShadow = true;
+        this.object.receiveShadow = true;
         screen.scene.add(this.object);
     }
 

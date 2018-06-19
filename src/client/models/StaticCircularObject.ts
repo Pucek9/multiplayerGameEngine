@@ -16,11 +16,13 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
 
         const texture = new THREE.TextureLoader().load(cumin);
         const geometry = new THREE.CylinderGeometry(this.size ,this.size, 80, 32);
-        const material = new THREE.MeshBasicMaterial({map: texture, color: this.color});
+        const material = new THREE.MeshPhongMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
         this.object.rotation.x = degToRad(90);
         this.object.position.x = this.x;
         this.object.position.y = this.y;
+        this.object.castShadow = true;
+        this.object.receiveShadow = true;
         screen.scene.add(this.object);
     }
 
