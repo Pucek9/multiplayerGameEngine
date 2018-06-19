@@ -176,11 +176,11 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         e.preventDefault();
         if (e.deltaY > 0) {
             //up
-            // screen.camera.rotation.x += 0.1
-            screen.camera.position.z += 10
+            // screen.camera.rotation.x += 0.1;
+            screen.camera.position.z += 10;
         } else {
-            screen.camera.position.z -= 10
-            // screen.camera.rotation.x -= 0.1
+            // screen.camera.rotation.x -= 0.1;
+            screen.camera.position.z -= 10;
 
         }
     });

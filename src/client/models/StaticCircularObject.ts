@@ -2,6 +2,7 @@ import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectM
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
 import {Screen} from "../types/Screen";
+const cumin = require("../games/robocop/obrazki/cumin.png");
 
 const THREE = require('three');
 
@@ -13,8 +14,9 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
             return deg * Math.PI / 180;
         }
 
+        const texture = new THREE.TextureLoader().load(cumin);
         const geometry = new THREE.CylinderGeometry(this.size ,this.size, 80, 32);
-        const material = new THREE.MeshBasicMaterial({color: this.color});
+        const material = new THREE.MeshBasicMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
         this.object.rotation.x = degToRad(90);
         this.object.position.x = this.x;
@@ -23,7 +25,6 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     }
 
     render() {
-
 
         // this.screen.ctx.fillStyle = this.color;
         // this.screen.ctx.beginPath();
@@ -35,7 +36,6 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
         //     2 * Math.PI
         // );
         // this.screen.ctx.fill();
-
 
     }
 }

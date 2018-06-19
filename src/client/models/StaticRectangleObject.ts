@@ -18,7 +18,6 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
 
         const texture = new THREE.TextureLoader().load(box);
         const geometry = new THREE.BoxGeometry(this.width, this.height, 50);
-        // const material = new THREE.MeshBasicMaterial({color: this.color});
         const material = new THREE.MeshBasicMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
         this.object.rotation.z = degToRad(this.deg);

@@ -17,8 +17,9 @@ export default class GameState {
             new StaticCircularObject(1000, 200, 90, 'blue'),
             new StaticCircularObject(500, 400, 30, 'purple'),
             new StaticRectangleObject(500, 300, 500, 100, 'green', 45),
-            new StaticRectangleObject(230, 170, 200, 80, 'aqua', -30),
-            new StaticRectangleObject(2300, 30, 100, 300, 'yellow'),
+            new StaticRectangleObject(230, 170, 200, 80, 'blue', -30),
+            new StaticRectangleObject(-400, -500, 300, 300, 'pink', -70),
+            new StaticRectangleObject(1300, 30, 100, 300, 'yellow'),
         );
     }
 
