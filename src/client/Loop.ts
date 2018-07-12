@@ -34,20 +34,29 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     socket.on('addPlayer', function (newPlayer) {
         const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, newPlayer.x, newPlayer.y);
         player.init(screen);
+        player.setAsEnemy();
         players.push(player);
-        activePlayer = players.find(player => player.id === user.id);
-        camera = new Camera(activePlayer);
-        light.init(activePlayer, cursor);
-        camera.init(screen);
+        if (!activePlayer) {
+            activePlayer = players.find(player => player.id === user.id);
+            activePlayer.setAsActive();
+
+            camera = new Camera(activePlayer);
+            camera.init(screen);
+            light.init(activePlayer, cursor);
+        }
     });
 
     socket.on('addPlayers', function (_players: PlayerModel[]) {
         _players
             .filter(_player => _player.active)
             .forEach(_player => {
-                const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
-                player.init(screen);
-                players.push(player);
+                const existed = players.find(player => player.id === _player.id);
+                if(!existed) {
+                    const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
+                    player.init(screen);
+                    player.setAsEnemy();
+                    players.push(player);
+                }
             });
     });
 
@@ -74,7 +83,6 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
                     player.score = _player.score;
                 }
             });
-        activePlayer = players.find(player => player.id === user.id);
     });
 
     socket.on('getBullets', function (_bullets: BulletUpdate[]) {
@@ -92,7 +100,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     });
 
     socket.on('getStaticObjects', function (_staticObjects: any[]) {
-        console.log('getStaticObjects')
+        console.log('getStaticObjects');
         staticObjects = _staticObjects;
         staticObjects.forEach(_staticObject => {
             if (_staticObject.type === 'rectangle') {
@@ -112,7 +120,6 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         }
     });
 
-// screen.canvas.addEventListener('mousedown', function (e) {
     window.addEventListener('mousedown', function (e) {
         e.preventDefault();
         if (config.menu === false) {
@@ -120,23 +127,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             socket.emit('activePlayer');
         } else {
             const newBullet = new NewBullet(
-                // activePlayer.x + cursor.x - screen.canvas.width / 2,
-                // activePlayer.y + cursor.y - screen.canvas.height / 2,
                 cursor.x,
                 cursor.y,
                 user.id
             );
             socket.emit('pushBullet', newBullet);
-            // console.log(activePlayer.cylinder.position, cursor.img.position)
-
         }
-        //
     });
-//
-// screen.canvas.addEventListener('mouseup', function (e) {
-//     e.preventDefault();
-// });
-//
+
     window.addEventListener("mousemove", function mouseMove(e) {
         // cursor.x = (e.clientX / window.innerWidth) * 2 - 1;
         // cursor.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -193,16 +191,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         camera.init(screen);
     }
     map.init(screen);
-
-    cursor.init(screen)
-    // socket.emit('iteration');
-    if (activePlayer) {
-        cursor.x = activePlayer.x
-        cursor.y = activePlayer.y
-    }
+    cursor.init(screen);
+    // if (activePlayer) {
+    //     cursor.x = activePlayer.x;
+    //     cursor.y = activePlayer.y;
+    // }
 
     screen.renderer.autoClear = true;
-    screen.renderer.toneMappingExposure = Math.pow( 0.68, 5.0 ); // to allow for very bright scenes.
+    screen.renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     screen.renderer.shadowMap.enabled = true;
 
     this.run = function () {

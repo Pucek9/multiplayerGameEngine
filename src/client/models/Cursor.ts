@@ -8,7 +8,7 @@ export default class Cursor implements IRenderable {
     public y: number;
     // public img: HTMLImageElement;
     // private img;
-    public img;
+    public object;
 
     constructor(public src: string) {
         // this.img = new Image();
@@ -20,18 +20,18 @@ export default class Cursor implements IRenderable {
     };
 
     init(screen: Screen) {
-        this.img = new THREE.Mesh(
+        this.object = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30, 0),
             new THREE.MeshPhongMaterial({
                 map: new THREE.TextureLoader().load(this.src)
             })
         );
-        screen.scene.add(this.img);
+        screen.scene.add(this.object);
     }
 
     render() {
-        this.img.position.x = this.x;
-        this.img.position.y = this.y;
+        this.object.position.x = this.x;
+        this.object.position.y = this.y;
         // this.screen.ctx.drawImage(
         //     this.img,
         //     this.x - this.img.width / 2,

@@ -10,8 +10,6 @@ export default class Map implements IRenderable {
     private object;
 
     constructor(public src: string) {
-        // this.img = new Image();
-        // this.img.src = src;
     };
 
     init(screen: Screen) {

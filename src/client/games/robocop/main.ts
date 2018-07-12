@@ -18,11 +18,6 @@ const socket = io.connect(url);
 console.log('Connected with: ' + url);
 
 window.onload = function () {
-    // const canvas = <HTMLCanvasElement>document.getElementById("canvas");
-    // canvas.style.cursor = "none";
-    // const ctx = canvas.getContext('2d');
-    // const screen = {ctx: ctx, canvas: canvas};
-
     const camera = new THREE.PerspectiveCamera(
         50,
         window.innerWidth / window.innerHeight,
@@ -43,12 +38,6 @@ window.onload = function () {
     const map = new Map(mapJPG);
     const menu = new Menu(startImageJPG, screen);
     const cursor = new Cursor(cursorPNG);
-        //
-    // var geometry, material, mesh;
-    // geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-    // material = new THREE.MeshNormalMaterial();
-    // mesh = new THREE.Mesh(geometry, material);
-    // scene.add(mesh);
 
     function randRGB() {
         return Math.floor(Math.random() * 255);

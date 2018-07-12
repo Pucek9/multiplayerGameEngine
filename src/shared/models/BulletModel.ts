@@ -7,7 +7,7 @@ export default class BulletModel implements ICircle {
     public y: number;
 
     constructor(public id: number,
-                public size: number = 1) {
+                public size: number = 2) {
         this.x = 0;
         this.y = 0;
     }
