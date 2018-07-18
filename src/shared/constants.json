@@ -1,0 +1,14 @@
+{
+  "API": {
+    "connection": "connection",
+    "keys": "keys",
+    "addPlayer": "addPlayer",
+    "addPlayers": "addPlayers",
+    "addBullet": "addBullet",
+    "getPlayers": "getPlayers",
+    "getBullets": "getBullets",
+    "getStaticObjects": "getStaticObjects",
+    "disconnectPlayer": "disconnectPlayer",
+    "HelloPlayer": "HelloPlayer"
+  }
+}

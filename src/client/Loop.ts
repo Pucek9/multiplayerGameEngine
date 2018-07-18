@@ -1,5 +1,6 @@
 import NewBullet from "../shared/api/NewBullet";
 import PlayerModel from "../shared/models/PlayerModel";
+import * as constants from '../shared/constants.json';
 import Player from "./models/Player";
 import Bullet from "./models/Bullet";
 import PlayerList from "./models/PlayersList";
@@ -9,6 +10,7 @@ import StaticRectangleObject from "./models/StaticRectangleObject";
 import Cursor from "./models/Cursor";
 import BulletUpdate from "../shared/api/BulletUpdate";
 import Light from "./models/Light";
+const API = (<any>constants).API;
 
 const config = {
     menu: false,
@@ -31,7 +33,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     let light = new Light(screen);
     const playersList = new PlayerList(screen);
 
-    socket.on('addPlayer', function (newPlayer) {
+    socket.on(API.addPlayer, function (newPlayer) {
         const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, newPlayer.x, newPlayer.y);
         player.init(screen);
         player.setAsEnemy();
@@ -46,7 +48,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         }
     });
 
-    socket.on('addPlayers', function (_players: PlayerModel[]) {
+    socket.on(API.addPlayers, function (_players: PlayerModel[]) {
         _players
             .filter(_player => _player.active)
             .forEach(_player => {
@@ -60,7 +62,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on('addBullet', function (newBullet: Bullet) {
+    socket.on(API.addBullet, function (newBullet: Bullet) {
         if (newBullet) {
             const bullet = new Bullet(
                 newBullet.id,
@@ -71,7 +73,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         }
     });
 
-    socket.on('getPlayers', function (_players: PlayerModel[]) {
+    socket.on(API.getPlayers, function (_players: PlayerModel[]) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
@@ -85,7 +87,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on('getBullets', function (_bullets: BulletUpdate[]) {
+    socket.on(API.getBullets, function (_bullets: BulletUpdate[]) {
         bullets
             .forEach(bullet => {
                 const _bullet = _bullets.find(_bullet => bullet.id === _bullet.id);
@@ -99,7 +101,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on('getStaticObjects', function (_staticObjects: any[]) {
+    socket.on(API.getStaticObjects, function (_staticObjects: any[]) {
         console.log('getStaticObjects');
         staticObjects = _staticObjects;
         staticObjects.forEach(_staticObject => {
@@ -112,7 +114,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         staticObjects.forEach(object => object.init(screen))
     });
 
-    socket.on('disconnectPlayer', function (id: string) {
+    socket.on(API.disconnectPlayer, function (id: string) {
         const disconnected = players.find(player => player.id === id);
         if (disconnected) {
             disconnected.remove(screen);
@@ -202,7 +204,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     screen.renderer.shadowMap.enabled = true;
 
     this.run = function () {
-        socket.emit('iteration');
+        socket.emit(API.iteration);
         if (activePlayer) {
             [
                 camera,

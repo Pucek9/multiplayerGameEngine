@@ -1,5 +1,4 @@
-import Player from "../client/models/Player";
-
+const API = require('../shared/constants.json').API;
 const express = require('express');
 const io = require('socket.io');
 import * as http from 'http';
@@ -20,34 +19,34 @@ app.get('/', function (req, res) {
 
 socketIo.on('connection', function (socket) {
     console.log(socket.id);
-    socket.emit('HelloPlayer', {socketId: socket.id});
+    socket.emit(API.HelloPlayer, {socketId: socket.id});
 
-    socket.on('CreatePlayer', function (newPlayer: NewPlayer) {
+    socket.on(API.CreatePlayer, function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
         player = gameState.connectPlayer(socket.id, newPlayer);
-        socketIo.emit('getPlayers', gameState.activePlayers());
-        socketIo.emit('addPlayers', gameState.activePlayers());
+        socketIo.emit(API.getPlayers, gameState.activePlayers());
+        socketIo.emit(API.addPlayers, gameState.activePlayers());
 
-        socket.on('keys', function (keys: Array<string>) {
+        socket.on(API.keys, function (keys: Array<string>) {
             gameState.setKeys(socket.id,keys)
         });
 
-        socket.on('activePlayer', function () {
+        socket.on(API.activePlayer, function () {
             gameState.setPlayerActive(socket.id);
-            socketIo.emit('addPlayer', player);
+            socketIo.emit(API.addPlayer, player);
 
             setInterval(() => {
                 gameState.move(socket.id);
                 gameState.updateBullets();
                 gameState.detectBulletsCollision();
-                socketIo.emit('getPlayers', gameState.activePlayers());
-                socketIo.emit('getBullets', gameState.getBullets());
+                socketIo.emit(API.getPlayers, gameState.activePlayers());
+                socketIo.emit(API.getBullets, gameState.getBullets());
             },1000 / 60);
         });
 
-        socket.on('pushBullet', function (newBullet: NewBullet) {
+        socket.on(API.pushBullet, function (newBullet: NewBullet) {
             const bullet = gameState.addBullet(newBullet);
-            socketIo.emit('addBullet', bullet);
+            socketIo.emit(API.addBullet, bullet);
         });
 
         // socket.on('iteration', function () {
@@ -58,13 +57,13 @@ socketIo.on('connection', function (socket) {
         //     socketIo.emit('getBullets', gameState.getBullets());
         // });
 
-        socketIo.emit('getStaticObjects', gameState.getStaticObjects());
+        socketIo.emit(API.getStaticObjects, gameState.getStaticObjects());
 
         socket.on('disconnect', function () {
             const disconnected = gameState.getPlayer(socket.id);
             console.log('Disconnected player: ', disconnected);
             gameState.disconnectPlayer(disconnected);
-            socketIo.emit('disconnectPlayer', socket.id);
+            socketIo.emit(API.disconnectPlayer, socket.id);
         });
 
     });
