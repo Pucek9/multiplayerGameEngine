@@ -18,10 +18,13 @@ app.get('/', function (req, res) {
 });
 
 socketIo.on('connection', function (socket) {
-    console.log(socket.id);
-    socket.emit(API.HelloPlayer, {socketId: socket.id});
 
-    socket.on(API.CreatePlayer, function (newPlayer: NewPlayer) {
+    console.log('connection:',API.helloPlayer, socket.id);
+    setTimeout(() => {
+        socket.emit(API.helloPlayer, {socketId: socket.id});
+    },1000);
+
+    socket.on(API.createPlayer, function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
         player = gameState.connectPlayer(socket.id, newPlayer);
         socketIo.emit(API.getPlayers, gameState.activePlayers());
@@ -32,6 +35,7 @@ socketIo.on('connection', function (socket) {
         });
 
         socket.on(API.activePlayer, function () {
+            console.log('Player activated: ', socket.id);
             gameState.setPlayerActive(socket.id);
             socketIo.emit(API.addPlayer, player);
 

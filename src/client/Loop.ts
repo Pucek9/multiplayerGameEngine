@@ -126,14 +126,15 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         e.preventDefault();
         if (config.menu === false) {
             config.menu = true;
-            socket.emit('activePlayer');
+            console.log('aktywujemy go', API.activePlayer)
+            socket.emit(API.activePlayer);
         } else {
             const newBullet = new NewBullet(
                 cursor.x,
                 cursor.y,
                 user.id
             );
-            socket.emit('pushBullet', newBullet);
+            socket.emit(API.pushBullet, newBullet);
         }
     });
 
@@ -164,14 +165,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         e.preventDefault();
         if (!e.repeat) {
             keys.add(normalizeKey(e.key));
-            socket.emit('keys', [...keys])
+            socket.emit(API.keys, [...keys])
         }
     });
 
     window.addEventListener('keyup', function (e) {
         e.preventDefault();
         keys.delete(normalizeKey(e.key));
-        socket.emit('keys', [...keys])
+        socket.emit(API.keys, [...keys])
     });
 
 

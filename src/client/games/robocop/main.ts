@@ -50,18 +50,17 @@ window.onload = function () {
     }
 
     function registerUser(data) {
-        let name = prompt("Please enter your name"  + API.HelloPlayer + 'ee', "Player");
+        let name = prompt("Please enter your name", "Player");
         if (!(name === null || name === '')) {
             const newPlayer = new NewPlayer(data.socketId, name, randColor());
-            socket.emit(API.CreatePlayer, newPlayer);
+            socket.emit(API.createPlayer, newPlayer);
             return newPlayer;
         } else {
             registerUser(data)
         }
     }
 
-    socket.on(API.HelloPlayer, function (data) {
-        console.log(data);
+    socket.on(API.helloPlayer, function (data) {
         const newPlayer = registerUser(data);
         alert(newPlayer.name + ' joined the game!');
         const loop = new Loop(socket, newPlayer, screen, cursor, menu, map);

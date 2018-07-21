@@ -11,9 +11,6 @@
       "node"
     ]
   },
-  "files": [
-    "typings.d.ts"
-  ],
   "exclude": [
     "node_modules"
   ]
