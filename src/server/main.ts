@@ -14,9 +14,7 @@ const socketIo = io.listen(httpServer);
 const gameState = new GameState();
 let player;
 
-app.get('/', function (req, res) {
-    res.send('<h1>Hello player! That\'s server api. Use port 8080 for connect client side!</h1>');
-});
+app.use(express.static('dist/client'));
 
 socketIo.on('connection', function (socket) {
 
