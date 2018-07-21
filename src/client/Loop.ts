@@ -10,6 +10,7 @@ import StaticRectangleObject from "./models/StaticRectangleObject";
 import Cursor from "./models/Cursor";
 import BulletUpdate from "../shared/api/BulletUpdate";
 import Light from "./models/Light";
+
 const API = (<any>constants).API;
 
 const config = {
@@ -53,7 +54,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             .filter(_player => _player.active)
             .forEach(_player => {
                 const existed = players.find(player => player.id === _player.id);
-                if(!existed) {
+                if (!existed) {
                     const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
                     player.init(screen);
                     player.setAsEnemy();
@@ -77,6 +78,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
+                if (_player.id === activePlayer.id) {
+                    const diff = {
+                        x: player.x - _player.x,
+                        y: player.y - _player.y,
+                    };
+                    cursor.x -= diff.x;
+                    cursor.y -= diff.y
+                }
                 if (_player) {
                     player.x = _player.x;
                     player.y = _player.y;
