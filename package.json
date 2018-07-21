@@ -12,8 +12,8 @@
   ],
   "main": "index.js",
   "scripts": {
+    "start": "npm run build && node dist/server/robocop.bundle.js",
     "build": "./node_modules/.bin/webpack",
-    "start": "node dist/server/robocop.bundle.js",
     "build:dev": "./node_modules/.bin/webpack --watch",
     "start:dev": "./node_modules/.bin/npm-run-all --parallel start:dev:client start:dev:server",
     "start:dev:client": "./node_modules/.bin/webpack-dev-server --hot",
