@@ -1,4 +1,4 @@
-import MouseClick from "../shared/api/MouseClick";
+import MouseCoordinates from "../shared/api/MouseCoordinates";
 import PlayerModel from "../shared/models/PlayerModel";
 import * as constants from '../shared/constants.json';
 import Player from "./models/Player";
@@ -92,6 +92,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
                     player.active = _player.active;
                     player.hp = _player.hp;
                     player.score = _player.score;
+                    player.direction = _player.direction;
                 }
             });
     });
@@ -136,7 +137,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             config.menu = true;
             socket.emit(API.ACTIVATE_PLAYER);
         } else {
-            const mouseClick = new MouseClick(
+            const mouseClick = new MouseCoordinates(
                 cursor.x,
                 cursor.y,
                 user.id
@@ -150,7 +151,13 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         // cursor.y = -(e.clientY / window.innerHeight) * 2 + 1;
         if (activePlayer) {
             cursor.x = e.clientX + activePlayer.x - window.innerWidth / 2;
-            cursor.y = -e.clientY + activePlayer.y + window.innerHeight / 2
+            cursor.y = -e.clientY + activePlayer.y + window.innerHeight / 2;
+            const mouseCoordinates = new MouseCoordinates(
+                cursor.x,
+                cursor.y,
+                user.id
+            );
+            socket.emit(API.UPDATE_DIRECTION, mouseCoordinates)
         }
         // if (e.pageX) {
         //     cursor.x = e.pageX;

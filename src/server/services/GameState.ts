@@ -4,7 +4,7 @@ import StaticRectangleObject from "../models/StaticRectangleObject";
 import Player from "../models/Player";
 import StaticCircularObject from "../models/StaticCircularObject";
 import NewPlayer from "../../shared/api/NewPlayer";
-import MouseClick from "../../shared/api/MouseClick";
+import MouseCoordinates from "../../shared/api/MouseCoordinates";
 
 export default class GameState {
 
@@ -17,9 +17,9 @@ export default class GameState {
             new StaticCircularObject(1000, 200, 90, 'blue'),
             new StaticCircularObject(500, 400, 30, 'purple'),
             new StaticRectangleObject(500, 300, 0, 500, 100, 200, 'green', 45),
-            new StaticRectangleObject(230, 170, 0, 200, 80, 80,'blue', -30),
-            new StaticRectangleObject(-400, -500, 0, 300, 300, 10,'pink', -70),
-            new StaticRectangleObject(1300, 30, 0, 100, 300, 100,'yellow'),
+            new StaticRectangleObject(230, 170, 0, 200, 80, 80, 'blue', -30),
+            new StaticRectangleObject(-400, -500, 0, 300, 300, 10, 'pink', -70),
+            new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
         );
     }
 
@@ -84,7 +84,7 @@ export default class GameState {
         });
     }
 
-    addBullet(mouseClick: MouseClick) {
+    addBullet(mouseClick: MouseCoordinates) {
         const owner = this.getPlayer(mouseClick.owner);
         if (owner) {
             const bullet = new Bullet(
@@ -148,6 +148,15 @@ export default class GameState {
             else {
                 player.removeAura();
             }
+        }
+    }
+
+    updatePlayerDirection(mouseCoordinates: MouseCoordinates) {
+        const owner = this.getPlayer(mouseCoordinates.owner);
+        if (owner) {
+            const dx = mouseCoordinates.targetX - owner.x;
+            const dy = mouseCoordinates.targetY - owner.y;
+            owner.direction = Math.atan2(dy, dx) - 80;
         }
     }
 

@@ -5,6 +5,7 @@ export default class PlayerModel implements ICircle {
 
     public active: boolean;
     public alive: boolean;
+    public direction: number;
 
     constructor(public id: number,
                 public name: string,
@@ -18,6 +19,7 @@ export default class PlayerModel implements ICircle {
     ) {
         this.active = false;
         this.alive = true;
+        this.direction = 0;
     }
 
 }

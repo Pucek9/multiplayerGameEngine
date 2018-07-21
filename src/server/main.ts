@@ -4,7 +4,7 @@ const io = require('socket.io');
 import * as http from 'http';
 
 import NewPlayer from "../shared/api/NewPlayer";
-import MouseClick from "../shared/api/MouseClick";
+import MouseCoordinates from "../shared/api/MouseCoordinates";
 import GameState from './services/GameState'
 
 const app = express();
@@ -48,9 +48,13 @@ socketIo.on('connection', function (socket) {
             },1000 / 60);
         });
 
-        socket.on(API.MOUSE_CLICK, function (mouseClick: MouseClick) {
+        socket.on(API.MOUSE_CLICK, function (mouseClick: MouseCoordinates) {
             const bullet = gameState.addBullet(mouseClick);
             socketIo.emit(API.ADD_NEW_BULLET, bullet);
+        });
+
+        socket.on(API.UPDATE_DIRECTION, function (mouseCoordinates: MouseCoordinates) {
+            gameState.updatePlayerDirection(mouseCoordinates)
         });
 
         // socket.on('iteration', function () {

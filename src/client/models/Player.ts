@@ -2,7 +2,7 @@ import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 import {Screen} from "../types/Screen";
 const THREE = require('three');
-const cumin = require("../games/robocop/obrazki/cumin.png");
+const cumin = require("../games/robocop/obrazki/head.png");
 const texture = new THREE.TextureLoader().load(cumin);
 
 export default class Player extends PlayerModel implements IRenderable {
@@ -35,6 +35,7 @@ export default class Player extends PlayerModel implements IRenderable {
     }
 
     renderBody() {
+        this.object.rotation.z = this.direction;
         this.object.position.x = this.x;
         this.object.position.y = this.y;
     }
