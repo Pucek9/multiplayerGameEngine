@@ -5,11 +5,13 @@ import Map from '../../models/Map';
 import Loop from '../../Loop'
 import Menu from "../../models/Menu";
 const THREE = require('three');
+import * as constants from '../../../shared/constants.json';
 
 const io = require('socket.io-client');
 const startImageJPG = require("./obrazki/start.jpg");
 const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
+const API = (<any>constants).API;
 
 let url = process.env.API_URL || 'localhost';
 url = 'http://' + url.toString() + ':3000';
@@ -51,15 +53,14 @@ window.onload = function () {
         let name = prompt("Please enter your name", "Player");
         if (!(name === null || name === '')) {
             const newPlayer = new NewPlayer(data.socketId, name, randColor());
-            socket.emit('CreatePlayer', newPlayer);
+            socket.emit(API.CREATE_PLAYER, newPlayer);
             return newPlayer;
         } else {
             registerUser(data)
         }
     }
 
-    socket.on('HelloPlayer', function (data) {
-        console.log(data);
+    socket.on(API.WELCOME_NEW_PLAYER, function (data) {
         const newPlayer = registerUser(data);
         alert(newPlayer.name + ' joined the game!');
         const loop = new Loop(socket, newPlayer, screen, cursor, menu, map);

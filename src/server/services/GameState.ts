@@ -4,7 +4,7 @@ import StaticRectangleObject from "../models/StaticRectangleObject";
 import Player from "../models/Player";
 import StaticCircularObject from "../models/StaticCircularObject";
 import NewPlayer from "../../shared/api/NewPlayer";
-import NewBullet from "../../shared/api/NewBullet";
+import MouseClick from "../../shared/api/MouseClick";
 
 export default class GameState {
 
@@ -84,16 +84,16 @@ export default class GameState {
         });
     }
 
-    addBullet(newBullet: NewBullet) {
-        const owner = this.getPlayer(newBullet.owner);
+    addBullet(mouseClick: MouseClick) {
+        const owner = this.getPlayer(mouseClick.owner);
         if (owner) {
             const bullet = new Bullet(
                 this.generateId(),
                 owner,
                 owner.x + owner.size / 4,
                 owner.y + owner.size / 4,
-                newBullet.targetX,
-                newBullet.targetY,
+                mouseClick.targetX,
+                mouseClick.targetY,
                 2
             );
             this.bullets.push(bullet);
