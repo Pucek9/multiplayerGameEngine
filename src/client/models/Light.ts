@@ -23,7 +23,7 @@ export default class Light implements IRenderable {
         // this.light.shadowCameraVisible = true;
         // this.screen.scene.add(this.light)
 
-        this.light = new THREE.SpotLight( 0xffffff , 10);
+        this.light = new THREE.SpotLight( 0xffffff , 20, 700);
         this.light.position.set( 100, 1000, 100 );
 
         this.light.castShadow = true;
