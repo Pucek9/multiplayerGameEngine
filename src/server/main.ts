@@ -4,7 +4,7 @@ const io = require('socket.io');
 import * as http from 'http';
 
 import NewPlayer from "../shared/api/NewPlayer";
-import NewBullet from "../shared/api/NewBullet";
+import MouseClick from "../shared/api/MouseClick";
 import GameState from './services/GameState'
 
 const app = express();
@@ -48,8 +48,8 @@ socketIo.on('connection', function (socket) {
             },1000 / 60);
         });
 
-        socket.on(API.MOUSE_CLICK, function (newBullet: NewBullet) {
-            const bullet = gameState.addBullet(newBullet);
+        socket.on(API.MOUSE_CLICK, function (mouseClick: MouseClick) {
+            const bullet = gameState.addBullet(mouseClick);
             socketIo.emit(API.ADD_NEW_BULLET, bullet);
         });
 

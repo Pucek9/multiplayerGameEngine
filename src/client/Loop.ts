@@ -1,4 +1,4 @@
-import NewBullet from "../shared/api/NewBullet";
+import MouseClick from "../shared/api/MouseClick";
 import PlayerModel from "../shared/models/PlayerModel";
 import * as constants from '../shared/constants.json';
 import Player from "./models/Player";
@@ -127,12 +127,12 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             config.menu = true;
             socket.emit(API.ACTIVATE_PLAYER);
         } else {
-            const newBullet = new NewBullet(
+            const mouseClick = new MouseClick(
                 cursor.x,
                 cursor.y,
                 user.id
             );
-            socket.emit(API.MOUSE_CLICK, newBullet);
+            socket.emit(API.MOUSE_CLICK, mouseClick);
         }
     });
 
