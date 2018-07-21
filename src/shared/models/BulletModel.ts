@@ -6,15 +6,10 @@ export default class BulletModel implements ICircle {
     public x: number;
     public y: number;
 
-    constructor(public fromX: number,
-                public fromY: number,
-                public targetX: number,
-                public targetY: number,
-                public owner: any,
-                public size: number = 1,
-                public power: number = 10,
-                protected range: number = 500
-    ) {
+    constructor(public id: number,
+                public size: number = 4) {
+        this.x = 0;
+        this.y = 0;
     }
 
 }

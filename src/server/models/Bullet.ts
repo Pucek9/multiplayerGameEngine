@@ -6,16 +6,24 @@ export default class Bullet extends BulletModel {
     private length: number;
     private trajectory: number;
 
-    constructor(fromX, fromY, targetX, targetY, owner, size?, power?, range?) {
-        super(fromX, fromY, targetX, targetY, owner, size, power, range);
+    constructor(id,
+                public owner: any,
+                public fromX: number,
+                public fromY: number,
+                public targetX: number,
+                public targetY: number,
+                size,
+                public power: number = 10,
+                protected range: number = 500,
+    ) {
+        super(id, size);
         this.length = 10;
-        this.range = 500;
         this.defaultSpeed = 5;
         this.speed = this.defaultSpeed;
     }
 
     decreaseSpeed(value = 1) {
-        if(this.speed > value) {
+        if (this.speed > value) {
             this.speed -= value;
         } else {
             this.speed = 1
@@ -23,7 +31,7 @@ export default class Bullet extends BulletModel {
     }
 
     increaseSpeed(value = 1) {
-        if(this.defaultSpeed > this.speed + value) {
+        if (this.defaultSpeed > this.speed + value) {
             this.speed += value;
         } else {
             this.speed = this.defaultSpeed;

@@ -4,7 +4,7 @@ import StaticRectangleObject from "../models/StaticRectangleObject";
 import Player from "../models/Player";
 import StaticCircularObject from "../models/StaticCircularObject";
 import NewPlayer from "../../shared/api/NewPlayer";
-import NewBullet from "../../shared/api/NewBullet";
+import MouseCoordinates from "../../shared/api/MouseCoordinates";
 
 export default class GameState {
 
@@ -16,10 +16,15 @@ export default class GameState {
             new StaticCircularObject(100, 200, 100, 'red'),
             new StaticCircularObject(1000, 200, 90, 'blue'),
             new StaticCircularObject(500, 400, 30, 'purple'),
-            new StaticRectangleObject(500, 300, 500, 100, 'green', 45),
-            new StaticRectangleObject(230, 170, 200, 80, 'aqua', -30),
-            new StaticRectangleObject(2300, 30, 100, 300, 'yellow'),
+            new StaticRectangleObject(500, 300, 0, 500, 100, 200, 'green', 45),
+            new StaticRectangleObject(230, 170, 0, 200, 80, 80, 'blue', -30),
+            new StaticRectangleObject(-400, -500, 0, 300, 300, 10, 'pink', -70),
+            new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
         );
+    }
+
+    generateId() {
+        return Date.now() + Math.floor(Math.random() * 100)
     }
 
     getPlayer(id) {
@@ -35,7 +40,9 @@ export default class GameState {
     }
 
     getBullets() {
-        return this.bullets;
+        return this.bullets.map(bullet => {
+            return {id: bullet.id, x: bullet.x, y: bullet.y}
+        });
     }
 
     getStaticObjects() {
@@ -77,16 +84,21 @@ export default class GameState {
         });
     }
 
-    addBullet(newBullet: NewBullet) {
-        const owner = this.getPlayer(newBullet.owner);
-        const bullet = new Bullet(
-            owner.x + owner.size / 4,
-            owner.y + owner.size / 4,
-            newBullet.targetX,
-            newBullet.targetY,
-            owner
-        );
-        this.bullets.push(bullet);
+    addBullet(mouseClick: MouseCoordinates) {
+        const owner = this.getPlayer(mouseClick.owner);
+        if (owner) {
+            const bullet = new Bullet(
+                this.generateId(),
+                owner,
+                owner.x + owner.size / 4,
+                owner.y + owner.size / 4,
+                mouseClick.targetX,
+                mouseClick.targetY,
+                2
+            );
+            this.bullets.push(bullet);
+            return {id: bullet.id, size: bullet.size};
+        }
     }
 
     setPlayerActive(id: number) {
@@ -96,6 +108,7 @@ export default class GameState {
     connectPlayer(id: number, newPlayer: NewPlayer) {
         const player = new Player(id, newPlayer.name, newPlayer.color, GameState.rand(1000), GameState.rand(1000), 20);
         this.players.push(player);
+        return player;
     }
 
     disconnectPlayer(disconnected) {
@@ -108,33 +121,43 @@ export default class GameState {
 
     move(id) {
         const player = this.getPlayer(id);
-        if (player.keys.has('W') || player.keys.has('ArrowUp')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
-                player.goUp();
+        if (player) {
+            if (player.keys.has('W') || player.keys.has('ArrowUp')) {
+                if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
+                    player.goDown();
+                }
+            }
+            if (player.keys.has('S') || player.keys.has('ArrowDown')) {
+                if (!this.detectPlayerCollision(player, {x: 0, y: -player.speed})) {
+                    player.goUp();
+                }
+            }
+            if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
+                if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
+                    player.goLeft();
+                }
+            }
+            if (player.keys.has('D') || player.keys.has('ArrowRight')) {
+                if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
+                    player.goRight();
+                }
+            }
+            if (player.keys.has('Shift')) {
+                player.getAura();
+            }
+            else {
+                player.removeAura();
             }
         }
-        if (player.keys.has('S') || player.keys.has('ArrowDown')) {
-            if (!this.detectPlayerCollision(player, {x: 0, y: player.speed})) {
-                player.goDown();
-            }
-        }
-        if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
-            if (!this.detectPlayerCollision(player, {x: -player.speed, y: 0})) {
-                player.goLeft();
-            }
-        }
-        if (player.keys.has('D') || player.keys.has('ArrowRight')) {
-            if (!this.detectPlayerCollision(player, {x: player.speed, y: 0})) {
-                player.goRight();
-            }
-        }
-        if (player.keys.has('Shift')) {
-            player.getAura();
-        }
-        else {
-            player.removeAura();
-        }
+    }
 
+    updatePlayerDirection(mouseCoordinates: MouseCoordinates) {
+        const owner = this.getPlayer(mouseCoordinates.owner);
+        if (owner) {
+            const dx = mouseCoordinates.targetX - owner.x;
+            const dy = mouseCoordinates.targetY - owner.y;
+            owner.direction = Math.atan2(dy, dx) - 80;
+        }
     }
 
     static rand(x) {
