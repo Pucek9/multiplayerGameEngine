@@ -19,38 +19,38 @@ app.get('/', function (req, res) {
 
 socketIo.on('connection', function (socket) {
 
-    console.log('connection:',API.helloPlayer, socket.id);
+    console.log('connection:', socket.id);
     setTimeout(() => {
-        socket.emit(API.helloPlayer, {socketId: socket.id});
+        socket.emit(API.WELCOME_NEW_PLAYER, {socketId: socket.id});
     },1000);
 
-    socket.on(API.createPlayer, function (newPlayer: NewPlayer) {
+    socket.on(API.CREATE_PLAYER, function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);
         player = gameState.connectPlayer(socket.id, newPlayer);
-        socketIo.emit(API.getPlayers, gameState.activePlayers());
-        socketIo.emit(API.addPlayers, gameState.activePlayers());
+        socketIo.emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+        socketIo.emit(API.ADD_PLAYERS, gameState.activePlayers());
 
-        socket.on(API.keys, function (keys: Array<string>) {
+        socket.on(API.UPDATE_KEYS, function (keys: Array<string>) {
             gameState.setKeys(socket.id,keys)
         });
 
-        socket.on(API.activePlayer, function () {
+        socket.on(API.ACTIVATE_PLAYER, function () {
             console.log('Player activated: ', socket.id);
             gameState.setPlayerActive(socket.id);
-            socketIo.emit(API.addPlayer, player);
+            socketIo.emit(API.ADD_NEW_PLAYER, player);
 
             setInterval(() => {
                 gameState.move(socket.id);
                 gameState.updateBullets();
                 gameState.detectBulletsCollision();
-                socketIo.emit(API.getPlayers, gameState.activePlayers());
-                socketIo.emit(API.getBullets, gameState.getBullets());
+                socketIo.emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+                socketIo.emit(API.GET_BULLETS, gameState.getBullets());
             },1000 / 60);
         });
 
-        socket.on(API.pushBullet, function (newBullet: NewBullet) {
+        socket.on(API.MOUSE_CLICK, function (newBullet: NewBullet) {
             const bullet = gameState.addBullet(newBullet);
-            socketIo.emit(API.addBullet, bullet);
+            socketIo.emit(API.ADD_NEW_BULLET, bullet);
         });
 
         // socket.on('iteration', function () {
@@ -61,13 +61,13 @@ socketIo.on('connection', function (socket) {
         //     socketIo.emit('getBullets', gameState.getBullets());
         // });
 
-        socketIo.emit(API.getStaticObjects, gameState.getStaticObjects());
+        socketIo.emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
 
         socket.on('disconnect', function () {
             const disconnected = gameState.getPlayer(socket.id);
             console.log('Disconnected player: ', disconnected);
             gameState.disconnectPlayer(disconnected);
-            socketIo.emit(API.disconnectPlayer, socket.id);
+            socketIo.emit(API.DISCONNECT_PLAYER, socket.id);
         });
 
     });

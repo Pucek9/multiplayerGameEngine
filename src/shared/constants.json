@@ -1,16 +1,16 @@
 {
   "API": {
-    "activePlayer": "activePlayer",
-    "createPlayer": "createPlayer",
-    "keys": "keys",
-    "addPlayer": "addPlayer",
-    "addPlayers": "addPlayers",
-    "addBullet": "addBullet",
-    "pushBullet": "pushBullet",
-    "getPlayers": "getPlayers",
-    "getBullets": "getBullets",
-    "getStaticObjects": "getStaticObjects",
-    "disconnectPlayer": "disconnectPlayer",
-    "helloPlayer": "helloPlayer"
+    "ACTIVATE_PLAYER": "activePlayer",
+    "CREATE_PLAYER": "createPlayer",
+    "UPDATE_KEYS": "keys",
+    "ADD_NEW_PLAYER": "addPlayer",
+    "ADD_PLAYERS": "addPlayers",
+    "ADD_NEW_BULLET": "addBullet",
+    "MOUSE_CLICK": "pushBullet",
+    "GET_PLAYERS_STATE": "getPlayers",
+    "GET_BULLETS": "getBullets",
+    "GET_STATIC_OBJECTS": "getStaticObjects",
+    "DISCONNECT_PLAYER": "disconnectPlayer",
+    "WELCOME_NEW_PLAYER": "helloPlayer"
   }
 }

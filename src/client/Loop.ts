@@ -33,7 +33,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     let light = new Light(screen);
     const playersList = new PlayerList(screen);
 
-    socket.on(API.addPlayer, function (newPlayer) {
+    socket.on(API.ADD_NEW_PLAYER, function (newPlayer) {
         const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, newPlayer.x, newPlayer.y);
         player.init(screen);
         player.setAsEnemy();
@@ -48,7 +48,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         }
     });
 
-    socket.on(API.addPlayers, function (_players: PlayerModel[]) {
+    socket.on(API.ADD_PLAYERS, function (_players: PlayerModel[]) {
         _players
             .filter(_player => _player.active)
             .forEach(_player => {
@@ -62,7 +62,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on(API.addBullet, function (newBullet: Bullet) {
+    socket.on(API.ADD_NEW_BULLET, function (newBullet: Bullet) {
         if (newBullet) {
             const bullet = new Bullet(
                 newBullet.id,
@@ -73,7 +73,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         }
     });
 
-    socket.on(API.getPlayers, function (_players: PlayerModel[]) {
+    socket.on(API.GET_PLAYERS_STATE, function (_players: PlayerModel[]) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
@@ -87,7 +87,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on(API.getBullets, function (_bullets: BulletUpdate[]) {
+    socket.on(API.GET_BULLETS, function (_bullets: BulletUpdate[]) {
         bullets
             .forEach(bullet => {
                 const _bullet = _bullets.find(_bullet => bullet.id === _bullet.id);
@@ -101,8 +101,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
             });
     });
 
-    socket.on(API.getStaticObjects, function (_staticObjects: any[]) {
-        console.log('getStaticObjects');
+    socket.on(API.GET_STATIC_OBJECTS, function (_staticObjects: any[]) {
         staticObjects = _staticObjects;
         staticObjects.forEach(_staticObject => {
             if (_staticObject.type === 'rectangle') {
@@ -114,7 +113,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         staticObjects.forEach(object => object.init(screen))
     });
 
-    socket.on(API.disconnectPlayer, function (id: string) {
+    socket.on(API.DISCONNECT_PLAYER, function (id: string) {
         const disconnected = players.find(player => player.id === id);
         if (disconnected) {
             disconnected.remove(screen);
@@ -126,15 +125,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         e.preventDefault();
         if (config.menu === false) {
             config.menu = true;
-            console.log('aktywujemy go', API.activePlayer)
-            socket.emit(API.activePlayer);
+            socket.emit(API.ACTIVATE_PLAYER);
         } else {
             const newBullet = new NewBullet(
                 cursor.x,
                 cursor.y,
                 user.id
             );
-            socket.emit(API.pushBullet, newBullet);
+            socket.emit(API.MOUSE_CLICK, newBullet);
         }
     });
 
@@ -165,14 +163,14 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
         e.preventDefault();
         if (!e.repeat) {
             keys.add(normalizeKey(e.key));
-            socket.emit(API.keys, [...keys])
+            socket.emit(API.UPDATE_KEYS, [...keys])
         }
     });
 
     window.addEventListener('keyup', function (e) {
         e.preventDefault();
         keys.delete(normalizeKey(e.key));
-        socket.emit(API.keys, [...keys])
+        socket.emit(API.UPDATE_KEYS, [...keys])
     });
 
 

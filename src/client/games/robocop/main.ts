@@ -53,14 +53,14 @@ window.onload = function () {
         let name = prompt("Please enter your name", "Player");
         if (!(name === null || name === '')) {
             const newPlayer = new NewPlayer(data.socketId, name, randColor());
-            socket.emit(API.createPlayer, newPlayer);
+            socket.emit(API.CREATE_PLAYER, newPlayer);
             return newPlayer;
         } else {
             registerUser(data)
         }
     }
 
-    socket.on(API.helloPlayer, function (data) {
+    socket.on(API.WELCOME_NEW_PLAYER, function (data) {
         const newPlayer = registerUser(data);
         alert(newPlayer.name + ' joined the game!');
         const loop = new Loop(socket, newPlayer, screen, cursor, menu, map);
