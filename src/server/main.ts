@@ -7,6 +7,7 @@ import NewPlayer from "../shared/api/NewPlayer";
 import MouseCoordinates from "../shared/api/MouseCoordinates";
 import GameState from './services/GameState'
 
+const port = process.env.OPENSHIFT_NODEJS_PORT  || '3000';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
@@ -78,6 +79,6 @@ socketIo.on('connection', function (socket) {
 
 });
 
-httpServer.listen(3000, function () {
-    console.log('listening on *:3000');
+httpServer.listen(parseInt(port), function () {
+    console.log(`listening on *:${port}`);
 });
