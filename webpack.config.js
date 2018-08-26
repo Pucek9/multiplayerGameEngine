@@ -1,6 +1,6 @@
 const webpack = require('webpack');
-const path = require('path')
-const NodemonPlugin = require( 'nodemon-webpack-plugin' )
+const path = require('path');
+const NodemonPlugin = require( 'nodemon-webpack-plugin' );
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -21,7 +21,8 @@ const config = [{
         filename: '[name].bundle.js',
     },
     devtool: "source-map",
-    mode: 'development',
+
+    mode: process.env.NODE_ENV || 'development',
 
     devServer: {
         port: 8080,
@@ -82,7 +83,7 @@ const config = [{
         libraryTarget: 'commonjs',
     },
 
-    mode: 'development',
+    mode: process.env.NODE_ENV || 'development',
 
     module: {
         rules: [
@@ -104,6 +105,8 @@ const config = [{
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
     },
+
+    devtool: 'cheap-module-source-map',
 
     plugins: [
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),

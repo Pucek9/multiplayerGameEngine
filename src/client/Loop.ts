@@ -31,7 +31,7 @@ function Loop(socket, user, screen, cursor: Cursor, menu, map) {
     const that = this;
     let activePlayer;
     let camera: Camera;
-    let light = new Light(screen);
+    let light: Light = new Light(screen);
     const playersList = new PlayerList(screen);
 
     socket.on(API.ADD_NEW_PLAYER, function (newPlayer) {
