@@ -43,7 +43,7 @@ const config = [{
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
         new webpack.DefinePlugin({
             'process.env': {
-                'IP': JSON.stringify(url),
+                'URL': JSON.stringify(url),
                 'PORT': JSON.stringify(port),
             }
         })
