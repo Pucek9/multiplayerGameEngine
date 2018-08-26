@@ -5,8 +5,8 @@ const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPl
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
-const url = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-const port = process.env.OPENSHIFT_NODEJS_PORT  || '3000';
+const url = process.env.IP || '127.0.0.1';
+const port = process.env.PORT  || '3000';
 const config = [{
 
     context: __dirname + '/src/client/',
@@ -43,8 +43,8 @@ const config = [{
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
         new webpack.DefinePlugin({
             'process.env': {
-                'OPENSHIFT_NODEJS_IP': JSON.stringify(url),
-                'OPENSHIFT_NODEJS_PORT': JSON.stringify(port),
+                'IP': JSON.stringify(url),
+                'PORT': JSON.stringify(port),
             }
         })
     ],

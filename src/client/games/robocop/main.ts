@@ -13,8 +13,8 @@ const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
 const API = (<any>constants).API;
 
-let url = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-let port = process.env.OPENSHIFT_NODEJS_PORT || '3000';
+let url = process.env.IP || '127.0.0.1';
+let port = process.env.PORT || '3000';
 url = `http://${url.toString()}:${port.toString()}`;
 
 const socket = io.connect(url);
