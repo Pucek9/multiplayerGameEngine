@@ -13,7 +13,7 @@ const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
 const API = (<any>constants).API;
 
-let url = process.env.IP || '127.0.0.1';
+let url = process.env.URL || 'localhost';
 let port = process.env.PORT || '3000';
 url = `http://${url.toString()}:${port.toString()}`;
 

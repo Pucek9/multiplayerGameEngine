@@ -5,7 +5,7 @@ const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPl
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
-const url = process.env.IP || '127.0.0.1';
+const url = process.env.URL || 'localhost';
 const port = process.env.PORT  || '3000';
 const config = [{
 
