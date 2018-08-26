@@ -12,7 +12,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server/robocop.bundle.js",
+    "start": "nodemon dist/server/robocop.bundle.js",
     "postinstall": "npm run build",
     "build": "webpack",
     "build:dev": "webpack --watch",
