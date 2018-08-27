@@ -6,7 +6,7 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 const url = process.env.URL || 'localhost';
-const port = '80';
+const port = process.env.PORT || '80';
 const config = [{
 
     context: __dirname + '/src/client/',
