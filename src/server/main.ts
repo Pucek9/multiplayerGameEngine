@@ -7,7 +7,7 @@ import NewPlayer from "../shared/api/NewPlayer";
 import MouseCoordinates from "../shared/api/MouseCoordinates";
 import GameState from './services/GameState'
 
-const port = process.env.PORT  || '3000';
+const port = '80';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);

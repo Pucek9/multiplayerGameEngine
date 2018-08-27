@@ -6,7 +6,7 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 const url = process.env.URL || 'localhost';
-const port = process.env.PORT  || '3000';
+const port = '80';
 const config = [{
 
     context: __dirname + '/src/client/',
@@ -43,8 +43,7 @@ const config = [{
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
         new webpack.DefinePlugin({
             'process.env': {
-                'URL': JSON.stringify(url),
-                'PORT': JSON.stringify(port),
+                'URL': JSON.stringify(url)
             }
         })
     ],
