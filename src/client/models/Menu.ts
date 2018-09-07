@@ -4,10 +4,12 @@ const THREE = require('three');
 
 export default class Menu implements IRenderable {
 
-    public img: HTMLImageElement;
+    public background: HTMLElement;
 
-    constructor(src: string, public screen: Screen) {
-        // this.img = new Image();
+    constructor(id, src: string) {
+        // @ts-ignore
+        this.background = document.getElementById('menu');
+        this.background.style.backgroundImage = `url(${src})`;
         // this.img.src = src;
     }
 

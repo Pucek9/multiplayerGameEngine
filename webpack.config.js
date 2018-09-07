@@ -20,6 +20,7 @@ const config = [{
         // publicPath: "/assets/",
         filename: '[name].bundle.js',
     },
+
     devtool: "source-map",
 
     mode: process.env.NODE_ENV || 'development',

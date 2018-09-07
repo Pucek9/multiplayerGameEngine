@@ -27,7 +27,7 @@ function normalizeKey(key) {
     return (key.length !== 1) ? key : key.toUpperCase()
 }
 
-function Loop(socket, user, screen, cursor: Cursor, menu, map) {
+function Loop(socket, user, screen, cursor: Cursor, map) {
     const that = this;
     let activePlayer;
     let camera: Camera;

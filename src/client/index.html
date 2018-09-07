@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Gra</title>
+    <title>Robo-Game-Engine</title>
 </head>
 <style>
     body {
@@ -9,7 +9,144 @@
         background-color: black;
         cursor: none;
     }
+
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: DodgerBlue;
+        flex-flow: row wrap;
+        width: 100%;
+    }
+
+    .flex-container > div {
+        text-align: center;
+        margin: 10px;
+        padding: 20px;
+        font-size: 30px;
+    }
+
+    .flex-container > .header {
+        flex-grow: 8;
+        width: 95%;
+        height: 100px;
+    }
+
+    .flex-container > .join-game {
+        flex-grow: 3;
+        width: 40%;
+    }
+
+    .flex-container > .add-game {
+        flex-grow: 3;
+        width: 40%;
+    }
+
+    .table-row {
+        margin: 10px;
+        display: flex;
+    }
+
+    #games-list {
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .fixed_header{
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .fixed_header tbody{
+        display:block;
+        width: 100%;
+        overflow: auto;
+        height: 300px;
+    }
+
+    .fixed_header thead tr {
+        display: block;
+    }
+
+    .fixed_header thead {
+        background: black;
+        color:#fff;
+    }
+
+    .fixed_header th, .fixed_header td {
+        padding: 5px;
+        text-align: center;
+        border: 1px solid black;
+        width: 400px;
+    }
+
+    #game-type-input {
+        width: 173px;
+        margin-left: 12px
+    }
 </style>
 <body>
+<div id="menu" class="flex-container">
+    <div class="header">
+        <h1>Robo game engine</h1>
+    </div>
+    <div class="join-game">
+        <div class="nick-row">
+            <label>Nick:
+                <input id="nick" type="text">
+            </label>
+        </div>
+        <div class="table-row">
+            <table id="games-list" class="fixed_header">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Players</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>aaaaaa</td>
+                    <td>free for all</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>vvfasdv</td>
+                    <td>free for all</td>
+                    <td>2</td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="join-row">
+            <input type="button" value="Join">
+        </div>
+    </div>
+    <div class="add-game">
+        <form>
+            <div class="name-row">
+                <label>Name:
+                    <input id="game-name-input" type="text">
+                </label>
+            </div>
+            <div class="type-row">
+                <label>Type:
+                    <select id="game-type-input">
+                        <option value="Free for all">Free for all</option>
+                    </select>
+                </label>
+            </div>
+            <div class="add-game-row">
+                <input id="add-new-game" type="submit" value="Add new game">
+            </div>
+        </form>
+    </div>
+</div>
+
+
 </body>
 </html>
