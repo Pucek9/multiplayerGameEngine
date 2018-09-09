@@ -3,9 +3,12 @@ import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
 import Loop from '../../Loop'
-import Store from "../../Store";
-import Menu from "../../models/Menu";
+import reducer from '../../reducer';
+import Menu from '../../models/Menu';
 import * as constants from '../../../shared/constants.json';
+
+import {createStore} from 'redux'
+import {addGame} from '../../actions'
 
 const THREE = require('three');
 const io = require('socket.io-client');
@@ -32,7 +35,7 @@ function prepareScreen() {
     document.body.appendChild(renderer.domElement);
 
     return {
-        camera : camera, scene: scene, renderer: renderer
+        camera: camera, scene: scene, renderer: renderer
     };
 }
 
@@ -57,9 +60,46 @@ function registerUser(data) {
     }
 }
 
+const store = createStore(reducer);
+render();
+
+function render() {
+    const table = document.getElementById('games-list').getElementsByTagName('tbody')[0];
+    console.log(store.getState());
+    table.innerHTML = '';
+    const gamesList = store.getState().gamesList;
+    gamesList.forEach(game => {
+        let name = document.createElement('td');
+        name.appendChild(document.createTextNode(game.name));
+        let type = document.createElement('td');
+        type.appendChild(document.createTextNode(game.type));
+        let count = document.createElement('td');
+        count.appendChild(document.createTextNode(game.count));
+        let row = document.createElement('tr');
+        // @ts-ignore
+        row.append(name, type, count);
+        // @ts-ignore
+        table.append(row);
+    });
+
+}
+
+
+
+document.getElementById('add-new-game')
+    .addEventListener('click', function () {
+        // @ts-ignore
+        let name = document.getElementById('game-name-input').value;
+        // @ts-ignore
+        let type = document.getElementById('game-type-input').value;
+        store.dispatch(addGame(name, type, 0));
+    });
+
+
 window.onload = function () {
+    var unsubscribeRender = store.subscribe(render);
+
     console.log('Connected with: ' + url);
-    const store = new Store({},{})
 
     socket.on(API.WELCOME_NEW_PLAYER, function (data) {
         const newPlayer = registerUser(data);
