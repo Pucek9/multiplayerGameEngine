@@ -3,18 +3,20 @@ declare var gameTypeInput: HTMLSelectElement;
 declare var addNewGameButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
+declare var joinGameButton: HTMLButtonElement;
 
 import NewPlayer from "../../../shared/api/NewPlayer";
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
 import Loop from '../../Loop';
-import {gamesList, joinGame} from '../../reducers';
+import {newGame, joinGame} from '../../reducers';
 import Menu from '../../models/Menu';
 import * as constants from '../../../shared/constants.json';
 
+import devToolsEnhancer from 'remote-redux-devtools';
 import {createStore, combineReducers} from 'redux';
-import {addGame, setNick} from '../../actions';
+import {addGame, chooseGame, setNick, setGameName, setGameType} from '../../actions';
 
 const THREE = require('three');
 const io = require('socket.io-client');
@@ -23,9 +25,9 @@ const mapJPG = require("./obrazki/test.jpg");
 const cursorPNG = require("./obrazki/celownik.png");
 const API = (<any>constants).API;
 
+let unsubscribeRender;
 let url = process.env.URL || 'localhost';
 url = `http://${url.toString()}`;
-
 const socket = io.connect(url);
 
 function prepareScreen() {
@@ -66,15 +68,15 @@ function registerUser(data) {
     }
 }
 
-const app = combineReducers({gamesList, joinGame})
-const store = createStore(app);
+const app = combineReducers({newGame, joinGame});
+const store = createStore(app, devToolsEnhancer());
 render();
 
 function render() {
-    console.log('render',store.getState());
+    console.log('render', store.getState());
     gamesListTable.innerHTML = '';
     const state = store.getState();
-    state.gamesList.forEach(game => {
+    state.newGame.list.forEach(game => {
         let name = document.createElement('td');
         name.appendChild(document.createTextNode(game.name));
         let type = document.createElement('td');
@@ -82,13 +84,19 @@ function render() {
         let count = document.createElement('td');
         count.appendChild(document.createTextNode(game.count));
         let row = document.createElement('tr');
+        row.addEventListener("click", () => {
+            store.dispatch(chooseGame(game.name))
+        });
+        if (state.joinGame.chosenGame === game.name) {
+            row.style.backgroundColor = 'grey';
+        }
         // @ts-ignore
         row.append(name, type, count);
         // @ts-ignore
-        // table.append(row);
         gamesListTable.append(row);
     });
-
+    joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null;
+    addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null;
 }
 
 addNewGameButton.addEventListener('click', function () {
@@ -98,12 +106,20 @@ addNewGameButton.addEventListener('click', function () {
     gameNameInput.value = '';
 });
 
+gameNameInput.addEventListener('keyup', function () {
+    store.dispatch(setGameName(gameNameInput.value))
+});
+
+gameTypeInput.addEventListener('change', function () {
+    store.dispatch(setGameType(gameTypeInput.value))
+});
+
 nickInput.addEventListener('keyup', function () {
     store.dispatch(setNick(nickInput.value))
 });
 
 window.onload = function () {
-    const unsubscribeRender = store.subscribe(render);
+    unsubscribeRender = store.subscribe(render);
 
     // console.log('Connected with: ' + url);
     //

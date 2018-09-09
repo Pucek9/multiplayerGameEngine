@@ -51,7 +51,7 @@
         display: flex;
     }
 
-    #games-list {
+    #gamesListTable {
         text-align: center;
         width: 100%;
         border-collapse: collapse;
@@ -85,7 +85,7 @@
         width: 400px;
     }
 
-    #game-type-input {
+    #gameTypeInput {
         width: 173px;
         margin-left: 12px
     }
@@ -111,23 +111,11 @@
                 </tr>
                 </thead>
                 <tbody id="gamesListTable">
-                <tr>
-                    <td>aaaaaa</td>
-                    <td>free for all</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>vvfasdv</td>
-                    <td>free for all</td>
-                    <td>2</td>
-                </tr>
-
                 </tbody>
-
             </table>
         </div>
         <div class="join-row">
-            <input type="button" value="Join">
+            <input id="joinGameButton" type="button" value="Join">
         </div>
     </div>
     <div class="add-game">
@@ -141,6 +129,8 @@
                 <label>Type:
                     <select id="gameTypeInput">
                         <option value="Free for all">Free for all</option>
+                        <option value="Team fight">Team fight</option>
+                        <option value="Capture the flag">Capture the flag</option>
                     </select>
                 </label>
             </div>

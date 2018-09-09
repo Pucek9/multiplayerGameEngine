@@ -1,5 +1,7 @@
 export const gamesListActions = {
     ADD_GAME: 'ADD_GAME',
+    SET_GAME_NAME: 'SET_GAME_NAME',
+    SET_GAME_TYPE: 'SET_GAME_TYPE',
 };
 
 export const joinGameActions = {
@@ -11,10 +13,14 @@ export const addGame = (name, type, count) => {
     return {
         type: gamesListActions.ADD_GAME,
         payload: (state) => {
-            return [
+            return {
                 ...state,
-                {name, type, count},
-            ];
+                list: [
+                    ...state.list,
+                    {name, type, count},
+                ],
+                name: '',
+            };
         }
     };
 };
@@ -26,6 +32,30 @@ export const setNick = (nick) => {
             return {
                 ...state,
                 nick,
+            }
+        }
+    };
+};
+
+export const setGameName = (name) => {
+    return {
+        type: gamesListActions.SET_GAME_NAME,
+        payload: (state) => {
+            return {
+                ...state,
+                name,
+            }
+        }
+    };
+};
+
+export const setGameType = (type) => {
+    return {
+        type: gamesListActions.SET_GAME_TYPE,
+        payload: (state) => {
+            return {
+                ...state,
+                type,
             }
         }
     };

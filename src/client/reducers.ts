@@ -1,6 +1,6 @@
 import {gamesListActions, joinGameActions} from "./actions";
 
-export function gamesList(state = [], action) {
+export function newGame(state = { name: '', type: 'Free for all', list: []}, action) {
     if (Object.keys(gamesListActions).includes(action.type) && action.payload) {
         return action.payload(state);
     }

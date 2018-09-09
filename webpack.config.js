@@ -4,7 +4,8 @@ const NodemonPlugin = require( 'nodemon-webpack-plugin' );
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const isProd = process.env.NODE_ENV === 'production';
+const environment = process.env.NODE_ENV || 'development';
+const isProd = environment === 'production';
 const url = process.env.URL || 'localhost';
 const port = process.env.PORT || '80';
 const config = [{
@@ -23,7 +24,7 @@ const config = [{
 
     devtool: "source-map",
 
-    mode: process.env.NODE_ENV || 'development',
+    mode: environment,
 
     devServer: {
         port: 8080,
@@ -44,7 +45,8 @@ const config = [{
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
         new webpack.DefinePlugin({
             'process.env': {
-                'URL': JSON.stringify(url)
+                'URL': JSON.stringify(url),
+                'NODE_ENV': JSON.stringify(environment)
             }
         })
     ],
@@ -83,7 +85,7 @@ const config = [{
         libraryTarget: 'commonjs',
     },
 
-    mode: process.env.NODE_ENV || 'development',
+    mode: environment,
 
     module: {
         rules: [
@@ -111,7 +113,6 @@ const config = [{
     plugins: [
         new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
         new CheckerPlugin(),
-        // new NodemonPlugin({watch: path.resolve('./dist/server/'),})
     ],
 
 }];
