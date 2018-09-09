@@ -1,14 +1,20 @@
+declare var gameNameInput: HTMLInputElement;
+declare var gameTypeInput: HTMLSelectElement;
+declare var addNewGameButton: HTMLButtonElement;
+declare var gamesListTable: HTMLTableDataCellElement;
+declare var nickInput: HTMLInputElement;
+
 import NewPlayer from "../../../shared/api/NewPlayer";
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
-import Loop from '../../Loop'
-import reducer from '../../reducer';
+import Loop from '../../Loop';
+import {gamesList, joinGame} from '../../reducers';
 import Menu from '../../models/Menu';
 import * as constants from '../../../shared/constants.json';
 
-import {createStore} from 'redux'
-import {addGame} from '../../actions'
+import {createStore, combineReducers} from 'redux';
+import {addGame, setNick} from '../../actions';
 
 const THREE = require('three');
 const io = require('socket.io-client');
@@ -60,15 +66,15 @@ function registerUser(data) {
     }
 }
 
-const store = createStore(reducer);
+const app = combineReducers({gamesList, joinGame})
+const store = createStore(app);
 render();
 
 function render() {
-    const table = document.getElementById('games-list').getElementsByTagName('tbody')[0];
-    console.log(store.getState());
-    table.innerHTML = '';
-    const gamesList = store.getState().gamesList;
-    gamesList.forEach(game => {
+    console.log('render',store.getState());
+    gamesListTable.innerHTML = '';
+    const state = store.getState();
+    state.gamesList.forEach(game => {
         let name = document.createElement('td');
         name.appendChild(document.createTextNode(game.name));
         let type = document.createElement('td');
@@ -79,36 +85,36 @@ function render() {
         // @ts-ignore
         row.append(name, type, count);
         // @ts-ignore
-        table.append(row);
+        // table.append(row);
+        gamesListTable.append(row);
     });
 
 }
 
+addNewGameButton.addEventListener('click', function () {
+    let name = gameNameInput.value;
+    let type = gameTypeInput.value;
+    store.dispatch(addGame(name, type, 0));
+    gameNameInput.value = '';
+});
 
-
-document.getElementById('add-new-game')
-    .addEventListener('click', function () {
-        // @ts-ignore
-        let name = document.getElementById('game-name-input').value;
-        // @ts-ignore
-        let type = document.getElementById('game-type-input').value;
-        store.dispatch(addGame(name, type, 0));
-    });
-
+nickInput.addEventListener('keyup', function () {
+    store.dispatch(setNick(nickInput.value))
+});
 
 window.onload = function () {
-    var unsubscribeRender = store.subscribe(render);
+    const unsubscribeRender = store.subscribe(render);
 
-    console.log('Connected with: ' + url);
-
-    socket.on(API.WELCOME_NEW_PLAYER, function (data) {
-        const newPlayer = registerUser(data);
-        alert(newPlayer.name + ' joined the game!');
-        const screen = prepareScreen();
-        const map = new Map(mapJPG);
-        const cursor = new Cursor(cursorPNG);
-        const loop = new Loop(socket, newPlayer, screen, cursor, map);
-        loop.run();
-    });
+    // console.log('Connected with: ' + url);
+    //
+    // socket.on(API.WELCOME_NEW_PLAYER, function (data) {
+    //     const newPlayer = registerUser(data);
+    //     alert(newPlayer.name + ' joined the game!');
+    //     const screen = prepareScreen();
+    //     const map = new Map(mapJPG);
+    //     const cursor = new Cursor(cursorPNG);
+    //     const loop = new Loop(socket, newPlayer, screen, cursor, map);
+    //     loop.run();
+    // });
 
 };

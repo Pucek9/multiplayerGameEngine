@@ -8,6 +8,9 @@
     body {
         margin: 0;
         background-color: black;
+    }
+
+    canvas {
         cursor: none;
     }
 
@@ -54,13 +57,13 @@
         border-collapse: collapse;
     }
 
-    .fixed_header{
+    .fixed_header {
         table-layout: fixed;
         border-collapse: collapse;
     }
 
-    .fixed_header tbody{
-        display:block;
+    .fixed_header tbody {
+        display: block;
         width: 100%;
         overflow: auto;
         height: 300px;
@@ -72,7 +75,7 @@
 
     .fixed_header thead {
         background: black;
-        color:#fff;
+        color: #fff;
     }
 
     .fixed_header th, .fixed_header td {
@@ -95,11 +98,11 @@
     <div class="join-game">
         <div class="nick-row">
             <label>Nick:
-                <input id="nick" type="text">
+                <input id="nickInput" type="text">
             </label>
         </div>
         <div class="table-row">
-            <table id="games-list" class="fixed_header">
+            <table class="fixed_header">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -107,7 +110,7 @@
                     <th>Players</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="gamesListTable">
                 <tr>
                     <td>aaaaaa</td>
                     <td>free for all</td>
@@ -131,18 +134,18 @@
         <form>
             <div class="name-row">
                 <label>Name:
-                    <input id="game-name-input" type="text">
+                    <input id="gameNameInput" type="text">
                 </label>
             </div>
             <div class="type-row">
                 <label>Type:
-                    <select id="game-type-input">
+                    <select id="gameTypeInput">
                         <option value="Free for all">Free for all</option>
                     </select>
                 </label>
             </div>
             <div class="add-game-row">
-                <input id="add-new-game" type="submit" value="Add new game">
+                <input id="addNewGameButton" type="button" value="Add new game">
             </div>
         </form>
     </div>
