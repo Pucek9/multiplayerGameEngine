@@ -5,18 +5,18 @@ declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
 
+import {createStore, combineReducers} from 'redux';
+import devToolsEnhancer from 'remote-redux-devtools';
+import {addGame, chooseGame, setNick, setGameName, setGameType} from '../../actions';
+import {newGame, joinGame} from '../../reducers';
+
 import NewPlayer from "../../../shared/api/NewPlayer";
 import Player from "../../../server/models/Player";
 import Cursor from '../../models/Cursor';
 import Map from '../../models/Map';
 import Loop from '../../Loop';
-import {newGame, joinGame} from '../../reducers';
 import Menu from '../../models/Menu';
 import * as constants from '../../../shared/constants.json';
-
-import devToolsEnhancer from 'remote-redux-devtools';
-import {createStore, combineReducers} from 'redux';
-import {addGame, chooseGame, setNick, setGameName, setGameType} from '../../actions';
 
 const THREE = require('three');
 const io = require('socket.io-client');
