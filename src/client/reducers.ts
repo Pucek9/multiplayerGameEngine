@@ -7,7 +7,7 @@ export function newGame(state = { name: '', type: 'Free for all', list: []}, act
     return state;
 }
 
-export function joinGame(state = { nick: '', chosenGame: null}, action) {
+export function joinGame(state = { nick: '', id: null, chosenGame: null}, action) {
     if (Object.keys(joinGameActions).includes(action.type) &&action.payload) {
         return action.payload(state);
     }

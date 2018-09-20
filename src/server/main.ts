@@ -13,6 +13,7 @@ const httpServer = http.createServer(app);
 const socketIo = io.listen(httpServer);
 const gameState = new GameState();
 let player;
+const games = [];
 
 app.use(express.static('dist/client'));
 
@@ -20,8 +21,15 @@ socketIo.on('connection', function (socket) {
 
     console.log('connection:', socket.id);
     setTimeout(() => {
+        socketIo.emit(API.GET_GAMES_LIST, games);
         socket.emit(API.WELCOME_NEW_PLAYER, {socketId: socket.id});
     },1000);
+
+    socket.on(API.CREATE_GAME, function (game) {
+        socket.join(game.name);
+        games.push(game)
+        socketIo.emit(API.GET_GAMES_LIST, games);
+    });
 
     socket.on(API.CREATE_PLAYER, function (newPlayer: NewPlayer) {
         console.log('Added new player: ', newPlayer);

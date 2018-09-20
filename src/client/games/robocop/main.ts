@@ -7,7 +7,7 @@ declare var joinGameButton: HTMLButtonElement;
 
 import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-import {addGame, chooseGame, setNick, setGameName, setGameType} from '../../actions';
+import {addGame, chooseGame, setNick, setGameName, setGameType, clearGamesList, setId} from '../../actions';
 import {newGame, joinGame} from '../../reducers';
 import '../../style.scss';
 
@@ -56,18 +56,18 @@ function randColor() {
     return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
-function registerUser(data) {
-    const menu = new Menu('menu-background', startImageJPG);
-
-    let name = prompt("Please enter your name", "Player");
-    if (!(name === null || name === '')) {
-        const newPlayer = new NewPlayer(data.socketId, name, randColor());
-        socket.emit(API.CREATE_PLAYER, newPlayer);
-        return newPlayer;
-    } else {
-        registerUser(data)
-    }
-}
+// function registerUser(data) {
+//     const menu = new Menu('menu-background', startImageJPG);
+//
+//     let name = prompt("Please enter your name", "Player");
+//     if (!(name === null || name === '')) {
+//         const newPlayer = new NewPlayer(data.socketId, name, randColor());
+//         socket.emit(API.CREATE_PLAYER, newPlayer);
+//         return newPlayer;
+//     } else {
+//         registerUser(data)
+//     }
+// }
 
 const app = combineReducers({newGame, joinGame});
 const store = createStore(app, devToolsEnhancer());
@@ -96,15 +96,29 @@ function render() {
         // @ts-ignore
         gamesListTable.append(row);
     });
-    joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null;
+    joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null || state.joinGame.id === null;
     addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null;
 }
 
 addNewGameButton.addEventListener('click', function () {
     let name = gameNameInput.value;
     let type = gameTypeInput.value;
-    store.dispatch(addGame(name, type, 0));
+    socket.emit(API.CREATE_GAME, {name, type});
     gameNameInput.value = '';
+});
+
+joinGameButton.addEventListener('click', function () {
+    const userState = store.getState().joinGame;
+    console.log(userState)
+    const newPlayer = new NewPlayer(userState.id, userState.nick, randColor());
+    socket.emit(API.CREATE_PLAYER, newPlayer);
+    alert(newPlayer.name + ' joined the game!');
+    const screen = prepareScreen();
+    const map = new Map(mapJPG);
+    const cursor = new Cursor(cursorPNG);
+    const loop = new Loop(socket, newPlayer, screen, cursor, map);
+    loop.run();
+
 });
 
 gameNameInput.addEventListener('keyup', function () {
@@ -119,9 +133,20 @@ nickInput.addEventListener('keyup', function () {
     store.dispatch(setNick(nickInput.value))
 });
 
+
 window.onload = function () {
     unsubscribeRender = store.subscribe(render);
 
+    socket.on(API.WELCOME_NEW_PLAYER, function (data) {
+        store.dispatch(setId(data.socketId))
+    })
+
+    socket.on(API.GET_GAMES_LIST, function (data) {
+        console.log('GET_GAMES_LIST', data)
+        store.dispatch(clearGamesList());
+        data.forEach(game => store.dispatch(addGame(game.name, game.type, game.count)));
+
+    })
     // console.log('Connected with: ' + url);
     //
     // socket.on(API.WELCOME_NEW_PLAYER, function (data) {

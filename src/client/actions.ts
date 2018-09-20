@@ -2,6 +2,7 @@ export const gamesListActions = {
     ADD_GAME: 'ADD_GAME',
     SET_GAME_NAME: 'SET_GAME_NAME',
     SET_GAME_TYPE: 'SET_GAME_TYPE',
+    CLEAR_GAMES_LIST: 'CLEAR_GAMES_LIST',
 };
 
 export const joinGameActions = {
@@ -32,6 +33,18 @@ export const setNick = (nick) => {
             return {
                 ...state,
                 nick,
+            }
+        }
+    };
+};
+
+export const setId = (id) => {
+    return {
+        type: joinGameActions.SET_NICK,
+        payload: (state) => {
+            return {
+                ...state,
+                id,
             }
         }
     };
@@ -69,6 +82,18 @@ export const chooseGame = (chosenGame) => {
                 ...state,
                 chosenGame,
             }
+        }
+    };
+};
+
+export const clearGamesList = () => {
+    return {
+        type: gamesListActions.CLEAR_GAMES_LIST,
+        payload: (state) => {
+            return {
+                ...state,
+                list: [],
+            };
         }
     };
 };

@@ -12,6 +12,8 @@
     "GET_STATIC_OBJECTS": "getStaticObjects",
     "DISCONNECT_PLAYER": "disconnectPlayer",
     "WELCOME_NEW_PLAYER": "helloPlayer",
-    "UPDATE_DIRECTION": "updateDirection"
+    "UPDATE_DIRECTION": "updateDirection",
+    "CREATE_GAME": "createGame",
+    "GET_GAMES_LIST": "getGamesList"
   }
 }
