@@ -9,6 +9,7 @@ import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
 import {addGame, chooseGame, setNick, setGameName, setGameType} from '../../actions';
 import {newGame, joinGame} from '../../reducers';
+import '../../style.scss';
 
 import NewPlayer from "../../../shared/api/NewPlayer";
 import Player from "../../../server/models/Player";
