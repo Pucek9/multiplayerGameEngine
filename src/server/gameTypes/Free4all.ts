@@ -1,26 +1,19 @@
-import CollisionDetector from "./CollisionDetector";
+import CollisionDetector from "../services/CollisionDetector";
 import Bullet from "../models/Bullet";
-import StaticRectangleObject from "../models/StaticRectangleObject";
 import Player from "../models/Player";
-import StaticCircularObject from "../models/StaticCircularObject";
 import NewPlayer from "../../shared/api/NewPlayer";
 import MouseCoordinates from "../../shared/api/MouseCoordinates";
+import GameMap from "../maps/GameMap";
+import GameType from "./GameType";
 
-export default class GameState {
+export default class Free4all implements GameType{
 
-    constructor(private staticObjects: any[] = [],
-                private players: Player[] = [],
+    public type: string = 'Free for all';
+
+    constructor(public name: string,
+                private map: GameMap,
+                public players: Player[] = [],
                 private bullets: Bullet[] = []) {
-
-        this.staticObjects.push(
-            new StaticCircularObject(100, 200, 100, 'red'),
-            new StaticCircularObject(1000, 200, 90, 'blue'),
-            new StaticCircularObject(500, 400, 30, 'purple'),
-            new StaticRectangleObject(500, 300, 0, 500, 100, 200, 'green', 45),
-            new StaticRectangleObject(230, 170, 0, 200, 80, 80, 'blue', -30),
-            new StaticRectangleObject(-400, -500, 0, 300, 300, 10, 'pink', -70),
-            new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
-        );
     }
 
     generateId() {
@@ -39,14 +32,22 @@ export default class GameState {
         return this.players;
     }
 
+    isPlayerInThisGame(id: number) {
+        return this.players.find(player => player.id === id);
+    }
+
     getBullets() {
         return this.bullets.map(bullet => {
             return {id: bullet.id, x: bullet.x, y: bullet.y}
         });
     }
 
+    getMapName() {
+        return this.map.getMapName();
+    }
+
     getStaticObjects() {
-        return this.staticObjects;
+        return this.map.getStaticObjects()
     }
 
     updateBullets() {
@@ -58,15 +59,15 @@ export default class GameState {
         });
     }
 
-    detectPlayerCollision(player, direction: { x: number, y: number }) {
-        return [...this.staticObjects, ...this.players].some(object => {
+    private detectPlayerCollision(player, direction: { x: number, y: number }) {
+        return [...this.getStaticObjects(), ...this.players].some(object => {
             return player !== object && CollisionDetector.detectCollision(player, object, direction);
         });
     }
 
     detectBulletsCollision() {
         this.bullets.forEach((bullet, i) => {
-            [...this.staticObjects, ...this.players].forEach(object => {
+            [...this.getStaticObjects(), ...this.players].forEach(object => {
                 if (bullet.owner !== object) {
                     if (CollisionDetector.detectCollision(object, bullet)) {
                         object.hitFromBullet(bullet);
@@ -106,7 +107,7 @@ export default class GameState {
     }
 
     connectPlayer(id: number, newPlayer: NewPlayer) {
-        const player = new Player(id, newPlayer.name, newPlayer.color, GameState.rand(1000), GameState.rand(1000), 20);
+        const player = new Player(id, newPlayer.name, newPlayer.color, Free4all.rand(1000), Free4all.rand(1000), 20);
         this.players.push(player);
         return player;
     }

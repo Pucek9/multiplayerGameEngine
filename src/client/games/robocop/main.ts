@@ -1,5 +1,8 @@
+import NewGame from "../../../shared/api/NewGame";
+
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
+declare var gameMapInput: HTMLSelectElement;
 declare var addNewGameButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
@@ -7,7 +10,7 @@ declare var joinGameButton: HTMLButtonElement;
 
 import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-import {addGame, chooseGame, setNick, setGameName, setGameType, clearGamesList, setId} from '../../actions';
+import {addGame, chooseGame, setNick, setGameName, setGameType, clearGamesList, setId, setGameMap} from '../../actions';
 import {newGame, joinGame} from '../../reducers';
 import '../../style.scss';
 
@@ -101,16 +104,17 @@ function render() {
 }
 
 addNewGameButton.addEventListener('click', function () {
-    let name = gameNameInput.value;
-    let type = gameTypeInput.value;
-    socket.emit(API.CREATE_GAME, {name, type});
+    const name = gameNameInput.value;
+    const type = gameTypeInput.value;
+    const map = gameMapInput.value;
+    const newGame = new NewGame(name, type, map)
+    socket.emit(API.CREATE_GAME, newGame);
     gameNameInput.value = '';
 });
 
 joinGameButton.addEventListener('click', function () {
     const userState = store.getState().joinGame;
-    console.log(userState)
-    const newPlayer = new NewPlayer(userState.id, userState.nick, randColor());
+    const newPlayer = new NewPlayer(userState.id, userState.nick, randColor(), userState.chosenGame);
     socket.emit(API.CREATE_PLAYER, newPlayer);
     alert(newPlayer.name + ' joined the game!');
     const screen = prepareScreen();
@@ -129,6 +133,10 @@ gameTypeInput.addEventListener('change', function () {
     store.dispatch(setGameType(gameTypeInput.value))
 });
 
+gameMapInput.addEventListener('change', function () {
+    store.dispatch(setGameMap(gameMapInput.value))
+});
+
 nickInput.addEventListener('keyup', function () {
     store.dispatch(setNick(nickInput.value))
 });
@@ -144,7 +152,7 @@ window.onload = function () {
     socket.on(API.GET_GAMES_LIST, function (data) {
         console.log('GET_GAMES_LIST', data)
         store.dispatch(clearGamesList());
-        data.forEach(game => store.dispatch(addGame(game.name, game.type, game.count)));
+        data.forEach(game => store.dispatch(addGame(game.name, game.type, game.map, game.count)));
 
     })
     // console.log('Connected with: ' + url);

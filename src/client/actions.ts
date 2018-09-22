@@ -2,6 +2,7 @@ export const gamesListActions = {
     ADD_GAME: 'ADD_GAME',
     SET_GAME_NAME: 'SET_GAME_NAME',
     SET_GAME_TYPE: 'SET_GAME_TYPE',
+    SET_GAME_MAP: 'SET_GAME_MAP',
     CLEAR_GAMES_LIST: 'CLEAR_GAMES_LIST',
 };
 
@@ -10,7 +11,7 @@ export const joinGameActions = {
     CHOOSE_GAME: 'CHOOSE_GAME',
 };
 
-export const addGame = (name, type, count) => {
+export const addGame = (name, type, map, count) => {
     return {
         type: gamesListActions.ADD_GAME,
         payload: (state) => {
@@ -18,7 +19,7 @@ export const addGame = (name, type, count) => {
                 ...state,
                 list: [
                     ...state.list,
-                    {name, type, count},
+                    {name, type, map, count},
                 ],
                 name: '',
             };
@@ -69,6 +70,18 @@ export const setGameType = (type) => {
             return {
                 ...state,
                 type,
+            }
+        }
+    };
+};
+
+export const setGameMap = (map) => {
+    return {
+        type: gamesListActions.SET_GAME_MAP,
+        payload: (state) => {
+            return {
+                ...state,
+                map,
             }
         }
     };
