@@ -59,19 +59,6 @@ function randColor() {
     return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
-// function registerUser(data) {
-//     const menu = new Menu('menu-background', startImageJPG);
-//
-//     let name = prompt("Please enter your name", "Player");
-//     if (!(name === null || name === '')) {
-//         const newPlayer = new NewPlayer(data.socketId, name, randColor());
-//         socket.emit(API.CREATE_PLAYER, newPlayer);
-//         return newPlayer;
-//     } else {
-//         registerUser(data)
-//     }
-// }
-
 const app = combineReducers({newGame, joinGame});
 const store = createStore(app, devToolsEnhancer());
 render();
@@ -157,16 +144,5 @@ window.onload = function () {
         data.forEach(game => store.dispatch(addGame(game.name, game.type, game.map, game.count)));
 
     })
-    // console.log('Connected with: ' + url);
-    //
-    // socket.on(API.WELCOME_NEW_PLAYER, function (data) {
-    //     const newPlayer = registerUser(data);
-    //     alert(newPlayer.name + ' joined the game!');
-    //     const screen = prepareScreen();
-    //     const map = new Map(mapJPG);
-    //     const cursor = new Cursor(cursorPNG);
-    //     const loop = new Loop(socket, newPlayer, screen, cursor, map);
-    //     loop.run();
-    // });
 
 };

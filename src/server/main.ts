@@ -39,20 +39,16 @@ socketIo.on('connection', function (socket) {
                 player = gameState.connectPlayer(socket.id, newPlayer);
                 socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
                 socketIo.to(newPlayer.gameName).emit(API.ADD_PLAYERS, gameState.activePlayers());
-                // }
+                socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
+
                 socket.on(API.UPDATE_KEYS, function (keys: Array<string>) {
-                    // const gameState = gamesStory.getGameByPlayer(socket.id);
-                    // if(gameState) {
                     gameState.setKeys(socket.id, keys)
-                    // }
                 });
 
                 socket.on(API.ACTIVATE_PLAYER, function () {
                         console.log('Player activated: ', socket.id);
-                        // const gameState = gamesStory.getGameByPlayer(socket.id);
-                        // if (gameState) {
                         gameState.setPlayerActive(socket.id);
-                    socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_PLAYER, player);
+                        socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_PLAYER, player);
 
                         setInterval(() => {
                             gameState.move(socket.id);
@@ -72,14 +68,6 @@ socketIo.on('connection', function (socket) {
                 socket.on(API.UPDATE_DIRECTION, function (mouseCoordinates: MouseCoordinates) {
                     gameState.updatePlayerDirection(mouseCoordinates)
                 });
-
-                // socket.on('iteration', function () {
-                //     gameState.move(socket.id);
-                //     gameState.updateBullets();
-                //     gameState.detectBulletsCollision();
-                //     socketIo.emit('getPlayers', gameState.activePlayers());
-                //     socketIo.emit('getBullets', gameState.getBullets());
-                // });
 
                 socket.on('disconnect', function () {
                     const disconnected = gameState.getPlayer(socket.id);
