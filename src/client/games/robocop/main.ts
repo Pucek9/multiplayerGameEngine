@@ -85,6 +85,8 @@ function render() {
         name.appendChild(document.createTextNode(game.name));
         let type = document.createElement('td');
         type.appendChild(document.createTextNode(game.type));
+        let map = document.createElement('td');
+        map.appendChild(document.createTextNode(game.map));
         let count = document.createElement('td');
         count.appendChild(document.createTextNode(game.count));
         let row = document.createElement('tr');
@@ -95,7 +97,7 @@ function render() {
             row.style.backgroundColor = 'grey';
         }
         // @ts-ignore
-        row.append(name, type, count);
+        row.append(name, type, map, count);
         // @ts-ignore
         gamesListTable.append(row);
     });
@@ -147,7 +149,7 @@ window.onload = function () {
 
     socket.on(API.WELCOME_NEW_PLAYER, function (data) {
         store.dispatch(setId(data.socketId))
-    })
+    });
 
     socket.on(API.GET_GAMES_LIST, function (data) {
         console.log('GET_GAMES_LIST', data)
