@@ -89,7 +89,7 @@ function render() {
         gamesListTable.append(row);
     });
     joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null || state.joinGame.id === null;
-    addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null;
+    addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
 }
 
 addNewGameButton.addEventListener('click', function () {
