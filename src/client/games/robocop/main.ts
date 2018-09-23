@@ -7,6 +7,7 @@ declare var addNewGameButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
+declare var menu: HTMLDivElement;
 
 import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
@@ -106,6 +107,7 @@ joinGameButton.addEventListener('click', function () {
     const newPlayer = new NewPlayer(userState.id, userState.nick, randColor(), userState.chosenGame);
     socket.emit(API.CREATE_PLAYER, newPlayer);
     alert(newPlayer.name + ' joined the game!');
+    menu.style.display = 'none';
     const screen = prepareScreen();
     const map = new Map(mapJPG);
     const cursor = new Cursor(cursorPNG);
