@@ -27,10 +27,7 @@ socketIo.on('connection', function (socket) {
     }, 1000);
 
     socket.on(API.CREATE_GAME, function (newGame: NewGame) {
-        console.log(newGame);
-        socket.join(newGame.name);
         gamesStory.createGame(newGame.name, newGame.type, newGame.map);
-
         socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
     });
 
@@ -38,9 +35,10 @@ socketIo.on('connection', function (socket) {
             console.log('Added new player: ', newPlayer);
             const gameState = gamesStory.getGame(newPlayer.gameName);
             if (gameState) {
-                player = gamesStory.getGame(newPlayer.gameName).connectPlayer(socket.id, newPlayer);
-                socketIo.emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
-                socketIo.emit(API.ADD_PLAYERS, gameState.activePlayers());
+                socket.join(newPlayer.gameName);
+                player = gameState.connectPlayer(socket.id, newPlayer);
+                socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+                socketIo.to(newPlayer.gameName).emit(API.ADD_PLAYERS, gameState.activePlayers());
                 // }
                 socket.on(API.UPDATE_KEYS, function (keys: Array<string>) {
                     // const gameState = gamesStory.getGameByPlayer(socket.id);
@@ -54,21 +52,21 @@ socketIo.on('connection', function (socket) {
                         // const gameState = gamesStory.getGameByPlayer(socket.id);
                         // if (gameState) {
                         gameState.setPlayerActive(socket.id);
-                        socketIo.emit(API.ADD_NEW_PLAYER, player);
+                    socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_PLAYER, player);
 
                         setInterval(() => {
                             gameState.move(socket.id);
                             gameState.updateBullets();
                             gameState.detectBulletsCollision();
-                            socketIo.emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
-                            socketIo.emit(API.GET_BULLETS, gameState.getBullets());
+                            socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+                            socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
                         }, 1000 / 60);
                     }
                 );
 
                 socket.on(API.MOUSE_CLICK, function (mouseClick: MouseCoordinates) {
                     const bullet = gameState.addBullet(mouseClick);
-                    socketIo.emit(API.ADD_NEW_BULLET, bullet);
+                    socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_BULLET, bullet);
                 });
 
                 socket.on(API.UPDATE_DIRECTION, function (mouseCoordinates: MouseCoordinates) {
@@ -87,10 +85,10 @@ socketIo.on('connection', function (socket) {
                     const disconnected = gameState.getPlayer(socket.id);
                     console.log('Disconnected player: ', disconnected);
                     gameState.disconnectPlayer(disconnected);
-                    socketIo.emit(API.DISCONNECT_PLAYER, socket.id);
+                    socketIo.to(newPlayer.gameName).emit(API.DISCONNECT_PLAYER, socket.id);
                 });
 
-                socketIo.emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
+                socketIo.to(newPlayer.gameName).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
             }
         }
     );
