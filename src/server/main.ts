@@ -74,6 +74,7 @@ socketIo.on('connection', function (socket) {
                     console.log('Disconnected player: ', disconnected);
                     gameState.disconnectPlayer(disconnected);
                     socketIo.to(newPlayer.gameName).emit(API.DISCONNECT_PLAYER, socket.id);
+                    socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
                 });
 
                 socketIo.to(newPlayer.gameName).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
