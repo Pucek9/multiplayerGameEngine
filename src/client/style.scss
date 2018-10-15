@@ -7,6 +7,11 @@ body {
     cursor: none;
   }
 
+  .validate {
+    color: #6d0000;
+    font-size: 17px;
+  }
+
   .flex-container {
     display: flex;
     justify-content: center;
@@ -77,8 +82,13 @@ body {
       width: 40%;
 
       #gameTypeInput {
-        width: 173px;
+        width: 162px;
         margin-left: 12px
+      }
+
+      #gameMapInput {
+        width: 162px;
+        margin-left: 15px
       }
     }
   }

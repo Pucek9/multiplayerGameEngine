@@ -8,6 +8,9 @@ declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
 declare var menu: HTMLDivElement;
+declare var validateGameName: HTMLLabelElement;
+declare var validateNick: HTMLLabelElement;
+declare var validateSelectedGame: HTMLLabelElement;
 
 import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
@@ -91,6 +94,10 @@ function render() {
     });
     joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null || state.joinGame.id === null;
     addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
+    validateNick.style.display = state.joinGame.nick === '' ? 'block' : 'none';
+    validateSelectedGame.style.display = state.joinGame.chosenGame === null ? 'block' : 'none';
+    validateGameName.style.display = state.newGame.name === '' ? 'block' : 'none';
+
 }
 
 addNewGameButton.addEventListener('click', function () {
@@ -106,7 +113,7 @@ joinGameButton.addEventListener('click', function () {
     const userState = store.getState().joinGame;
     const newPlayer = new NewPlayer(userState.id, userState.nick, randColor(), userState.chosenGame);
     socket.emit(API.CREATE_PLAYER, newPlayer);
-    alert(newPlayer.name + ' joined the game!');
+    alert(newPlayer.name + ' joined the game! Click mouse after close that!');
     menu.style.display = 'none';
     const screen = prepareScreen();
     const map = new Map(mapJPG);
