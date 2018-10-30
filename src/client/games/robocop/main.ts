@@ -94,9 +94,9 @@ function render() {
     });
     joinGameButton.disabled = state.joinGame.nick === '' || state.joinGame.chosenGame === null || state.joinGame.id === null;
     addNewGameButton.disabled = state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
-    validateNick.style.display = state.joinGame.nick === '' ? 'block' : 'none';
-    validateSelectedGame.style.display = state.joinGame.chosenGame === null ? 'block' : 'none';
-    validateGameName.style.display = state.newGame.name === '' ? 'block' : 'none';
+    validateNick.style.visibility = state.joinGame.nick === '' ? 'visible' : 'hidden';
+    validateSelectedGame.style.visibility = state.joinGame.chosenGame === null ? 'visible' : 'hidden';
+    validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
 
 }
 
