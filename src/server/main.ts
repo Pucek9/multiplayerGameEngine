@@ -2,7 +2,7 @@ import GamesStore from "./services/GamesStore";
 
 const API = require('../shared/constants.json').API;
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const io = require('socket.io');
 import * as http from 'http';
 
@@ -18,7 +18,7 @@ const gamesStory = new GamesStore();
 let player;
 
 app.use(express.static('dist/client'));
-app.use(cors());
+// app.use(cors());
 
 app.route('/login')
     .get(function (req, res) {
