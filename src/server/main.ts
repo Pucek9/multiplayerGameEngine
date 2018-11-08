@@ -20,13 +20,13 @@ app.use(express.static('dist/client'));
 
 app.route('/login')
     .get(function (req, res) {
-        res.send('Get a user' + req.login)
+        res.send('Get a user' + req.body.login)
     })
     .post(function (req, res) {
-        res.send('Add a user' + req.login)
+        res.send('Add a user' + req.body.login)
     })
     .put(function (req, res) {
-        res.send('Update the user' + req.login)
+        res.send('Update the user' + req.body.login)
     });
 
 socketIo.on('connection', function (socket) {
