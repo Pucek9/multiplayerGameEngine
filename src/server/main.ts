@@ -18,6 +18,7 @@ const gamesStory = new GamesStore();
 let player;
 
 app.use(express.static('dist/client'));
+app.use(cors());
 
 app.route('/login')
     .get(function (req, res) {
@@ -33,7 +34,6 @@ app.route('/login')
         res.send('Update the user' + req.body.login)
     });
 
-app.use(cors())
 
 socketIo.on('connection', function (socket) {
 
