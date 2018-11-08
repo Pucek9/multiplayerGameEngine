@@ -19,14 +19,17 @@ let player;
 
 app.use(express.static('dist/client'));
 
-app.route('/login/:login')
+app.route('/login')
     .get(function (req, res) {
-        res.send('Get a user' + req.params.login)
+        console.log('Get a user');
+        res.send('Get a user' + req)
     })
     .post(function (req, res) {
+        console.log('Add a user');
         res.send('Add a user' + req.body.login)
     })
     .put(function (req, res) {
+        console.log('Update the user');
         res.send('Update the user' + req.body.login)
     });
 
