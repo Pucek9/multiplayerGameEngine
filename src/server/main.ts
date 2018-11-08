@@ -2,7 +2,6 @@ import GamesStore from "./services/GamesStore";
 
 const API = require('../shared/constants.json').API;
 const express = require('express');
-const cors = require('cors');
 const io = require('socket.io');
 import * as http from 'http';
 
@@ -18,22 +17,6 @@ const gamesStory = new GamesStore();
 let player;
 
 app.use(express.static('dist/client'));
-app.use(cors());
-
-app.route('/login')
-    .get(function (req, res) {
-        console.log('Get a user');
-        res.send('Get a user' + req)
-    })
-    .post(function (req, res) {
-        console.log('Add a user');
-        res.send('Add a user' + req.body.login)
-    })
-    .put(function (req, res) {
-        console.log('Update the user');
-        res.send('Update the user' + req.body.login)
-    });
-
 
 socketIo.on('connection', function (socket) {
 
