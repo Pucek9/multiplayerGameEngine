@@ -78,7 +78,7 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
-                if (_player.id === activePlayer.id) {
+                if (activePlayer && _player.id === activePlayer.id) {
                     const diff = {
                         x: player.x - _player.x,
                         y: player.y - _player.y,
