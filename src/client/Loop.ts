@@ -3,7 +3,7 @@ import PlayerModel from "../shared/models/PlayerModel";
 import * as constants from '../shared/constants.json';
 import Player from "./models/Player";
 import Bullet from "./models/Bullet";
-import PlayerList from "./models/PlayersList";
+import PlayerListComponent from "./menu/PlayersList";
 import Camera from "./models/Camera";
 import StaticCircularObject from "./models/StaticCircularObject";
 import StaticRectangleObject from "./models/StaticRectangleObject";
@@ -19,6 +19,7 @@ const config = {
 };
 
 const players = [];
+let playersListString = '';
 let bullets = [];
 let keys: Set<string> = new Set([]);
 let staticObjects: any [];
@@ -32,7 +33,7 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
     let activePlayer;
     let camera: Camera;
     let light: Light = new Light(screen);
-    const playersList = new PlayerList(screen);
+    const playersListComponent = new PlayerListComponent();
 
     socket.on(API.ADD_NEW_PLAYER, function (newPlayer) {
         const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, newPlayer.x, newPlayer.y);
@@ -242,7 +243,12 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
         // } else {
         //     menu.render();
         // }
-        // playersList.render(players);
+        const playersList = players.map(player => ({name: player.name, score: player.score, color:player.color, hp: player.hp}));
+        const _playersListString = JSON.stringify(playersList);
+        if(_playersListString !== playersListString) {
+            playersListComponent.render(playersList);
+            playersListString = _playersListString;
+        }
         // cursor.render();
         //
         // setTimeout(that.run, 1000 / config.fps);

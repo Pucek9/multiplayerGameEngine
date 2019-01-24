@@ -87,7 +87,6 @@ export default class Menu {
         validateNick.style.visibility = state.joinGame.nick === '' ? 'visible' : 'hidden';
         validateSelectedGame.style.visibility = state.joinGame.chosenGame === null ? 'visible' : 'hidden';
         validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
-
     }
 
 

@@ -2,7 +2,7 @@ import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectM
 import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
 import {Screen} from "../types/Screen";
-const cumin = require("../games/robocop/obrazki/cumin.png");
+const cumin = require("../games/balls/images/head.png");
 
 const THREE = require('three');
 

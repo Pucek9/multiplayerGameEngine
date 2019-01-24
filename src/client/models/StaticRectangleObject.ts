@@ -3,7 +3,7 @@ import IRenderable from "../interfaces/IRenderable";
 import PlayerModel from "../../shared/models/PlayerModel";
 import {Screen} from "../types/Screen";
 
-const box = require("../games/robocop/obrazki/box.png");
+const box = require("../games/balls/images/box.png");
 
 const THREE = require('three');
 

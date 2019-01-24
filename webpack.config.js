@@ -13,7 +13,7 @@ const config = [{
     context: __dirname + '/src/client/',
 
     entry: {
-        robocop: './games/robocop/main.ts',
+        robocop: './main.ts',
     },
 
     output: {

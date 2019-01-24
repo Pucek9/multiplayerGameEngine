@@ -1,23 +1,22 @@
-import NewGame from "../../../shared/api/NewGame";
+import NewGame from '../shared/api/NewGame';
 
 import {createStore, combineReducers} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-import {addGame, clearGamesList, setId} from '../../actions';
-import {newGame, joinGame} from '../../reducers';
-import '../../style.scss';
+import {addGame, clearGamesList, setId} from './actions';
+import {newGame, joinGame} from './reducers';
+import './style.scss';
 
-import NewPlayer from "../../../shared/api/NewPlayer";
-import Cursor from '../../models/Cursor';
-import Map from '../../models/Map';
-import Loop from '../../Loop';
-import Menu from '../../menu/Menu';
-import * as constants from '../../../shared/constants.json';
+import NewPlayer from '../shared/api/NewPlayer';
+import Cursor from './models/Cursor';
+import Map from './models/Map';
+import Loop from './Loop';
+import Menu from './menu/Menu';
+import * as constants from '../shared/constants.json';
 
 const THREE = require('three');
 const io = require('socket.io-client');
-const startImageJPG = require("./obrazki/circuit_board.jpg");
-const mapJPG = require("./obrazki/test.jpg");
-const cursorPNG = require("./obrazki/celownik.png");
+const mapJPG = require('./games/balls/images/test.jpg');
+const cursorPNG = require('./games/balls/images/pointer.png');
 const API = (<any>constants).API;
 
 let url = process.env.URL || 'localhost';

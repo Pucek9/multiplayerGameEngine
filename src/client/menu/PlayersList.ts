@@ -1,14 +1,24 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
-import {Screen} from "../types/Screen";
+import {chooseGame} from "../actions";
 
-export default class PlayerList implements IRenderable {
+declare var playersList: HTMLUListElement;
 
-    constructor(
-        public screen: Screen) {
+export default class PlayerListComponent implements IRenderable {
+
+    constructor(        ) {
     }
 
-    render(players: PlayerModel[]) {
+    render(players: any[]) {
+        playersList.innerHTML = '';
+        players.forEach(_player => {
+            const li = document.createElement('li');
+            li.style.color = _player.color;
+            li.appendChild(document.createTextNode(`${_player.name}: ${_player.score}`));
+            // @ts-ignore
+            playersList.append(li);
+        });
+
         // this.screen.ctx.font = '10pt Arial';
         // this.screen.ctx.lineWidth = 1;
         // this.screen.ctx.fillStyle = 'black';
