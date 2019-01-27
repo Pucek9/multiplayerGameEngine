@@ -1,7 +1,7 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-    private defaultSpeed: number;
+    private readonly defaultSpeed: number;
     private speed: number;
     private length: number;
     private trajectory: number;

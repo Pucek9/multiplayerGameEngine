@@ -10,7 +10,7 @@ export default class Map implements IRenderable {
     private object;
 
     constructor(public src: string) {
-    };
+    }
 
     init(screen: Screen) {
         this.object = new THREE.Mesh(

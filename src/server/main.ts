@@ -84,6 +84,6 @@ socketIo.on('connection', function (socket) {
 
 });
 
-httpServer.listen(parseInt(port), function () {
+httpServer.listen(parseInt(port, 0), function () {
     console.log(`listening on *:${port}`);
 });

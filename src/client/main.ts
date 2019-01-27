@@ -2,7 +2,7 @@ import {combineReducers, createStore} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
 
 import {addGame, clearGamesList, setId} from './store/actions';
-import {joinGame, newGame} from './store/reducers';
+import {joinGameReducer, newGameReducer} from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
 import './style.scss';
@@ -31,7 +31,7 @@ function randColor() {
     return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
-const app = combineReducers({newGame, joinGame});
+const app = combineReducers({newGame: newGameReducer, joinGame: joinGameReducer});
 const store = createStore(app, devToolsEnhancer());
 
 let mainInstance;

@@ -18,7 +18,7 @@ export default class Cursor implements IRenderable {
 
         // this.img.material.depthTest = false;
         // this.img.material.depthWrite = false;
-    };
+    }
 
     init(screen: Screen) {
         this.object = new THREE.Mesh(

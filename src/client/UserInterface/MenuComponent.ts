@@ -56,15 +56,15 @@ export default class MenuComponent {
 
     renderTable(state) {
         state.newGame.list.forEach(game => {
-            let name = document.createElement('td');
+            const name = document.createElement('td');
             name.appendChild(document.createTextNode(game.name));
-            let type = document.createElement('td');
+            const type = document.createElement('td');
             type.appendChild(document.createTextNode(game.type));
-            let map = document.createElement('td');
+            const map = document.createElement('td');
             map.appendChild(document.createTextNode(game.map));
-            let count = document.createElement('td');
+            const count = document.createElement('td');
             count.appendChild(document.createTextNode(game.count));
-            let row = document.createElement('tr');
+            const row = document.createElement('tr');
             row.addEventListener('click', () => {
                 this.store.dispatch(chooseGame(game.name));
             });
@@ -79,7 +79,6 @@ export default class MenuComponent {
     }
 
     render() {
-        //console.log('render', this.store.getState());
         gamesListTable.innerHTML = '';
         const state = this.store.getState();
         this.renderTable(state);

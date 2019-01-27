@@ -50,7 +50,7 @@ export default class GameState {
         player.setAsEnemy();
         this.players.push(player);
         if (!this.currentPlayer) {
-            this.currentPlayer = this.players.find(player => player.id === this.user.id);
+            this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
             this.currentPlayer.setAsActive();
 
             this.camera = new Camera(this.currentPlayer);
@@ -109,22 +109,22 @@ export default class GameState {
     updatePlayersState(_players: PlayerModel[]) {
         this.players
             .forEach(player => {
-                const _player = _players.find(_player => player.id === _player.id);
-                if (this.currentPlayer && _player.id === this.currentPlayer.id) {
+                const foundPlayer = _players.find(_player => player.id === _player.id);
+                if (this.currentPlayer && foundPlayer.id === this.currentPlayer.id) {
                     const diff = {
-                        x: player.x - _player.x,
-                        y: player.y - _player.y,
+                        x: player.x - foundPlayer.x,
+                        y: player.y - foundPlayer.y,
                     };
                     this.cursor.x -= diff.x;
                     this.cursor.y -= diff.y;
                 }
-                if (_player) {
-                    player.x = _player.x;
-                    player.y = _player.y;
-                    player.active = _player.active;
-                    player.hp = _player.hp;
-                    player.score = _player.score;
-                    player.direction = _player.direction;
+                if (foundPlayer) {
+                    player.x = foundPlayer.x;
+                    player.y = foundPlayer.y;
+                    player.active = foundPlayer.active;
+                    player.hp = foundPlayer.hp;
+                    player.score = foundPlayer.score;
+                    player.direction = foundPlayer.direction;
                 }
             });
     }
@@ -132,10 +132,10 @@ export default class GameState {
     updateBulletsState(_bullets: BulletUpdate[]) {
         this.bullets
             .forEach(bullet => {
-                const _bullet = _bullets.find(_bullet => bullet.id === _bullet.id);
-                if (_bullet) {
-                    bullet.x = _bullet.x;
-                    bullet.y = _bullet.y;
+                const foundBullet = _bullets.find(_bullet => bullet.id === _bullet.id);
+                if (foundBullet) {
+                    bullet.x = foundBullet.x;
+                    bullet.y = foundBullet.y;
                 } else {
                     bullet.remove(this.screen);
                     this.bullets.splice(this.bullets.indexOf(bullet), 1);

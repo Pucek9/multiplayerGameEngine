@@ -7,8 +7,7 @@ export default class Camera implements IRenderable {
     private screen;
 
     constructor(private activePlayer: PlayerModel) {
-
-    };
+    }
 
     init(screen: Screen) {
         this.screen = screen;

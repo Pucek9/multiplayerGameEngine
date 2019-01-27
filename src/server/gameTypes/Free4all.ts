@@ -8,7 +8,7 @@ import GameType from './GameType';
 
 export default class Free4all implements GameType {
 
-    public type: string = 'Free for all';
+    public type = 'Free for all';
 
     constructor(public name: string,
                 private map: GameMap,

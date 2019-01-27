@@ -12,6 +12,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "lint": "tslint --project tsconfig.json --fix",
     "start": "node dist/server/robocop.bundle.js",
     "postinstall": "npm run build",
     "build": "webpack",
@@ -48,7 +49,8 @@
     "file-system": "^2.2.2",
     "redux": "^4.0.1",
     "socket.io": "^2.1.1",
-    "three": "^0.97.0"
+    "three": "^0.97.0",
+    "tslint": "^5.12.1"
   },
   "engines": {
     "node": ">=8.9.0"
