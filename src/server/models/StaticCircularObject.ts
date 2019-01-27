@@ -1,5 +1,5 @@
-import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectModel";
-import Bullet from "./Bullet";
+import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import Bullet from './Bullet';
 
 export default class StaticCircularObject extends StaticCircularObjectModel {
 

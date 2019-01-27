@@ -1,5 +1,5 @@
-import StaticCircularObject from "../models/StaticCircularObject";
-import StaticRectangleObject from "../models/StaticRectangleObject";
+import StaticCircularObject from '../models/StaticCircularObject';
+import StaticRectangleObject from '../models/StaticRectangleObject';
 
 export default class Prototype1 {
     private static mapName = 'Prototype1';
@@ -21,7 +21,7 @@ export default class Prototype1 {
             new StaticRectangleObject(230, 170, 0, 200, 80, 80, 'blue', -30),
             new StaticRectangleObject(-400, -500, 0, 300, 300, 10, 'pink', -70),
             new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
-        ]
+        ];
     }
 
 }

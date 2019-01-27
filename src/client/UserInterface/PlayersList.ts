@@ -1,12 +1,10 @@
-import PlayerModel from "../../shared/models/PlayerModel";
-import IRenderable from "../interfaces/IRenderable";
-import {chooseGame} from "../store/actions";
+import IRenderable from '../interfaces/IRenderable';
 
 declare var playersList: HTMLUListElement;
 
 export default class PlayerListComponent implements IRenderable {
 
-    constructor(        ) {
+    constructor() {
     }
 
     render(players: any[]) {

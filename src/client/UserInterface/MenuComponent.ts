@@ -1,4 +1,4 @@
-import {chooseGame, setGameMap, setGameName, setGameType, setNick} from "../store/actions";
+import {chooseGame, setGameMap, setGameName, setGameType, setNick} from '../store/actions';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -18,7 +18,7 @@ export default class MenuComponent {
 
     constructor(
         main,
-        store
+        store,
     ) {
         this.store = store;
         const unsubscribeRender = store.subscribe(() => this.render());
@@ -38,19 +38,19 @@ export default class MenuComponent {
         });
 
         gameNameInput.addEventListener('keyup', function () {
-            store.dispatch(setGameName(gameNameInput.value))
+            store.dispatch(setGameName(gameNameInput.value));
         });
 
         gameTypeInput.addEventListener('change', function () {
-            store.dispatch(setGameType(gameTypeInput.value))
+            store.dispatch(setGameType(gameTypeInput.value));
         });
 
         gameMapInput.addEventListener('change', function () {
-            store.dispatch(setGameMap(gameMapInput.value))
+            store.dispatch(setGameMap(gameMapInput.value));
         });
 
         nickInput.addEventListener('keyup', function () {
-            store.dispatch(setNick(nickInput.value))
+            store.dispatch(setNick(nickInput.value));
         });
     }
 
@@ -65,8 +65,8 @@ export default class MenuComponent {
             let count = document.createElement('td');
             count.appendChild(document.createTextNode(game.count));
             let row = document.createElement('tr');
-            row.addEventListener("click", () => {
-                this.store.dispatch(chooseGame(game.name))
+            row.addEventListener('click', () => {
+                this.store.dispatch(chooseGame(game.name));
             });
             if (state.joinGame.chosenGame === game.name) {
                 row.style.backgroundColor = 'grey';
@@ -77,6 +77,7 @@ export default class MenuComponent {
             gamesListTable.append(row);
         });
     }
+
     render() {
         //console.log('render', this.store.getState());
         gamesListTable.innerHTML = '';

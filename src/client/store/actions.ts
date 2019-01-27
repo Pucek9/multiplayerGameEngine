@@ -23,7 +23,7 @@ export const addGame = (name, type, map, count) => {
                 ],
                 name: '',
             };
-        }
+        },
     };
 };
 
@@ -34,8 +34,8 @@ export const setNick = (nick) => {
             return {
                 ...state,
                 nick,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -46,8 +46,8 @@ export const setId = (id) => {
             return {
                 ...state,
                 id,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -58,8 +58,8 @@ export const setGameName = (name) => {
             return {
                 ...state,
                 name,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -70,8 +70,8 @@ export const setGameType = (type) => {
             return {
                 ...state,
                 type,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -82,8 +82,8 @@ export const setGameMap = (map) => {
             return {
                 ...state,
                 map,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -94,8 +94,8 @@ export const chooseGame = (chosenGame) => {
             return {
                 ...state,
                 chosenGame,
-            }
-        }
+            };
+        },
     };
 };
 
@@ -107,6 +107,6 @@ export const clearGamesList = () => {
                 ...state,
                 list: [],
             };
-        }
+        },
     };
 };

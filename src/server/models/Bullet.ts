@@ -1,4 +1,4 @@
-import BulletModel from "../../shared/models/BulletModel";
+import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
     private defaultSpeed: number;
@@ -26,7 +26,7 @@ export default class Bullet extends BulletModel {
         if (this.speed > value) {
             this.speed -= value;
         } else {
-            this.speed = 1
+            this.speed = 1;
         }
     }
 

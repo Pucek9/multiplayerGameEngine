@@ -1,5 +1,5 @@
-import IRenderable from "../interfaces/IRenderable";
-import {Screen} from "../types/Screen";
+import IRenderable from '../interfaces/IRenderable';
+
 const THREE = require('three');
 
 export default class Menu implements IRenderable {

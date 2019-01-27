@@ -1,17 +1,17 @@
-import {createStore, combineReducers} from 'redux';
+import {combineReducers, createStore} from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-const THREE = require('three');
-const io = require('socket.io-client');
 
 import {addGame, clearGamesList, setId} from './store/actions';
-import {newGame, joinGame} from './store/reducers';
+import {joinGame, newGame} from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
-import GameState from "./GameState";
+import GameState from './GameState';
 import './style.scss';
-
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import NewGame from '../shared/apiModels/NewGame';
 import {API} from '../shared/constants';
+
+const THREE = require('three');
+const io = require('socket.io-client');
 
 let url = process.env.URL || 'localhost';
 url = `http://${url.toString()}`;
@@ -46,7 +46,7 @@ class Main {
         mainInstance = this;
 
         socket.on(API.WELCOME_NEW_PLAYER, function (data) {
-            store.dispatch(setId(data.socketId))
+            store.dispatch(setId(data.socketId));
         });
 
         socket.on(API.GET_GAMES_LIST, function (data) {
@@ -94,7 +94,7 @@ class Main {
             }
         });
 
-        window.addEventListener("mousemove", function mouseMove(e: MouseEvent) {
+        window.addEventListener('mousemove', function mouseMove(e: MouseEvent) {
             const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
             if (mouseCoordinates) {
                 socket.emit(API.UPDATE_DIRECTION, mouseCoordinates);
@@ -105,18 +105,18 @@ class Main {
             e.preventDefault();
             if (!e.repeat) {
                 gameState.addKey(e);
-                socket.emit(API.UPDATE_KEYS, gameState.getKeys())
+                socket.emit(API.UPDATE_KEYS, gameState.getKeys());
             }
         });
 
         window.addEventListener('keyup', function (e: KeyboardEvent) {
             e.preventDefault();
             gameState.deleteKey(e);
-            socket.emit(API.UPDATE_KEYS, gameState.getKeys())
+            socket.emit(API.UPDATE_KEYS, gameState.getKeys());
         });
 
 
-        window.addEventListener("wheel", function (e: WheelEvent) {
+        window.addEventListener('wheel', function (e: WheelEvent) {
             e.preventDefault();
             gameState.wheel(e);
         });
@@ -143,7 +143,7 @@ class Main {
         document.body.appendChild(renderer.domElement);
 
         return {
-            camera: camera, scene: scene, renderer: renderer
+            camera: camera, scene: scene, renderer: renderer,
         };
     }
 

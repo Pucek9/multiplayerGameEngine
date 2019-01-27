@@ -36,7 +36,7 @@ export default class CollisionDetector {
 
     static detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
         if (rect.deg === 0) {
-           return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
+            return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
         } else {
             return this.detectRotatedRectangleAndCircleCollision(circle, rect, direction);
         }
@@ -51,7 +51,7 @@ export default class CollisionDetector {
     static detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction) {
 
         function distance(x1, y1, x2, y2) {
-            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         }
 
         function degToRad(deg) {

@@ -1,5 +1,5 @@
-import IRenderable from "../interfaces/IRenderable";
-import {Screen} from "../types/Screen";
+import IRenderable from '../interfaces/IRenderable';
+import {Screen} from '../types/Screen';
 
 export default class Cleaner implements IRenderable {
 

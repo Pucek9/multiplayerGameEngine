@@ -1,15 +1,15 @@
-import Player from "./models/Player";
-import Camera from "./models/Camera";
-import PlayerModel from "../shared/models/PlayerModel";
-import Bullet from "./models/Bullet";
-import BulletUpdate from "../shared/apiModels/BulletUpdate";
-import StaticRectangleObject from "./models/StaticRectangleObject";
-import StaticCircularObject from "./models/StaticCircularObject";
-import Light from "./models/Light";
-import PlayerListComponent from "./UserInterface/PlayersList";
-import MouseCoordinates from "../shared/apiModels/MouseCoordinates";
-import Map from "./models/Map";
-import Cursor from "./models/Cursor";
+import Player from './models/Player';
+import Camera from './models/Camera';
+import PlayerModel from '../shared/models/PlayerModel';
+import Bullet from './models/Bullet';
+import BulletUpdate from '../shared/apiModels/BulletUpdate';
+import StaticRectangleObject from './models/StaticRectangleObject';
+import StaticCircularObject from './models/StaticCircularObject';
+import Light from './models/Light';
+import PlayerListComponent from './UserInterface/PlayersList';
+import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
+import Map from './models/Map';
+import Cursor from './models/Cursor';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.png');
@@ -116,7 +116,7 @@ export default class GameState {
                         y: player.y - _player.y,
                     };
                     this.cursor.x -= diff.x;
-                    this.cursor.y -= diff.y
+                    this.cursor.y -= diff.y;
                 }
                 if (_player) {
                     player.x = _player.x;
@@ -152,7 +152,7 @@ export default class GameState {
                 Object.setPrototypeOf(_staticObject, StaticCircularObject.prototype);
             }
         });
-        this.staticObjects.forEach(object => object.init(this.screen))
+        this.staticObjects.forEach(object => object.init(this.screen));
     }
 
     removePlayer(id: string) {
@@ -170,7 +170,7 @@ export default class GameState {
             return new MouseCoordinates(
                 this.cursor.x,
                 this.cursor.y,
-                this.user.id
+                this.user.id,
             );
         }
     }
@@ -179,7 +179,7 @@ export default class GameState {
         return new MouseCoordinates(
             this.cursor.x,
             this.cursor.y,
-            this.user.id
+            this.user.id,
         );
     }
 
@@ -213,5 +213,5 @@ export default class GameState {
 }
 
 function normalizeKey(key) {
-    return (key.length !== 1) ? key : key.toUpperCase()
+    return (key.length !== 1) ? key : key.toUpperCase();
 }

@@ -1,5 +1,6 @@
-import IRenderable from "../interfaces/IRenderable";
-import {Screen} from "../types/Screen";
+import IRenderable from '../interfaces/IRenderable';
+import {Screen} from '../types/Screen';
+
 const THREE = require('three');
 
 export default class Cursor implements IRenderable {
@@ -23,8 +24,8 @@ export default class Cursor implements IRenderable {
         this.object = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30, 0),
             new THREE.MeshPhongMaterial({
-                map: new THREE.TextureLoader().load(this.src)
-            })
+                map: new THREE.TextureLoader().load(this.src),
+            }),
         );
         screen.scene.add(this.object);
     }

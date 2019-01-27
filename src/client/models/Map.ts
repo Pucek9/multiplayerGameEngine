@@ -1,8 +1,8 @@
-import PlayerModel from "../../shared/models/PlayerModel";
-import IRenderable from "../interfaces/IRenderable";
+import PlayerModel from '../../shared/models/PlayerModel';
+import IRenderable from '../interfaces/IRenderable';
+import {Screen} from '../types/Screen';
 
 const THREE = require('three');
-import {Screen} from "../types/Screen";
 
 export default class Map implements IRenderable {
 
@@ -16,13 +16,13 @@ export default class Map implements IRenderable {
         this.object = new THREE.Mesh(
             new THREE.PlaneGeometry(2920, 2004, 0),
             new THREE.MeshPhongMaterial({
-                map: new THREE.TextureLoader().load(this.src)
-            })
+                map: new THREE.TextureLoader().load(this.src),
+            }),
         );
 
         // this.object.material.depthTest = false;
         // this.object.material.depthWrite = false;
-        this.object.receiveShadow =  true;
+        this.object.receiveShadow = true;
 
         screen.scene.add(this.object);
     }

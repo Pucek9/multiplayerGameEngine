@@ -1,11 +1,11 @@
-import ICircle from "../../shared/interfaces/ICircle";
+import ICircle from '../../shared/interfaces/ICircle';
 
-export default class Aura implements ICircle  {
+export default class Aura implements ICircle {
     public type = 'circle';
 
     constructor(public x: number,
-    public y: number,
-    public size: number = 70) {
+                public y: number,
+                public size: number = 70) {
 
     }
 }

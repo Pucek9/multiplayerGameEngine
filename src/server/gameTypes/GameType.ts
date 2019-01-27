@@ -1,5 +1,5 @@
-import MouseCoordinates from "../../shared/apiModels/MouseCoordinates";
-import NewPlayer from "../../shared/apiModels/NewPlayer";
+import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
+import NewPlayer from '../../shared/apiModels/NewPlayer';
 
 export default interface GameType {
 

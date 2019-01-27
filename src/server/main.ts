@@ -1,13 +1,13 @@
-import GamesStore from "./services/GamesStore";
-
-const API = require('../shared/constants.json').API;
-const express = require('express');
-const io = require('socket.io');
+import GamesStore from './services/GamesStore';
 import * as http from 'http';
 
-import NewPlayer from "../shared/apiModels/NewPlayer";
-import MouseCoordinates from "../shared/apiModels/MouseCoordinates";
-import NewGame from "../shared/apiModels/NewGame";
+import NewPlayer from '../shared/apiModels/NewPlayer';
+import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
+import NewGame from '../shared/apiModels/NewGame';
+import {API} from '../shared/constants';
+
+const express = require('express');
+const io = require('socket.io');
 
 const port = process.env.PORT || '80';
 const app = express();
@@ -42,7 +42,7 @@ socketIo.on('connection', function (socket) {
                 socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
 
                 socket.on(API.UPDATE_KEYS, function (keys: Array<string>) {
-                    gameState.setKeys(socket.id, keys)
+                    gameState.setKeys(socket.id, keys);
                 });
 
                 socket.on(API.ACTIVATE_PLAYER, function () {
@@ -57,7 +57,7 @@ socketIo.on('connection', function (socket) {
                             socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
                             socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
                         }, 1000 / 60);
-                    }
+                    },
                 );
 
                 socket.on(API.MOUSE_CLICK, function (mouseClick: MouseCoordinates) {
@@ -66,7 +66,7 @@ socketIo.on('connection', function (socket) {
                 });
 
                 socket.on(API.UPDATE_DIRECTION, function (mouseCoordinates: MouseCoordinates) {
-                    gameState.updatePlayerDirection(mouseCoordinates)
+                    gameState.updatePlayerDirection(mouseCoordinates);
                 });
 
                 socket.on('disconnect', function () {
@@ -79,7 +79,7 @@ socketIo.on('connection', function (socket) {
 
                 socketIo.to(newPlayer.gameName).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
             }
-        }
+        },
     );
 
 });
