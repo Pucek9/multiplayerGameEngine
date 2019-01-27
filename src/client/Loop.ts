@@ -1,15 +1,5 @@
-import MouseCoordinates from "../shared/api/MouseCoordinates";
-import PlayerModel from "../shared/models/PlayerModel";
 import * as constants from '../shared/constants.json';
-import Player from "./models/Player";
-import Bullet from "./models/Bullet";
-import PlayerListComponent from "./menu/PlayersList";
-import Camera from "./models/Camera";
-import StaticCircularObject from "./models/StaticCircularObject";
-import StaticRectangleObject from "./models/StaticRectangleObject";
-import Cursor from "./models/Cursor";
-import BulletUpdate from "../shared/api/BulletUpdate";
-import Light from "./models/Light";
+import GameState from './GameState'
 
 const API = (<any>constants).API;
 
@@ -18,119 +8,24 @@ const config = {
     fps: 100,
 };
 
-const players = [];
-let playersListString = '';
-let bullets = [];
-let keys: Set<string> = new Set([]);
-let staticObjects: any [];
+function Loop(socket, user, screen) {
 
-function normalizeKey(key) {
-    return (key.length !== 1) ? key : key.toUpperCase()
-}
-
-function Loop(socket, user, screen, cursor: Cursor, map) {
     const that = this;
-    let currentPlayer;
-    let camera: Camera;
-    let light: Light = new Light(screen);
-    const playersListComponent = new PlayerListComponent();
+    const gameState = new GameState(user, screen);
 
-    socket.on(API.ADD_NEW_PLAYER, function (newPlayer) {
-        const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, newPlayer.x, newPlayer.y);
-        player.init(screen);
-        player.setAsEnemy();
-        players.push(player);
-        if (!currentPlayer) {
-            currentPlayer = players.find(player => player.id === user.id);
-            currentPlayer.setAsActive();
+    socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
-            camera = new Camera(currentPlayer);
-            camera.init(screen);
-            light.init(currentPlayer, cursor);
-        }
-    });
+    socket.on(API.ADD_PLAYERS,gameState.appendPlayers.bind(gameState));
 
-    socket.on(API.ADD_PLAYERS, function (_players: PlayerModel[]) {
-        _players
-            .filter(_player => _player.active)
-            .forEach(_player => {
-                const existed = players.find(player => player.id === _player.id);
-                if (!existed) {
-                    const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
-                    player.init(screen);
-                    player.setAsEnemy();
-                    players.push(player);
-                }
-            });
-    });
+    socket.on(API.ADD_NEW_BULLET,gameState.appendNewBullet.bind(gameState));
 
-    socket.on(API.ADD_NEW_BULLET, function (newBullet: Bullet) {
-        if (newBullet) {
-            const bullet = new Bullet(
-                newBullet.id,
-                newBullet.size,
-            );
-            bullet.init(screen);
-            bullets.push(bullet);
-        }
-    });
+    socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
 
-    socket.on(API.GET_PLAYERS_STATE, function (_players: PlayerModel[]) {
-        players
-            .forEach(player => {
-                const _player = _players.find(_player => player.id === _player.id);
-                if (currentPlayer && _player.id === currentPlayer.id) {
-                    const diff = {
-                        x: player.x - _player.x,
-                        y: player.y - _player.y,
-                    };
-                    cursor.x -= diff.x;
-                    cursor.y -= diff.y
-                }
-                if (_player) {
-                    player.x = _player.x;
-                    player.y = _player.y;
-                    player.active = _player.active;
-                    player.hp = _player.hp;
-                    player.score = _player.score;
-                    player.direction = _player.direction;
-                }
-            });
-    });
+    socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
-    socket.on(API.GET_BULLETS, function (_bullets: BulletUpdate[]) {
-        bullets
-            .forEach(bullet => {
-                const _bullet = _bullets.find(_bullet => bullet.id === _bullet.id);
-                if (_bullet) {
-                    bullet.x = _bullet.x;
-                    bullet.y = _bullet.y;
-                } else {
-                    bullet.remove(screen);
-                    bullets.splice(bullets.indexOf(bullet), 1);
-                }
-            });
-    });
+    socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
 
-    socket.on(API.GET_STATIC_OBJECTS, function (_staticObjects: any[]) {
-        staticObjects = _staticObjects;
-        staticObjects.forEach(_staticObject => {
-            if (_staticObject.type === 'rectangle') {
-                Object.setPrototypeOf(_staticObject, StaticRectangleObject.prototype);
-            } else {
-                Object.setPrototypeOf(_staticObject, StaticCircularObject.prototype);
-            }
-        });
-        staticObjects.forEach(object => object.init(screen))
-    });
-
-    socket.on(API.DISCONNECT_PLAYER, function (id: string) {
-        const disconnected = players.find(player => player.id === id);
-        if (disconnected) {
-            disconnected.remove(screen);
-            players.splice(players.indexOf(disconnected), 1);
-        }
-    });
+    socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
     window.addEventListener('mousedown', function (e) {
         e.preventDefault();
@@ -138,121 +33,53 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
             config.menu = true;
             socket.emit(API.ACTIVATE_PLAYER);
         } else {
-            const mouseClick = new MouseCoordinates(
-                cursor.x,
-                cursor.y,
-                user.id
-            );
+            const mouseClick = gameState.getMouseCoordinates();
             socket.emit(API.MOUSE_CLICK, mouseClick);
         }
     });
 
-    window.addEventListener("mousemove", function mouseMove(e) {
-        // cursor.x = (e.clientX / window.innerWidth) * 2 - 1;
-        // cursor.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        if (currentPlayer) {
-            cursor.x = e.clientX + currentPlayer.x - window.innerWidth / 2;
-            cursor.y = -e.clientY + currentPlayer.y + window.innerHeight / 2;
-            const mouseCoordinates = new MouseCoordinates(
-                cursor.x,
-                cursor.y,
-                user.id
-            );
-            socket.emit(API.UPDATE_DIRECTION, mouseCoordinates)
+    window.addEventListener("mousemove", function mouseMove(e: MouseEvent) {
+        const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
+        if(mouseCoordinates) {
+            socket.emit(API.UPDATE_DIRECTION, mouseCoordinates);
         }
-        // if (e.pageX) {
-        //     cursor.x = e.pageX;
-        // }
-        // else if (e.clientX) {
-        //     cursor.x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        // }
-        // cursor.x = cursor.x - screen.canvas.offsetLeft;
-        // if (e.pageY) {
-        //     cursor.y = e.pageY;
-        // }
-        // else if (e.clientY) {
-        //     cursor.y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        // }
-        // cursor.y = cursor.y - screen.canvas.offsetTop;
     }, false);
 
-    window.addEventListener('keydown', function (e) {
+    window.addEventListener('keydown', function (e : KeyboardEvent) {
         e.preventDefault();
         if (!e.repeat) {
-            keys.add(normalizeKey(e.key));
-            socket.emit(API.UPDATE_KEYS, [...keys])
+            gameState.addKey(e);
+            socket.emit(API.UPDATE_KEYS, [...gameState.keys])
         }
     });
 
-    window.addEventListener('keyup', function (e) {
+    window.addEventListener('keyup', function (e: KeyboardEvent) {
         e.preventDefault();
-        keys.delete(normalizeKey(e.key));
-        socket.emit(API.UPDATE_KEYS, [...keys])
+        gameState.deleteKey(e);
+        socket.emit(API.UPDATE_KEYS, [...gameState.keys])
     });
 
 
-    window.addEventListener("wheel", function (e) {
+    window.addEventListener("wheel", function (e: WheelEvent) {
         e.preventDefault();
-        if (e.deltaY > 0) {
-            //up
-            // screen.camera.rotation.x += 0.1;
-            screen.camera.position.z += 10;
-        } else {
-            // screen.camera.rotation.x -= 0.1;
-            screen.camera.position.z -= 10;
-
-        }
+        gameState.wheel(e);
     });
-
-
-    if (camera) {
-        camera.init(screen);
-    }
-    map.init(screen);
-    cursor.init(screen);
-    // if (activePlayer) {
-    //     cursor.x = activePlayer.x;
-    //     cursor.y = activePlayer.y;
-    // }
-
-    screen.renderer.autoClear = true;
-    screen.renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
-    screen.renderer.shadowMap.enabled = true;
 
     this.run = function () {
-        socket.emit(API.iteration);
-        if (currentPlayer) {
-            [
-                camera,
-                map,
-                ...staticObjects,
-                ...bullets,
-                ...players.filter(player => player.active),
-                cursor,
-                light,
-            ].forEach(object => object.render());
-        }
-        requestAnimationFrame(that.run);
+        gameState.tryRenderEverything();
         screen.renderer.render(screen.scene, screen.camera);
+        requestAnimationFrame(that.run);
 
-        //
-        // cleaner.render();
-        // socket.emit('iteration');
-        // if (config.menu && activePlayer && map) {
-        //     [map, ...bullets, ...staticObjects, ...players].forEach(object => object.render(activePlayer));
-        // } else {
-        //     menu.render();
-        // }
-        const playersList = players.map(player => ({name: player.name, score: player.score, color:player.color, hp: player.hp}));
+        const playersList = gameState.players.map(player => ({name: player.name, score: player.score, color:player.color, hp: player.hp}));
         const _playersListString = JSON.stringify(playersList);
-        if(_playersListString !== playersListString) {
-            playersListComponent.render(playersList);
-            playersListString = _playersListString;
+        if(_playersListString !== gameState.playersListString) {
+            gameState.playersListComponent.render(playersList);
+            gameState.playersListString = _playersListString;
         }
-        // cursor.render();
-        //
-        // setTimeout(that.run, 1000 / config.fps);
+
     }
+
+
 }
 
 export default Loop;

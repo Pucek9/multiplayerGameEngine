@@ -15,8 +15,7 @@ import * as constants from '../shared/constants.json';
 
 const THREE = require('three');
 const io = require('socket.io-client');
-const mapJPG = require('./games/balls/images/test.jpg');
-const cursorPNG = require('./games/balls/images/pointer.png');
+
 const API = (<any>constants).API;
 
 let url = process.env.URL || 'localhost';
@@ -60,9 +59,7 @@ class Main {
         socket.emit(API.CREATE_PLAYER, newPlayer);
         alert(newPlayer.name + ' joined the game! Click mouse after close that!');
         const screen = this.prepareScreen();
-        const map = new Map(mapJPG);
-        const cursor = new Cursor(cursorPNG);
-        const loop = new Loop(socket, newPlayer, screen, cursor, map);
+        const loop = new Loop(socket, newPlayer, screen);
         loop.run();
     }
 
@@ -81,6 +78,9 @@ class Main {
         const scene = new THREE.Scene();
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.autoClear = true;
+        renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
+        renderer.shadowMap.enabled = true;
         document.body.appendChild(renderer.domElement);
 
         return {
