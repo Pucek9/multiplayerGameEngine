@@ -9,15 +9,17 @@ export default class Player extends PlayerModel implements IRenderable {
 
     public object;
     private initiated = false;
+    private screen;
 
     init(screen: Screen) {
+        this.screen = screen;
         if(!this.isInitiated()) {
             const texture = new THREE.TextureLoader().load(cumin);
             const geometry = new THREE.SphereGeometry(20 ,10, 10, 1);
             const material = new THREE.MeshPhongMaterial({map: texture, color: this.color});
             this.object = new THREE.Mesh(geometry, material);
             this.object.receiveShadow = true;
-            screen.scene.add(this.object);
+            this.screen.scene.add(this.object);
             this.initiated = true;
         }
     }
@@ -42,10 +44,13 @@ export default class Player extends PlayerModel implements IRenderable {
 
     render() {
         this.renderBody();
+        if(this.active === false) {
+            this.remove()
+        }
     }
 
-    remove(screen: Screen) {
-        screen.scene.remove(this.object)
+    remove() {
+        this.screen.scene.remove(this.object)
     }
 
 }
