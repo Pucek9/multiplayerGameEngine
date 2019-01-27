@@ -1,4 +1,4 @@
-import ICircle from "../interfaces/ICircle";
+import ICircle from '../interfaces/ICircle';
 
 export default class StaticCircularObjectModel implements ICircle {
     public type = 'circle';
@@ -7,7 +7,7 @@ export default class StaticCircularObjectModel implements ICircle {
         public x: number,
         public y: number,
         public size: number,
-        public color: string
+        public color: string,
     ) {
     }
 

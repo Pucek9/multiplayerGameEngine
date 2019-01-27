@@ -1,12 +1,15 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 
+interface Direction {
+    x: number;
+    y: number;
+}
+
 export default class CollisionDetector {
 
-    static detectCollision(object1: ICircle, object2: ICircle, direction?: { x: number, y: number }): boolean;
-    static detectCollision(object1: IRectangle, object2: IRectangle, direction?: { x: number, y: number }): boolean
-    static detectCollision(object1: ICircle, object2: IRectangle, direction?: { x: number, y: number }): boolean
-    static detectCollision(object1: IRectangle, object2: ICircle, direction?: { x: number, y: number }): boolean
+    static detectCollision(object1: ICircle | IRectangle, object2: ICircle | IRectangle, direction?: Direction): boolean;
+
     static detectCollision(object1, object2, direction = {x: 0, y: 0}) {
         switch ([object1.type, object2.type].join()) {
             case 'circle,circle':
@@ -21,9 +24,9 @@ export default class CollisionDetector {
     }
 
     static detectCircularCollision(o1: ICircle, o2: ICircle, direction): boolean {
-        let dx = direction.x + o1.x - o2.x;
-        let dy = direction.y + o1.y - o2.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
+        const dx = direction.x + o1.x - o2.x;
+        const dy = direction.y + o1.y - o2.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
         return distance < o1.size + o2.size;
     }
 
@@ -36,22 +39,22 @@ export default class CollisionDetector {
 
     static detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
         if (rect.deg === 0) {
-           return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
+            return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
         } else {
             return this.detectRotatedRectangleAndCircleCollision(circle, rect, direction);
         }
     }
 
     static detectUnRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
-        let deltaX = circle.x + direction.x - Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width));
-        let deltaY = circle.y + direction.y - Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height));
+        const deltaX = circle.x + direction.x - Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width));
+        const deltaY = circle.y + direction.y - Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height));
         return (deltaX * deltaX + deltaY * deltaY) < (circle.size * circle.size);
     }
 
     static detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction) {
 
         function distance(x1, y1, x2, y2) {
-            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         }
 
         function degToRad(deg) {
@@ -59,12 +62,14 @@ export default class CollisionDetector {
         }
 
         let cx, cy;
-        let angleOfRad = degToRad(-rect.deg);
-        let rectCenterX = rect.x + rect.width / 2;
-        let rectCenterY = rect.y + rect.height / 2;
+        const angleOfRad = degToRad(-rect.deg);
+        const rectCenterX = rect.x + rect.width / 2;
+        const rectCenterY = rect.y + rect.height / 2;
 
-        let rotateCircleX = Math.cos(angleOfRad) * (circle.x + direction.x - rectCenterX) - Math.sin(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterX;
-        let rotateCircleY = Math.sin(angleOfRad) * (circle.x + direction.x - rectCenterX) + Math.cos(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterY;
+        const rotateCircleX = Math.cos(angleOfRad) * (circle.x + direction.x - rectCenterX)
+            - Math.sin(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterX;
+        const rotateCircleY = Math.sin(angleOfRad) * (circle.x + direction.x - rectCenterX)
+            + Math.cos(angleOfRad) * (circle.y + direction.y - rectCenterY) + rectCenterY;
 
 
         if (rotateCircleX < rect.x) {

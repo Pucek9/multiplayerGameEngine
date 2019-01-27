@@ -1,6 +1,6 @@
-import Bullet from "./Bullet";
-import PlayerModel from "../../shared/models/PlayerModel";
-import Aura from "./Aura";
+import Bullet from './Bullet';
+import PlayerModel from '../../shared/models/PlayerModel';
+import Aura from './Aura';
 
 export default class Player extends PlayerModel {
     public keys: Set<string> = new Set();

@@ -1,38 +1,38 @@
-import MouseCoordinates from "../../shared/api/MouseCoordinates";
-import NewPlayer from "../../shared/api/NewPlayer";
+import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
+import NewPlayer from '../../shared/apiModels/NewPlayer';
 
 export default interface GameType {
 
-    generateId()
+    generateId();
 
-    getPlayer(id)
+    getPlayer(id);
 
-    activePlayers()
+    activePlayers();
 
-    getPlayers()
+    getPlayers();
 
-    getBullets()
+    getBullets();
 
-    getMapName()
+    getMapName();
 
-    getStaticObjects()
+    getStaticObjects();
 
-    updateBullets()
+    updateBullets();
 
-    detectBulletsCollision()
+    detectBulletsCollision();
 
-    addBullet(mouseClick: MouseCoordinates)
+    addBullet(mouseClick: MouseCoordinates);
 
-    setPlayerActive(id: number)
+    setPlayerActive(id: number);
 
-    connectPlayer(id: number, newPlayer: NewPlayer)
+    connectPlayer(id: number, newPlayer: NewPlayer);
 
-    disconnectPlayer(disconnected)
+    disconnectPlayer(disconnected);
 
-    setKeys(id, keys)
+    setKeys(id, keys);
 
-    move(id)
+    move(id);
 
-    updatePlayerDirection(mouseCoordinates: MouseCoordinates)
+    updatePlayerDirection(mouseCoordinates: MouseCoordinates);
 
 }

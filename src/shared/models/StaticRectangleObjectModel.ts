@@ -1,4 +1,4 @@
-import IRectangle from "../interfaces/IRectangle";
+import IRectangle from '../interfaces/IRectangle';
 
 export default class StaticRectangleObjectModel implements IRectangle {
     public type = 'rectangle';
@@ -11,7 +11,7 @@ export default class StaticRectangleObjectModel implements IRectangle {
         public height: number,
         public depth: number,
         public color: string,
-        public deg: number = 0
+        public deg: number = 0,
     ) {
     }
 

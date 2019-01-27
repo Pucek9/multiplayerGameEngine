@@ -1,4 +1,4 @@
-import ICircle from '../interfaces/ICircle'
+import ICircle from '../interfaces/ICircle';
 
 export default class PlayerModel implements ICircle {
     public type = 'circle';

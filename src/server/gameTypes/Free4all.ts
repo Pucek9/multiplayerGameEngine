@@ -1,14 +1,14 @@
-import CollisionDetector from "../services/CollisionDetector";
-import Bullet from "../models/Bullet";
-import Player from "../models/Player";
-import NewPlayer from "../../shared/api/NewPlayer";
-import MouseCoordinates from "../../shared/api/MouseCoordinates";
-import GameMap from "../maps/GameMap";
-import GameType from "./GameType";
+import CollisionDetector from '../services/CollisionDetector';
+import Bullet from '../models/Bullet';
+import Player from '../models/Player';
+import NewPlayer from '../../shared/apiModels/NewPlayer';
+import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
+import GameMap from '../maps/GameMap';
+import GameType from './GameType';
 
-export default class Free4all implements GameType{
+export default class Free4all implements GameType {
 
-    public type: string = 'Free for all';
+    public type = 'Free for all';
 
     constructor(public name: string,
                 private map: GameMap,
@@ -16,8 +16,12 @@ export default class Free4all implements GameType{
                 private bullets: Bullet[] = []) {
     }
 
+    static rand(x) {
+        return Math.floor((Math.random() * x) + 1);
+    }
+
     generateId() {
-        return Date.now() + Math.floor(Math.random() * 100)
+        return Date.now() + Math.floor(Math.random() * 100);
     }
 
     getPlayer(id) {
@@ -25,7 +29,7 @@ export default class Free4all implements GameType{
     }
 
     activePlayers() {
-        return this.players.filter(player => player.active === true)
+        return this.players.filter(player => player.active === true);
     }
 
     getPlayers() {
@@ -38,7 +42,7 @@ export default class Free4all implements GameType{
 
     getBullets() {
         return this.bullets.map(bullet => {
-            return {id: bullet.id, x: bullet.x, y: bullet.y}
+            return {id: bullet.id, x: bullet.x, y: bullet.y};
         });
     }
 
@@ -47,21 +51,15 @@ export default class Free4all implements GameType{
     }
 
     getStaticObjects() {
-        return this.map.getStaticObjects()
+        return this.map.getStaticObjects();
     }
 
     updateBullets() {
         this.bullets.forEach((bullet, i) => {
             bullet.update();
             if (!bullet.isStillInAir()) {
-                this.bullets.splice(i, 1)
+                this.bullets.splice(i, 1);
             }
-        });
-    }
-
-    private detectPlayerCollision(player, direction: { x: number, y: number }) {
-        return [...this.getStaticObjects(), ...this.players].some(object => {
-            return player !== object && CollisionDetector.detectCollision(player, object, direction);
         });
     }
 
@@ -71,7 +69,7 @@ export default class Free4all implements GameType{
                 if (bullet.owner !== object) {
                     if (CollisionDetector.detectCollision(object, bullet)) {
                         object.hitFromBullet(bullet);
-                        this.bullets.splice(i, 1)
+                        this.bullets.splice(i, 1);
                     }
                     if (object.aura) {
                         if (CollisionDetector.detectCollision(object.aura, bullet)) {
@@ -95,7 +93,7 @@ export default class Free4all implements GameType{
                 owner.y + owner.size / 4,
                 mouseClick.targetX,
                 mouseClick.targetY,
-                2
+                2,
             );
             this.bullets.push(bullet);
             return {id: bullet.id, size: bullet.size};
@@ -145,8 +143,7 @@ export default class Free4all implements GameType{
             }
             if (player.keys.has('Shift')) {
                 player.getAura();
-            }
-            else {
+            } else {
                 player.removeAura();
             }
         }
@@ -161,7 +158,9 @@ export default class Free4all implements GameType{
         }
     }
 
-    static rand(x) {
-        return Math.floor((Math.random() * x) + 1);
+    private detectPlayerCollision(player, direction: { x: number, y: number }) {
+        return [...this.getStaticObjects(), ...this.players].some(object => {
+            return player !== object && CollisionDetector.detectCollision(player, object, direction);
+        });
     }
 }

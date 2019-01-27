@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const NodemonPlugin = require( 'nodemon-webpack-plugin' );
+const NodemonPlugin = require('nodemon-webpack-plugin');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,7 +22,7 @@ const config = [{
         filename: '[name].bundle.js',
     },
 
-    devtool: "source-map",
+    devtool: 'source-map',
 
     mode: environment,
 
@@ -33,22 +33,22 @@ const config = [{
         open: true,
         hot: true,
         contentBase: ['./dist/client'],
-        watchContentBase: true
+        watchContentBase: true,
     },
 
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Custom template',
             template: 'index.html',
-            hash: isProd
+            hash: isProd,
         }),
-        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
+        new TsConfigPathsPlugin({configFileName: 'tsconfig.json'}),
         new webpack.DefinePlugin({
             'process.env': {
                 'URL': JSON.stringify(url),
-                'NODE_ENV': JSON.stringify(environment)
-            }
-        })
+                'NODE_ENV': JSON.stringify(environment),
+            },
+        }),
     ],
 
     module: {
@@ -56,28 +56,28 @@ const config = [{
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
-                ]
+                    'file-loader',
+                ],
             },
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.scss$/,
                 use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
-                ]
+                    'style-loader', // creates style nodes from JS strings
+                    'css-loader', // translates CSS into CommonJS
+                    'sass-loader', // compiles Sass to CSS, using Node Sass by default
+                ],
             },
-        ]
+        ],
     },
 
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
-    }
+        extensions: ['.tsx', '.ts', '.js'],
+    },
 
 }, {
 
@@ -100,26 +100,26 @@ const config = [{
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
-                ]
+                    'file-loader',
+                ],
             }, {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
     target: 'node',
-    externals: [/^(?!\.|\/).+/i,],
+    externals: [/^(?!\.|\/).+/i],
 
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js'],
     },
 
     devtool: 'cheap-module-source-map',
 
     plugins: [
-        new TsConfigPathsPlugin({ configFileName: "tsconfig.json" }),
+        new TsConfigPathsPlugin({configFileName: 'tsconfig.json'}),
         new CheckerPlugin(),
     ],
 

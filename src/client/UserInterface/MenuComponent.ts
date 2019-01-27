@@ -1,4 +1,4 @@
-import {chooseGame, setGameMap, setGameName, setGameType, setNick} from "../actions";
+import {chooseGame, setGameMap, setGameName, setGameType, setNick} from '../store/actions';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -12,13 +12,13 @@ declare var validateGameName: HTMLLabelElement;
 declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
-export default class Menu {
+export default class MenuComponent {
 
     private store;
 
     constructor(
         main,
-        store
+        store,
     ) {
         this.store = store;
         const unsubscribeRender = store.subscribe(() => this.render());
@@ -38,35 +38,35 @@ export default class Menu {
         });
 
         gameNameInput.addEventListener('keyup', function () {
-            store.dispatch(setGameName(gameNameInput.value))
+            store.dispatch(setGameName(gameNameInput.value));
         });
 
         gameTypeInput.addEventListener('change', function () {
-            store.dispatch(setGameType(gameTypeInput.value))
+            store.dispatch(setGameType(gameTypeInput.value));
         });
 
         gameMapInput.addEventListener('change', function () {
-            store.dispatch(setGameMap(gameMapInput.value))
+            store.dispatch(setGameMap(gameMapInput.value));
         });
 
         nickInput.addEventListener('keyup', function () {
-            store.dispatch(setNick(nickInput.value))
+            store.dispatch(setNick(nickInput.value));
         });
     }
 
     renderTable(state) {
         state.newGame.list.forEach(game => {
-            let name = document.createElement('td');
+            const name = document.createElement('td');
             name.appendChild(document.createTextNode(game.name));
-            let type = document.createElement('td');
+            const type = document.createElement('td');
             type.appendChild(document.createTextNode(game.type));
-            let map = document.createElement('td');
+            const map = document.createElement('td');
             map.appendChild(document.createTextNode(game.map));
-            let count = document.createElement('td');
+            const count = document.createElement('td');
             count.appendChild(document.createTextNode(game.count));
-            let row = document.createElement('tr');
-            row.addEventListener("click", () => {
-                this.store.dispatch(chooseGame(game.name))
+            const row = document.createElement('tr');
+            row.addEventListener('click', () => {
+                this.store.dispatch(chooseGame(game.name));
             });
             if (state.joinGame.chosenGame === game.name) {
                 row.style.backgroundColor = 'grey';
@@ -77,8 +77,8 @@ export default class Menu {
             gamesListTable.append(row);
         });
     }
+
     render() {
-        //console.log('render', this.store.getState());
         gamesListTable.innerHTML = '';
         const state = this.store.getState();
         this.renderTable(state);

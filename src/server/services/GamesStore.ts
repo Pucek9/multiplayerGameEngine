@@ -1,5 +1,5 @@
-import gameTypes from '../gameTypes'
-import maps from '../maps'
+import gameTypes from '../gameTypes';
+import maps from '../maps';
 
 export default class GamesStore {
 
@@ -9,7 +9,7 @@ export default class GamesStore {
     }
 
     createGame(name: string, type: string, map: string) {
-        this.games.push(new gameTypes[type](name, maps[map]))
+        this.games.push(new gameTypes[type](name, maps[map]));
     }
 
     getGame(name: string) {
@@ -28,7 +28,7 @@ export default class GamesStore {
                 type: game.type,
                 map: game.map.mapName,
                 count: game.players.length,
-            }
+            };
         });
     }
 

@@ -1,4 +1,4 @@
-export default class BulletUpdate {
+export default class CreateBullet {
 
     constructor(public id: number,
                 public x: number,

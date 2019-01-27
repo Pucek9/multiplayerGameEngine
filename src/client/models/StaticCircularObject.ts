@@ -1,8 +1,8 @@
-import StaticCircularObjectModel from "../../shared/models/StaticCircularObjectModel";
-import IRenderable from "../interfaces/IRenderable";
-import PlayerModel from "../../shared/models/PlayerModel";
-import {Screen} from "../types/Screen";
-const cumin = require("../games/balls/images/head.png");
+import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import IRenderable from '../interfaces/IRenderable';
+import {Screen} from '../types/Screen';
+
+const cumin = require('../games/balls/images/head.jpg');
 
 const THREE = require('three');
 
@@ -15,7 +15,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
         }
 
         const texture = new THREE.TextureLoader().load(cumin);
-        const geometry = new THREE.CylinderGeometry(this.size ,this.size, 80, 32);
+        const geometry = new THREE.CylinderGeometry(this.size, this.size, 80, 32);
         const material = new THREE.MeshPhongMaterial({map: texture, color: this.color});
         this.object = new THREE.Mesh(geometry, material);
         this.object.rotation.x = degToRad(90);

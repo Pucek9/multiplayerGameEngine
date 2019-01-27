@@ -98,11 +98,20 @@ body {
     }
   }
 
-  #playersList {
-    list-style-type: none;
-    margin: 0;
-    padding-left: 5px;
+  #leftPanel {
+    overflow: hidden;
+    background-color: grey;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+
+    ul#playersList {
+      list-style-type: none;
+      margin: 0;
+      padding-left: 5px;
+    }
   }
+
 
 }
 
