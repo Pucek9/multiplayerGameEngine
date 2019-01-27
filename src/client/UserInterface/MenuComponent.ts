@@ -1,4 +1,4 @@
-import {chooseGame, setGameMap, setGameName, setGameType, setNick} from "../actions";
+import {chooseGame, setGameMap, setGameName, setGameType, setNick} from "../store/actions";
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -12,7 +12,7 @@ declare var validateGameName: HTMLLabelElement;
 declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
-export default class Menu {
+export default class MenuComponent {
 
     private store;
 

@@ -1,8 +1,8 @@
 import CollisionDetector from "../services/CollisionDetector";
 import Bullet from "../models/Bullet";
 import Player from "../models/Player";
-import NewPlayer from "../../shared/api/NewPlayer";
-import MouseCoordinates from "../../shared/api/MouseCoordinates";
+import NewPlayer from "../../shared/apiModels/NewPlayer";
+import MouseCoordinates from "../../shared/apiModels/MouseCoordinates";
 import GameMap from "../maps/GameMap";
 import GameType from "./GameType";
 

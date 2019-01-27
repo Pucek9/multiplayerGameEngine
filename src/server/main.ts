@@ -5,9 +5,9 @@ const express = require('express');
 const io = require('socket.io');
 import * as http from 'http';
 
-import NewPlayer from "../shared/api/NewPlayer";
-import MouseCoordinates from "../shared/api/MouseCoordinates";
-import NewGame from "../shared/api/NewGame";
+import NewPlayer from "../shared/apiModels/NewPlayer";
+import MouseCoordinates from "../shared/apiModels/MouseCoordinates";
+import NewGame from "../shared/apiModels/NewGame";
 
 const port = process.env.PORT || '80';
 const app = express();

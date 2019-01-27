@@ -2,7 +2,7 @@ import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
 import {Screen} from "../types/Screen";
 const THREE = require('three');
-const cumin = require("../games/balls/images/head.png");
+const cumin = require("../games/balls/images/head.jpg");
 const texture = new THREE.TextureLoader().load(cumin);
 
 export default class Player extends PlayerModel implements IRenderable {

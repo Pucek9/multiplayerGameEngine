@@ -2,12 +2,12 @@ import Player from "./models/Player";
 import Camera from "./models/Camera";
 import PlayerModel from "../shared/models/PlayerModel";
 import Bullet from "./models/Bullet";
-import BulletUpdate from "../shared/api/BulletUpdate";
+import BulletUpdate from "../shared/apiModels/BulletUpdate";
 import StaticRectangleObject from "./models/StaticRectangleObject";
 import StaticCircularObject from "./models/StaticCircularObject";
 import Light from "./models/Light";
-import PlayerListComponent from "./menu/PlayersList";
-import MouseCoordinates from "../shared/api/MouseCoordinates";
+import PlayerListComponent from "./UserInterface/PlayersList";
+import MouseCoordinates from "../shared/apiModels/MouseCoordinates";
 import Map from "./models/Map";
 import Cursor from "./models/Cursor";
 
@@ -22,7 +22,7 @@ export default class GameState {
     camera: Camera;
     light: Light;
     playersListComponent;
-    players= [];
+    players = [];
     playersListString = '';
     bullets;
     keys: Set<string> = new Set([]);
@@ -75,6 +75,10 @@ export default class GameState {
 
     addKey(e: KeyboardEvent) {
         this.keys.add(normalizeKey(e.key));
+    }
+
+    getKeys() {
+        return [...this.keys];
     }
 
     deleteKey(e: KeyboardEvent) {
@@ -180,6 +184,9 @@ export default class GameState {
     }
 
     tryRenderEverything() {
+        this.screen.renderer.render(this.screen.scene, this.screen.camera);
+
+        this.renderPlayerList();
         if (this.currentPlayer) {
             [
                 this.camera,
@@ -191,8 +198,18 @@ export default class GameState {
                 this.light,
             ].forEach(object => object.render());
         }
+
+
     }
 
+    renderPlayerList() {
+        const playersList = this.players.map(({name, score, color, hp}) => ({name, score, color, hp}));
+        const _playersListString = JSON.stringify(playersList);
+        if (_playersListString !== this.playersListString) {
+            this.playersListComponent.render(playersList);
+            this.playersListString = _playersListString;
+        }
+    }
 }
 
 function normalizeKey(key) {

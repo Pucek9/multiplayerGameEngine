@@ -1,6 +1,6 @@
 import PlayerModel from "../../shared/models/PlayerModel";
 import IRenderable from "../interfaces/IRenderable";
-import {chooseGame} from "../actions";
+import {chooseGame} from "../store/actions";
 
 declare var playersList: HTMLUListElement;
 
