@@ -1,5 +1,5 @@
 export default interface GameMap {
-    getMapName();
+  getMapName();
 
-    getStaticObjects();
+  getStaticObjects();
 }

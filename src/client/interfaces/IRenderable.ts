@@ -1,5 +1,3 @@
 export default interface IRenderable {
-
-    render(any?): void;
-
+  render(any?): void;
 }

@@ -1,6 +1,4 @@
 const webpack = require('webpack');
-const path = require('path');
-const NodemonPlugin = require('nodemon-webpack-plugin');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
