@@ -1,24 +1,24 @@
-import GamesStore from './services/GamesStore';
+import * as express from 'express';
 import * as http from 'http';
+import { listen, Socket } from 'socket.io';
 
+import GamesStore from './services/GamesStore';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
-
-const express = require('express');
-const io = require('socket.io');
+import Player from './models/Player';
 
 const port = process.env.PORT || '80';
 const app = express();
 const httpServer = http.createServer(app);
-const socketIo = io.listen(httpServer);
+const socketIo = listen(httpServer);
 const gamesStory = new GamesStore();
-let player;
+let player: Player;
 
 app.use(express.static('dist/client'));
 
-socketIo.on('connection', function(socket) {
+socketIo.on('connection', function(socket: Socket) {
   console.log('connection:', socket.id);
   setTimeout(() => {
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());

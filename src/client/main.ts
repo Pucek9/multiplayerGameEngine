@@ -1,5 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
+import { connect } from 'socket.io-client';
 
 import { addGame, clearGamesList, setId } from './store/actions';
 import { joinGameReducer, newGameReducer } from './store/reducers';
@@ -12,11 +13,9 @@ import { API } from '../shared/constants';
 import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { ScreenModel } from './types/ScreenModel';
 
-const io = require('socket.io-client');
-
 let url = process.env.URL || 'localhost';
 url = `http://${url.toString()}`;
-const socket = io.connect(url);
+const socket = connect(url);
 
 const config = {
   menu: false,
