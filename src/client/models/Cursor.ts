@@ -1,14 +1,13 @@
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
-
-const THREE = require('three');
+import { ScreenModel } from '../types/ScreenModel';
+import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
 export default class Cursor implements IRenderable {
   public x: number;
   public y: number;
   // public img: HTMLImageElement;
   // private img;
-  public object;
+  public object: Mesh;
 
   constructor(public src: string) {
     // this.img = new Image();
@@ -17,11 +16,11 @@ export default class Cursor implements IRenderable {
     // this.img.material.depthWrite = false;
   }
 
-  init(screen: Screen) {
-    this.object = new THREE.Mesh(
-      new THREE.PlaneGeometry(30, 30, 0),
-      new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load(this.src),
+  init(screen: ScreenModel) {
+    this.object = new Mesh(
+      new PlaneGeometry(30, 30, 0),
+      new MeshPhongMaterial({
+        map: new TextureLoader().load(this.src),
       }),
     );
     screen.scene.add(this.object);

@@ -1,11 +1,9 @@
 import IRenderable from '../interfaces/IRenderable';
 
-const THREE = require('three');
-
-export default class Menu implements IRenderable {
+export default class MenuBackground implements IRenderable {
   public background: HTMLElement;
 
-  constructor(id, src: string) {
+  constructor(id: string, src: string) {
     // @ts-ignore
     this.background = document.getElementById('menu');
     this.background.style.backgroundImage = `url(${src})`;

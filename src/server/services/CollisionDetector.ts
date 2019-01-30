@@ -1,5 +1,6 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
+import { degToRad } from '../../shared/helpers';
 
 interface Direction {
   x: number;
@@ -13,7 +14,7 @@ export default class CollisionDetector {
     direction?: Direction,
   ): boolean;
 
-  static detectCollision(object1, object2, direction = { x: 0, y: 0 }) {
+  static detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
     switch ([object1.type, object2.type].join()) {
       case 'circle,circle':
         return this.detectCircularCollision(object1, object2, direction);
@@ -26,14 +27,14 @@ export default class CollisionDetector {
     }
   }
 
-  static detectCircularCollision(o1: ICircle, o2: ICircle, direction): boolean {
+  static detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): boolean {
     const dx = direction.x + o1.x - o2.x;
     const dy = direction.y + o1.y - o2.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     return distance < o1.size + o2.size;
   }
 
-  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction): boolean {
+  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): boolean {
     return (
       o2.x + o2.width > o1.x &&
       o2.y + o2.height > o1.y &&
@@ -42,7 +43,11 @@ export default class CollisionDetector {
     );
   }
 
-  static detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
+  static detectRectangleAndCircleCollision(
+    circle: ICircle,
+    rect: IRectangle,
+    direction: Direction,
+  ): boolean {
     if (rect.deg === 0) {
       return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
     } else {
@@ -53,7 +58,7 @@ export default class CollisionDetector {
   static detectUnRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
-    direction,
+    direction: Direction,
   ): boolean {
     const deltaX =
       circle.x +
@@ -66,13 +71,13 @@ export default class CollisionDetector {
     return deltaX * deltaX + deltaY * deltaY < circle.size * circle.size;
   }
 
-  static detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction) {
-    function distance(x1, y1, x2, y2) {
+  static detectRotatedRectangleAndCircleCollision(
+    circle: ICircle,
+    rect: IRectangle,
+    direction: Direction,
+  ) {
+    function distance(x1: number, y1: number, x2: number, y2: number) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
-
-    function degToRad(deg) {
-      return (deg * Math.PI) / 180;
     }
 
     let cx, cy;

@@ -1,7 +1,7 @@
 import ICircle from '../interfaces/ICircle';
 
 export default class BulletModel implements ICircle {
-  public type = 'circle';
+  public type: string = 'circle';
 
   public x: number;
   public y: number;

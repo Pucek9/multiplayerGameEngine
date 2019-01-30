@@ -1,14 +1,14 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
 
-import { Screen } from '../types/Screen';
+import { ScreenModel } from '../types/ScreenModel';
 
 export default class Camera implements IRenderable {
-  private screen;
+  private screen: ScreenModel;
 
   constructor(private activePlayer: PlayerModel) {}
 
-  init(screen: Screen) {
+  init(screen: ScreenModel) {
     this.screen = screen;
   }
 

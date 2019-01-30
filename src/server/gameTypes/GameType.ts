@@ -1,10 +1,11 @@
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import NewPlayer from '../../shared/apiModels/NewPlayer';
+import Player from '../models/Player';
 
 export default interface GameType {
   generateId();
 
-  getPlayer(id);
+  getPlayer(id: string);
 
   activePlayers();
 
@@ -22,15 +23,15 @@ export default interface GameType {
 
   addBullet(mouseClick: MouseCoordinates);
 
-  setPlayerActive(id: number);
+  setPlayerActive(id: string);
 
-  connectPlayer(id: number, newPlayer: NewPlayer);
+  connectPlayer(id: string, newPlayer: NewPlayer);
 
-  disconnectPlayer(disconnected);
+  disconnectPlayer(disconnected: Player);
 
-  setKeys(id, keys);
+  setKeys(id: string, keys: Array<string>);
 
-  move(id);
+  move(id: string);
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
 }

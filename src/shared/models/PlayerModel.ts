@@ -1,14 +1,14 @@
 import ICircle from '../interfaces/ICircle';
 
 export default class PlayerModel implements ICircle {
-  public type = 'circle';
+  public type: string = 'circle';
 
   public active: boolean;
   public alive: boolean;
   public direction: number;
 
   constructor(
-    public id: number,
+    public id: string,
     public name: string,
     public color: string,
     public x: number,

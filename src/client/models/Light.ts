@@ -1,27 +1,28 @@
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
-
-const THREE = require('three');
+import { ScreenModel } from '../types/ScreenModel';
+import Cursor from './Cursor';
+import Player from './Player';
+import { SpotLight } from 'three';
 
 export default class Light implements IRenderable {
-  private light;
-  private activePlayer;
-  private cursor;
+  private light: SpotLight;
+  private activePlayer: Player;
+  private cursor: Cursor;
 
-  constructor(public screen: Screen) {}
+  constructor(public screen: ScreenModel) {}
 
-  init(activePlayer, cursor) {
+  init(activePlayer: Player, cursor: Cursor) {
     this.activePlayer = activePlayer;
     this.cursor = cursor;
     //
-    // this.light = new THREE.PointLight(0xffffff,10);
+    // this.light = new PointLight(0xffffff,10);
     // this.light.shadowBias = 0.0001;
     // this.light.castShadow = true;
     // this.light.shadowDarkness = 0.3;
     // this.light.shadowCameraVisible = true;
     // this.screen.scene.add(this.light)
 
-    this.light = new THREE.SpotLight(0xffffff, 20, 700);
+    this.light = new SpotLight(0xffffff, 20, 700);
     this.light.position.set(100, 1000, 100);
 
     this.light.castShadow = true;

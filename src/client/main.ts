@@ -9,8 +9,9 @@ import './style.scss';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
+import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { ScreenModel } from './types/ScreenModel';
 
-const THREE = require('three');
 const io = require('socket.io-client');
 
 let url = process.env.URL || 'localhost';
@@ -73,7 +74,7 @@ class Main {
     this.run();
   }
 
-  registerEvents(gameState) {
+  registerEvents(gameState: GameState) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));
@@ -88,7 +89,7 @@ class Main {
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
-    window.addEventListener('mousedown', function(e) {
+    window.addEventListener('mousedown', function(e: MouseEvent) {
       e.preventDefault();
       if (config.menu === false) {
         config.menu = true;
@@ -130,21 +131,16 @@ class Main {
     });
   }
 
-  onAddNewGame({ name, type, map }) {
+  onAddNewGame({ name, type, map }: NewGame) {
     const newGame = new NewGame(name, type, map);
     socket.emit(API.CREATE_GAME, newGame);
   }
 
-  prepareScreen() {
-    const camera = new THREE.PerspectiveCamera(
-      50,
-      window.innerWidth / window.innerHeight,
-      0.01,
-      2000,
-    );
+  prepareScreen(): ScreenModel {
+    const camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
     camera.position.z = 400;
-    const scene = new THREE.Scene();
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const scene = new Scene();
+    const renderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.autoClear = true;
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.

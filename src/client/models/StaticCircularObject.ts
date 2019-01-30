@@ -1,27 +1,22 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
+import { ScreenModel } from '../types/ScreenModel';
+import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
 
-const THREE = require('three');
-
 export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
-  private object;
+  private object: Mesh;
 
-  init(screen: Screen) {
-    function degToRad(deg) {
-      return (deg * Math.PI) / 180;
-    }
-
-    const texture = new THREE.TextureLoader().load(cumin);
-    const geometry = new THREE.CylinderGeometry(this.size, this.size, 80, 32);
-    const material = new THREE.MeshPhongMaterial({
+  init(screen: ScreenModel) {
+    const texture = new TextureLoader().load(cumin);
+    const geometry = new CylinderGeometry(this.size, this.size, 80, 32);
+    const material = new MeshPhongMaterial({
       map: texture,
       color: this.color,
     });
-    this.object = new THREE.Mesh(geometry, material);
-    this.object.rotation.x = degToRad(90);
+    this.object = new Mesh(geometry, material);
+    this.object.rotation.x = Math.degToRad(90);
     this.object.position.x = this.x;
     this.object.position.y = this.y;
     this.object.castShadow = true;

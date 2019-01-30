@@ -1,8 +1,8 @@
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
+import { ScreenModel } from '../types/ScreenModel';
 
 export default class Cleaner implements IRenderable {
-  constructor(public screen: Screen) {}
+  constructor(public screen: ScreenModel) {}
 
   render() {
     // this.screen.ctx.clearRect(

@@ -7,7 +7,7 @@ import GameMap from '../maps/GameMap';
 import GameType from './GameType';
 
 export default class Free4all implements GameType {
-  public type = 'Free for all';
+  public type: string = 'Free for all';
 
   constructor(
     public name: string,
@@ -16,7 +16,7 @@ export default class Free4all implements GameType {
     private bullets: Bullet[] = [],
   ) {}
 
-  static rand(x) {
+  static rand(x: number) {
     return Math.floor(Math.random() * x + 1);
   }
 
@@ -24,7 +24,7 @@ export default class Free4all implements GameType {
     return Date.now() + Math.floor(Math.random() * 100);
   }
 
-  getPlayer(id) {
+  getPlayer(id: string) {
     return this.players.find(player => player.id === id);
   }
 
@@ -36,7 +36,7 @@ export default class Free4all implements GameType {
     return this.players;
   }
 
-  isPlayerInThisGame(id: number) {
+  isPlayerInThisGame(id: string) {
     return this.players.find(player => player.id === id);
   }
 
@@ -100,11 +100,11 @@ export default class Free4all implements GameType {
     }
   }
 
-  setPlayerActive(id: number) {
+  setPlayerActive(id: string) {
     this.getPlayer(id).active = true;
   }
 
-  connectPlayer(id: number, newPlayer: NewPlayer) {
+  connectPlayer(id: string, newPlayer: NewPlayer) {
     const player = new Player(
       id,
       newPlayer.name,
@@ -117,15 +117,15 @@ export default class Free4all implements GameType {
     return player;
   }
 
-  disconnectPlayer(disconnected) {
+  disconnectPlayer(disconnected: Player) {
     this.players.splice(this.players.indexOf(disconnected), 1);
   }
 
-  setKeys(id, keys) {
+  setKeys(id: string, keys: Array<string>) {
     this.getPlayer(id).keys = new Set(keys);
   }
 
-  move(id) {
+  move(id: string) {
     const player = this.getPlayer(id);
     if (player) {
       if (player.keys.has('W') || player.keys.has('ArrowUp')) {
@@ -185,7 +185,7 @@ export default class Free4all implements GameType {
     }
   }
 
-  private detectPlayerCollision(player, direction: { x: number; y: number }) {
+  private detectPlayerCollision(player: Player, direction: { x: number; y: number }) {
     return [...this.getStaticObjects(), ...this.players].some(object => {
       return player !== object && CollisionDetector.detectCollision(player, object, direction);
     });

@@ -2,7 +2,7 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 
 export default class Prototype1 {
-  private static mapName = 'Prototype1';
+  private static mapName: string = 'Prototype1';
 
   constructor() {}
 

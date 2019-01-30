@@ -10,39 +10,41 @@ import PlayerListComponent from './UserInterface/PlayersList';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
+import BulletModel from '../shared/models/BulletModel';
+import NewPlayer from '../shared/apiModels/NewPlayer';
+import { ScreenModel } from './types/ScreenModel';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.png');
 
 export default class GameState {
-  user;
-  screen;
-  currentPlayer;
+  user: NewPlayer;
+  screen: ScreenModel;
+  currentPlayer: Player;
   camera: Camera;
   light: Light;
-  playersListComponent;
-  players = [];
-  playersListString = '';
-  bullets;
+  playersListComponent: PlayerListComponent;
+  players: Player[] = [];
+  playersListString: string = '';
+  bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
   staticObjects: any[];
   map: Map;
   cursor: Cursor;
 
-  constructor(user, screen) {
+  constructor(user: NewPlayer, screen: ScreenModel) {
     this.user = user;
     this.screen = screen;
     this.light = new Light(screen);
     this.playersListComponent = new PlayerListComponent();
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
-    this.bullets = [];
 
     this.map.init(this.screen);
     this.cursor.init(this.screen);
   }
 
-  appendNewPlayer(newPlayer) {
+  appendNewPlayer(newPlayer: PlayerModel) {
     const player = new Player(
       newPlayer.id,
       newPlayer.name,
@@ -99,7 +101,7 @@ export default class GameState {
     }
   }
 
-  appendNewBullet(newBullet: Bullet) {
+  appendNewBullet(newBullet: BulletModel) {
     if (newBullet) {
       const bullet = new Bullet(newBullet.id, newBullet.size);
       bullet.init(this.screen);
@@ -155,22 +157,22 @@ export default class GameState {
   }
 
   removePlayer(id: string) {
-    const disconnected = this.players.find(player => player.id === id);
+    const disconnected = this.players.find((player: Player) => player.id === id);
     if (disconnected) {
       disconnected.remove(this.screen);
       this.players.splice(this.players.indexOf(disconnected), 1);
     }
   }
 
-  getUpdatedMouseCoordinates(e: MouseEvent) {
+  getUpdatedMouseCoordinates(e: MouseEvent): MouseCoordinates {
     if (this.currentPlayer) {
       this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
       this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
-      return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
+      return this.getMouseCoordinates();
     }
   }
 
-  getMouseCoordinates() {
+  getMouseCoordinates(): MouseCoordinates {
     return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
   }
 
@@ -206,6 +208,6 @@ export default class GameState {
   }
 }
 
-function normalizeKey(key) {
+function normalizeKey(key: string): string {
   return key.length !== 1 ? key : key.toUpperCase();
 }

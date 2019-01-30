@@ -1,7 +1,7 @@
 import StaticRectangleObject from '../models/StaticRectangleObject';
 
 export default class Prototype2 {
-  private static mapName = 'Prototype2';
+  private static mapName: string = 'Prototype2';
 
   constructor() {}
 

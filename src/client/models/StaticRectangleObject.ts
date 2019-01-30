@@ -1,29 +1,24 @@
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
+import { ScreenModel } from '../types/ScreenModel';
+import { BoxGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const box = require('../games/balls/images/box.png');
 
-const THREE = require('three');
-
 export default class StaticRectangleObject extends StaticRectangleObjectModel
   implements IRenderable {
-  private object;
+  private object: Mesh;
 
-  init(screen: Screen) {
-    function degToRad(deg) {
-      return (deg * Math.PI) / 180;
-    }
-
-    const texture = new THREE.TextureLoader().load(box);
-    const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
-    const material = new THREE.MeshPhongMaterial({
+  init(screen: ScreenModel) {
+    const texture = new TextureLoader().load(box);
+    const geometry = new BoxGeometry(this.width, this.height, this.depth);
+    const material = new MeshPhongMaterial({
       map: texture,
       color: this.color,
     });
-    this.object = new THREE.Mesh(geometry, material);
+    this.object = new Mesh(geometry, material);
 
-    this.object.rotation.z = degToRad(this.deg);
+    this.object.rotation.z = Math.degToRad(this.deg);
 
     this.object.position.x = this.x + this.width / 2;
     this.object.position.y = this.y + this.height / 2;

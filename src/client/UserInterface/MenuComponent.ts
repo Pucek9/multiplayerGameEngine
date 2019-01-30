@@ -1,4 +1,5 @@
 import { chooseGame, setGameMap, setGameName, setGameType, setNick } from '../store/actions';
+import { Store } from 'redux';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -13,9 +14,9 @@ declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
 export default class MenuComponent {
-  private store;
+  private store: Store;
 
-  constructor(main, store) {
+  constructor(main, store: Store) {
     this.store = store;
     const unsubscribeRender = store.subscribe(() => this.render());
 
