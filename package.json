@@ -13,7 +13,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "tslint --project tsconfig.json --fix",
-    "prettier": "prettier --write \"src/**/*.ts\"",
+    "prettier": "prettier --write \"src/**/*{.ts,.scss,.html}\"",
     "start": "node dist/server/robocop.bundle.js",
     "postinstall": "npm run build",
     "build": "webpack",
