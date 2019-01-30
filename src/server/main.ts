@@ -36,12 +36,8 @@ socketIo.on('connection', function(socket) {
     if (gameState) {
       socket.join(newPlayer.gameName);
       player = gameState.connectPlayer(socket.id, newPlayer);
-      socketIo
-        .to(newPlayer.gameName)
-        .emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
-      socketIo
-        .to(newPlayer.gameName)
-        .emit(API.ADD_PLAYERS, gameState.activePlayers());
+      socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+      socketIo.to(newPlayer.gameName).emit(API.ADD_PLAYERS, gameState.activePlayers());
       socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
 
       socket.on(API.UPDATE_KEYS, function(keys: Array<string>) {
@@ -57,12 +53,8 @@ socketIo.on('connection', function(socket) {
           gameState.move(socket.id);
           gameState.updateBullets();
           gameState.detectBulletsCollision();
-          socketIo
-            .to(newPlayer.gameName)
-            .emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
-          socketIo
-            .to(newPlayer.gameName)
-            .emit(API.GET_BULLETS, gameState.getBullets());
+          socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+          socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
         }, 1000 / 60);
       });
 
@@ -71,9 +63,7 @@ socketIo.on('connection', function(socket) {
         socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_BULLET, bullet);
       });
 
-      socket.on(API.UPDATE_DIRECTION, function(
-        mouseCoordinates: MouseCoordinates,
-      ) {
+      socket.on(API.UPDATE_DIRECTION, function(mouseCoordinates: MouseCoordinates) {
         gameState.updatePlayerDirection(mouseCoordinates);
       });
 
@@ -85,9 +75,7 @@ socketIo.on('connection', function(socket) {
         socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
       });
 
-      socketIo
-        .to(newPlayer.gameName)
-        .emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
+      socketIo.to(newPlayer.gameName).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
     }
   });
 });

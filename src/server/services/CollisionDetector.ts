@@ -20,17 +20,9 @@ export default class CollisionDetector {
       case 'rectangle,rectangle':
         return this.detectRectangleCollision(object1, object2, direction);
       case 'circle,rectangle':
-        return this.detectRectangleAndCircleCollision(
-          object1,
-          object2,
-          direction,
-        );
+        return this.detectRectangleAndCircleCollision(object1, object2, direction);
       case 'rectangle,circle':
-        return this.detectRectangleAndCircleCollision(
-          object2,
-          object1,
-          direction,
-        );
+        return this.detectRectangleAndCircleCollision(object2, object1, direction);
     }
   }
 
@@ -41,11 +33,7 @@ export default class CollisionDetector {
     return distance < o1.size + o2.size;
   }
 
-  static detectRectangleCollision(
-    o1: IRectangle,
-    o2: IRectangle,
-    direction,
-  ): boolean {
+  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction): boolean {
     return (
       o2.x + o2.width > o1.x &&
       o2.y + o2.height > o1.y &&
@@ -54,23 +42,11 @@ export default class CollisionDetector {
     );
   }
 
-  static detectRectangleAndCircleCollision(
-    circle: ICircle,
-    rect: IRectangle,
-    direction,
-  ): boolean {
+  static detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction): boolean {
     if (rect.deg === 0) {
-      return this.detectUnRotatedRectangleAndCircleCollision(
-        circle,
-        rect,
-        direction,
-      );
+      return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
     } else {
-      return this.detectRotatedRectangleAndCircleCollision(
-        circle,
-        rect,
-        direction,
-      );
+      return this.detectRotatedRectangleAndCircleCollision(circle, rect, direction);
     }
   }
 
@@ -90,11 +66,7 @@ export default class CollisionDetector {
     return deltaX * deltaX + deltaY * deltaY < circle.size * circle.size;
   }
 
-  static detectRotatedRectangleAndCircleCollision(
-    circle: ICircle,
-    rect: IRectangle,
-    direction,
-  ) {
+  static detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle, direction) {
     function distance(x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }

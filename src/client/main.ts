@@ -53,9 +53,7 @@ class Main {
     socket.on(API.GET_GAMES_LIST, function(data) {
       console.log('GET_GAMES_LIST', data);
       store.dispatch(clearGamesList());
-      data.forEach(game =>
-        store.dispatch(addGame(game.name, game.type, game.map, game.count)),
-      );
+      data.forEach(game => store.dispatch(addGame(game.name, game.type, game.map, game.count)));
     });
   }
 
@@ -82,17 +80,11 @@ class Main {
 
     socket.on(API.ADD_NEW_BULLET, gameState.appendNewBullet.bind(gameState));
 
-    socket.on(
-      API.GET_PLAYERS_STATE,
-      gameState.updatePlayersState.bind(gameState),
-    );
+    socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
 
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
-    socket.on(
-      API.GET_STATIC_OBJECTS,
-      gameState.appendStaticObjects.bind(gameState),
-    );
+    socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 

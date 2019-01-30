@@ -46,16 +46,13 @@ export default class Bullet extends BulletModel {
   update() {
     this.length += this.speed;
     this.trajectory = Math.sqrt(
-      Math.pow(this.targetX - this.fromX, 2) +
-        Math.pow(this.targetY - this.fromY, 2),
+      Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
     this.x =
       this.targetX +
-      ((this.trajectory - this.length) / this.trajectory) *
-        (this.fromX - this.targetX);
+      ((this.trajectory - this.length) / this.trajectory) * (this.fromX - this.targetX);
     this.y =
       this.targetY +
-      ((this.trajectory - this.length) / this.trajectory) *
-        (this.fromY - this.targetY);
+      ((this.trajectory - this.length) / this.trajectory) * (this.fromY - this.targetY);
   }
 }

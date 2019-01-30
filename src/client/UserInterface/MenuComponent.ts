@@ -1,10 +1,4 @@
-import {
-  chooseGame,
-  setGameMap,
-  setGameName,
-  setGameType,
-  setNick,
-} from '../store/actions';
+import { chooseGame, setGameMap, setGameName, setGameType, setNick } from '../store/actions';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -88,14 +82,10 @@ export default class MenuComponent {
       state.joinGame.chosenGame === null ||
       state.joinGame.id === null;
     addNewGameButton.disabled =
-      state.newGame.name === '' ||
-      state.newGame.type === null ||
-      state.newGame.map === null;
-    validateNick.style.visibility =
-      state.joinGame.nick === '' ? 'visible' : 'hidden';
+      state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
+    validateNick.style.visibility = state.joinGame.nick === '' ? 'visible' : 'hidden';
     validateSelectedGame.style.visibility =
       state.joinGame.chosenGame === null ? 'visible' : 'hidden';
-    validateGameName.style.visibility =
-      state.newGame.name === '' ? 'visible' : 'hidden';
+    validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
   }
 }

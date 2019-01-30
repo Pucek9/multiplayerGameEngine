@@ -10,10 +10,7 @@ export function newGameReducer(
   return state;
 }
 
-export function joinGameReducer(
-  state = { nick: '', id: null, chosenGame: null },
-  action,
-) {
+export function joinGameReducer(state = { nick: '', id: null, chosenGame: null }, action) {
   if (Object.keys(joinGameActions).includes(action.type) && action.payload) {
     return action.payload(state);
   }

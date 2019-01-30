@@ -54,9 +54,7 @@ export default class GameState {
     player.setAsEnemy();
     this.players.push(player);
     if (!this.currentPlayer) {
-      this.currentPlayer = this.players.find(
-        _player => _player.id === this.user.id,
-      );
+      this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsActive();
 
       this.camera = new Camera(this.currentPlayer);
@@ -71,13 +69,7 @@ export default class GameState {
       .forEach(_player => {
         const existed = this.players.find(player => player.id === _player.id);
         if (!existed) {
-          const player = new Player(
-            _player.id,
-            _player.name,
-            _player.color,
-            _player.x,
-            _player.y,
-          );
+          const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
           player.init(this.screen);
           player.setAsEnemy();
           this.players.push(player);
@@ -173,8 +165,7 @@ export default class GameState {
   getUpdatedMouseCoordinates(e: MouseEvent) {
     if (this.currentPlayer) {
       this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
-      this.cursor.y =
-        -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
+      this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
       return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
     }
   }

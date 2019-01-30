@@ -6,8 +6,7 @@ const cumin = require('../games/balls/images/head.jpg');
 
 const THREE = require('three');
 
-export default class StaticCircularObject extends StaticCircularObjectModel
-  implements IRenderable {
+export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
   private object;
 
   init(screen: Screen) {
