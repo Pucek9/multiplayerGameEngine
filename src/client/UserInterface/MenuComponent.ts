@@ -3,7 +3,7 @@ import {
   setGameMap,
   setGameName,
   setGameType,
-  setNick
+  setNick,
 } from '../store/actions';
 
 declare var gameNameInput: HTMLInputElement;

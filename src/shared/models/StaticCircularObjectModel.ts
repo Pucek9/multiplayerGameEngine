@@ -7,6 +7,6 @@ export default class StaticCircularObjectModel implements ICircle {
     public x: number,
     public y: number,
     public size: number,
-    public color: string
+    public color: string,
   ) {}
 }

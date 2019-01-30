@@ -10,7 +10,7 @@ export default class CollisionDetector {
   static detectCollision(
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
-    direction?: Direction
+    direction?: Direction,
   ): boolean;
 
   static detectCollision(object1, object2, direction = { x: 0, y: 0 }) {
@@ -23,13 +23,13 @@ export default class CollisionDetector {
         return this.detectRectangleAndCircleCollision(
           object1,
           object2,
-          direction
+          direction,
         );
       case 'rectangle,circle':
         return this.detectRectangleAndCircleCollision(
           object2,
           object1,
-          direction
+          direction,
         );
     }
   }
@@ -44,7 +44,7 @@ export default class CollisionDetector {
   static detectRectangleCollision(
     o1: IRectangle,
     o2: IRectangle,
-    direction
+    direction,
   ): boolean {
     return (
       o2.x + o2.width > o1.x &&
@@ -57,19 +57,19 @@ export default class CollisionDetector {
   static detectRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
-    direction
+    direction,
   ): boolean {
     if (rect.deg === 0) {
       return this.detectUnRotatedRectangleAndCircleCollision(
         circle,
         rect,
-        direction
+        direction,
       );
     } else {
       return this.detectRotatedRectangleAndCircleCollision(
         circle,
         rect,
-        direction
+        direction,
       );
     }
   }
@@ -77,7 +77,7 @@ export default class CollisionDetector {
   static detectUnRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
-    direction
+    direction,
   ): boolean {
     const deltaX =
       circle.x +
@@ -93,7 +93,7 @@ export default class CollisionDetector {
   static detectRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
-    direction
+    direction,
   ) {
     function distance(x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));

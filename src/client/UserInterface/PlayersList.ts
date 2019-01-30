@@ -11,7 +11,7 @@ export default class PlayerListComponent implements IRenderable {
       const li = document.createElement('li');
       li.style.color = _player.color;
       li.appendChild(
-        document.createTextNode(`${_player.name}: ${_player.score}`)
+        document.createTextNode(`${_player.name}: ${_player.score}`),
       );
       // @ts-ignore
       playersList.append(li);

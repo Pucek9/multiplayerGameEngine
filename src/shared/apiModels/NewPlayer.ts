@@ -3,6 +3,6 @@ export default class NewPlayer {
     public id: number,
     public name: string,
     public color: string,
-    public gameName: string
+    public gameName: string,
   ) {}
 }

@@ -13,7 +13,7 @@ export default class Free4all implements GameType {
     public name: string,
     private map: GameMap,
     public players: Player[] = [],
-    private bullets: Bullet[] = []
+    private bullets: Bullet[] = [],
   ) {}
 
   static rand(x) {
@@ -93,7 +93,7 @@ export default class Free4all implements GameType {
         owner.y + owner.size / 4,
         mouseClick.targetX,
         mouseClick.targetY,
-        2
+        2,
       );
       this.bullets.push(bullet);
       return { id: bullet.id, size: bullet.size };
@@ -111,7 +111,7 @@ export default class Free4all implements GameType {
       newPlayer.color,
       Free4all.rand(1000),
       Free4all.rand(1000),
-      20
+      20,
     );
     this.players.push(player);
     return player;
@@ -132,7 +132,7 @@ export default class Free4all implements GameType {
         if (
           !this.detectPlayerCollision(player, {
             x: 0,
-            y: player.speed
+            y: player.speed,
           })
         ) {
           player.goDown();
@@ -142,7 +142,7 @@ export default class Free4all implements GameType {
         if (
           !this.detectPlayerCollision(player, {
             x: 0,
-            y: -player.speed
+            y: -player.speed,
           })
         ) {
           player.goUp();
@@ -152,7 +152,7 @@ export default class Free4all implements GameType {
         if (
           !this.detectPlayerCollision(player, {
             x: -player.speed,
-            y: 0
+            y: 0,
           })
         ) {
           player.goLeft();
@@ -162,7 +162,7 @@ export default class Free4all implements GameType {
         if (
           !this.detectPlayerCollision(player, {
             x: player.speed,
-            y: 0
+            y: 0,
           })
         ) {
           player.goRight();

@@ -48,14 +48,14 @@ export default class GameState {
       newPlayer.name,
       newPlayer.color,
       newPlayer.x,
-      newPlayer.y
+      newPlayer.y,
     );
     player.init(this.screen);
     player.setAsEnemy();
     this.players.push(player);
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(
-        _player => _player.id === this.user.id
+        _player => _player.id === this.user.id,
       );
       this.currentPlayer.setAsActive();
 
@@ -76,7 +76,7 @@ export default class GameState {
             _player.name,
             _player.color,
             _player.x,
-            _player.y
+            _player.y,
           );
           player.init(this.screen);
           player.setAsEnemy();
@@ -121,7 +121,7 @@ export default class GameState {
       if (this.currentPlayer && foundPlayer.id === this.currentPlayer.id) {
         const diff = {
           x: player.x - foundPlayer.x,
-          y: player.y - foundPlayer.y
+          y: player.y - foundPlayer.y,
         };
         this.cursor.x -= diff.x;
         this.cursor.y -= diff.y;
@@ -195,7 +195,7 @@ export default class GameState {
         ...this.bullets,
         ...this.players.filter(player => player.active),
         this.cursor,
-        this.light
+        this.light,
       ].forEach(object => object.render());
     }
   }
@@ -205,7 +205,7 @@ export default class GameState {
       name,
       score,
       color,
-      hp
+      hp,
     }));
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {

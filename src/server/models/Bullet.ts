@@ -15,7 +15,7 @@ export default class Bullet extends BulletModel {
     public targetY: number,
     size,
     public power: number = 10,
-    protected range: number = 500
+    protected range: number = 500,
   ) {
     super(id, size);
     this.length = 10;
@@ -47,7 +47,7 @@ export default class Bullet extends BulletModel {
     this.length += this.speed;
     this.trajectory = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) +
-        Math.pow(this.targetY - this.fromY, 2)
+        Math.pow(this.targetY - this.fromY, 2),
     );
     this.x =
       this.targetX +

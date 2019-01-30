@@ -2,7 +2,7 @@ import { gamesListActions, joinGameActions } from './actions';
 
 export function newGameReducer(
   state = { name: '', type: 'Free4All', map: 'Prototype1', list: [] },
-  action
+  action,
 ) {
   if (Object.keys(gamesListActions).includes(action.type) && action.payload) {
     return action.payload(state);
@@ -12,7 +12,7 @@ export function newGameReducer(
 
 export function joinGameReducer(
   state = { nick: '', id: null, chosenGame: null },
-  action
+  action,
 ) {
   if (Object.keys(joinGameActions).includes(action.type) && action.payload) {
     return action.payload(state);

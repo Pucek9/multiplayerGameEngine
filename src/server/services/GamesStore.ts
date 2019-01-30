@@ -25,7 +25,7 @@ export default class GamesStore {
         name: game.name,
         type: game.type,
         map: game.map.mapName,
-        count: game.players.length
+        count: game.players.length,
       };
     });
   }

@@ -3,5 +3,5 @@ import Prototype2 from './Prototype2';
 
 export default {
   Prototype1,
-  Prototype2
+  Prototype2,
 };

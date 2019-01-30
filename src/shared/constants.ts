@@ -13,5 +13,5 @@ export enum API {
   WELCOME_NEW_PLAYER = 'helloPlayer',
   UPDATE_DIRECTION = 'updateDirection',
   CREATE_GAME = 'createGame',
-  GET_GAMES_LIST = 'getGamesList'
+  GET_GAMES_LIST = 'getGamesList',
 }

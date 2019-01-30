@@ -16,7 +16,7 @@ export default class PlayerModel implements ICircle {
     public size: number = 32,
     public speed: number = 3,
     public score: number = 0,
-    public hp: number = 100
+    public hp: number = 100,
   ) {
     this.active = false;
     this.alive = true;

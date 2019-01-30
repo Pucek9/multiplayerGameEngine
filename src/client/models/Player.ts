@@ -15,7 +15,7 @@ export default class Player extends PlayerModel implements IRenderable {
       const geometry = new THREE.SphereGeometry(20, 10, 10, 1);
       const material = new THREE.MeshPhongMaterial({
         map: texture,
-        color: this.color
+        color: this.color,
       });
       this.object = new THREE.Mesh(geometry, material);
       this.object.receiveShadow = true;

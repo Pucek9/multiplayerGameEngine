@@ -19,7 +19,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel
     const geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
     const material = new THREE.MeshPhongMaterial({
       map: texture,
-      color: this.color
+      color: this.color,
     });
     this.object = new THREE.Mesh(geometry, material);
 

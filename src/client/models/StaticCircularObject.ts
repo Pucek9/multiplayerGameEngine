@@ -19,7 +19,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel
     const geometry = new THREE.CylinderGeometry(this.size, this.size, 80, 32);
     const material = new THREE.MeshPhongMaterial({
       map: texture,
-      color: this.color
+      color: this.color,
     });
     this.object = new THREE.Mesh(geometry, material);
     this.object.rotation.x = degToRad(90);

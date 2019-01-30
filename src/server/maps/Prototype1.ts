@@ -18,7 +18,7 @@ export default class Prototype1 {
       new StaticRectangleObject(500, 300, 0, 500, 100, 200, 'green', 45),
       new StaticRectangleObject(230, 170, 0, 200, 80, 80, 'blue', -30),
       new StaticRectangleObject(-400, -500, 0, 300, 300, 10, 'pink', -70),
-      new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow')
+      new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
     ];
   }
 }

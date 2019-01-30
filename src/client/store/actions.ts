@@ -3,12 +3,12 @@ export const gamesListActions = {
   SET_GAME_NAME: 'SET_GAME_NAME',
   SET_GAME_TYPE: 'SET_GAME_TYPE',
   SET_GAME_MAP: 'SET_GAME_MAP',
-  CLEAR_GAMES_LIST: 'CLEAR_GAMES_LIST'
+  CLEAR_GAMES_LIST: 'CLEAR_GAMES_LIST',
 };
 
 export const joinGameActions = {
   SET_NICK: 'SET_NICK',
-  CHOOSE_GAME: 'CHOOSE_GAME'
+  CHOOSE_GAME: 'CHOOSE_GAME',
 };
 
 export const addGame = (name, type, map, count) => {
@@ -18,9 +18,9 @@ export const addGame = (name, type, map, count) => {
       return {
         ...state,
         list: [...state.list, { name, type, map, count }],
-        name: ''
+        name: '',
       };
-    }
+    },
   };
 };
 
@@ -30,9 +30,9 @@ export const setNick = nick => {
     payload: state => {
       return {
         ...state,
-        nick
+        nick,
       };
-    }
+    },
   };
 };
 
@@ -42,9 +42,9 @@ export const setId = id => {
     payload: state => {
       return {
         ...state,
-        id
+        id,
       };
-    }
+    },
   };
 };
 
@@ -54,9 +54,9 @@ export const setGameName = name => {
     payload: state => {
       return {
         ...state,
-        name
+        name,
       };
-    }
+    },
   };
 };
 
@@ -66,9 +66,9 @@ export const setGameType = type => {
     payload: state => {
       return {
         ...state,
-        type
+        type,
       };
-    }
+    },
   };
 };
 
@@ -78,9 +78,9 @@ export const setGameMap = map => {
     payload: state => {
       return {
         ...state,
-        map
+        map,
       };
-    }
+    },
   };
 };
 
@@ -90,9 +90,9 @@ export const chooseGame = chosenGame => {
     payload: state => {
       return {
         ...state,
-        chosenGame
+        chosenGame,
       };
-    }
+    },
   };
 };
 
@@ -102,8 +102,8 @@ export const clearGamesList = () => {
     payload: state => {
       return {
         ...state,
-        list: []
+        list: [],
       };
-    }
+    },
   };
 };

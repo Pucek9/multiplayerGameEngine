@@ -21,8 +21,8 @@ export default class Cursor implements IRenderable {
     this.object = new THREE.Mesh(
       new THREE.PlaneGeometry(30, 30, 0),
       new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load(this.src)
-      })
+        map: new THREE.TextureLoader().load(this.src),
+      }),
     );
     screen.scene.add(this.object);
   }

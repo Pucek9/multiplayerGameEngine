@@ -14,8 +14,8 @@ export default class Map implements IRenderable {
     this.object = new THREE.Mesh(
       new THREE.PlaneGeometry(2920, 2004, 0),
       new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load(this.src)
-      })
+        map: new THREE.TextureLoader().load(this.src),
+      }),
     );
 
     // this.object.material.depthTest = false;

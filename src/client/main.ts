@@ -19,7 +19,7 @@ const socket = io.connect(url);
 
 const config = {
   menu: false,
-  fps: 100
+  fps: 100,
 };
 
 function randRGB() {
@@ -32,7 +32,7 @@ function randColor() {
 
 const app = combineReducers({
   newGame: newGameReducer,
-  joinGame: joinGameReducer
+  joinGame: joinGameReducer,
 });
 const store = createStore(app, devToolsEnhancer());
 
@@ -54,7 +54,7 @@ class Main {
       console.log('GET_GAMES_LIST', data);
       store.dispatch(clearGamesList());
       data.forEach(game =>
-        store.dispatch(addGame(game.name, game.type, game.map, game.count))
+        store.dispatch(addGame(game.name, game.type, game.map, game.count)),
       );
     });
   }
@@ -65,7 +65,7 @@ class Main {
       userState.id,
       userState.nick,
       randColor(),
-      userState.chosenGame
+      userState.chosenGame,
     );
     socket.emit(API.CREATE_PLAYER, newPlayer);
     alert(newPlayer.name + ' joined the game! Click mouse after close that!');
@@ -84,14 +84,14 @@ class Main {
 
     socket.on(
       API.GET_PLAYERS_STATE,
-      gameState.updatePlayersState.bind(gameState)
+      gameState.updatePlayersState.bind(gameState),
     );
 
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
     socket.on(
       API.GET_STATIC_OBJECTS,
-      gameState.appendStaticObjects.bind(gameState)
+      gameState.appendStaticObjects.bind(gameState),
     );
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
@@ -115,7 +115,7 @@ class Main {
           socket.emit(API.UPDATE_DIRECTION, mouseCoordinates);
         }
       },
-      false
+      false,
     );
 
     window.addEventListener('keydown', function(e: KeyboardEvent) {
@@ -148,7 +148,7 @@ class Main {
       50,
       window.innerWidth / window.innerHeight,
       0.01,
-      2000
+      2000,
     );
     camera.position.z = 400;
     const scene = new THREE.Scene();
@@ -162,7 +162,7 @@ class Main {
     return {
       camera: camera,
       scene: scene,
-      renderer: renderer
+      renderer: renderer,
     };
   }
 

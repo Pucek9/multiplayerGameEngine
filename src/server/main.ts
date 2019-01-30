@@ -72,7 +72,7 @@ socketIo.on('connection', function(socket) {
       });
 
       socket.on(API.UPDATE_DIRECTION, function(
-        mouseCoordinates: MouseCoordinates
+        mouseCoordinates: MouseCoordinates,
       ) {
         gameState.updatePlayerDirection(mouseCoordinates);
       });
