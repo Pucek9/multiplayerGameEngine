@@ -100,10 +100,13 @@ body {
 
   #leftPanel {
     overflow: hidden;
-    background-color: grey;
-    opacity: 0.7;
+    background: rgba(171, 205, 239, 0.3);
     position: absolute;
     top: 0;
+
+    span {
+      color: white;
+    }
 
     ul#playersList {
       list-style-type: none;
