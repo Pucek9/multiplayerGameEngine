@@ -1,8 +1,16 @@
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import NewPlayer from '../../shared/apiModels/NewPlayer';
 import Player from '../models/Player';
+import Bullet from '../models/Bullet';
+import GameMap from '../maps/GameMap';
 
-export default interface GameType {
+export default interface GameModel {
+  name: string;
+  type: string;
+  map: GameMap;
+  players: Player[];
+  bullets: Bullet[];
+
   generateId();
 
   getPlayer(id: string);
@@ -10,6 +18,8 @@ export default interface GameType {
   activePlayers();
 
   getPlayers();
+
+  isPlayerInThisGame(id: string);
 
   getBullets();
 

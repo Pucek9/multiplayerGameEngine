@@ -22,7 +22,7 @@ socketIo.on('connection', function(socket: Socket) {
   console.log('connection:', socket.id);
   setTimeout(() => {
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
-    socket.emit(API.WELCOME_NEW_PLAYER, { socketId: socket.id });
+    socket.emit(API.WELCOME_NEW_PLAYER,  socket.id);
   }, 1000);
 
   socket.on(API.CREATE_GAME, function(newGame: NewGame) {

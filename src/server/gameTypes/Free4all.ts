@@ -4,16 +4,16 @@ import Player from '../models/Player';
 import NewPlayer from '../../shared/apiModels/NewPlayer';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
-import GameType from './GameType';
+import GameModel from './GameModel';
 
-export default class Free4all implements GameType {
+export default class Free4all implements GameModel {
   public type: string = 'Free for all';
 
   constructor(
     public name: string,
-    private map: GameMap,
+    public map: GameMap,
     public players: Player[] = [],
-    private bullets: Bullet[] = [],
+    public bullets: Bullet[] = [],
   ) {}
 
   static rand(x: number) {

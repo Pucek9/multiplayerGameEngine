@@ -1,5 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
+import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
 import { addGame, clearGamesList, setId } from './store/actions';
@@ -10,7 +11,7 @@ import './style.scss';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import GameItem from '../shared/apiModels/GameItem';
 import { ScreenModel } from './types/ScreenModel';
 
 let url = process.env.URL || 'localhost';
@@ -46,14 +47,16 @@ class Main {
     this.menu = new MenuComponent(this, store);
     mainInstance = this;
 
-    socket.on(API.WELCOME_NEW_PLAYER, function(data) {
-      store.dispatch(setId(data.socketId));
+    socket.on(API.WELCOME_NEW_PLAYER, function(id: string) {
+      store.dispatch(setId(id));
     });
 
-    socket.on(API.GET_GAMES_LIST, function(data) {
-      console.log('GET_GAMES_LIST', data);
+    socket.on(API.GET_GAMES_LIST, function(gamesList: GameItem[]) {
+      console.log('GET_GAMES_LIST', gamesList);
       store.dispatch(clearGamesList());
-      data.forEach(game => store.dispatch(addGame(game.name, game.type, game.map, game.count)));
+      gamesList.forEach(game =>
+        store.dispatch(addGame(game.name, game.type, game.map, game.count)),
+      );
     });
   }
 

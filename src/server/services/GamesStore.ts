@@ -1,8 +1,10 @@
 import gameTypes from '../gameTypes';
 import maps from '../maps';
+import GameItem from '../../shared/apiModels/GameItem';
+import GameModel from '../gameTypes/GameModel';
 
 export default class GamesStore {
-  public games: any[] = [];
+  public games: GameModel[] = [];
 
   constructor() {}
 
@@ -14,12 +16,11 @@ export default class GamesStore {
     return this.games.find(game => game.name === name);
   }
 
-  getGameByPlayer(id: number) {
+  getGameByPlayer(id: string) {
     return this.games.find(game => game.isPlayerInThisGame(id));
   }
 
-  getGamesList() {
-    // console.log('this.games', this.games)
+  getGamesList(): GameItem[] {
     return this.games.map(game => {
       return {
         name: game.name,
