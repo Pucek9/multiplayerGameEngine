@@ -5,74 +5,15 @@
   </head>
 
   <body>
-    <div class="flex-container" id="menu">
-      <div class="header">
-        <h1>Robo game engine</h1>
-      </div>
-      <div class="join-game">
-        <div class="nick-row">
-          <label
-            >Nick:
-            <input id="nickInput" type="text" />
-          </label>
-        </div>
-        <div class="table-row">
-          <table class="fixed_header">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Map</th>
-                <th>Players</th>
-              </tr>
-            </thead>
-            <tbody id="gamesListTable"></tbody>
-          </table>
-        </div>
-        <div class="join-row">
-          <input id="joinGameButton" type="button" value="Join" />
-        </div>
-        <div class="validate">
-          <label id="validateNick">Please fill nickname.</label>
-        </div>
-        <div class="validate">
-          <label id="validateSelectedGame">Please select game.</label>
-        </div>
-      </div>
-      <div class="add-game">
-        <form>
-          <div class="name-row">
-            <label
-              >Name:
-              <input id="gameNameInput" type="text" />
-            </label>
-          </div>
-          <div class="type-row">
-            <label
-              >Type:
-              <select id="gameTypeInput">
-                <option value="Free4all">Free for all</option>
-                <option disabled value="TeamFight">Team fight</option>
-                <option disabled value="CaptureTheFlag">Capture the flag</option>
-              </select>
-            </label>
-          </div>
-          <div class="type-row">
-            <label
-              >Map:
-              <select id="gameMapInput">
-                <option value="Prototype1">Prototype1</option>
-                <option value="Prototype2">Prototype2</option>
-              </select>
-            </label>
-          </div>
-          <div class="add-game-row">
-            <input id="addNewGameButton" type="button" value="Add new game" />
-          </div>
-          <div class="validate">
-            <label id="validateGameName">Please fill game name.</label>
-          </div>
-        </form>
+    <div class="container">
+      <div class="grid">
+        <div class="box header">ROBO-GAME-ENGINE</div>
+        <div class="box form">FORM</div>
+        <div class="box name">NAME</div>
+        <div class="box add">ADD</div>
+        <div class="box tab">TAB</div>
+        <div class="box nick">NICK</div>
+        <div class="box join">JOIN</div>
       </div>
     </div>
 

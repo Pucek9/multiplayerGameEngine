@@ -11,93 +11,6 @@ body {
     font-size: 17px;
   }
 
-  .flex-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: DodgerBlue;
-    flex-flow: row wrap;
-    width: 100%;
-    height: 100%;
-
-    > div {
-      text-align: center;
-      margin: 10px;
-      padding: 20px;
-      font-size: 30px;
-    }
-
-    .header {
-      flex-grow: 8;
-      width: 95%;
-      padding: 0 0 0 0;
-
-      h1 {
-        margin: 0 0 0 0;
-      }
-    }
-
-    .join-game {
-      flex-grow: 3;
-      width: 40%;
-
-      .table-row {
-        margin: 10px;
-        display: flex;
-
-        .fixed_header {
-          table-layout: fixed;
-          border-collapse: collapse;
-
-          #gamesListTable {
-            text-align: center;
-            width: 100%;
-            border-collapse: collapse;
-          }
-
-          tbody {
-            display: block;
-            width: 100%;
-            overflow: auto;
-            height: 250px;
-          }
-
-          thead tr {
-            display: block;
-          }
-
-          thead {
-            background: black;
-            color: #fff;
-          }
-
-          th,
-          td {
-            padding: 5px;
-            text-align: center;
-            border: 1px solid black;
-            width: 400px;
-          }
-        }
-      }
-    }
-
-    .add-game {
-      flex-grow: 3;
-      width: 40%;
-
-      #gameTypeInput {
-        width: 162px;
-        margin-left: 12px;
-      }
-
-      #gameMapInput {
-        width: 162px;
-        margin-left: 15px;
-      }
-    }
-  }
-
   #leftPanel {
     overflow: hidden;
     background: rgba(171, 205, 239, 0.3);
@@ -114,4 +27,142 @@ body {
       padding-left: 5px;
     }
   }
+}
+
+.box {
+  background: #ea47f3;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+  .container {
+    max-width: 1000px;
+    margin: 20px auto 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-gap: 8px;
+    padding: 8px;
+    background-color: green;
+    grid-template-columns: [page-start] repeat(4, 1fr) [page-end final];
+    grid-template-rows: repeat(8, 80px);
+  }
+  .header {
+    grid-column: 1 / 5;
+    grid-row: 1;
+  }
+  .form {
+    grid-column: 1 / 5;
+    grid-row: span 2 / 4;
+  }
+  .name {
+    grid-column: 1 / span 3;
+    grid-row: 4;
+  }
+  .add {
+    grid-column: 4;
+    grid-row: 4;
+  }
+  .tab {
+    grid-column: page-start / page-end;
+    grid-row: 5 / 8;
+  }
+  .nick {
+    grid-column: page-start / span 3;
+    grid-row: span 1 /-1;
+  }
+  .join {
+    grid-column: span 1 / page-end;
+    grid-row: span 1 /-1;
+  }
+
+@media (min-width: 640px) {
+  .grid {
+    background-color: yellow;
+
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+            ". header header header header ."
+            " form form form tab tab tab "
+            " form form form tab tab tab "
+            " form form form tab tab tab "
+            " form form form tab tab tab "
+            " form form form tab tab tab "
+            " form form form tab tab tab "
+            " name name add nick nick join "
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  .form {
+    grid-area: form;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .add {
+    grid-area: add;
+  }
+
+  .tab {
+    grid-column: tab-start / tab-end;
+    grid-row: tab-start / tab-end;
+  }
+
+  .nick {
+    grid-area: nick;
+  }
+
+  .join {
+    grid-area: join;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+  }
+  .grid {
+    background-color: orange;
+
+    grid-template-rows: repeat(8,65px);
+  }
+}
+
+@media (min-width: 1680px) {
+  .container {
+    max-width: 1500px;
+  }
+  .grid {
+    background-color: red;
+
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(10, 80px);
+    grid-template-areas:
+            ". . . . . . . ."
+            ". . header header header header . ."
+            ". . header header header header . ."
+            ". form form form tab tab tab ."
+            ". form form form tab tab tab ."
+            ". form form form tab tab tab ."
+            ". form form form tab tab tab ."
+            ". form form form tab tab tab ."
+            ". name name add nick nick join ."
+            ". . . . . . . .";
+  }
+
 }
