@@ -41,17 +41,17 @@ body {
 }
 
   .container {
-    max-width: 1000px;
-    margin: 20px auto 0;
+    margin: 0 auto 0 auto;
   }
 
   .grid {
+    height: calc(100vh - 16px);
     display: grid;
     grid-gap: 8px;
     padding: 8px;
     background-color: green;
     grid-template-columns: [page-start] repeat(4, 1fr) [page-end final];
-    grid-template-rows: repeat(8, 80px);
+    grid-template-rows: repeat(8, 1fr);
   }
   .header {
     grid-column: 1 / 5;
@@ -85,12 +85,11 @@ body {
 @media (min-width: 640px) {
   .grid {
     background-color: yellow;
-
     display: grid;
     grid-gap: 8px;
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
-            ". header header header header ."
+            " header header header header header header"
             " form form form tab tab tab "
             " form form form tab tab tab "
             " form form form tab tab tab "
@@ -136,8 +135,13 @@ body {
   }
   .grid {
     background-color: orange;
-    grid-template-rows: repeat(8,80px);
+    grid-template-rows: repeat(8, 1fr);
   }
+  .header {
+    grid-column: 2 / -2;
+    grid-row: 1;
+  }
+
 }
 
 @media (min-width: 1680px) {
@@ -150,11 +154,11 @@ body {
     display: grid;
     grid-gap: 8px;
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(10, 80px);
+    grid-template-rows: repeat(10, 1fr);
     grid-template-areas:
-            ". . . . . . . ."
             ". . header header header header . ."
             ". . header header header header . ."
+            ". form form form tab tab tab ."
             ". form form form tab tab tab ."
             ". form form form tab tab tab ."
             ". form form form tab tab tab ."
@@ -163,5 +167,7 @@ body {
             ". name name add nick nick join ."
             ". . . . . . . .";
   }
-
+  .header {
+    grid-area: header;
+  }
 }
