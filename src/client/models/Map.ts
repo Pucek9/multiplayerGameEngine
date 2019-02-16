@@ -1,33 +1,28 @@
-import PlayerModel from "../../shared/models/PlayerModel";
-import IRenderable from "../interfaces/IRenderable";
-
-const THREE = require('three');
-import {Screen} from "../types/Screen";
+import PlayerModel from '../../shared/models/PlayerModel';
+import IRenderable from '../interfaces/IRenderable';
+import { ScreenModel } from '../types/ScreenModel';
+import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
 export default class Map implements IRenderable {
+  public img: HTMLImageElement;
+  private object: Mesh;
 
-    public img: HTMLImageElement;
-    private object;
+  constructor(public src: string) {}
 
-    constructor(public src: string) {
-    };
+  init(screen: ScreenModel) {
+    this.object = new Mesh(
+      new PlaneGeometry(2920, 2004, 0),
+      new MeshPhongMaterial({
+        map: new TextureLoader().load(this.src),
+      }),
+    );
 
-    init(screen: Screen) {
-        this.object = new THREE.Mesh(
-            new THREE.PlaneGeometry(2920, 2004, 0),
-            new THREE.MeshPhongMaterial({
-                map: new THREE.TextureLoader().load(this.src)
-            })
-        );
+    // this.object.material.depthTest = false;
+    // this.object.material.depthWrite = false;
+    this.object.receiveShadow = true;
 
-        // this.object.material.depthTest = false;
-        // this.object.material.depthWrite = false;
-        this.object.receiveShadow =  true;
+    screen.scene.add(this.object);
+  }
 
-        screen.scene.add(this.object);
-    }
-
-    render(activePlayer: PlayerModel) {
-
-    }
+  render(activePlayer: PlayerModel) {}
 }

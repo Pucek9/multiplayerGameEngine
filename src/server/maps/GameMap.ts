@@ -1,4 +1,7 @@
 export default interface GameMap {
-    getMapName();
-    getStaticObjects();
+  mapName: string;
+
+  getMapName();
+
+  getStaticObjects();
 }

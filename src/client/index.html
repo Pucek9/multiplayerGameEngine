@@ -1,91 +1,84 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Robo-Game-Engine</title>
-</head>
+  </head>
 
-<body>
-<div id="menu" class="flex-container">
-    <div class="header">
+  <body>
+    <div class="flex-container" id="menu">
+      <div class="header">
         <h1>Robo game engine</h1>
-    </div>
-    <div class="join-game">
+      </div>
+      <div class="join-game">
         <div class="nick-row">
-            <label>Nick:
-                <input id="nickInput" type="text">
-            </label>
+          <label
+            >Nick:
+            <input id="nickInput" type="text" />
+          </label>
         </div>
         <div class="table-row">
-            <table class="fixed_header">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Map</th>
-                    <th>Players</th>
-                </tr>
-                </thead>
-                <tbody id="gamesListTable">
-                </tbody>
-            </table>
+          <table class="fixed_header">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Map</th>
+                <th>Players</th>
+              </tr>
+            </thead>
+            <tbody id="gamesListTable"></tbody>
+          </table>
         </div>
         <div class="join-row">
-            <input id="joinGameButton" type="button" value="Join">
+          <input id="joinGameButton" type="button" value="Join" />
         </div>
         <div class="validate">
-            <label id="validateNick">Please fill nickname.</label>
+          <label id="validateNick">Please fill nickname.</label>
         </div>
         <div class="validate">
-            <label id="validateSelectedGame">Please select game.</label>
+          <label id="validateSelectedGame">Please select game.</label>
         </div>
-
-    </div>
-    <div class="add-game">
+      </div>
+      <div class="add-game">
         <form>
-            <div class="name-row">
-                <label>Name:
-                    <input id="gameNameInput" type="text">
-                </label>
-            </div>
-            <div class="type-row">
-                <label>Type:
-                    <select id="gameTypeInput">
-                        <option value="Free4all">Free for all</option>
-                        <option disabled value="TeamFight">Team fight</option>
-                        <option disabled value="CaptureTheFlag">Capture the flag</option>
-                    </select>
-                </label>
-            </div>
-            <div class="type-row">
-                <label>Map:
-                    <select id="gameMapInput">
-                        <option value="Prototype1">Prototype1</option>
-                        <option value="Prototype2">Prototype2</option>
-                    </select>
-                </label>
-            </div>
-            <div class="add-game-row">
-                <input id="addNewGameButton" type="button" value="Add new game">
-            </div>
-            <div class="validate">
-                <label id="validateGameName">Please fill game name.</label>
-            </div>
+          <div class="name-row">
+            <label
+              >Name:
+              <input id="gameNameInput" type="text" />
+            </label>
+          </div>
+          <div class="type-row">
+            <label
+              >Type:
+              <select id="gameTypeInput">
+                <option value="Free4all">Free for all</option>
+                <option disabled value="TeamFight">Team fight</option>
+                <option disabled value="CaptureTheFlag">Capture the flag</option>
+              </select>
+            </label>
+          </div>
+          <div class="type-row">
+            <label
+              >Map:
+              <select id="gameMapInput">
+                <option value="Prototype1">Prototype1</option>
+                <option value="Prototype2">Prototype2</option>
+              </select>
+            </label>
+          </div>
+          <div class="add-game-row">
+            <input id="addNewGameButton" type="button" value="Add new game" />
+          </div>
+          <div class="validate">
+            <label id="validateGameName">Please fill game name.</label>
+          </div>
         </form>
+      </div>
     </div>
-</div>
 
-<!--<div style="overflow: hidden; width: 1056px; height: 626px; position: absolute; top: 0px;">-->
-<!--<div class="label" style="margin-top: -1em; position: absolute; transform: translate(-50%, -50%) translate(521.787px, 298.5px); z-index: 2;">Earth</div>-->
-<!--<div class="label" style="margin-top: -1em; position: absolute; transform: translate(-50%, -50%) translate(646.295px, 205.98px); z-index: 1;">Moon</div>-->
-<!--</div>-->
-
-
-<!--<div style="overflow: hidden; background-color: grey; opacity: 0.3; position: absolute; top: 0;">-->
-<div style="overflow: hidden; background-color: grey; opacity: 0.7; position: absolute; top: 0;">
-    <span>Active players:</span>
-    <ul id="playersList"></ul>
-</div>
-
-
-</body>
+    <div id="leftPanel">
+      <span>Active players:</span>
+      <ul id="playersList"></ul>
+    </div>
+  </body>
 </html>

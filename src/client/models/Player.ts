@@ -1,26 +1,25 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
-import { Screen } from '../types/Screen';
+import { ScreenModel } from '../types/ScreenModel';
+import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
-const THREE = require('three');
-const cumin = require('../games/balls/images/head.png');
-const texture = new THREE.TextureLoader().load(cumin);
+const cumin = require('../games/balls/images/head.jpg');
+const texture = new TextureLoader().load(cumin);
 
 export default class Player extends PlayerModel implements IRenderable {
   public object;
   private initiated = false;
   private screen;
 
-  init(screen: Screen) {
+  init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      const texture = new THREE.TextureLoader().load(cumin);
-      const geometry = new THREE.SphereGeometry(20, 10, 10, 1);
-      const material = new THREE.MeshPhongMaterial({
+      const geometry = new SphereGeometry(20, 10, 10, 1);
+      const material = new MeshPhongMaterial({
         map: texture,
         color: this.color,
       });
-      this.object = new THREE.Mesh(geometry, material);
+      this.object = new Mesh(geometry, material);
       this.object.name = this.id;
       this.object.receiveShadow = true;
       this.initiated = true;

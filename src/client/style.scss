@@ -1,5 +1,4 @@
 body {
-
   margin: 0;
   background-color: black;
 
@@ -72,7 +71,8 @@ body {
             color: #fff;
           }
 
-          th, td {
+          th,
+          td {
             padding: 5px;
             text-align: center;
             border: 1px solid black;
@@ -88,24 +88,30 @@ body {
 
       #gameTypeInput {
         width: 162px;
-        margin-left: 12px
+        margin-left: 12px;
       }
 
       #gameMapInput {
         width: 162px;
-        margin-left: 15px
+        margin-left: 15px;
       }
     }
   }
 
-  #playersList {
-    list-style-type: none;
-    margin: 0;
-    padding-left: 5px;
+  #leftPanel {
+    overflow: hidden;
+    background: rgba(171, 205, 239, 0.3);
+    position: absolute;
+    top: 0;
+
+    span {
+      color: white;
+    }
+
+    ul#playersList {
+      list-style-type: none;
+      margin: 0;
+      padding-left: 5px;
+    }
   }
-
 }
-
-
-
-
