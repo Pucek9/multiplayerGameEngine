@@ -69,7 +69,6 @@ class Main {
       userState.chosenGame,
     );
     socket.emit(API.CREATE_PLAYER, newPlayer);
-    alert(newPlayer.name + ' joined the game! Click mouse after close that!');
     const screen = this.prepareScreen();
     this.gameState = new GameState(newPlayer, screen);
     this.registerEvents(this.gameState);
@@ -93,8 +92,7 @@ class Main {
 
     window.addEventListener('mousedown', function(e: MouseEvent) {
       e.preventDefault();
-      if (config.menu === false) {
-        config.menu = true;
+      if (!gameState.currentPlayer.alive) {
         socket.emit(API.ACTIVATE_PLAYER);
       } else {
         const mouseClick = gameState.getMouseCoordinates();

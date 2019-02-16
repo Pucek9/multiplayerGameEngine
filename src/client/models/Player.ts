@@ -38,8 +38,8 @@ export default class Player extends PlayerModel implements IRenderable {
     return this.screen.scene.children.includes(this.object);
   }
 
-  isActive() {
-    return this.active;
+  isAlive() {
+    return this.alive;
   }
 
   addToScene() {
@@ -57,9 +57,9 @@ export default class Player extends PlayerModel implements IRenderable {
   }
 
   render() {
-    if (this.isOnScene() && !this.isActive()) {
+    if (this.isOnScene() && !this.isAlive()) {
       this.remove();
-    } else if (!this.isOnScene() && this.isActive()) {
+    } else if (!this.isOnScene() && this.isAlive()) {
       this.addToScene();
     } else {
       this.updateBody();

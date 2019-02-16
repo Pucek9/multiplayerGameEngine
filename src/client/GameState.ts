@@ -67,7 +67,7 @@ export default class GameState {
 
   appendPlayers(_players: PlayerModel[]) {
     _players
-      .filter(_player => _player.active)
+      .filter(_player => _player.alive)
       .forEach(_player => {
         const existed = this.players.find(player => player.id === _player.id);
         if (!existed) {
@@ -123,7 +123,7 @@ export default class GameState {
       if (foundPlayer) {
         player.x = foundPlayer.x;
         player.y = foundPlayer.y;
-        player.active = foundPlayer.active;
+        player.alive = foundPlayer.alive;
         player.hp = foundPlayer.hp;
         player.score = foundPlayer.score;
         player.direction = foundPlayer.direction;

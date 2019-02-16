@@ -3,7 +3,6 @@ import ICircle from '../interfaces/ICircle';
 export default class PlayerModel implements ICircle {
   public type: string = 'circle';
 
-  public active: boolean;
   public alive: boolean;
   public direction: number;
 
@@ -16,10 +15,11 @@ export default class PlayerModel implements ICircle {
     public size: number = 32,
     public speed: number = 3,
     public score: number = 0,
-    public hp: number = 100,
+    public baseHp: number = 100,
+    public hp?: number,
   ) {
-    this.active = false;
-    this.alive = true;
+    this.hp = this.baseHp;
+    this.alive = false;
     this.direction = 0;
   }
 }

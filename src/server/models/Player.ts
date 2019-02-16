@@ -12,7 +12,11 @@ export default class Player extends PlayerModel {
 
   die() {
     this.alive = false;
-    this.active = false;
+  }
+
+  revive() {
+    this.alive = true;
+    this.hp = this.baseHp;
   }
 
   getAura() {

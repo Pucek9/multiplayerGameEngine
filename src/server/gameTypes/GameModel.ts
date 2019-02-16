@@ -15,7 +15,7 @@ export default interface GameModel {
 
   getPlayer(id: string);
 
-  activePlayers();
+  alivePlayers();
 
   getPlayers();
 
@@ -33,7 +33,7 @@ export default interface GameModel {
 
   addBullet(mouseClick: MouseCoordinates);
 
-  setPlayerActive(id: string);
+  revivePlayer(id: string);
 
   connectPlayer(id: string, newPlayer: NewPlayer);
 

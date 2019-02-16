@@ -46,18 +46,18 @@ socketIo.on('connection', function(socket: Socket) {
       });
 
       socket.on(API.ACTIVATE_PLAYER, function() {
-        console.log('Player activated: ', socket.id);
-        gameState.setPlayerActive(socket.id);
-        socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_PLAYER, player);
-
-        setInterval(() => {
-          gameState.move(socket.id);
-          gameState.updateBullets();
-          gameState.detectBulletsCollision();
-          socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
-          socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
-        }, 1000 / 60);
+        gameState.revivePlayer(socket.id);
       });
+
+      socketIo.to(newPlayer.gameName).emit(API.ADD_NEW_PLAYER, player);
+
+      setInterval(() => {
+        gameState.move(socket.id);
+        gameState.updateBullets();
+        gameState.detectBulletsCollision();
+        socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
+        socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
+      }, 1000 / 60);
 
       socket.on(API.MOUSE_CLICK, function(mouseClick: MouseCoordinates) {
         const bullet = gameState.addBullet(mouseClick);

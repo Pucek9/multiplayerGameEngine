@@ -29,8 +29,8 @@ export default class Free4all implements GameModel {
     return this.players.find(player => player.id === id);
   }
 
-  activePlayers() {
-    return this.players.filter(player => player.active === true);
+  alivePlayers() {
+    return this.players.filter(player => player.alive === true);
   }
 
   getPlayers() {
@@ -66,7 +66,7 @@ export default class Free4all implements GameModel {
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.activePlayers()].forEach((object: Player) => {
+      [...this.getStaticObjects(), ...this.alivePlayers()].forEach((object: Player) => {
         if (bullet.owner !== object) {
           if (CollisionDetector.detectCollision(object, bullet)) {
             object.hitFromBullet(bullet);
@@ -101,10 +101,8 @@ export default class Free4all implements GameModel {
     }
   }
 
-  setPlayerActive(id: string) {
-    const player = this.getPlayer(id);
-    player.active = true;
-    player.alive = true;
+  revivePlayer(id: string) {
+    this.getPlayer(id).revive();
   }
 
   connectPlayer(id: string, newPlayer: NewPlayer) {
@@ -189,7 +187,7 @@ export default class Free4all implements GameModel {
   }
 
   private detectPlayerCollision(player: Player, direction: Direction) {
-    return [...this.getStaticObjects(), ...this.activePlayers()].some(object => {
+    return [...this.getStaticObjects(), ...this.alivePlayers()].some(object => {
       return player !== object && CollisionDetector.detectCollision(player, object, direction);
     });
   }
