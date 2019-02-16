@@ -9,6 +9,7 @@ import NewPlayer from "../shared/api/NewPlayer";
 import MouseCoordinates from "../shared/api/MouseCoordinates";
 import NewGame from "../shared/api/NewGame";
 
+const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
 const app = express();
 const httpServer = http.createServer(app);
@@ -24,7 +25,7 @@ socketIo.on('connection', function (socket) {
     setTimeout(() => {
         socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
         socket.emit(API.WELCOME_NEW_PLAYER, {socketId: socket.id});
-    }, 1000);
+    }, TIMEOUT);
 
     socket.on(API.CREATE_GAME, function (newGame: NewGame) {
         gamesStory.createGame(newGame.name, newGame.type, newGame.map);
@@ -37,8 +38,8 @@ socketIo.on('connection', function (socket) {
             if (gameState) {
                 socket.join(newPlayer.gameName);
                 player = gameState.connectPlayer(socket.id, newPlayer);
-                socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
-                socketIo.to(newPlayer.gameName).emit(API.ADD_PLAYERS, gameState.activePlayers());
+                socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
+                socketIo.to(newPlayer.gameName).emit(API.ADD_PLAYERS, gameState.getPlayers());
                 socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
 
                 socket.on(API.UPDATE_KEYS, function (keys: Array<string>) {
@@ -54,7 +55,7 @@ socketIo.on('connection', function (socket) {
                             gameState.move(socket.id);
                             gameState.updateBullets();
                             gameState.detectBulletsCollision();
-                            socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.activePlayers());
+                            socketIo.to(newPlayer.gameName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
                             socketIo.to(newPlayer.gameName).emit(API.GET_BULLETS, gameState.getBullets());
                         }, 1000 / 60);
                     }

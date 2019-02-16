@@ -30,7 +30,7 @@ function normalizeKey(key) {
 
 function Loop(socket, user, screen, cursor: Cursor, map) {
     const that = this;
-    let activePlayer;
+    let currentPlayer;
     let camera: Camera;
     let light: Light = new Light(screen);
     const playersListComponent = new PlayerListComponent();
@@ -40,13 +40,13 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
         player.init(screen);
         player.setAsEnemy();
         players.push(player);
-        if (!activePlayer) {
-            activePlayer = players.find(player => player.id === user.id);
-            activePlayer.setAsActive();
+        if (!currentPlayer) {
+            currentPlayer = players.find(player => player.id === user.id);
+            currentPlayer.setAsCurrent();
 
-            camera = new Camera(activePlayer);
+            camera = new Camera(currentPlayer);
             camera.init(screen);
-            light.init(activePlayer, cursor);
+            light.init(currentPlayer, cursor);
         }
     });
 
@@ -79,7 +79,7 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
         players
             .forEach(player => {
                 const _player = _players.find(_player => player.id === _player.id);
-                if (activePlayer && _player.id === activePlayer.id) {
+                if (currentPlayer && _player && _player.id === currentPlayer.id) {
                     const diff = {
                         x: player.x - _player.x,
                         y: player.y - _player.y,
@@ -150,9 +150,9 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
     window.addEventListener("mousemove", function mouseMove(e) {
         // cursor.x = (e.clientX / window.innerWidth) * 2 - 1;
         // cursor.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        if (activePlayer) {
-            cursor.x = e.clientX + activePlayer.x - window.innerWidth / 2;
-            cursor.y = -e.clientY + activePlayer.y + window.innerHeight / 2;
+        if (currentPlayer) {
+            cursor.x = e.clientX + currentPlayer.x - window.innerWidth / 2;
+            cursor.y = -e.clientY + currentPlayer.y + window.innerHeight / 2;
             const mouseCoordinates = new MouseCoordinates(
                 cursor.x,
                 cursor.y,
@@ -210,9 +210,9 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
     }
     map.init(screen);
     cursor.init(screen);
-    // if (activePlayer) {
-    //     cursor.x = activePlayer.x;
-    //     cursor.y = activePlayer.y;
+    // if (currentPlayer) {
+    //     cursor.x = currentPlayer.x;
+    //     cursor.y = currentPlayer.y;
     // }
 
     screen.renderer.autoClear = true;
@@ -221,13 +221,14 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
 
     this.run = function () {
         socket.emit(API.iteration);
-        if (activePlayer) {
+        if (currentPlayer) {
             [
                 camera,
                 map,
                 ...staticObjects,
                 ...bullets,
-                ...players.filter(player => player.active),
+                ...players,
+                // ...players.filter(player => player.active),
                 cursor,
                 light,
             ].forEach(object => object.render());
@@ -238,8 +239,8 @@ function Loop(socket, user, screen, cursor: Cursor, map) {
         //
         // cleaner.render();
         // socket.emit('iteration');
-        // if (config.menu && activePlayer && map) {
-        //     [map, ...bullets, ...staticObjects, ...players].forEach(object => object.render(activePlayer));
+        // if (config.menu && currentPlayer && map) {
+        //     [map, ...bullets, ...staticObjects, ...players].forEach(object => object.render(currentPlayer));
         // } else {
         //     menu.render();
         // }

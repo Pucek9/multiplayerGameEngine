@@ -60,14 +60,14 @@ export default class Free4all implements GameType{
     }
 
     private detectPlayerCollision(player, direction: { x: number, y: number }) {
-        return [...this.getStaticObjects(), ...this.players].some(object => {
+        return [...this.getStaticObjects(), ...this.activePlayers()].some(object => {
             return player !== object && CollisionDetector.detectCollision(player, object, direction);
         });
     }
 
     detectBulletsCollision() {
         this.bullets.forEach((bullet, i) => {
-            [...this.getStaticObjects(), ...this.players].forEach((object: Player) => {
+            [...this.getStaticObjects(), ...this.activePlayers()].forEach((object: Player) => {
                 if (bullet.owner !== object) {
                     if (CollisionDetector.detectCollision(object, bullet)) {
                         object.hitFromBullet(bullet);
