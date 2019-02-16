@@ -10,10 +10,10 @@ export default class Player extends PlayerModel {
     return this.alive;
   }
 
-    die() {
-        this.alive = false;
-        this.active = false;
-    }
+  die() {
+    this.alive = false;
+    this.active = false;
+  }
 
   getAura() {
     this.aura = new Aura(this.x, this.y);

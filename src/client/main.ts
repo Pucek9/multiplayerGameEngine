@@ -12,7 +12,7 @@ import NewPlayer from '../shared/apiModels/NewPlayer';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameItem from '../shared/apiModels/GameItem';
-import { ScreenModel } from './types/ScreenModel';
+import ScreenModel from './types/ScreenModel';
 
 let url = process.env.URL || 'localhost';
 url = `http://${url.toString()}`;

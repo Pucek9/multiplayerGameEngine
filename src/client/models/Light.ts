@@ -1,5 +1,5 @@
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
+import ScreenModel from '../types/ScreenModel';
 import Cursor from './Cursor';
 import Player from './Player';
 import { SpotLight } from 'three';

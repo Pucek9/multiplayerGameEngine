@@ -5,6 +5,7 @@ import NewPlayer from '../../shared/apiModels/NewPlayer';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
+import Direction from '../../shared/models/Direction';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -54,34 +55,34 @@ export default class Free4all implements GameModel {
     return this.map.getStaticObjects();
   }
 
-    updateBullets() {
-        this.bullets.forEach((bullet, i) => {
-            bullet.update();
-            if (!bullet.isStillInAir()) {
-                this.bullets.splice(i, 1)
-            }
-        });
-    }
+  updateBullets() {
+    this.bullets.forEach((bullet, i) => {
+      bullet.update();
+      if (!bullet.isStillInAir()) {
+        this.bullets.splice(i, 1);
+      }
+    });
+  }
 
-    detectBulletsCollision() {
-        this.bullets.forEach((bullet, i) => {
-            [...this.getStaticObjects(), ...this.activePlayers()].forEach((object: Player) => {
-                if (bullet.owner !== object) {
-                    if (CollisionDetector.detectCollision(object, bullet)) {
-                        object.hitFromBullet(bullet);
-                        this.bullets.splice(i, 1)
-                    }
-                    if (object.aura) {
-                        if (CollisionDetector.detectCollision(object.aura, bullet)) {
-                            bullet.decreaseSpeed();
-                        } else {
-                            bullet.increaseSpeed();
-                        }
-                    }
-                }
-            });
-        });
-    }
+  detectBulletsCollision() {
+    this.bullets.forEach((bullet, i) => {
+      [...this.getStaticObjects(), ...this.activePlayers()].forEach((object: Player) => {
+        if (bullet.owner !== object) {
+          if (CollisionDetector.detectCollision(object, bullet)) {
+            object.hitFromBullet(bullet);
+            this.bullets.splice(i, 1);
+          }
+          if (object.aura) {
+            if (CollisionDetector.detectCollision(object.aura, bullet)) {
+              bullet.decreaseSpeed();
+            } else {
+              bullet.increaseSpeed();
+            }
+          }
+        }
+      });
+    });
+  }
 
   addBullet(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
@@ -100,11 +101,11 @@ export default class Free4all implements GameModel {
     }
   }
 
-    setPlayerActive(id: string) {
-        const player = this.getPlayer(id);
-        player.active = true;
-        player.alive = true;
-    }
+  setPlayerActive(id: string) {
+    const player = this.getPlayer(id);
+    player.active = true;
+    player.alive = true;
+  }
 
   connectPlayer(id: string, newPlayer: NewPlayer) {
     const player = new Player(
@@ -187,7 +188,7 @@ export default class Free4all implements GameModel {
     }
   }
 
-  private detectPlayerCollision(player, direction: { x: number, y: number }) {
+  private detectPlayerCollision(player: Player, direction: Direction) {
     return [...this.getStaticObjects(), ...this.activePlayers()].some(object => {
       return player !== object && CollisionDetector.detectCollision(player, object, direction);
     });

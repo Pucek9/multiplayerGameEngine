@@ -1,6 +1,6 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
+import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
@@ -39,7 +39,7 @@ export default class Player extends PlayerModel implements IRenderable {
   }
 
   isActive() {
-   return this.active;
+    return this.active;
   }
 
   addToScene() {
@@ -59,10 +59,7 @@ export default class Player extends PlayerModel implements IRenderable {
   render() {
     if (this.isOnScene() && !this.isActive()) {
       this.remove();
-    }
-    else if (
-      !this.isOnScene() && this.isActive()
-    ) {
+    } else if (!this.isOnScene() && this.isActive()) {
       this.addToScene();
     } else {
       this.updateBody();

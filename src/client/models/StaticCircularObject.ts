@@ -1,6 +1,6 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
+import ScreenModel from '../types/ScreenModel';
 import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');

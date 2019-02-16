@@ -1,11 +1,7 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
-
-interface Direction {
-  x: number;
-  y: number;
-}
+import Direction from '../../shared/models/Direction';
 
 export default class CollisionDetector {
   static detectCollision(
