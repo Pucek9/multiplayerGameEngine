@@ -23,7 +23,6 @@ export default class Player extends PlayerModel implements IRenderable {
       this.object = new THREE.Mesh(geometry, material);
       this.object.name = this.id;
       this.object.receiveShadow = true;
-      this.screen.scene.add(this.object);
       this.initiated = true;
     }
   }
@@ -36,23 +35,38 @@ export default class Player extends PlayerModel implements IRenderable {
     this.object.castShadow = false;
   }
 
+  isOnScene() {
+    return this.screen.scene.children.includes(this.object);
+  }
+
+  isActive() {
+   return this.active;
+  }
+
+  addToScene() {
+    this.screen.scene.add(this.object);
+  }
+
   setAsEnemy() {
     this.object.castShadow = true;
   }
 
-  renderBody() {
+  updateBody() {
     this.object.rotation.z = this.direction;
     this.object.position.x = this.x;
     this.object.position.y = this.y;
   }
 
   render() {
-    this.renderBody();
-    if (
-      this.active === false &&
-      this.screen.scene.children.includes(this.object)
-    ) {
+    if (this.isOnScene() && !this.isActive()) {
       this.remove();
+    }
+    else if (
+      !this.isOnScene() && this.isActive()
+    ) {
+      this.addToScene();
+    } else {
+      this.updateBody();
     }
   }
 
