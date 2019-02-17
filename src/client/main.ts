@@ -60,6 +60,11 @@ class Main {
     });
   }
 
+  onAddNewGame({ name, type, map }: NewGame) {
+    const newGame = new NewGame(name, type, map);
+    socket.emit(API.CREATE_GAME, newGame);
+  }
+
   onJoinGame() {
     const userState = store.getState().joinGame;
     const newPlayer = new NewPlayer(
@@ -92,12 +97,8 @@ class Main {
 
     window.addEventListener('mousedown', function(e: MouseEvent) {
       e.preventDefault();
-      if (!gameState.currentPlayer.alive) {
-        socket.emit(API.ACTIVATE_PLAYER);
-      } else {
-        const mouseClick = gameState.getMouseCoordinates();
-        socket.emit(API.MOUSE_CLICK, mouseClick);
-      }
+      const mouseClick = gameState.getMouseCoordinates();
+      socket.emit(API.MOUSE_CLICK, mouseClick);
     });
 
     window.addEventListener(
@@ -129,11 +130,6 @@ class Main {
       e.preventDefault();
       gameState.wheel(e);
     });
-  }
-
-  onAddNewGame({ name, type, map }: NewGame) {
-    const newGame = new NewGame(name, type, map);
-    socket.emit(API.CREATE_GAME, newGame);
   }
 
   prepareScreen(): ScreenModel {

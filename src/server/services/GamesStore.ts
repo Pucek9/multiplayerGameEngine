@@ -8,8 +8,8 @@ export default class GamesStore {
 
   constructor() {}
 
-  createGame(name: string, type: string, map: string) {
-    this.games.push(new gameTypes[type](name, maps[map]));
+  createGame(main, name: string, type: string, map: string) {
+    this.games.push(new gameTypes[type](main, name, maps[map]));
   }
 
   getGame(name: string) {

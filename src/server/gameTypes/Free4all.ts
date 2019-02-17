@@ -11,6 +11,7 @@ export default class Free4all implements GameModel {
   public type: string = 'Free for all';
 
   constructor(
+    public main,
     public name: string,
     public map: GameMap,
     public players: Player[] = [],
@@ -102,10 +103,13 @@ export default class Free4all implements GameModel {
   }
 
   revivePlayer(id: string) {
-    this.getPlayer(id).revive();
+    const player = this.getPlayer(id);
+    if (player && !this.detectPlayerCollision(player)) {
+      player.revive();
+    }
   }
 
-  connectPlayer(id: string, newPlayer: NewPlayer) {
+  connectPlayer(id: string, newPlayer: NewPlayer): Player {
     const player = new Player(
       id,
       newPlayer.name,
@@ -123,14 +127,18 @@ export default class Free4all implements GameModel {
   }
 
   setKeys(id: string, keys: Array<string>) {
-    this.getPlayer(id).keys = new Set(keys);
+    const player = this.getPlayer(id);
+    if (player) {
+      player.keys = new Set(keys);
+    }
   }
 
-  move(id: string) {
+  updatePlayerPosition(id: string) {
     const player = this.getPlayer(id);
     if (player) {
       if (player.keys.has('W') || player.keys.has('ArrowUp')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: 0,
             y: player.speed,
@@ -141,6 +149,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('S') || player.keys.has('ArrowDown')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: 0,
             y: -player.speed,
@@ -151,6 +160,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: -player.speed,
             y: 0,
@@ -161,6 +171,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('D') || player.keys.has('ArrowRight')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: player.speed,
             y: 0,
@@ -186,7 +197,20 @@ export default class Free4all implements GameModel {
     }
   }
 
-  private detectPlayerCollision(player: Player, direction: Direction) {
+  isPlayerAlive(id: string) {
+    return this.getPlayer(id).isAlive();
+  }
+
+  onMouseClick(mouseClick: MouseCoordinates) {
+    if (this.isPlayerAlive(mouseClick.owner)) {
+      const bullet = this.addBullet(mouseClick);
+      this.main.sendNewBullet(bullet);
+    } else {
+      this.revivePlayer(mouseClick.owner);
+    }
+  }
+
+  private detectPlayerCollision(player: Player, direction?: Direction) {
     return [...this.getStaticObjects(), ...this.alivePlayers()].some(object => {
       return player !== object && CollisionDetector.detectCollision(player, object, direction);
     });

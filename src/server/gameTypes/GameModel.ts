@@ -5,6 +5,7 @@ import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
 
 export default interface GameModel {
+  main;
   name: string;
   type: string;
   map: GameMap;
@@ -41,7 +42,11 @@ export default interface GameModel {
 
   setKeys(id: string, keys: Array<string>);
 
-  move(id: string);
+  updatePlayerPosition(id: string);
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
+
+  isPlayerAlive(id: string);
+
+  onMouseClick(mouseClick: MouseCoordinates);
 }
