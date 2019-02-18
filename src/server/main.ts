@@ -48,18 +48,20 @@ class Connection {
       this.gameState = gamesStory.getGame(newPlayer.gameName);
       if (this.gameState) {
         this.gameName = this.gameState.gameName;
+        this.joinToRoom();
         this.initNewPlayer(newPlayer);
-
         this.registerPlayerEvents();
-
         this.runGameLoop();
       }
     });
   }
 
+  joinToRoom() {
+    this.socket.join(this.gameName);
+  }
+
   initNewPlayer(newPlayer) {
     this.player = this.gameState.connectPlayer(this.socket.id, newPlayer);
-    this.socket.join(this.gameName);
     socketIo.to(this.gameName).emit(API.ADD_NEW_PLAYER, this.player);
     socketIo.to(this.gameName).emit(API.ADD_PLAYERS, this.gameState.getPlayers());
     socketIo.to(this.gameName).emit(API.GET_STATIC_OBJECTS, this.gameState.getStaticObjects());
@@ -75,6 +77,7 @@ class Connection {
       socketIo.to(this.gameName).emit(API.GET_BULLETS, this.gameState.getBullets());
     }, 1000 / 60);
   }
+
   registerPlayerEvents() {
     this.socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
       this.gameState.setKeys(this.socket.id, keys);
@@ -88,14 +91,14 @@ class Connection {
       this.gameState.updatePlayerDirection(mouseCoordinates);
     });
 
-    this.socket.on('disconnect', () => {
-      if (this.player) {
-        this.gameState.disconnectPlayer(this.player);
-      }
-      console.log('Disconnected player: ', this.player);
+    this.socket.on(API.DISCONNECT, () => {
+      console.log('Disconnected player: ', this.player.name);
+      this.gameState.disconnectPlayer(this.player);
       socketIo.to(this.gameName).emit(API.DISCONNECT_PLAYER, this.socket.id);
       socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
-      clearInterval(this.interval);
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
     });
   }
 
@@ -104,7 +107,7 @@ class Connection {
   }
 }
 
-socketIo.on('connection', (socket: Socket) => {
+socketIo.on(API.CONNECTION, (socket: Socket) => {
   new Connection(socket);
 });
 

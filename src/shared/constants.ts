@@ -1,5 +1,6 @@
 export enum API {
-  ACTIVATE_PLAYER = 'activePlayer',
+  CONNECTION = 'connection',
+  DISCONNECT = 'disconnect',
   CREATE_PLAYER = 'createPlayer',
   UPDATE_KEYS = 'keys',
   ADD_NEW_PLAYER = 'addPlayer',
