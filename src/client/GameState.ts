@@ -67,7 +67,6 @@ export default class GameState {
 
   appendPlayers(_players: PlayerModel[]) {
     _players
-      .filter(_player => _player.alive)
       .forEach(_player => {
         const existed = this.players.find(player => player.id === _player.id);
         if (!existed) {

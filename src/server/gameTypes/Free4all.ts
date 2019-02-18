@@ -185,6 +185,9 @@ export default class Free4all implements GameModel {
       } else {
         player.removeAura();
       }
+      // if (player.keys.has('Escape')) {
+      //   this.disconnectPlayer(player);
+      // }
     }
   }
 
@@ -214,5 +217,9 @@ export default class Free4all implements GameModel {
     return [...this.getStaticObjects(), ...this.alivePlayers()].some(object => {
       return player !== object && CollisionDetector.detectCollision(player, object, direction);
     });
+  }
+
+  private hasKeys() {
+
   }
 }

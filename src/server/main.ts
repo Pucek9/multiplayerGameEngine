@@ -30,7 +30,7 @@ class Connection {
   }
 
   init() {
-    console.log('Connected:', this.socket.id);
+    console.log(`[${this.socket.id}] Connected`);
     setTimeout(() => {
       socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
       this.socket.emit(API.WELCOME_NEW_PLAYER, this.socket.id);
@@ -40,6 +40,7 @@ class Connection {
 
   registerGameMenuEvents() {
     this.socket.on(API.CREATE_GAME, (newGame: NewGame) => {
+      console.log(`[${this.socket.id}] Created game '${newGame.name}'`);
       gamesStory.createGame(this, newGame.name, newGame.type, newGame.map);
       socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
     });
@@ -47,11 +48,19 @@ class Connection {
     this.socket.on(API.CREATE_PLAYER, (newPlayer: NewPlayer) => {
       this.gameState = gamesStory.getGame(newPlayer.gameName);
       if (this.gameState) {
-        this.gameName = this.gameState.gameName;
+        this.gameName = this.gameState.name;
+        console.log(`[${this.socket.id}] Player '${newPlayer.name}' joined to '${this.gameName}'`);
         this.joinToRoom();
         this.initNewPlayer(newPlayer);
         this.registerPlayerEvents();
         this.runGameLoop();
+      }
+    });
+
+    this.socket.on(API.DISCONNECT, () => {
+      console.log(`[${this.socket.id}] Disconnected`);
+      if(this.gameState) {
+        this.removePlayer();
       }
     });
   }
@@ -91,15 +100,16 @@ class Connection {
       this.gameState.updatePlayerDirection(mouseCoordinates);
     });
 
-    this.socket.on(API.DISCONNECT, () => {
-      console.log('Disconnected player: ', this.player.name);
-      this.gameState.disconnectPlayer(this.player);
-      socketIo.to(this.gameName).emit(API.DISCONNECT_PLAYER, this.socket.id);
-      socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
-      if (this.interval) {
-        clearInterval(this.interval);
-      }
-    });
+  }
+
+  removePlayer() {
+    console.log(`[${this.socket.id}] Player '${this.player.name}' left '${this.gameName}'`);
+    this.gameState.disconnectPlayer(this.player);
+    socketIo.to(this.gameName).emit(API.DISCONNECT_PLAYER, this.socket.id);
+    socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   sendNewBullet(bullet: Bullet) {
@@ -112,5 +122,5 @@ socketIo.on(API.CONNECTION, (socket: Socket) => {
 });
 
 httpServer.listen(parseInt(port, 0), function() {
-  console.log(`listening on *:${port}`);
+  console.log(`App listening on *:${port}`);
 });
