@@ -15,4 +15,5 @@ export enum API {
   UPDATE_DIRECTION = 'updateDirection',
   CREATE_GAME = 'createGame',
   GET_GAMES_LIST = 'getGamesList',
+  LEAVE_GAME = 'leaveGame',
 }

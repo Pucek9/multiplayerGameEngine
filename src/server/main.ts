@@ -23,7 +23,6 @@ class Connection {
   player: Player;
   gameName: string;
   gameState: any;
-  interval;
 
   constructor(private socket: Socket) {
     this.init();
@@ -53,14 +52,15 @@ class Connection {
         this.joinToRoom();
         this.initNewPlayer(newPlayer);
         this.registerPlayerEvents();
-        this.runGameLoop();
       }
     });
 
     this.socket.on(API.DISCONNECT, () => {
       console.log(`[${this.socket.id}] Disconnected`);
-      if(this.gameState) {
-        this.removePlayer();
+      if (this.gameState) {
+        const disconnected = this.gameState.getPlayer(this.socket.id);
+        this.gameState.disconnectPlayer(disconnected);
+        this.disconnectPlayer(disconnected.name);
       }
     });
   }
@@ -77,39 +77,35 @@ class Connection {
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
   }
 
-  runGameLoop() {
-    this.interval = setInterval(() => {
-      this.gameState.updatePlayerPosition(this.socket.id);
-      this.gameState.updateBullets();
-      this.gameState.detectBulletsCollision();
-      socketIo.to(this.gameName).emit(API.GET_PLAYERS_STATE, this.gameState.getPlayers());
-      socketIo.to(this.gameName).emit(API.GET_BULLETS, this.gameState.getBullets());
-    }, 1000 / 60);
-  }
-
   registerPlayerEvents() {
     this.socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
-      this.gameState.setKeys(this.socket.id, keys);
+      this.gameState.updateKeys(this.socket.id, keys);
     });
-
     this.socket.on(API.MOUSE_CLICK, (mouseClick: MouseCoordinates) => {
-      this.gameState.onMouseClick(mouseClick);
+      this.gameState.mouseClick(mouseClick);
     });
-
     this.socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
       this.gameState.updatePlayerDirection(mouseCoordinates);
     });
-
   }
 
-  removePlayer() {
-    console.log(`[${this.socket.id}] Player '${this.player.name}' left '${this.gameName}'`);
-    this.gameState.disconnectPlayer(this.player);
+  emitGameState(gameState) {
+    socketIo.to(gameState.name).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
+    socketIo.to(gameState.name).emit(API.GET_BULLETS, gameState.getBullets());
+  }
+
+  disconnectPlayer(name) {
+    console.log(`[${this.socket.id}] Player '${name}' left '${this.gameName}'`);
     socketIo.to(this.gameName).emit(API.DISCONNECT_PLAYER, this.socket.id);
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
+    this.socket.emit(API.LEAVE_GAME);
+    this.socket.leave(this.gameName);
+    // this.socket.removeAllListeners(API.UPDATE_KEYS);
+    // this.socket.removeAllListeners(API.MOUSE_CLICK);
+    // this.socket.removeAllListeners(API.UPDATE_DIRECTION);
+    // delete this.gameState;
+    // delete this.gameName;
+    // delete this.player;
   }
 
   sendNewBullet(bullet: Bullet) {

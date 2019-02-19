@@ -95,6 +95,12 @@ class Main {
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
+    // socket.on(API.LEAVE_GAME, () => {
+    //   console.log('leave');
+    //   gameState.screen.renderer.domElement.remove();
+    //   this.menu.show();
+    // });
+
     window.addEventListener('mousedown', function(e: MouseEvent) {
       e.preventDefault();
       const mouseClick = gameState.getMouseCoordinates();

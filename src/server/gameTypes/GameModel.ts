@@ -40,13 +40,15 @@ export default interface GameModel {
 
   disconnectPlayer(disconnected: Player);
 
-  setKeys(id: string, keys: Array<string>);
+  updateKeys(id: string, keys: Array<string>);
 
-  updatePlayerPosition(id: string);
+  updatePlayerPosition(player: Player);
+
+  updatePlayersPosition();
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
 
   isPlayerAlive(id: string);
 
-  onMouseClick(mouseClick: MouseCoordinates);
+  mouseClick(mouseClick: MouseCoordinates);
 }

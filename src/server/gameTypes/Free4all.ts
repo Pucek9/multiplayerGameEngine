@@ -9,6 +9,7 @@ import Direction from '../../shared/models/Direction';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
+  private interval;
 
   constructor(
     public main,
@@ -16,7 +17,14 @@ export default class Free4all implements GameModel {
     public map: GameMap,
     public players: Player[] = [],
     public bullets: Bullet[] = [],
-  ) {}
+  ) {
+    this.interval = setInterval(() => {
+      this.updatePlayersPosition();
+      this.updateBullets();
+      this.detectBulletsCollision();
+      this.main.emitGameState(this)
+    }, 1000 / 60);
+  }
 
   static rand(x: number) {
     return Math.floor(Math.random() * x + 1);
@@ -126,15 +134,20 @@ export default class Free4all implements GameModel {
     this.players.splice(this.players.indexOf(disconnected), 1);
   }
 
-  setKeys(id: string, keys: Array<string>) {
+  updateKeys(id: string, keys: Array<string>) {
     const player = this.getPlayer(id);
     if (player) {
       player.keys = new Set(keys);
     }
   }
 
-  updatePlayerPosition(id: string) {
-    const player = this.getPlayer(id);
+  updatePlayersPosition() {
+    this.players.forEach(
+      player => this.updatePlayerPosition(player)
+    )
+  }
+
+  updatePlayerPosition(player: Player) {
     if (player) {
       if (player.keys.has('W') || player.keys.has('ArrowUp')) {
         if (
@@ -187,6 +200,7 @@ export default class Free4all implements GameModel {
       }
       // if (player.keys.has('Escape')) {
       //   this.disconnectPlayer(player);
+      //   this.main.disconnectPlayer(player.name);
       // }
     }
   }
@@ -201,10 +215,13 @@ export default class Free4all implements GameModel {
   }
 
   isPlayerAlive(id: string) {
-    return this.getPlayer(id).isAlive();
+    const player = this.getPlayer(id);
+    if (player) {
+      return this.getPlayer(id).isAlive();
+    }
   }
 
-  onMouseClick(mouseClick: MouseCoordinates) {
+  mouseClick(mouseClick: MouseCoordinates) {
     if (this.isPlayerAlive(mouseClick.owner)) {
       const bullet = this.addBullet(mouseClick);
       this.main.sendNewBullet(bullet);
@@ -219,7 +236,4 @@ export default class Free4all implements GameModel {
     });
   }
 
-  private hasKeys() {
-
-  }
 }
