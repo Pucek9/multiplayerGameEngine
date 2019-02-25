@@ -78,7 +78,6 @@ export default class Player extends PlayerModel {
   }
 
   addWeapon(weapon) {
-    // weapon.setOwner(this);
     this.weapons.push(weapon);
     this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }
