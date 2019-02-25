@@ -5,6 +5,8 @@ export default class PlayerModel implements ICircle {
 
   public alive: boolean;
   public direction: number;
+  public weapons = [];
+  public selectedWeapon;
 
   constructor(
     public id: string,

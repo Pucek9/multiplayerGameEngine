@@ -1,6 +1,8 @@
 import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
 import Aura from './Aura';
+// import Weapon from './weapons/Weapon';
+import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
@@ -69,5 +71,15 @@ export default class Player extends PlayerModel {
     if (this.aura) {
       this.aura.y = this.y;
     }
+  }
+
+  shoot(mouseClick: MouseCoordinates): Bullet[] {
+    return this.selectedWeapon ? this.selectedWeapon.shoot(mouseClick, this) : [];
+  }
+
+  addWeapon(weapon) {
+    // weapon.setOwner(this);
+    this.weapons.push(weapon);
+    this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }
 }

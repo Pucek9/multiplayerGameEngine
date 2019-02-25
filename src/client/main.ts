@@ -85,7 +85,7 @@ class Main {
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));
 
-    socket.on(API.ADD_NEW_BULLET, gameState.appendNewBullet.bind(gameState));
+    socket.on(API.ADD_NEW_BULLET, gameState.appendNewBullets.bind(gameState));
 
     socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
 

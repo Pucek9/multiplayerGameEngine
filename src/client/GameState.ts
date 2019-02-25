@@ -13,6 +13,7 @@ import Cursor from './models/Cursor';
 import BulletModel from '../shared/models/BulletModel';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import ScreenModel from './types/ScreenModel';
+import { normalizeKey } from '../shared/helpers';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.png');
@@ -66,16 +67,15 @@ export default class GameState {
   }
 
   appendPlayers(_players: PlayerModel[]) {
-    _players
-      .forEach(_player => {
-        const existed = this.players.find(player => player.id === _player.id);
-        if (!existed) {
-          const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
-          player.init(this.screen);
-          player.setAsEnemy();
-          this.players.push(player);
-        }
-      });
+    _players.forEach(_player => {
+      const existed = this.players.find(player => player.id === _player.id);
+      if (!existed) {
+        const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
+        player.init(this.screen);
+        player.setAsEnemy();
+        this.players.push(player);
+      }
+    });
   }
 
   addKey(e: KeyboardEvent) {
@@ -100,12 +100,12 @@ export default class GameState {
     }
   }
 
-  appendNewBullet(newBullet: BulletModel) {
-    if (newBullet) {
+  appendNewBullets(newBullets: BulletModel[]) {
+    newBullets.forEach(newBullet => {
       const bullet = new Bullet(newBullet.id, newBullet.size);
       bullet.init(this.screen);
       this.bullets.push(bullet);
-    }
+    });
   }
 
   updatePlayersState(_players: PlayerModel[]) {
@@ -207,6 +207,3 @@ export default class GameState {
   }
 }
 
-function normalizeKey(key: string): string {
-  return key.length !== 1 ? key : key.toUpperCase();
-}

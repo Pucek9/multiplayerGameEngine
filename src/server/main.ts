@@ -108,8 +108,8 @@ class Connection {
     // delete this.player;
   }
 
-  sendNewBullet(bullet: Bullet) {
-    socketIo.to(this.gameName).emit(API.ADD_NEW_BULLET, bullet);
+  sendNewBullets(bullets: Bullet[]) {
+    socketIo.to(this.gameName).emit(API.ADD_NEW_BULLET, bullets);
   }
 }
 

@@ -12,8 +12,6 @@ export default interface GameModel {
   players: Player[];
   bullets: Bullet[];
 
-  generateId();
-
   getPlayer(id: string);
 
   alivePlayers();
@@ -32,7 +30,7 @@ export default interface GameModel {
 
   detectBulletsCollision();
 
-  addBullet(mouseClick: MouseCoordinates);
+  shoot(mouseClick: MouseCoordinates);
 
   revivePlayer(id: string);
 
