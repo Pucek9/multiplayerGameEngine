@@ -45,9 +45,7 @@ export default class Free4all implements GameModel {
   }
 
   getBullets() {
-    return this.bullets.map(bullet => {
-      return { id: bullet.id, x: bullet.x, y: bullet.y };
-    });
+    return this.bullets.map(bullet => ({ id: bullet.id, x: bullet.x, y: bullet.y }));
   }
 
   getMapName() {
@@ -61,9 +59,7 @@ export default class Free4all implements GameModel {
   updateBullets() {
     this.bullets.forEach((bullet, i) => {
       bullet.update();
-      if (!bullet.isStillInAir()) {
-        this.bullets.splice(i, 1);
-      }
+      !bullet.isStillInAir() && this.bullets.splice(i, 1);
     });
   }
 
@@ -91,21 +87,25 @@ export default class Free4all implements GameModel {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
-      this.bullets.push(...bullets);
-      return bullets.map(bullet => ({ id: bullet.id, size: bullet.size }));
+      if (bullets) {
+        this.bullets.push(...bullets);
+        return bullets.map(bullet => ({ id: bullet.id, size: bullet.size }));
+      }
     }
   }
 
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
-    if (player && !this.detectPlayerCollision(player)) {
-      player.revive();
-    }
+    // if (player && !this.detectPlayerCollision(player)) {
+    //   player.revive();
+    // }
+    player && !this.detectPlayerCollision(player) && player.revive();
+
   }
 
   connectPlayer(id: string, newPlayer: NewPlayer): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
-    player.addWeapon(new Pistol());
+    player.addWeapon(new Pistol(30, 10));
     this.players.push(player);
     return player;
   }
@@ -116,9 +116,10 @@ export default class Free4all implements GameModel {
 
   updateKeys(id: string, keys: Array<string>) {
     const player = this.getPlayer(id);
-    if (player) {
-      player.keys = new Set(keys);
-    }
+    player && (player.keys = new Set(keys));
+    // if (player) {
+    //   player.keys = new Set(keys);
+    // }
   }
 
   updatePlayersPosition() {
@@ -202,7 +203,7 @@ export default class Free4all implements GameModel {
   mouseClick(mouseClick: MouseCoordinates) {
     if (this.isPlayerAlive(mouseClick.owner)) {
       const bullets = this.shoot(mouseClick);
-      this.main.sendNewBullets(bullets);
+      bullets && this.main.sendNewBullets(bullets);
     } else {
       this.revivePlayer(mouseClick.owner);
     }

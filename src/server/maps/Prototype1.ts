@@ -1,5 +1,7 @@
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
+import Pistol from '../models/weapons/Pistol';
+import Shotgun from '../models/weapons/Shotgun';
 
 export default class Prototype1 {
   private static mapName: string = 'Prototype1';
@@ -21,4 +23,11 @@ export default class Prototype1 {
       new StaticRectangleObject(1300, 30, 0, 100, 300, 100, 'yellow'),
     ];
   }
+
+  // static getWeapons() {
+  //   return [
+  //     new Pistol(100, 200, 100, 'red'),
+  //     new Shotgun(1000, 200, 90, 'blue'),
+  //   ];
+  // }
 }
