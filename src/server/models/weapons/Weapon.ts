@@ -16,11 +16,13 @@ export default class Weapon {
   constructor() {}
 
   shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
-    console.log('strazł', this.type, this.ready, this.bulletsInMagazine, this.shootBulletsCount);
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;
         this.bulletsInMagazine -= this.shootBulletsCount;
+        if (this.bulletsInMagazine < this.shootBulletsCount) {
+          this.reload();
+        }
         setTimeout(() => {
           this.ready = true;
         }, this.minTimeBetweenBullets);
@@ -32,7 +34,6 @@ export default class Weapon {
   }
 
   reload() {
-    console.log('reload xxxxxxxxxxxxxxxx', this.loaded, this.magazines);
     if (this.loaded && this.magazines > 0) {
       this.loaded = false;
       setTimeout(() => {
