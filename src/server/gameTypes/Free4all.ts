@@ -8,6 +8,7 @@ import GameModel from './GameModel';
 import Direction from '../../shared/models/Direction';
 import { rand } from '../../shared/helpers';
 import Pistol from '../models/weapons/Pistol';
+import Shotgun from '../models/weapons/Shotgun';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -96,16 +97,14 @@ export default class Free4all implements GameModel {
 
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
-    // if (player && !this.detectPlayerCollision(player)) {
-    //   player.revive();
-    // }
     player && !this.detectPlayerCollision(player) && player.revive();
 
   }
 
   connectPlayer(id: string, newPlayer: NewPlayer): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
-    player.addWeapon(new Pistol(30, 10));
+    player.addWeapon(new Pistol());
+    player.addWeapon(new Shotgun());
     this.players.push(player);
     return player;
   }
@@ -117,9 +116,6 @@ export default class Free4all implements GameModel {
   updateKeys(id: string, keys: Array<string>) {
     const player = this.getPlayer(id);
     player && (player.keys = new Set(keys));
-    // if (player) {
-    //   player.keys = new Set(keys);
-    // }
   }
 
   updatePlayersPosition() {
@@ -171,6 +167,12 @@ export default class Free4all implements GameModel {
         ) {
           player.goRight();
         }
+      }
+      if (player.keys.has('1')) {
+          player.selectWeapon(0);
+      }
+      if (player.keys.has('2')) {
+        player.selectWeapon(1);
       }
       if (player.keys.has('Shift')) {
         player.getAura();

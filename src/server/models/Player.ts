@@ -81,4 +81,10 @@ export default class Player extends PlayerModel {
     this.weapons.push(weapon);
     this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }
+
+  selectWeapon(index: number) {
+    if (this.weapons[index]) {
+      this.selectedWeapon = this.weapons[index];
+    }
+  }
 }

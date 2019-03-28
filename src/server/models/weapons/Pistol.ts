@@ -4,51 +4,35 @@ import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
 import { generateId } from '../../../shared/helpers';
 
-export default class Pistol implements Weapon {
+export default class Pistol extends Weapon {
   type = 'Pistol';
-  minTimeBetweenBullets = 150;
+  magazines = 30;
+  maxBulletsInMagazine = 10;
+  bulletsInMagazine = 10;
+  minTimeBetweenBullets = 200;
   reloadTime = 1500;
-  ready = true;
-  loaded = true;
-  bulletsInMagazine: number;
+  shootBulletsCount = 1;
+  bulletSize = 3;
+  bulletPower = 10;
+  range = 500;
 
-  constructor(private maxBulletsInMagazine: number, private magazines: number) {
-    this.bulletsInMagazine = this.maxBulletsInMagazine;
+  constructor() {
+    super();
   }
 
-  shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
-    if (this.ready) {
-      if (this.bulletsInMagazine > 0) {
-        this.ready = false;
-        this.bulletsInMagazine -= 1;
-        setTimeout(() => {
-          this.ready = true;
-        }, this.minTimeBetweenBullets);
-        return [
-          new Bullet(
-            generateId(),
-            owner,
-            owner.x + owner.size / 4,
-            owner.y + owner.size / 4,
-            mouseClick.targetX,
-            mouseClick.targetY,
-            2,
-          ),
-        ];
-      } else {
-        this.reload();
-      }
-    }
-  }
-
-  reload() {
-    if (this.loaded && this.magazines > 0) {
-      this.loaded = false;
-      setTimeout(() => {
-        this.bulletsInMagazine = this.maxBulletsInMagazine;
-        this.magazines -= 1;
-        this.loaded = true;
-      }, this.reloadTime);
-    }
+  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel) {
+    return [
+      new Bullet(
+        generateId(),
+        owner,
+        owner.x + owner.size / 4,
+        owner.y + owner.size / 4,
+        mouseClick.targetX,
+        mouseClick.targetY,
+        this.bulletSize,
+        this.bulletPower,
+        this.range,
+      ),
+    ];
   }
 }
