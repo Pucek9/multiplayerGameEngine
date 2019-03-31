@@ -121,7 +121,11 @@ export default class GameState {
         this.cursor.y -= diff.y;
       }
       if (foundPlayer) {
-        Object.assign(player, foundPlayer)
+        const size = player.size;
+        Object.assign(player, foundPlayer);
+        if(player.size !== size) {
+          player.updateObjectGeometry();
+        }
       }
     });
   }
@@ -130,8 +134,11 @@ export default class GameState {
     this.bullets.forEach(bullet => {
       const foundBullet = _bullets.find(_bullet => bullet.id === _bullet.id);
       if (foundBullet) {
-        bullet.x = foundBullet.x;
-        bullet.y = foundBullet.y;
+        const size = bullet.size;
+        Object.assign(bullet, foundBullet);
+        if(bullet.size !== size) {
+          bullet.updateObjectGeometry();
+        }
       } else {
         bullet.remove(this.screen);
         this.bullets.splice(this.bullets.indexOf(bullet), 1);

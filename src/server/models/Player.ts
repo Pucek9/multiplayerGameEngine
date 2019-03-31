@@ -35,7 +35,8 @@ export default class Player extends PlayerModel {
 
   hitFromBullet(bullet: Bullet) {
     if (this.isAlive()) {
-      this.hp = this.hp - bullet.power;
+      this.hp -= bullet.power;
+      bullet.effectOnPlayer(this);
       if (this.hp <= 0) {
         if (bullet.owner) {
           bullet.owner.addScore(100);
@@ -46,28 +47,28 @@ export default class Player extends PlayerModel {
   }
 
   goLeft() {
-    this.x = this.x - this.speed;
+    this.x -= this.speed;
     if (this.aura) {
       this.aura.x = this.x;
     }
   }
 
   goRight() {
-    this.x = this.x + this.speed;
+    this.x += this.speed;
     if (this.aura) {
       this.aura.x = this.x;
     }
   }
 
   goDown() {
-    this.y = this.y + this.speed;
+    this.y += this.speed;
     if (this.aura) {
       this.aura.y = this.y;
     }
   }
 
   goUp() {
-    this.y = this.y - this.speed;
+    this.y -= this.speed;
     if (this.aura) {
       this.aura.y = this.y;
     }

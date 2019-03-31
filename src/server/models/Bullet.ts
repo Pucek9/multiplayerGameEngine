@@ -4,7 +4,6 @@ export default class Bullet extends BulletModel {
   private defaultSpeed = 5;
   private speed = 5;
   private distance = 10;
-  private trajectory = 0;
   power = 10;
   range = 500;
   owner: any;
@@ -39,16 +38,15 @@ export default class Bullet extends BulletModel {
     return this.distance < this.range;
   }
 
-  update() {
+  updatePosition() {
     this.distance += this.speed;
-    this.trajectory = Math.sqrt(
+    const a = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
-    this.x =
-      this.targetX +
-      ((this.trajectory - this.distance) / this.trajectory) * (this.fromX - this.targetX);
-    this.y =
-      this.targetY +
-      ((this.trajectory - this.distance) / this.trajectory) * (this.fromY - this.targetY);
+    const b = (a - this.distance) / a;
+    this.x = this.targetX + b * (this.fromX - this.targetX);
+    this.y = this.targetY + b * (this.fromY - this.targetY);
   }
+
+  effectOnPlayer(player) {}
 }

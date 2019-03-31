@@ -1,7 +1,7 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
 import ScreenModel from '../types/ScreenModel';
-import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
+import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(cumin);
@@ -10,16 +10,31 @@ export default class Player extends PlayerModel implements IRenderable {
   public object;
   private initiated = false;
   private screen;
+  private geometry: SphereGeometry;
+  private material: MeshPhongMaterial;
+
+  setGeometry() {
+    this.geometry = new SphereGeometry(this.size, 10, 10, 1);
+  }
+
+  updateObjectGeometry() {
+    this.setGeometry();
+    this.object.geometry = new BufferGeometry().fromGeometry(this.geometry);
+  }
+
+  setMaterial() {
+    this.material = new MeshPhongMaterial({
+      map: texture,
+      color: this.color,
+    });
+  }
 
   init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      const geometry = new SphereGeometry(20, 10, 10, 1);
-      const material = new MeshPhongMaterial({
-        map: texture,
-        color: this.color,
-      });
-      this.object = new Mesh(geometry, material);
+      this.setGeometry();
+      this.setMaterial();
+      this.object = new Mesh( this.geometry,  this.material);
       this.object.name = this.id;
       this.object.receiveShadow = true;
       this.initiated = true;
@@ -51,6 +66,7 @@ export default class Player extends PlayerModel implements IRenderable {
   }
 
   updateBody() {
+    this.updateObjectGeometry();
     this.object.rotation.z = this.direction;
     this.object.position.x = this.x;
     this.object.position.y = this.y;

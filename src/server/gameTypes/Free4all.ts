@@ -10,6 +10,7 @@ import { rand } from '../../shared/helpers';
 import Pistol from '../models/weapons/Pistol';
 import Shotgun from '../models/weapons/Shotgun';
 import NewBullet from '../../shared/apiModels/NewBullet';
+import Resizer from '../models/weapons/Resizer';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -47,7 +48,12 @@ export default class Free4all implements GameModel {
   }
 
   getBullets() {
-    return this.bullets.map(bullet => ({ id: bullet.id, x: bullet.x, y: bullet.y }));
+    return this.bullets.map(bullet => ({
+      id: bullet.id,
+      x: bullet.x,
+      y: bullet.y,
+      size: bullet.size,
+    }));
   }
 
   getMapName() {
@@ -60,7 +66,7 @@ export default class Free4all implements GameModel {
 
   updateBullets() {
     this.bullets.forEach((bullet, i) => {
-      bullet.update();
+      bullet.updatePosition();
       !bullet.isStillInAir() && this.bullets.splice(i, 1);
     });
   }
@@ -85,7 +91,7 @@ export default class Free4all implements GameModel {
     });
   }
 
-  shoot(mouseClick: MouseCoordinates) : NewBullet[] {
+  shoot(mouseClick: MouseCoordinates): NewBullet[] {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
@@ -99,13 +105,13 @@ export default class Free4all implements GameModel {
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
     player && !this.detectPlayerCollision(player) && player.revive();
-
   }
 
   connectPlayer(id: string, newPlayer: NewUser): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
     player.addWeapon(new Pistol());
     player.addWeapon(new Shotgun());
+    player.addWeapon(new Resizer());
     player.selectWeapon(0);
     this.players.push(player);
     return player;
@@ -171,10 +177,13 @@ export default class Free4all implements GameModel {
         }
       }
       if (player.keys.has('1')) {
-          player.selectWeapon(0);
+        player.selectWeapon(0);
       }
       if (player.keys.has('2')) {
         player.selectWeapon(1);
+      }
+      if (player.keys.has('3')) {
+        player.selectWeapon(2);
       }
       if (player.keys.has('Shift')) {
         player.getAura();
