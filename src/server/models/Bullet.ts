@@ -5,18 +5,18 @@ export default class Bullet extends BulletModel {
   private speed = 5;
   private distance = 10;
   private trajectory = 0;
-  public power = 10;
-  public range = 500;
-  public owner: any;
-  public fromX: number;
-  public fromY: number;
-  public targetX: number;
-  public targetY: number;
+  power = 10;
+  range = 500;
+  owner: any;
+  fromX: number;
+  fromY: number;
+  targetX: number;
+  targetY: number;
 
   constructor(params: Partial<Bullet>) {
     super(params);
     Object.assign(this, params);
-    Object.seal(this)
+    Object.seal(this);
   }
 
   decreaseSpeed(value: number = 1) {
