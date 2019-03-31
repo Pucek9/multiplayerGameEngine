@@ -1,7 +1,7 @@
 import CollisionDetector from '../services/CollisionDetector';
 import Bullet from '../models/Bullet';
 import Player from '../models/Player';
-import NewPlayer from '../../shared/apiModels/NewPlayer';
+import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
@@ -9,6 +9,7 @@ import Direction from '../../shared/models/Direction';
 import { rand } from '../../shared/helpers';
 import Pistol from '../models/weapons/Pistol';
 import Shotgun from '../models/weapons/Shotgun';
+import NewBullet from '../../shared/apiModels/NewBullet';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -84,7 +85,7 @@ export default class Free4all implements GameModel {
     });
   }
 
-  shoot(mouseClick: MouseCoordinates) {
+  shoot(mouseClick: MouseCoordinates) : NewBullet[] {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
@@ -101,10 +102,11 @@ export default class Free4all implements GameModel {
 
   }
 
-  connectPlayer(id: string, newPlayer: NewPlayer): Player {
+  connectPlayer(id: string, newPlayer: NewUser): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000), 20);
     player.addWeapon(new Pistol());
     player.addWeapon(new Shotgun());
+    player.selectWeapon(0);
     this.players.push(player);
     return player;
   }

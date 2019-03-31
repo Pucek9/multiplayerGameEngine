@@ -1,5 +1,5 @@
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
-import NewPlayer from '../../shared/apiModels/NewPlayer';
+import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
@@ -34,7 +34,7 @@ export default interface GameModel {
 
   revivePlayer(id: string);
 
-  connectPlayer(id: string, newPlayer: NewPlayer);
+  connectPlayer(id: string, newPlayer: NewUser);
 
   disconnectPlayer(disconnected: Player);
 

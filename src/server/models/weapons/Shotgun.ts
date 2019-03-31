@@ -23,58 +23,40 @@ export default class Shotgun extends Weapon {
   }
 
   generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] {
-    const basicsInfo = [owner, owner.x + owner.size / 4, owner.y + owner.size / 4];
+    const commonBulletInfo = {
+      owner,
+      fromX: owner.x + owner.size / 4,
+      fromY: owner.y + owner.size / 4,
+      range: this.range,
+      size: this.bulletSize,
+      power: this.bulletPower,
+    };
     return [
-      // @ts-ignore
-      new Bullet(
-        generateId(),
-        ...basicsInfo,
-        mouseClick.targetX,
-        mouseClick.targetY,
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
-      // @ts-ignore
-      new Bullet(
-        generateId(),
-        ...basicsInfo,
-        mouseClick.targetX + rand(DISPERSION),
-        mouseClick.targetY + rand(DISPERSION),
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
-      // @ts-ignore
-      new Bullet(
-        generateId(),
-        ...basicsInfo,
-        mouseClick.targetX - rand(DISPERSION),
-        mouseClick.targetY + rand(DISPERSION),
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
-      // @ts-ignore
-      new Bullet(
-        generateId(),
-        ...basicsInfo,
-        mouseClick.targetX - rand(DISPERSION),
-        mouseClick.targetY - rand(DISPERSION),
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
-      // @ts-ignore
-      new Bullet(
-        generateId(),
-        ...basicsInfo,
-        mouseClick.targetX + rand(DISPERSION),
-        mouseClick.targetY - rand(DISPERSION),
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
+      new Bullet({
+        targetX: mouseClick.targetX,
+        targetY: mouseClick.targetY,
+        ...commonBulletInfo,
+      }),
+      new Bullet({
+        targetX: mouseClick.targetX + rand(DISPERSION),
+        targetY: mouseClick.targetY + rand(DISPERSION),
+        ...commonBulletInfo,
+      }),
+      new Bullet({
+        targetX: mouseClick.targetX - rand(DISPERSION),
+        targetY: mouseClick.targetY + rand(DISPERSION),
+        ...commonBulletInfo,
+      }),
+      new Bullet({
+        targetX: mouseClick.targetX - rand(DISPERSION),
+        targetY: mouseClick.targetY - rand(DISPERSION),
+        ...commonBulletInfo,
+      }),
+      new Bullet({
+        targetX: mouseClick.targetX + rand(DISPERSION),
+        targetY: mouseClick.targetY - rand(DISPERSION),
+        ...commonBulletInfo,
+      }),
     ];
   }
 }

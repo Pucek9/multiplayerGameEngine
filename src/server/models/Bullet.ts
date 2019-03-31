@@ -1,26 +1,22 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-  private readonly defaultSpeed: number;
-  private speed: number;
-  private distance: number;
-  private trajectory: number;
+  private defaultSpeed = 5;
+  private speed = 5;
+  private distance = 10;
+  private trajectory = 0;
+  public power = 10;
+  public range = 500;
+  public owner: any;
+  public fromX: number;
+  public fromY: number;
+  public targetX: number;
+  public targetY: number;
 
-  constructor(
-    public id: number,
-    public owner: any,
-    public fromX: number,
-    public fromY: number,
-    public targetX: number,
-    public targetY: number,
-    public size: number,
-    public power: number = 10,
-    protected range: number = 500,
-  ) {
-    super(id, size);
-    this.distance = 10;
-    this.defaultSpeed = 5;
-    this.speed = this.defaultSpeed;
+  constructor(params: Partial<Bullet>) {
+    super(params);
+    Object.assign(this, params);
+    Object.seal(this)
   }
 
   decreaseSpeed(value: number = 1) {

@@ -2,7 +2,6 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
-import { generateId } from '../../../shared/helpers';
 
 export default class Pistol extends Weapon {
   type = 'Pistol';
@@ -22,17 +21,16 @@ export default class Pistol extends Weapon {
 
   generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel) {
     return [
-      new Bullet(
-        generateId(),
+      new Bullet({
         owner,
-        owner.x + owner.size / 4,
-        owner.y + owner.size / 4,
-        mouseClick.targetX,
-        mouseClick.targetY,
-        this.bulletSize,
-        this.bulletPower,
-        this.range,
-      ),
+        fromX: owner.x + owner.size / 4,
+        fromY: owner.y + owner.size / 4,
+        targetX: mouseClick.targetX,
+        targetY: mouseClick.targetY,
+        range: this.range,
+        size: this.bulletSize,
+        power: this.bulletPower,
+      }),
     ];
   }
 }

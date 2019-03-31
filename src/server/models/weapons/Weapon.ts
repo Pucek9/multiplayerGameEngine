@@ -2,7 +2,7 @@ import Bullet from '../Bullet';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
 
-export default class Weapon {
+export default abstract class Weapon {
   type: string;
   ready = true;
   loaded = true;
@@ -13,7 +13,7 @@ export default class Weapon {
   reloadTime: number;
   shootBulletsCount: number;
 
-  constructor() {}
+  protected constructor() {}
 
   shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
     if (this.ready) {

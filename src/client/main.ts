@@ -8,7 +8,7 @@ import { joinGameReducer, newGameReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
 import './style.scss';
-import NewPlayer from '../shared/apiModels/NewPlayer';
+import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameItem from '../shared/apiModels/GameItem';
@@ -67,7 +67,7 @@ class Main {
 
   onJoinGame() {
     const userState = store.getState().joinGame;
-    const newPlayer = new NewPlayer(
+    const newPlayer = new NewUser(
       userState.id,
       userState.nick,
       randColor(),

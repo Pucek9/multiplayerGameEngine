@@ -1,25 +1,26 @@
 import Player from './models/Player';
 import Camera from './models/Camera';
-import PlayerModel from '../shared/models/PlayerModel';
 import Bullet from './models/Bullet';
-import BulletUpdate from '../shared/apiModels/BulletUpdate';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
 import Light from './models/Light';
 import PlayerListComponent from './UserInterface/PlayersList';
-import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
-import BulletModel from '../shared/models/BulletModel';
-import NewPlayer from '../shared/apiModels/NewPlayer';
 import ScreenModel from './types/ScreenModel';
+import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
+import NewBullet from '../shared/apiModels/NewBullet';
+import BulletUpdate from '../shared/apiModels/BulletUpdate';
+import NewUser from '../shared/apiModels/NewUser';
+import NewPlayer from '../shared/apiModels/NewPlayer';
+import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.png');
 
 export default class GameState {
-  user: NewPlayer;
+  user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
   camera: Camera;
@@ -33,7 +34,7 @@ export default class GameState {
   map: Map;
   cursor: Cursor;
 
-  constructor(user: NewPlayer, screen: ScreenModel) {
+  constructor(user: NewUser, screen: ScreenModel) {
     this.user = user;
     this.screen = screen;
     this.light = new Light(screen);
@@ -45,7 +46,7 @@ export default class GameState {
     this.cursor.init(this.screen);
   }
 
-  appendNewPlayer(newPlayer: PlayerModel) {
+  appendNewPlayer(newPlayer: NewPlayer) {
     const player = new Player(
       newPlayer.id,
       newPlayer.name,
@@ -66,7 +67,7 @@ export default class GameState {
     }
   }
 
-  appendPlayers(_players: PlayerModel[]) {
+  appendPlayers(_players: NewPlayer[]) {
     _players.forEach(_player => {
       const existed = this.players.find(player => player.id === _player.id);
       if (!existed) {
@@ -100,9 +101,9 @@ export default class GameState {
     }
   }
 
-  appendNewBullets(newBullets: BulletModel[]) {
+  appendNewBullets(newBullets: NewBullet[]) {
     newBullets.forEach(newBullet => {
-      const bullet = new Bullet(newBullet.id, newBullet.size);
+      const bullet = new Bullet(newBullet);
       bullet.init(this.screen);
       this.bullets.push(bullet);
     });
@@ -120,12 +121,7 @@ export default class GameState {
         this.cursor.y -= diff.y;
       }
       if (foundPlayer) {
-        player.x = foundPlayer.x;
-        player.y = foundPlayer.y;
-        player.alive = foundPlayer.alive;
-        player.hp = foundPlayer.hp;
-        player.score = foundPlayer.score;
-        player.direction = foundPlayer.direction;
+        Object.assign(player, foundPlayer)
       }
     });
   }
@@ -206,4 +202,3 @@ export default class GameState {
     }
   }
 }
-

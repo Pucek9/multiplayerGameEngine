@@ -3,12 +3,12 @@ import * as http from 'http';
 import { listen, Socket } from 'socket.io';
 
 import GamesStore from './services/GamesStore';
-import NewPlayer from '../shared/apiModels/NewPlayer';
+import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
-import Bullet from './models/Bullet';
 import Player from './models/Player';
+import NewBullet from '../shared/apiModels/NewBullet';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
@@ -44,7 +44,7 @@ class Connection {
       socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
     });
 
-    this.socket.on(API.CREATE_PLAYER, (newPlayer: NewPlayer) => {
+    this.socket.on(API.CREATE_PLAYER, (newPlayer: NewUser) => {
       this.gameState = gamesStory.getGame(newPlayer.gameName);
       if (this.gameState) {
         this.gameName = this.gameState.name;
@@ -108,7 +108,7 @@ class Connection {
     // delete this.player;
   }
 
-  sendNewBullets(bullets: Bullet[]) {
+  sendNewBullets(bullets: NewBullet[]) {
     socketIo.to(this.gameName).emit(API.ADD_NEW_BULLET, bullets);
   }
 }
