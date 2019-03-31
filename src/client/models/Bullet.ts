@@ -15,7 +15,7 @@ export default class Bullet extends BulletModel implements IRenderable {
   }
 
   setMaterial() {
-    this.material = new MeshBasicMaterial({ color: 'black' });
+    this.material = new MeshBasicMaterial({ color: this.color });
   }
 
   updateObjectGeometry() {

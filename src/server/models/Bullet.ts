@@ -39,6 +39,7 @@ export default class Bullet extends BulletModel {
   }
 
   updatePosition() {
+    this.additionalAction();
     this.distance += this.speed;
     const a = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
@@ -47,6 +48,8 @@ export default class Bullet extends BulletModel {
     this.x = this.targetX + b * (this.fromX - this.targetX);
     this.y = this.targetY + b * (this.fromY - this.targetY);
   }
+
+  additionalAction() {}
 
   effectOnPlayer(player) {}
 }

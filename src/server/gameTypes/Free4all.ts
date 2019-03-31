@@ -97,7 +97,7 @@ export default class Free4all implements GameModel {
       const bullets = owner.shoot(mouseClick);
       if (bullets) {
         this.bullets.push(...bullets);
-        return bullets.map(bullet => ({ id: bullet.id, size: bullet.size }));
+        return bullets.map(bullet => ({ id: bullet.id, size: bullet.size, color: bullet.color }));
       }
     }
   }

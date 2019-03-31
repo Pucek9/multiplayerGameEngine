@@ -66,7 +66,6 @@ export default class Player extends PlayerModel implements IRenderable {
   }
 
   updateBody() {
-    this.updateObjectGeometry();
     this.object.rotation.z = this.direction;
     this.object.position.x = this.x;
     this.object.position.y = this.y;

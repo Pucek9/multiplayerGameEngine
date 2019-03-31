@@ -12,12 +12,17 @@ export default class Resizer extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig = {
+    color: 'white',
     size: 5,
     power: 1,
     range: 700,
     effectOnPlayer(player) {
-      player.size++;
-    }
+      player.size += 1;
+      player.speed -= 1;
+    },
+    additionalAction() {
+      this.size += 0.1;
+    },
   };
 
   constructor() {
