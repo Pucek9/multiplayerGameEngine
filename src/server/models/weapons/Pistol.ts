@@ -11,9 +11,11 @@ export default class Pistol extends Weapon {
   minTimeBetweenBullets = 200;
   reloadTime = 1500;
   shootBulletsCount = 1;
-  bulletSize = 3;
-  bulletPower = 10;
-  range = 500;
+  bulletConfig = {
+    size: 3,
+    power: 10,
+    range: 500,
+  };
 
   constructor() {
     super();
@@ -27,9 +29,7 @@ export default class Pistol extends Weapon {
         fromY: owner.y + owner.size / 4,
         targetX: mouseClick.targetX,
         targetY: mouseClick.targetY,
-        range: this.range,
-        size: this.bulletSize,
-        power: this.bulletPower,
+        ...this.bulletConfig,
       }),
     ];
   }

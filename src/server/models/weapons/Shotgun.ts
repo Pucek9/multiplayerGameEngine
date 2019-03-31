@@ -14,9 +14,11 @@ export default class Shotgun extends Weapon {
   minTimeBetweenBullets = 500;
   reloadTime = 2000;
   shootBulletsCount = 5;
-  bulletSize = 2;
-  bulletPower = 8;
-  range = 350;
+  bulletConfig = {
+    size: 2,
+    power: 8,
+    range: 350,
+  };
 
   constructor() {
     super();
@@ -27,9 +29,7 @@ export default class Shotgun extends Weapon {
       owner,
       fromX: owner.x + owner.size / 4,
       fromY: owner.y + owner.size / 4,
-      range: this.range,
-      size: this.bulletSize,
-      power: this.bulletPower,
+      ...this.bulletConfig,
     };
     return [
       new Bullet({
