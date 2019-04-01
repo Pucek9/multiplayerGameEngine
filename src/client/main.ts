@@ -145,7 +145,7 @@ class Main {
     camera.position.z = 400;
     const scene = new Scene();
     const renderer = new WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     renderer.autoClear = true;
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     renderer.shadowMap.enabled = true;
