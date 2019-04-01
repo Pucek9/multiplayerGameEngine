@@ -16,7 +16,6 @@ export default class Light implements IRenderable {
     this.cursor = cursor;
     this.light = new SpotLight(0xffffff, 20, 700);
     this.light.position.set(100, 1000, 100);
-
     this.light.castShadow = true;
 
     this.light.shadow.mapSize.width = 300;
@@ -30,9 +29,10 @@ export default class Light implements IRenderable {
   }
 
   render() {
-    this.light.position.set(this.activePlayer.x, this.activePlayer.y, 30);
+    this.light.position.set(this.activePlayer.x, this.activePlayer.y, 50);
     if (this.cursor) {
-      this.light.target = this.cursor.object;
+      this.light.target.position.set(this.cursor.object.position.x, this.cursor.object.position.y, 10);
+      this.light.target.updateMatrixWorld(true)
     }
   }
 }

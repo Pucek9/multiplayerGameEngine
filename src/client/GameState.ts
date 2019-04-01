@@ -17,7 +17,7 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 
 const mapJPG = require('./games/balls/images/test.jpg');
-const cursorPNG = require('./games/balls/images/pointer.png');
+const cursorPNG = require('./games/balls/images/pointer.jpg');
 
 export default class GameState {
   user: NewUser;
