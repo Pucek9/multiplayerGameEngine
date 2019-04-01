@@ -14,12 +14,12 @@ export default class Player extends PlayerModel {
 
   die() {
     this.alive = false;
+    this.speed = this.baseSpeed;
+    this.size = this.baseSize;
   }
 
   revive() {
     this.alive = true;
-    this.speed = this.baseSpeed;
-    this.size = this.baseSize;
     this.hp = this.baseHp;
   }
 

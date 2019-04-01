@@ -95,6 +95,8 @@ class Main {
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
+    socket.on(API.GET_WEAPON_DETAILS, gameState.updateWeaponInfo.bind(gameState));
+
     // socket.on(API.LEAVE_GAME, () => {
     //   console.log('leave');
     //   gameState.screen.renderer.domElement.remove();

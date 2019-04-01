@@ -5,6 +5,7 @@ import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
 import Light from './models/Light';
 import PlayerListComponent from './UserInterface/PlayersList';
+import WeaponsListComponent from './UserInterface/WeaponsList';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
 import ScreenModel from './types/ScreenModel';
@@ -26,6 +27,7 @@ export default class GameState {
   camera: Camera;
   light: Light;
   playersListComponent: PlayerListComponent;
+  weaponsListComponent: WeaponsListComponent;
   players: Player[] = [];
   playersListString: string = '';
   bullets: Bullet[] = [];
@@ -39,6 +41,7 @@ export default class GameState {
     this.screen = screen;
     this.light = new Light(screen);
     this.playersListComponent = new PlayerListComponent();
+    this.weaponsListComponent = new WeaponsListComponent();
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
 
@@ -207,5 +210,9 @@ export default class GameState {
       this.playersListComponent.render(playersList);
       this.playersListString = _playersListString;
     }
+  }
+
+  updateWeaponInfo(info) {
+    this.weaponsListComponent.render(info)
   }
 }

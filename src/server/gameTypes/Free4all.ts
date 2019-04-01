@@ -91,13 +91,20 @@ export default class Free4all implements GameModel {
     });
   }
 
-  shoot(mouseClick: MouseCoordinates): NewBullet[] {
+  shoot(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
       if (bullets) {
         this.bullets.push(...bullets);
-        return bullets.map(bullet => ({ id: bullet.id, size: bullet.size, color: bullet.color }));
+        return {
+          owner,
+          bullets: bullets.map(bullet => ({
+            id: bullet.id,
+            size: bullet.size,
+            color: bullet.color,
+          })),
+        };
       }
     }
   }
@@ -113,6 +120,7 @@ export default class Free4all implements GameModel {
     player.addWeapon(new Shotgun());
     player.addWeapon(new Resizer());
     player.selectWeapon(0);
+    this.getWeaponInfo(player);
     this.players.push(player);
     return player;
   }
@@ -178,12 +186,15 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('1')) {
         player.selectWeapon(0);
+        this.getWeaponInfo(player);
       }
       if (player.keys.has('2')) {
         player.selectWeapon(1);
+        this.getWeaponInfo(player);
       }
       if (player.keys.has('3')) {
         player.selectWeapon(2);
+        this.getWeaponInfo(player);
       }
       if (player.keys.has('Shift')) {
         player.getAura();
@@ -215,11 +226,22 @@ export default class Free4all implements GameModel {
 
   mouseClick(mouseClick: MouseCoordinates) {
     if (this.isPlayerAlive(mouseClick.owner)) {
-      const bullets = this.shoot(mouseClick);
-      bullets && this.main.sendNewBullets(bullets);
+      const shoot = this.shoot(mouseClick);
+      if (shoot && shoot.bullets) {
+        this.main.sendNewBullets(shoot.bullets);
+        this.getWeaponInfo(shoot.owner)
+
+      }
     } else {
       this.revivePlayer(mouseClick.owner);
     }
+  }
+
+  getWeaponInfo(player) {
+    this.main.updateWeaponInfo(player.id, {
+      selectedWeapon: player.selectedWeapon,
+      weapons: player.weapons.map(weapon => weapon.type),
+    });
   }
 
   private detectPlayerCollision(player: Player, direction?: Direction) {
