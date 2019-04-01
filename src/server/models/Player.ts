@@ -18,6 +18,8 @@ export default class Player extends PlayerModel {
 
   revive() {
     this.alive = true;
+    this.speed = this.baseSpeed;
+    this.size = this.baseSize;
     this.hp = this.baseHp;
   }
 

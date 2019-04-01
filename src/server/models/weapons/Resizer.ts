@@ -17,8 +17,10 @@ export default class Resizer extends Weapon {
     power: 1,
     range: 700,
     effectOnPlayer(player) {
-      player.size += 1;
-      player.speed -= 1;
+      player.size += 2;
+      if(player.speed > 0.5) {
+        player.speed -= 0.5;
+      }
     },
     additionalAction() {
       this.size += 0.1;
