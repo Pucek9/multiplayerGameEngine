@@ -249,8 +249,12 @@ export default class Free4all implements GameModel {
 
   private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
-      if (CollisionDetector.detectCollision(player, generator, direction) && generator.isReady()) {
-        player.addWeapon(generator.generateWeapon());
+      if (CollisionDetector.detectCollision(player, generator, direction) && generator.ready) {
+        const weapon = generator.generateWeapon();
+        if (weapon) {
+          player.addWeapon(weapon);
+          this.main.updateItemGenerators();
+        }
       }
     });
   }

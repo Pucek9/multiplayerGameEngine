@@ -6,7 +6,7 @@ import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from '
 const cumin = require('../games/balls/images/head.jpg');
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
-  private object: Mesh;
+  protected object: Mesh;
 
   init(screen: ScreenModel) {
     const texture = new TextureLoader().load(cumin);

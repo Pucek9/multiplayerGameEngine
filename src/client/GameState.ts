@@ -16,6 +16,7 @@ import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
+import Weapon from './models/Weapon';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -166,7 +167,7 @@ export default class GameState {
     console.log(_itemGenerators);
     this.itemGenerators = _itemGenerators;
     this.itemGenerators.forEach(_itemGenerator => {
-      Object.setPrototypeOf(_itemGenerator, StaticCircularObject.prototype);
+      Object.setPrototypeOf(_itemGenerator, Weapon.prototype);
     });
     this.itemGenerators.forEach(object => object.init(this.screen));
   }

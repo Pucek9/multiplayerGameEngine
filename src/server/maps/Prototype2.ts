@@ -1,16 +1,17 @@
 import StaticRectangleObject from '../models/StaticRectangleObject';
+import GameMap from './GameMap';
+import StaticCircularObject from '../models/StaticCircularObject';
+import ItemGenerator from '../models/ItemGenerator';
+import Weapon from '../models/weapons/Weapon';
+import Pistol from '../models/weapons/Pistol';
 
-export default class Prototype2 {
-  private static mapName: string = 'Prototype2';
+export default class Prototype2 implements GameMap {
+  mapName: string = 'Prototype2';
+  staticObjects: (StaticRectangleObject | StaticCircularObject)[];
+  itemGenerators: ItemGenerator<Weapon>[];
 
-  constructor() {}
-
-  static getMapName() {
-    return this.mapName;
-  }
-
-  static getStaticObjects() {
-    return [
+  constructor() {
+    this.staticObjects = [
       new StaticRectangleObject({
         x: 1200,
         y: 30,
@@ -75,9 +76,27 @@ export default class Prototype2 {
         color: 'yellow',
       }),
     ];
+    this.itemGenerators = [
+      new ItemGenerator({
+        x: 1300,
+        y: 10,
+        size: 30,
+        color: 'brown',
+        time: 10000,
+        weapon: Pistol,
+      }),
+    ];
   }
 
-  static getItemGenerators() {
-    return [];
+  getMapName() {
+    return this.mapName;
+  }
+
+  getStaticObjects() {
+    return this.staticObjects;
+  }
+
+  getItemGenerators() {
+    return this.itemGenerators;
   }
 }
