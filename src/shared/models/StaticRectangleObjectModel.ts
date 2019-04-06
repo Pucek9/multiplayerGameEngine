@@ -1,16 +1,17 @@
 import IRectangle from '../interfaces/IRectangle';
 
 export default class StaticRectangleObjectModel implements IRectangle {
-  public type: string = 'rectangle';
+  type: string = 'rectangle';
+  x: number;
+  y: number;
+  z: number;
+  width: number;
+  height: number;
+  depth: number;
+  color: string;
+  deg: number = 0;
 
-  constructor(
-    public x: number,
-    public y: number,
-    public z: number,
-    public width: number,
-    public height: number,
-    public depth: number,
-    public color: string,
-    public deg: number = 0,
-  ) {}
+  constructor(params: Partial<StaticRectangleObjectModel>) {
+    Object.assign(this, params);
+  }
 }

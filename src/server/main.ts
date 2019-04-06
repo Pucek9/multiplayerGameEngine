@@ -74,6 +74,7 @@ class Connection {
     socketIo.to(this.gameName).emit(API.ADD_NEW_PLAYER, this.player);
     socketIo.to(this.gameName).emit(API.ADD_PLAYERS, this.gameState.getPlayers());
     socketIo.to(this.gameName).emit(API.GET_STATIC_OBJECTS, this.gameState.getStaticObjects());
+    socketIo.to(this.gameName).emit(API.GET_ITEM_GENERATORS, this.gameState.getItemGenerators());
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
   }
 

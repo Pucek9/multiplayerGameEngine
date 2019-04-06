@@ -11,13 +11,73 @@ export default class Prototype2 {
 
   static getStaticObjects() {
     return [
-      new StaticRectangleObject(1200, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(800, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(400, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(0, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(-400, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(-800, 30, 0, 100, 800, 10, 'yellow'),
-      new StaticRectangleObject(-1200, 30, 0, 100, 800, 10, 'yellow'),
+      new StaticRectangleObject({
+        x: 1200,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: 800,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: 400,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: 0,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: -400,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: -800,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
+      new StaticRectangleObject({
+        x: -1200,
+        y: 30,
+        z: 0,
+        width: 100,
+        height: 800,
+        depth: 10,
+        color: 'yellow',
+      }),
     ];
+  }
+
+  static getItemGenerators() {
+    return [];
   }
 }

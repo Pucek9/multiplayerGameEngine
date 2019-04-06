@@ -33,6 +33,7 @@ export default class GameState {
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
   staticObjects: any[];
+  itemGenerators: any[];
   map: Map;
   cursor: Cursor;
 
@@ -126,7 +127,7 @@ export default class GameState {
       if (foundPlayer) {
         const size = player.size;
         Object.assign(player, foundPlayer);
-        if(player.size !== size) {
+        if (player.size !== size) {
           player.updateObjectGeometry();
         }
       }
@@ -139,7 +140,7 @@ export default class GameState {
       if (foundBullet) {
         const size = bullet.size;
         Object.assign(bullet, foundBullet);
-        if(bullet.size !== size) {
+        if (bullet.size !== size) {
           bullet.updateObjectGeometry();
         }
       } else {
@@ -159,6 +160,15 @@ export default class GameState {
       }
     });
     this.staticObjects.forEach(object => object.init(this.screen));
+  }
+
+  appendItemGenerators(_itemGenerators: any[]) {
+    console.log(_itemGenerators);
+    this.itemGenerators = _itemGenerators;
+    this.itemGenerators.forEach(_itemGenerator => {
+      Object.setPrototypeOf(_itemGenerator, StaticCircularObject.prototype);
+    });
+    this.itemGenerators.forEach(object => object.init(this.screen));
   }
 
   removePlayer(id: string) {
@@ -213,6 +223,6 @@ export default class GameState {
   }
 
   updateWeaponInfo(info) {
-    this.weaponsListComponent.render(info)
+    this.weaponsListComponent.render(info);
   }
 }

@@ -10,6 +10,7 @@ export enum API {
   GET_PLAYERS_STATE = 'getPlayers',
   GET_BULLETS = 'getBullets',
   GET_STATIC_OBJECTS = 'getStaticObjects',
+  GET_ITEM_GENERATORS = 'getItemGenerators',
   DISCONNECT_PLAYER = 'disconnectPlayer',
   WELCOME_NEW_PLAYER = 'helloPlayer',
   UPDATE_DIRECTION = 'updateDirection',

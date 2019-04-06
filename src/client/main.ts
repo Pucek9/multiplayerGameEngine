@@ -67,12 +67,7 @@ class Main {
 
   onJoinGame() {
     const userState = store.getState().joinGame;
-    const newPlayer = new NewUser(
-      userState.id,
-      userState.nick,
-      randColor(),
-      userState.chosenGame,
-    );
+    const newPlayer = new NewUser(userState.id, userState.nick, randColor(), userState.chosenGame);
     socket.emit(API.CREATE_PLAYER, newPlayer);
     const screen = this.prepareScreen();
     this.gameState = new GameState(newPlayer, screen);
@@ -92,6 +87,8 @@ class Main {
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
     socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
+
+    socket.on(API.GET_ITEM_GENERATORS, gameState.appendItemGenerators.bind(gameState));
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 

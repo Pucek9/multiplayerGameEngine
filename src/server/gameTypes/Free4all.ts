@@ -64,6 +64,10 @@ export default class Free4all implements GameModel {
     return this.map.getStaticObjects();
   }
 
+  getItemGenerators() {
+    return this.map.getItemGenerators();
+  }
+
   updateBullets() {
     this.bullets.forEach((bullet, i) => {
       bullet.updatePosition();
@@ -116,10 +120,10 @@ export default class Free4all implements GameModel {
 
   connectPlayer(id: string, newPlayer: NewUser): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000));
-    player.addWeapon(new Pistol());
-    player.addWeapon(new Shotgun());
-    player.addWeapon(new Resizer());
-    player.selectWeapon(0);
+    // player.addWeapon(new Pistol());
+    // player.addWeapon(new Shotgun());
+    // player.addWeapon(new Resizer());
+    // player.selectWeapon(0);
     this.getWeaponInfo(player);
     this.players.push(player);
     return player;
@@ -229,8 +233,7 @@ export default class Free4all implements GameModel {
       const shoot = this.shoot(mouseClick);
       if (shoot && shoot.bullets) {
         this.main.sendNewBullets(shoot.bullets);
-        this.getWeaponInfo(shoot.owner)
-
+        this.getWeaponInfo(shoot.owner);
       }
     } else {
       this.revivePlayer(mouseClick.owner);
@@ -244,9 +247,21 @@ export default class Free4all implements GameModel {
     });
   }
 
+  private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
+    this.getItemGenerators().forEach(generator => {
+      if (CollisionDetector.detectCollision(player, generator, direction) && generator.isReady()) {
+        player.addWeapon(generator.generateWeapon());
+      }
+    });
+  }
+
   private detectPlayerCollision(player: Player, direction?: Direction) {
-    return [...this.getStaticObjects(), ...this.alivePlayers()].some(object => {
-      return player !== object && CollisionDetector.detectCollision(player, object, direction);
+    this.detectPlayerCollisionWithGenerator(player, direction);
+    return [
+      ...this.getStaticObjects(),
+      ...this.alivePlayers().filter(object => player !== object),
+    ].some(object => {
+      return CollisionDetector.detectCollision(player, object, direction);
     });
   }
 }
