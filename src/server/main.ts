@@ -12,6 +12,7 @@ import NewBullet from '../shared/apiModels/NewBullet';
 import ItemGenerator from './models/ItemGenerator';
 import Item from '../shared/models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
+import Weapon from './models/weapons/Weapon';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
@@ -117,7 +118,7 @@ class Connection {
     socketIo.to(this.gameName).emit(API.ADD_NEW_BULLET, bullets);
   }
 
-  updateWeaponInfo(id: string, weaponInfo: Item) {
+  updateWeaponInfo(id: string, weaponInfo: { selectedWeapon: Weapon; weapons: Item[] }) {
     socketIo.to(id).emit(API.GET_WEAPON_DETAILS, weaponInfo);
   }
 
