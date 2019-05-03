@@ -5,8 +5,8 @@ import ItemGenerator from '../models/ItemGenerator';
 import Pistol from '../models/weapons/Pistol';
 import Item from '../../shared/models/Item';
 
-export default class Prototype2 implements GameMap {
-  mapName: string = 'Prototype2';
+export default class Boxes implements GameMap {
+  mapName: string = 'Boxes';
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 

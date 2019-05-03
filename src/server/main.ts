@@ -117,7 +117,7 @@ class Connection {
     socketIo.to(this.gameName).emit(API.ADD_NEW_BULLET, bullets);
   }
 
-  updateWeaponInfo(id, weaponInfo) {
+  updateWeaponInfo(id: string, weaponInfo: Item) {
     socketIo.to(id).emit(API.GET_WEAPON_DETAILS, weaponInfo);
   }
 

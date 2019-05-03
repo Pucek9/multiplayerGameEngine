@@ -5,7 +5,7 @@ import PlayerModel from '../../../shared/models/PlayerModel';
 
 export default class Pistol extends Weapon {
   type = 'Pistol';
-  magazines = 30;
+  magazines = 5;
   maxBulletsInMagazine = 10;
   bulletsInMagazine = 10;
   minTimeBetweenBullets = 200;

@@ -4,9 +4,11 @@ import Pistol from '../models/weapons/Pistol';
 import ItemGenerator from '../models/ItemGenerator';
 import GameMap from './GameMap';
 import Item from '../../shared/models/Item';
+import Shotgun from '../models/weapons/Shotgun';
+import Resizer from '../models/weapons/Resizer';
 
-export default class Prototype1 implements GameMap {
-  mapName: string = 'Prototype1';
+export default class Playground implements GameMap {
+  mapName: string = 'Playground';
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 
@@ -64,6 +66,24 @@ export default class Prototype1 implements GameMap {
         time: 10000,
         item: Pistol,
         type: 'Pistol',
+      }),
+      new ItemGenerator({
+        x: 200,
+        y: 500,
+        size: 4,
+        color: 'red',
+        time: 20000,
+        item: Shotgun,
+        type: 'Shotgun',
+      }),
+      new ItemGenerator({
+        x: -500,
+        y: 200,
+        size: 4,
+        color: 'white',
+        time: 30000,
+        item: Resizer,
+        type: 'Resizer',
       }),
     ];
   }

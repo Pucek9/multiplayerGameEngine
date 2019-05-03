@@ -5,7 +5,7 @@ import PlayerModel from '../../../shared/models/PlayerModel';
 
 export default class Resizer extends Weapon {
   type = 'Resizer';
-  magazines = 30;
+  magazines = 3;
   maxBulletsInMagazine = 10;
   bulletsInMagazine = 10;
   minTimeBetweenBullets = 100;
@@ -18,7 +18,7 @@ export default class Resizer extends Weapon {
     range: 700,
     effectOnPlayer(player) {
       player.size += 2;
-      if(player.speed > 0.5) {
+      if (player.speed > 0.5) {
         player.speed -= 0.5;
       }
     },

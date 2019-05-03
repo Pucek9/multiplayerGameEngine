@@ -9,18 +9,18 @@ export default class WeaponListComponent implements IRenderable {
     weaponsList.innerHTML = '';
     weapons.forEach((_weapon, index) => {
       const li = document.createElement('li');
-      if (_weapon === selectedWeapon.type) {
+      if (_weapon.id === selectedWeapon.id) {
         li.style.fontWeight = 'bold';
         li.appendChild(
           document.createTextNode(
-            `${index + 1} ${_weapon}: ${selectedWeapon.bulletsInMagazine}/${
+            `${index + 1} ${_weapon.type}: ${selectedWeapon.bulletsInMagazine}/${
               selectedWeapon.maxBulletsInMagazine
             } | ${selectedWeapon.magazines}`,
           ),
         );
       } else {
         li.style.fontWeight = 'normal';
-        li.appendChild(document.createTextNode(`${index + 1} ${_weapon}`));
+        li.appendChild(document.createTextNode(`${index + 1} ${_weapon.type}`));
       }
       // @ts-ignore
       weaponsList.append(li);

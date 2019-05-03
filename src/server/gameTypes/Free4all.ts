@@ -13,6 +13,7 @@ import NewBullet from '../../shared/apiModels/NewBullet';
 import Resizer from '../models/weapons/Resizer';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Item from '../../shared/models/Item';
+import Weapon from '../models/weapons/Weapon';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -249,7 +250,7 @@ export default class Free4all implements GameModel {
   getWeaponInfo(player) {
     this.main.updateWeaponInfo(player.id, {
       selectedWeapon: player.selectedWeapon,
-      weapons: player.weapons.map(weapon => weapon.type),
+      weapons: player.weapons.map((weapon: Weapon) => ({ type: weapon.type, id: weapon.id })),
     });
   }
 
@@ -263,6 +264,7 @@ export default class Free4all implements GameModel {
         }, generator.time);
         const weapon = generator.generateItem();
         player.addWeapon(weapon);
+        this.getWeaponInfo(player);
         this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
       }
     });

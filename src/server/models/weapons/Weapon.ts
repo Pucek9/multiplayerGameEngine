@@ -2,6 +2,7 @@ import Bullet from '../Bullet';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
 import Item from '../../../shared/models/Item';
+import { generateId } from '../../../shared/helpers';
 
 export default abstract class Weapon implements Item {
   type: string;
@@ -13,8 +14,11 @@ export default abstract class Weapon implements Item {
   minTimeBetweenBullets: number;
   reloadTime: number;
   shootBulletsCount: number;
+  id: number;
 
-  protected constructor() {}
+  protected constructor() {
+    this.id = generateId();
+  }
 
   shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
     if (this.ready) {

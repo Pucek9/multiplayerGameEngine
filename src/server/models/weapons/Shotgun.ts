@@ -8,7 +8,7 @@ const DISPERSION = 70;
 
 export default class Shotgun extends Weapon {
   type = 'Shotgun';
-  magazines = 10;
+  magazines = 2;
   maxBulletsInMagazine = 25;
   bulletsInMagazine = 25;
   minTimeBetweenBullets = 500;

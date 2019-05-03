@@ -174,7 +174,6 @@ export default class GameState {
   }
 
   updateItemGenerator(updatedItemGenerator: ItemGeneratorAPI) {
-    console.log(updatedItemGenerator);
     const itemGenerator = this.itemGenerators.find(
       itemGenerator => itemGenerator.id === updatedItemGenerator.id,
     );
@@ -235,7 +234,8 @@ export default class GameState {
     }
   }
 
-  updateWeaponInfo(info) {
+  updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
+    console.log(info);
     this.weaponsListComponent.render(info);
   }
 }
