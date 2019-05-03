@@ -1,8 +1,9 @@
 import Bullet from '../Bullet';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
+import Item from '../../../shared/models/Item';
 
-export default abstract class Weapon {
+export default abstract class Weapon implements Item {
   type: string;
   ready = true;
   loaded = true;

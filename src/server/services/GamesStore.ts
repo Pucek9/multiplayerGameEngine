@@ -1,6 +1,6 @@
 import gameTypes from '../gameTypes';
 import maps from '../maps';
-import GameItem from '../../shared/apiModels/GameItem';
+import GameInstance from '../../shared/apiModels/GameInstance';
 import GameModel from '../gameTypes/GameModel';
 
 export default class GamesStore {
@@ -20,7 +20,7 @@ export default class GamesStore {
     return this.games.find(game => game.isPlayerInThisGame(id));
   }
 
-  getGamesList(): GameItem[] {
+  getGamesList(): GameInstance[] {
     return this.games.map(game => {
       return {
         name: game.name,

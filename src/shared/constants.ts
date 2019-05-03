@@ -11,6 +11,7 @@ export enum API {
   GET_BULLETS = 'getBullets',
   GET_STATIC_OBJECTS = 'getStaticObjects',
   GET_ITEM_GENERATORS = 'getItemGenerators',
+  UPDATE_ITEM_GENERATOR = 'updateItemGenerator',
   DISCONNECT_PLAYER = 'disconnectPlayer',
   WELCOME_NEW_PLAYER = 'helloPlayer',
   UPDATE_DIRECTION = 'updateDirection',

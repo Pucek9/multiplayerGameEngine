@@ -11,6 +11,8 @@ import Pistol from '../models/weapons/Pistol';
 import Shotgun from '../models/weapons/Shotgun';
 import NewBullet from '../../shared/apiModels/NewBullet';
 import Resizer from '../models/weapons/Resizer';
+import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
+import Item from '../../shared/models/Item';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -66,6 +68,10 @@ export default class Free4all implements GameModel {
 
   getItemGenerators() {
     return this.map.getItemGenerators();
+  }
+
+  getItemGeneratorsAPI() {
+    return this.getItemGenerators().map(itemGenerator => new ItemGeneratorAPI(itemGenerator));
   }
 
   updateBullets() {
@@ -249,12 +255,15 @@ export default class Free4all implements GameModel {
 
   private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
-      if (CollisionDetector.detectCollision(player, generator, direction) && generator.ready) {
-        const weapon = generator.generateWeapon();
-        if (weapon) {
-          player.addWeapon(weapon);
-          this.main.updateItemGenerators();
-        }
+      if (CollisionDetector.detectCollision(player, generator, direction) && generator.isReady()) {
+        generator.deactivate();
+        setTimeout(() => {
+          generator.activate();
+          this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
+        }, generator.time);
+        const weapon = generator.generateItem();
+        player.addWeapon(weapon);
+        this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
       }
     });
   }

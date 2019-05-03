@@ -2,7 +2,7 @@ import ICircle from '../interfaces/ICircle';
 import { generateId } from '../helpers';
 
 export default class BulletModel implements ICircle {
-  readonly type = 'circle';
+  readonly shape = 'circle';
   color = 'black';
   size = 1;
   id: number;

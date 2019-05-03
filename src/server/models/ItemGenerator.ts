@@ -1,16 +1,21 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import { generateId } from '../../shared/helpers';
+import Item from '../../shared/models/Item';
 
 interface ParameterlessConstructor<T> {
   new (): T;
 }
 
 export default class ItemGenerator<T> extends StaticCircularObjectModel {
+  item: ParameterlessConstructor<Item>;
   ready = true;
-  weapon: ParameterlessConstructor<T>;
+  type: string;
   time: number;
+  id: number;
 
-  constructor(params: Partial<ItemGenerator<T>>) {
+  constructor(params: Partial<ItemGenerator<Item>>) {
     super(params);
+    this.id = params.id || generateId();
     Object.assign(this, params);
     Object.seal(this);
   }
@@ -19,13 +24,15 @@ export default class ItemGenerator<T> extends StaticCircularObjectModel {
     return this.ready;
   }
 
-  generateWeapon(): T {
-    if (this.isReady()) {
-      this.ready = false;
-      setTimeout(() => {
-        this.ready = true;
-      }, this.time);
-      return new this.weapon();
-    }
+  activate() {
+    this.ready = true;
+  }
+
+  deactivate() {
+    this.ready = false;
+  }
+
+  generateItem(): Item {
+    return new this.item();
   }
 }

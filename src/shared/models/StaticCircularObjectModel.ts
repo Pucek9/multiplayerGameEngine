@@ -1,7 +1,7 @@
 import ICircle from '../interfaces/ICircle';
 
 export default abstract class StaticCircularObjectModel implements ICircle {
-  type: string = 'circle';
+  shape: string = 'circle';
   x: number;
   y: number;
   size: number;

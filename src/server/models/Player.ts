@@ -81,7 +81,7 @@ export default class Player extends PlayerModel {
   }
 
   addWeapon(weapon) {
-    // console.log('found weapon', weapon);
+    // console.log('found item', item);
     this.weapons.push(weapon);
     this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }

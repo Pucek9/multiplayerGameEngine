@@ -11,7 +11,7 @@ import './style.scss';
 import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
-import GameItem from '../shared/apiModels/GameItem';
+import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
 
 let url = process.env.URL || 'localhost';
@@ -51,7 +51,7 @@ class Main {
       store.dispatch(setId(id));
     });
 
-    socket.on(API.GET_GAMES_LIST, function(gamesList: GameItem[]) {
+    socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
       console.log('GET_GAMES_LIST', gamesList);
       store.dispatch(clearGamesList());
       gamesList.forEach(game =>
@@ -89,6 +89,8 @@ class Main {
     socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
 
     socket.on(API.GET_ITEM_GENERATORS, gameState.appendItemGenerators.bind(gameState));
+
+    socket.on(API.UPDATE_ITEM_GENERATOR, gameState.updateItemGenerator.bind(gameState));
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 

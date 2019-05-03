@@ -16,7 +16,8 @@ import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
-import Weapon from './models/Weapon';
+import Item from './models/Item';
+import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -33,8 +34,8 @@ export default class GameState {
   playersListString: string = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
-  staticObjects: any[];
-  itemGenerators: any[];
+  staticObjects: any[] = [];
+  itemGenerators: Item[] = [];
   map: Map;
   cursor: Cursor;
 
@@ -151,25 +152,35 @@ export default class GameState {
     });
   }
 
-  appendStaticObjects(_staticObjects: any[]) {
-    this.staticObjects = _staticObjects;
-    this.staticObjects.forEach(_staticObject => {
-      if (_staticObject.type === 'rectangle') {
-        Object.setPrototypeOf(_staticObject, StaticRectangleObject.prototype);
+  appendStaticObjects(newObjects: any[]) {
+    newObjects.forEach(newObject => {
+      let staticObject;
+      if (newObject.shape === 'rectangle') {
+        staticObject = new StaticRectangleObject(newObject);
       } else {
-        Object.setPrototypeOf(_staticObject, StaticCircularObject.prototype);
+        staticObject = new StaticCircularObject(newObject);
       }
+      staticObject.init(this.screen);
+      this.staticObjects.push(staticObject);
     });
-    this.staticObjects.forEach(object => object.init(this.screen));
   }
 
-  appendItemGenerators(_itemGenerators: any[]) {
-    console.log(_itemGenerators);
-    this.itemGenerators = _itemGenerators;
-    this.itemGenerators.forEach(_itemGenerator => {
-      Object.setPrototypeOf(_itemGenerator, Weapon.prototype);
+  appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
+    newItemGenerators.forEach((newItemGenerator: ItemGeneratorAPI) => {
+      const itemGenerator = new Item(newItemGenerator);
+      itemGenerator.init(this.screen);
+      this.itemGenerators.push(itemGenerator);
     });
-    this.itemGenerators.forEach(object => object.init(this.screen));
+  }
+
+  updateItemGenerator(updatedItemGenerator: ItemGeneratorAPI) {
+    console.log(updatedItemGenerator);
+    const itemGenerator = this.itemGenerators.find(
+      itemGenerator => itemGenerator.id === updatedItemGenerator.id,
+    );
+    if (itemGenerator) {
+      Object.assign(itemGenerator, updatedItemGenerator);
+    }
   }
 
   removePlayer(id: string) {
@@ -201,6 +212,7 @@ export default class GameState {
         this.camera,
         this.map,
         ...this.staticObjects,
+        ...this.itemGenerators,
         ...this.bullets,
         ...this.players,
         this.cursor,
