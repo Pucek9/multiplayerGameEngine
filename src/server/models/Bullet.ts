@@ -1,26 +1,21 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-  private readonly defaultSpeed: number;
-  private speed: number;
-  private length: number;
-  private trajectory: number;
+  private defaultSpeed = 5;
+  private speed = 5;
+  private distance = 10;
+  power = 10;
+  range = 500;
+  owner: any;
+  fromX: number;
+  fromY: number;
+  targetX: number;
+  targetY: number;
 
-  constructor(
-    public id: number,
-    public owner: any,
-    public fromX: number,
-    public fromY: number,
-    public targetX: number,
-    public targetY: number,
-    public size: number,
-    public power: number = 10,
-    protected range: number = 500,
-  ) {
-    super(id, size);
-    this.length = 10;
-    this.defaultSpeed = 5;
-    this.speed = this.defaultSpeed;
+  constructor(params: Partial<Bullet>) {
+    super(params);
+    Object.assign(this, params);
+    Object.seal(this);
   }
 
   decreaseSpeed(value: number = 1) {
@@ -40,19 +35,21 @@ export default class Bullet extends BulletModel {
   }
 
   isStillInAir(): boolean {
-    return this.length < this.range;
+    return this.distance < this.range;
   }
 
-  update() {
-    this.length += this.speed;
-    this.trajectory = Math.sqrt(
+  updatePosition() {
+    this.additionalAction();
+    this.distance += this.speed;
+    const a = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
-    this.x =
-      this.targetX +
-      ((this.trajectory - this.length) / this.trajectory) * (this.fromX - this.targetX);
-    this.y =
-      this.targetY +
-      ((this.trajectory - this.length) / this.trajectory) * (this.fromY - this.targetY);
+    const b = (a - this.distance) / a;
+    this.x = this.targetX + b * (this.fromX - this.targetX);
+    this.y = this.targetY + b * (this.fromY - this.targetY);
   }
+
+  additionalAction() {}
+
+  effectOnPlayer(player) {}
 }

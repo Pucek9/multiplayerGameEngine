@@ -1,6 +1,6 @@
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
-import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
+import ScreenModel from '../types/ScreenModel';
+import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 export default class Cursor implements IRenderable {
   public x: number;
@@ -8,6 +8,8 @@ export default class Cursor implements IRenderable {
   // public img: HTMLImageElement;
   // private img;
   public object: Mesh;
+  private geometry: SphereGeometry;
+  private material: MeshPhongMaterial;
 
   constructor(public src: string) {
     // this.img = new Image();
@@ -16,13 +18,21 @@ export default class Cursor implements IRenderable {
     // this.img.material.depthWrite = false;
   }
 
+  setGeometry() {
+    this.geometry = new SphereGeometry(10, 10, 10, 1);
+  }
+
+  setMaterial() {
+    this.material = new MeshPhongMaterial({
+      map: new TextureLoader().load(this.src),
+    });
+  }
+
   init(screen: ScreenModel) {
-    this.object = new Mesh(
-      new PlaneGeometry(30, 30, 0),
-      new MeshPhongMaterial({
-        map: new TextureLoader().load(this.src),
-      }),
-    );
+    this.setGeometry();
+    this.setMaterial();
+    this.object = new Mesh(this.geometry, this.material);
+    this.object.position.z = 50;
     screen.scene.add(this.object);
   }
 

@@ -1,6 +1,6 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
+import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
 export default class Map implements IRenderable {
@@ -24,5 +24,5 @@ export default class Map implements IRenderable {
     screen.scene.add(this.object);
   }
 
-  render(activePlayer: PlayerModel) {}
+  render() {}
 }

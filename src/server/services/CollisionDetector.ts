@@ -1,11 +1,7 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
-
-interface Direction {
-  x: number;
-  y: number;
-}
+import Direction from '../../shared/models/Direction';
 
 export default class CollisionDetector {
   static detectCollision(
@@ -15,7 +11,7 @@ export default class CollisionDetector {
   ): boolean;
 
   static detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
-    switch ([object1.type, object2.type].join()) {
+    switch ([object1.shape, object2.shape].join()) {
       case 'circle,circle':
         return this.detectCircularCollision(object1, object2, direction);
       case 'rectangle,rectangle':

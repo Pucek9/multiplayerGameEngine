@@ -1,5 +1,6 @@
 export enum API {
-  ACTIVATE_PLAYER = 'activePlayer',
+  CONNECTION = 'connection',
+  DISCONNECT = 'disconnect',
   CREATE_PLAYER = 'createPlayer',
   UPDATE_KEYS = 'keys',
   ADD_NEW_PLAYER = 'addPlayer',
@@ -9,9 +10,13 @@ export enum API {
   GET_PLAYERS_STATE = 'getPlayers',
   GET_BULLETS = 'getBullets',
   GET_STATIC_OBJECTS = 'getStaticObjects',
+  GET_ITEM_GENERATORS = 'getItemGenerators',
+  UPDATE_ITEM_GENERATOR = 'updateItemGenerator',
   DISCONNECT_PLAYER = 'disconnectPlayer',
   WELCOME_NEW_PLAYER = 'helloPlayer',
   UPDATE_DIRECTION = 'updateDirection',
   CREATE_GAME = 'createGame',
   GET_GAMES_LIST = 'getGamesList',
+  LEAVE_GAME = 'leaveGame',
+  GET_WEAPON_DETAILS = 'getWeaponDetails',
 }

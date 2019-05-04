@@ -1,6 +1,6 @@
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
+import ScreenModel from '../types/ScreenModel';
 import { BoxGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const box = require('../games/balls/images/box.png');

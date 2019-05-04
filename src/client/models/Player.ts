@@ -1,52 +1,87 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
-import { ScreenModel } from '../types/ScreenModel';
-import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
+import ScreenModel from '../types/ScreenModel';
+import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(cumin);
 
 export default class Player extends PlayerModel implements IRenderable {
-  public object: Mesh;
-  private initiated: boolean = false;
+  public object;
+  private initiated = false;
+  private screen;
+  private geometry: SphereGeometry;
+  private material: MeshPhongMaterial;
+
+  setGeometry() {
+    this.geometry = new SphereGeometry(this.size, 10, 10, 1);
+  }
+
+  updateObjectGeometry() {
+    this.setGeometry();
+    this.object.geometry = new BufferGeometry().fromGeometry(this.geometry);
+  }
+
+  setMaterial() {
+    this.material = new MeshPhongMaterial({
+      map: texture,
+      color: this.color,
+    });
+  }
 
   init(screen: ScreenModel) {
+    this.screen = screen;
     if (!this.isInitiated()) {
-      const geometry = new SphereGeometry(20, 10, 10, 1);
-      const material = new MeshPhongMaterial({
-        map: texture,
-        color: this.color,
-      });
-      this.object = new Mesh(geometry, material);
+      this.setGeometry();
+      this.setMaterial();
+      this.object = new Mesh(this.geometry, this.material);
+      this.object.name = this.id;
       this.object.receiveShadow = true;
-      screen.scene.add(this.object);
       this.initiated = true;
     }
   }
 
-  isInitiated(): boolean {
+  isInitiated() {
     return this.initiated;
   }
 
-  setAsActive() {
+  setAsCurrent() {
     this.object.castShadow = false;
+  }
+
+  isOnScene() {
+    return this.screen.scene.children.includes(this.object);
+  }
+
+  isAlive() {
+    return this.alive;
+  }
+
+  addToScene() {
+    this.screen.scene.add(this.object);
   }
 
   setAsEnemy() {
     this.object.castShadow = true;
   }
 
-  renderBody() {
+  updateBody() {
     this.object.rotation.z = this.direction;
     this.object.position.x = this.x;
     this.object.position.y = this.y;
   }
 
   render() {
-    this.renderBody();
+    if (this.isOnScene() && !this.isAlive()) {
+      this.remove();
+    } else if (!this.isOnScene() && this.isAlive()) {
+      this.addToScene();
+    } else {
+      this.updateBody();
+    }
   }
 
-  remove(screen: ScreenModel) {
-    screen.scene.remove(this.object);
+  remove() {
+    this.screen.scene.remove(this.object);
   }
 }

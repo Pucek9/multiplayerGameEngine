@@ -1,12 +1,18 @@
 import ICircle from '../interfaces/ICircle';
+import { generateId } from '../helpers';
 
 export default class BulletModel implements ICircle {
-  public type: string = 'circle';
+  readonly shape = 'circle';
+  color = 'black';
+  size = 1;
+  id: number;
+  x: number;
+  y: number;
 
-  public x: number;
-  public y: number;
-
-  constructor(public id: number, public size: number = 4) {
+  constructor(params) {
+    this.id = params.id || generateId();
+    params.size && (this.size = params.size);
+    params.color && (this.color = params.color);
     this.x = 0;
     this.y = 0;
   }

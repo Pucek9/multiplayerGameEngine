@@ -1,5 +1,5 @@
 export default interface IRectangle {
-  type: string;
+  shape: string;
   x: number;
   y: number;
   width: number;

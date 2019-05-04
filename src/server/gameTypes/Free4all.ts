@@ -1,35 +1,45 @@
 import CollisionDetector from '../services/CollisionDetector';
 import Bullet from '../models/Bullet';
 import Player from '../models/Player';
-import NewPlayer from '../../shared/apiModels/NewPlayer';
+import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
+import Direction from '../../shared/models/Direction';
+import { rand } from '../../shared/helpers';
+import Pistol from '../models/weapons/Pistol';
+import Shotgun from '../models/weapons/Shotgun';
+import NewBullet from '../../shared/apiModels/NewBullet';
+import Resizer from '../models/weapons/Resizer';
+import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
+import Item from '../../shared/models/Item';
+import Weapon from '../models/weapons/Weapon';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
+  private interval;
 
   constructor(
+    public main,
     public name: string,
     public map: GameMap,
     public players: Player[] = [],
     public bullets: Bullet[] = [],
-  ) {}
-
-  static rand(x: number) {
-    return Math.floor(Math.random() * x + 1);
-  }
-
-  generateId() {
-    return Date.now() + Math.floor(Math.random() * 100);
+  ) {
+    this.interval = setInterval(() => {
+      this.updatePlayersPosition();
+      this.updateBullets();
+      this.detectBulletsCollision();
+      this.main.emitGameState(this);
+    }, 1000 / 60);
   }
 
   getPlayer(id: string) {
     return this.players.find(player => player.id === id);
   }
 
-  activePlayers() {
-    return this.players.filter(player => player.active === true);
+  alivePlayers() {
+    return this.players.filter(player => player.alive === true);
   }
 
   getPlayers() {
@@ -41,9 +51,12 @@ export default class Free4all implements GameModel {
   }
 
   getBullets() {
-    return this.bullets.map(bullet => {
-      return { id: bullet.id, x: bullet.x, y: bullet.y };
-    });
+    return this.bullets.map(bullet => ({
+      id: bullet.id,
+      x: bullet.x,
+      y: bullet.y,
+      size: bullet.size,
+    }));
   }
 
   getMapName() {
@@ -54,18 +67,24 @@ export default class Free4all implements GameModel {
     return this.map.getStaticObjects();
   }
 
+  getItemGenerators() {
+    return this.map.getItemGenerators();
+  }
+
+  getItemGeneratorsAPI() {
+    return this.getItemGenerators().map(itemGenerator => new ItemGeneratorAPI(itemGenerator));
+  }
+
   updateBullets() {
     this.bullets.forEach((bullet, i) => {
-      bullet.update();
-      if (!bullet.isStillInAir()) {
-        this.bullets.splice(i, 1);
-      }
+      bullet.updatePosition();
+      !bullet.isStillInAir() && this.bullets.splice(i, 1);
     });
   }
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.players].forEach(object => {
+      [...this.getStaticObjects(), ...this.alivePlayers()].forEach((object: Player) => {
         if (bullet.owner !== object) {
           if (CollisionDetector.detectCollision(object, bullet)) {
             object.hitFromBullet(bullet);
@@ -83,36 +102,36 @@ export default class Free4all implements GameModel {
     });
   }
 
-  addBullet(mouseClick: MouseCoordinates) {
+  shoot(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
-      const bullet = new Bullet(
-        this.generateId(),
-        owner,
-        owner.x + owner.size / 4,
-        owner.y + owner.size / 4,
-        mouseClick.targetX,
-        mouseClick.targetY,
-        2,
-      );
-      this.bullets.push(bullet);
-      return { id: bullet.id, size: bullet.size };
+      const bullets = owner.shoot(mouseClick);
+      if (bullets && bullets.length > 0) {
+        this.bullets.push(...bullets);
+        return {
+          owner,
+          bullets: bullets.map(bullet => ({
+            id: bullet.id,
+            size: bullet.size,
+            color: bullet.color,
+          })),
+        };
+      }
     }
   }
 
-  setPlayerActive(id: string) {
-    this.getPlayer(id).active = true;
+  revivePlayer(id: string) {
+    const player = this.getPlayer(id);
+    player && !this.detectPlayerCollision(player) && player.revive();
   }
 
-  connectPlayer(id: string, newPlayer: NewPlayer) {
-    const player = new Player(
-      id,
-      newPlayer.name,
-      newPlayer.color,
-      Free4all.rand(1000),
-      Free4all.rand(1000),
-      20,
-    );
+  connectPlayer(id: string, newPlayer: NewUser): Player {
+    const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000));
+    // player.addWeapon(new Pistol());
+    // player.addWeapon(new Shotgun());
+    // player.addWeapon(new Resizer());
+    // player.selectWeapon(0);
+    this.getWeaponInfo(player);
     this.players.push(player);
     return player;
   }
@@ -121,15 +140,20 @@ export default class Free4all implements GameModel {
     this.players.splice(this.players.indexOf(disconnected), 1);
   }
 
-  setKeys(id: string, keys: Array<string>) {
-    this.getPlayer(id).keys = new Set(keys);
+  updateKeys(id: string, keys: Array<string>) {
+    const player = this.getPlayer(id);
+    player && (player.keys = new Set(keys));
   }
 
-  move(id: string) {
-    const player = this.getPlayer(id);
+  updatePlayersPosition() {
+    this.players.forEach(player => this.updatePlayerPosition(player));
+  }
+
+  updatePlayerPosition(player: Player) {
     if (player) {
       if (player.keys.has('W') || player.keys.has('ArrowUp')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: 0,
             y: player.speed,
@@ -140,6 +164,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('S') || player.keys.has('ArrowDown')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: 0,
             y: -player.speed,
@@ -150,6 +175,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: -player.speed,
             y: 0,
@@ -160,6 +186,7 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('D') || player.keys.has('ArrowRight')) {
         if (
+          !player.isAlive() ||
           !this.detectPlayerCollision(player, {
             x: player.speed,
             y: 0,
@@ -168,11 +195,27 @@ export default class Free4all implements GameModel {
           player.goRight();
         }
       }
+      if (player.keys.has('1')) {
+        player.selectWeapon(0);
+        this.getWeaponInfo(player);
+      }
+      if (player.keys.has('2')) {
+        player.selectWeapon(1);
+        this.getWeaponInfo(player);
+      }
+      if (player.keys.has('3')) {
+        player.selectWeapon(2);
+        this.getWeaponInfo(player);
+      }
       if (player.keys.has('Shift')) {
         player.getAura();
       } else {
         player.removeAura();
       }
+      // if (player.keys.has('Escape')) {
+      //   this.disconnectPlayer(player);
+      //   this.main.disconnectPlayer(player.name);
+      // }
     }
   }
 
@@ -185,9 +228,70 @@ export default class Free4all implements GameModel {
     }
   }
 
-  private detectPlayerCollision(player: Player, direction: { x: number; y: number }) {
-    return [...this.getStaticObjects(), ...this.players].some(object => {
-      return player !== object && CollisionDetector.detectCollision(player, object, direction);
+  isPlayerAlive(id: string) {
+    const player = this.getPlayer(id);
+    if (player) {
+      return this.getPlayer(id).isAlive();
+    }
+  }
+
+  mouseClick(mouseClick: MouseCoordinates) {
+    if (this.isPlayerAlive(mouseClick.owner)) {
+      const shoot = this.shoot(mouseClick);
+      if (shoot) {
+        this.main.sendNewBullets(shoot.bullets);
+        this.getWeaponInfo(shoot.owner);
+      }
+    } else {
+      this.revivePlayer(mouseClick.owner);
+    }
+  }
+
+  getWeaponInfo(player) {
+    this.main.updateWeaponInfo(player.id, {
+      selectedWeapon: player.selectedWeapon,
+      weapons: player.weapons.map((weapon: Weapon) => ({ type: weapon.type, id: weapon.id })),
+    });
+  }
+
+  private addWeapon(player, newWeapon) {
+    const weapon = player.weapons.find(weapon => weapon.type === newWeapon.type);
+    if (weapon) {
+      const sumBullets = weapon.bulletsInMagazine + newWeapon.bulletsInMagazine;
+      weapon.magazines +=
+        newWeapon.magazines + Math.floor(sumBullets / weapon.maxBulletsInMagazine);
+      weapon.bulletsInMagazine = sumBullets % weapon.maxBulletsInMagazine;
+      if (weapon.bulletsInMagazine === 0) {
+        weapon.reload();
+      }
+    } else {
+      player.addWeapon(newWeapon);
+    }
+  }
+
+  private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
+    this.getItemGenerators().forEach(generator => {
+      if (CollisionDetector.detectCollision(player, generator, direction) && generator.isReady()) {
+        generator.deactivate();
+        setTimeout(() => {
+          generator.activate();
+          this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
+        }, generator.time);
+        const weapon = generator.generateItem();
+        this.addWeapon(player, weapon);
+        this.getWeaponInfo(player);
+        this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
+      }
+    });
+  }
+
+  private detectPlayerCollision(player: Player, direction?: Direction) {
+    this.detectPlayerCollisionWithGenerator(player, direction);
+    return [
+      ...this.getStaticObjects(),
+      ...this.alivePlayers().filter(object => player !== object),
+    ].some(object => {
+      return CollisionDetector.detectCollision(player, object, direction);
     });
   }
 }

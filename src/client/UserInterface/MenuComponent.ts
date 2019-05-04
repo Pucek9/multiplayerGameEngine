@@ -89,4 +89,8 @@ export default class MenuComponent {
       state.joinGame.chosenGame === null ? 'visible' : 'hidden';
     validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
   }
+
+  show() {
+    menu.style.display = 'flex';
+  }
 }

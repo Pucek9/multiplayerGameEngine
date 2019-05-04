@@ -1,11 +1,15 @@
 import ICircle from '../interfaces/ICircle';
 
 export default class PlayerModel implements ICircle {
-  public type: string = 'circle';
+  shape: string = 'circle';
 
-  public active: boolean;
-  public alive: boolean;
-  public direction: number;
+  alive = false;
+  direction = 0;
+  weapons = [];
+  selectedWeapon;
+  hp: number;
+  speed: number;
+  size: number;
 
   constructor(
     public id: string,
@@ -13,13 +17,13 @@ export default class PlayerModel implements ICircle {
     public color: string,
     public x: number,
     public y: number,
-    public size: number = 32,
-    public speed: number = 3,
+    public baseHp: number = 100,
+    public baseSize: number = 20,
+    public baseSpeed: number = 3,
     public score: number = 0,
-    public hp: number = 100,
   ) {
-    this.active = false;
-    this.alive = true;
-    this.direction = 0;
+    this.hp = this.baseHp;
+    this.speed = this.baseSpeed;
+    this.size = this.baseSize;
   }
 }

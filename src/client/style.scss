@@ -27,49 +27,64 @@ body {
       padding-left: 5px;
     }
   }
+
+  #leftDownPanel {
+    overflow: hidden;
+    background: rgba(171, 205, 239, 0.3);
+    position: absolute;
+    bottom: 5%;
+
+    span {
+      color: white;
+    }
+
+    ul#weaponsList {
+      list-style-type: none;
+      margin: 0;
+      padding-left: 5px;
+    }
+  }
 }
 
-.button {
+.full {
   width: 100%;
   height: 100%;
 }
 
-  .fixed_header {
+.fixed_header {
+  //table-layout: fixed;
+  border-collapse: collapse;
 
-    //table-layout: fixed;
+  #gamesListTable {
+    text-align: center;
+    width: 100%;
     border-collapse: collapse;
-
-    #gamesListTable {
-      text-align: center;
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    tbody {
-      display: block;
-      width: 100%;
-      overflow: auto;
-      height: 100%;
-    }
-
-    thead tr {
-      display: block;
-    }
-
-    thead {
-      background: black;
-      color: #fff;
-    }
-
-    th,
-    td {
-      padding: 5px;
-      text-align: center;
-      border: 1px solid black;
-      //width: 400px;
-    }
   }
 
+  tbody {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+  }
+
+  thead tr {
+    display: block;
+  }
+
+  thead {
+    background: black;
+    color: #fff;
+  }
+
+  th,
+  td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+    //width: 400px;
+  }
+}
 
 .box {
   background: #ea47f3;
@@ -96,10 +111,10 @@ body {
   grid-template-rows: repeat(8, 1fr);
   grid-template-areas:
     ' header header header header '
-    ' form form form form '
+    ' create-header create-header create-header create-header '
     ' form form form form '
     ' name name name add '
-    ' tab tab tab tab '
+    ' join-header join-header join-header join-header '
     ' tab tab tab tab '
     ' tab tab tab tab '
     ' nick nick nick join ';
@@ -133,6 +148,14 @@ body {
   grid-area: join;
 }
 
+.create-header {
+  grid-area: create-header;
+}
+
+.join-header {
+  grid-area: join-header;
+}
+
 @media (min-width: 640px) {
   .grid {
     background-color: yellow;
@@ -141,7 +164,7 @@ body {
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
       ' header header header header header header'
-      ' form form form tab tab tab '
+      ' create-header create-header create-header join-header join-header join-header '
       ' form form form tab tab tab '
       ' form form form tab tab tab '
       ' form form form tab tab tab '
@@ -175,9 +198,13 @@ body {
     grid-column: 3/ 11;
     grid-row: 1 / 3;
   }
+  .create-header {
+    grid-column: 2 / 7;
+    grid-row: 3 / 4;
+  }
   .form {
     grid-column: 2 / 7;
-    grid-row: 3 / 10;
+    grid-row: 4 / 10;
   }
   .name {
     grid-column: 2 / 6;
@@ -187,9 +214,13 @@ body {
     grid-column: 6;
     grid-row: 10;
   }
+  .join-header {
+    grid-column: 7 / 12;
+    grid-row: 3 / 4;
+  }
   .tab {
     grid-column: 7 / 12;
-    grid-row: 3 / 10;
+    grid-row: 4 / 10;
   }
   .nick {
     grid-column: 7 / 11;

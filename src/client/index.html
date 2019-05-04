@@ -10,9 +10,12 @@
       <div class="container"></div>
 
       <div class="grid">
-
         <div class="box header">
           <h1>Robo game engine</h1>
+        </div>
+
+        <div class="box create-header">
+          <h2>Create new game</h2>
         </div>
 
         <div class="box form">
@@ -31,8 +34,8 @@
               <label
                 >Map:
                 <select id="gameMapInput">
-                  <option value="Prototype1">Prototype1</option>
-                  <option value="Prototype2">Prototype2</option>
+                  <option value="Playground">Playground</option>
+                  <option value="Boxes">Boxes</option>
                 </select>
               </label>
             </div>
@@ -40,17 +43,18 @@
         </div>
 
         <div class="box name">
-          <label
-            >Name:
-            <input id="gameNameInput" type="text" />
-          </label>
+          <input id="gameNameInput" class="full" placeholder="NAME" title="NAME" type="text" />
           <div class="validate">
             <label id="validateGameName">Please fill game name.</label>
           </div>
         </div>
 
         <div class="box add">
-            <input id="addNewGameButton" class="button" type="button" value="Add new game" />
+          <input id="addNewGameButton" class="full" type="button" value="Add new game" />
+        </div>
+
+        <div class="box join-header">
+          <h2>Join the game</h2>
         </div>
 
         <div class="box tab">
@@ -70,22 +74,24 @@
           </div>
         </div>
         <div class="box nick">
-          <label
-            >Nick:
-            <input id="nickInput" type="text" />
-          </label>
+          <input id="nickInput" class="full" placeholder="NICK" title="NICK" type="text" />
           <div class="validate">
             <label id="validateNick">Please fill nickname.</label>
           </div>
         </div>
         <div class="box join">
-            <input id="joinGameButton" class="button" type="button" value="Join" />
+          <input id="joinGameButton" class="full" type="button" value="Join" />
         </div>
       </div>
     </div>
+
     <div id="leftPanel">
       <span>Active players:</span>
       <ul id="playersList"></ul>
+    </div>
+    <div id="leftDownPanel">
+      <span>Weapons:</span>
+      <ul id="weaponsList"></ul>
     </div>
   </body>
 </html>

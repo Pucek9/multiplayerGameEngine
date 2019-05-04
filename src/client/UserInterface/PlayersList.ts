@@ -10,7 +10,9 @@ export default class PlayerListComponent implements IRenderable {
     players.forEach(_player => {
       const li = document.createElement('li');
       li.style.color = _player.color;
-      li.appendChild(document.createTextNode(`${_player.name}: ${_player.score}`));
+      li.appendChild(
+        document.createTextNode(`${_player.name}: ${_player.hp}hp Score:${_player.score}`),
+      );
       // @ts-ignore
       playersList.append(li);
     });

@@ -1,21 +1,20 @@
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
-import NewPlayer from '../../shared/apiModels/NewPlayer';
+import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
 
 export default interface GameModel {
+  main;
   name: string;
   type: string;
   map: GameMap;
   players: Player[];
   bullets: Bullet[];
 
-  generateId();
-
   getPlayer(id: string);
 
-  activePlayers();
+  alivePlayers();
 
   getPlayers();
 
@@ -31,17 +30,23 @@ export default interface GameModel {
 
   detectBulletsCollision();
 
-  addBullet(mouseClick: MouseCoordinates);
+  shoot(mouseClick: MouseCoordinates);
 
-  setPlayerActive(id: string);
+  revivePlayer(id: string);
 
-  connectPlayer(id: string, newPlayer: NewPlayer);
+  connectPlayer(id: string, newPlayer: NewUser);
 
   disconnectPlayer(disconnected: Player);
 
-  setKeys(id: string, keys: Array<string>);
+  updateKeys(id: string, keys: Array<string>);
 
-  move(id: string);
+  updatePlayerPosition(player: Player);
+
+  updatePlayersPosition();
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
+
+  isPlayerAlive(id: string);
+
+  mouseClick(mouseClick: MouseCoordinates);
 }

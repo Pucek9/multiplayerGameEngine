@@ -1,7 +1,13 @@
 import ICircle from '../interfaces/ICircle';
 
-export default class StaticCircularObjectModel implements ICircle {
-  public type: string = 'circle';
+export default abstract class StaticCircularObjectModel implements ICircle {
+  shape: string = 'circle';
+  x: number;
+  y: number;
+  size: number;
+  color: string;
 
-  constructor(public x: number, public y: number, public size: number, public color: string) {}
+  constructor(params: Partial<StaticCircularObjectModel>) {
+    Object.assign(this, params);
+  }
 }

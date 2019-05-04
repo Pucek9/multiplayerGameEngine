@@ -1,9 +1,8 @@
-export default class NewPlayer {
+export default class NewUser {
   constructor(
     public id: string,
     public name: string,
     public color: string,
-    public x: number,
-    public y: number,
+    public gameName: string,
   ) {}
 }
