@@ -57,7 +57,7 @@
     "three": "^0.97.0"
   },
   "engines": {
-    "node": ">=10.15.0"
+    "node": "10.15.0"
   },
   "repository": {
     "type": "git",
