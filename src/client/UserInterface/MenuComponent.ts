@@ -10,6 +10,7 @@ declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
 declare var menu: HTMLDivElement;
 declare var validateGameName: HTMLLabelElement;
+declare var validateGameNameDuplicate: HTMLLabelElement;
 declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
@@ -78,16 +79,21 @@ export default class MenuComponent {
     gamesListTable.innerHTML = '';
     const state = this.store.getState();
     this.renderTable(state);
-    joinGameButton.disabled =
-      state.joinGame.nick === '' ||
-      state.joinGame.chosenGame === null ||
-      state.joinGame.id === null;
-    addNewGameButton.disabled =
-      state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
-    validateNick.style.visibility = state.joinGame.nick === '' ? 'visible' : 'hidden';
-    validateSelectedGame.style.visibility =
-      state.joinGame.chosenGame === null ? 'visible' : 'hidden';
-    validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
+    const nickEmpty = state.joinGame.nick === '';
+    const chosenGameEmpty = state.joinGame.chosenGame === null;
+    const idEmpty = state.joinGame.id === null;
+    const nameEmpty = state.newGame.name === '';
+    const nameDuplicate = state.newGame.list.find(game => game.name === state.newGame.name);
+    const typeEmpty = state.newGame.type === null;
+    const mapEmpty = state.newGame.map === null;
+
+    joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
+    addNewGameButton.disabled = nameEmpty || typeEmpty || mapEmpty || nameDuplicate;
+
+    validateNick.style.display = nickEmpty ? 'block' : 'none';
+    validateSelectedGame.style.display = chosenGameEmpty ? 'block' : 'none';
+    validateGameName.style.display = nameEmpty ? 'block' : 'none';
+    validateGameNameDuplicate.style.display = nameDuplicate ? 'block' : 'none';
   }
 
   show() {

@@ -3,7 +3,7 @@ import devToolsEnhancer from 'remote-redux-devtools';
 import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
-import { addGame, clearGamesList, setId } from './store/actions';
+import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
 import { joinGameReducer, newGameReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
@@ -63,6 +63,7 @@ class Main {
   onAddNewGame({ name, type, map }: NewGame) {
     const newGame = new NewGame(name, type, map);
     socket.emit(API.CREATE_GAME, newGame);
+    store.dispatch(chooseGame(name));
   }
 
   onJoinGame() {
