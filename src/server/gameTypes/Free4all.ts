@@ -106,7 +106,7 @@ export default class Free4all implements GameModel {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
-      if (bullets.length > 0) {
+      if (bullets && bullets.length > 0) {
         this.bullets.push(...bullets);
         return {
           owner,
@@ -254,6 +254,21 @@ export default class Free4all implements GameModel {
     });
   }
 
+  private addWeapon(player, newWeapon) {
+    const weapon = player.weapons.find(weapon => weapon.type === newWeapon.type);
+    if (weapon) {
+      const sumBullets = weapon.bulletsInMagazine + newWeapon.bulletsInMagazine;
+      weapon.magazines +=
+        newWeapon.magazines + Math.floor(sumBullets / weapon.maxBulletsInMagazine);
+      weapon.bulletsInMagazine = sumBullets % weapon.maxBulletsInMagazine;
+      if (weapon.bulletsInMagazine === 0) {
+        weapon.reload();
+      }
+    } else {
+      player.addWeapon(newWeapon);
+    }
+  }
+
   private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
       if (CollisionDetector.detectCollision(player, generator, direction) && generator.isReady()) {
@@ -263,7 +278,7 @@ export default class Free4all implements GameModel {
           this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
         }, generator.time);
         const weapon = generator.generateItem();
-        player.addWeapon(weapon);
+        this.addWeapon(player, weapon);
         this.getWeaponInfo(player);
         this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
       }
