@@ -106,7 +106,7 @@ export default class Free4all implements GameModel {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
       const bullets = owner.shoot(mouseClick);
-      if (bullets) {
+      if (bullets.length > 0) {
         this.bullets.push(...bullets);
         return {
           owner,
@@ -238,7 +238,7 @@ export default class Free4all implements GameModel {
   mouseClick(mouseClick: MouseCoordinates) {
     if (this.isPlayerAlive(mouseClick.owner)) {
       const shoot = this.shoot(mouseClick);
-      if (shoot && shoot.bullets) {
+      if (shoot) {
         this.main.sendNewBullets(shoot.bullets);
         this.getWeaponInfo(shoot.owner);
       }
