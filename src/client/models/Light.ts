@@ -31,8 +31,12 @@ export default class Light implements IRenderable {
   render() {
     this.light.position.set(this.activePlayer.x, this.activePlayer.y, 50);
     if (this.cursor) {
-      this.light.target.position.set(this.cursor.object.position.x, this.cursor.object.position.y, 10);
-      this.light.target.updateMatrixWorld(true)
+      this.light.target.position.set(
+        this.cursor.object.position.x,
+        this.cursor.object.position.y,
+        10,
+      );
+      this.light.target.updateMatrixWorld(true);
     }
   }
 }

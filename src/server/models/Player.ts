@@ -1,7 +1,7 @@
 import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
 import Aura from './Aura';
-// import Weapon from './weapons/Weapon';
+// import Item from './weapons/Item';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 
 export default class Player extends PlayerModel {
@@ -81,7 +81,6 @@ export default class Player extends PlayerModel {
   }
 
   addWeapon(weapon) {
-    // console.log('found item', item);
     this.weapons.push(weapon);
     this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }

@@ -24,5 +24,5 @@ export default class Map implements IRenderable {
     screen.scene.add(this.object);
   }
 
-  render(activePlayer: PlayerModel) {}
+  render() {}
 }

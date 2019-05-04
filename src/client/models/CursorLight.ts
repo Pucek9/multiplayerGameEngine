@@ -15,10 +15,10 @@ export default class CursorLight implements IRenderable {
     this.activePlayer = activePlayer;
     this.cursor = cursor;
     //
-    this.light = new PointLight(0xffffff,10);
+    this.light = new PointLight(0xffffff, 10);
     // this.light.shadowBias = 0.0001;
     this.light.castShadow = true;
-    this.screen.scene.add(this.light)
+    this.screen.scene.add(this.light);
 
     this.light.position.set(100, 1000, 100);
 
@@ -34,7 +34,7 @@ export default class CursorLight implements IRenderable {
   }
 
   render() {
-    this.light.position.set(0,0,500);
+    this.light.position.set(0, 0, 500);
     this.light.position.set(this.cursor.x, this.cursor.y, 30);
   }
 }

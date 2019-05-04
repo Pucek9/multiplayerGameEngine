@@ -76,10 +76,9 @@ class Connection {
   initNewPlayer(newPlayer) {
     this.player = this.gameState.connectPlayer(this.socket.id, newPlayer);
     socketIo.to(this.gameName).emit(API.ADD_NEW_PLAYER, this.player);
-    socketIo.to(this.gameName).emit(API.ADD_PLAYERS, this.gameState.getPlayers());
-    socketIo.to(this.gameName).emit(API.GET_STATIC_OBJECTS, this.gameState.getStaticObjects());
-    this.appendItemGenerators();
-    // socketIo.to(this.gameName).emit(API.GET_ITEM_GENERATORS, this.gameState.getItemGenerators());
+    socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, this.gameState.getPlayers());
+    socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, this.gameState.getStaticObjects());
+    socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, this.gameState.getItemGeneratorsAPI());
     socketIo.emit(API.GET_GAMES_LIST, gamesStory.getGamesList());
   }
 
@@ -120,10 +119,6 @@ class Connection {
 
   updateWeaponInfo(id: string, weaponInfo: { selectedWeapon: Weapon; weapons: Item[] }) {
     socketIo.to(id).emit(API.GET_WEAPON_DETAILS, weaponInfo);
-  }
-
-  appendItemGenerators() {
-    socketIo.to(this.gameName).emit(API.GET_ITEM_GENERATORS, this.gameState.getItemGeneratorsAPI());
   }
 
   updateItemGenerator(itemGenerator: ItemGeneratorAPI) {

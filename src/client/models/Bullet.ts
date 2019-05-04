@@ -35,7 +35,7 @@ export default class Bullet extends BulletModel implements IRenderable {
     screen.scene.remove(this.object);
   }
 
-  render(activePlayer: PlayerModel) {
+  render() {
     this.object.position.x = this.x;
     this.object.position.y = this.y;
   }

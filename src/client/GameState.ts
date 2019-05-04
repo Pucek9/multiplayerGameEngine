@@ -178,7 +178,8 @@ export default class GameState {
       itemGenerator => itemGenerator.id === updatedItemGenerator.id,
     );
     if (itemGenerator) {
-      Object.assign(itemGenerator, updatedItemGenerator);
+      itemGenerator.ready = updatedItemGenerator.ready;
+      itemGenerator.render();
     }
   }
 
@@ -204,19 +205,11 @@ export default class GameState {
 
   tryRenderEverything() {
     this.screen.renderer.render(this.screen.scene, this.screen.camera);
-
     this.renderPlayerList();
     if (this.currentPlayer) {
-      [
-        this.camera,
-        this.map,
-        ...this.staticObjects,
-        ...this.itemGenerators,
-        ...this.bullets,
-        ...this.players,
-        this.cursor,
-        this.light,
-      ].forEach(object => object.render());
+      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light].forEach(object =>
+        object.render(),
+      );
     }
   }
 

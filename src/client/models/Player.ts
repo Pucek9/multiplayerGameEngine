@@ -34,7 +34,7 @@ export default class Player extends PlayerModel implements IRenderable {
     if (!this.isInitiated()) {
       this.setGeometry();
       this.setMaterial();
-      this.object = new Mesh( this.geometry,  this.material);
+      this.object = new Mesh(this.geometry, this.material);
       this.object.name = this.id;
       this.object.receiveShadow = true;
       this.initiated = true;
