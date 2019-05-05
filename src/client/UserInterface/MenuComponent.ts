@@ -4,7 +4,7 @@ import { Store } from 'redux';
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
 declare var gameMapInput: HTMLSelectElement;
-declare var addNewGameButton: HTMLButtonElement;
+declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
@@ -21,7 +21,7 @@ export default class MenuComponent {
     this.store = store;
     const unsubscribeRender = store.subscribe(() => this.render());
 
-    addNewGameButton.addEventListener('click', function() {
+    createButton.addEventListener('click', function() {
       const name = gameNameInput.value;
       const type = gameTypeInput.value;
       const map = gameMapInput.value;
@@ -88,7 +88,7 @@ export default class MenuComponent {
     const mapEmpty = state.newGame.map === null;
 
     joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
-    addNewGameButton.disabled = nameEmpty || typeEmpty || mapEmpty || nameDuplicate;
+    createButton.disabled = nameEmpty || typeEmpty || mapEmpty || nameDuplicate;
 
     validateNick.style.display = nickEmpty ? 'block' : 'none';
     validateSelectedGame.style.display = chosenGameEmpty ? 'block' : 'none';
