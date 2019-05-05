@@ -1,3 +1,8 @@
+$createColor: #007b45;
+$createColor2: #97e2a6;
+$joinColor: #5000f3;
+$joinColor2: #a998ff;
+
 body {
   margin: 0;
   background-color: black;
@@ -7,8 +12,10 @@ body {
   }
 
   .validate {
-    color: #6d0000;
+    color: #9d0000;
     font-size: 17px;
+    position: fixed;
+    align-self: flex-end;
   }
 
   #leftPanel {
@@ -46,52 +53,91 @@ body {
   }
 }
 
+form {
+  width: 100%;
+}
+
+.title {
+  font-size: 2.5rem;
+}
+
+.title2 {
+  font-size: 2rem;
+}
+
 .full {
   width: 100%;
   height: 100%;
-  font-size: 25px;
+  font-size: 1.5rem;
+}
+
+.select {
+  width: 80%;
+  font-size: 1.5rem;
 }
 
 .fill {
   width: 100%;
   height: 90%;
-  font-size: 25px;
+  font-size: 1.5rem;
   text-align: center;
 }
 
 #scrolltable {
-  margin-top: 20px;
+  align-self: flex-start;
   width: 100%;
-  height: 80%;
-  overflow: auto;
+  height: 90%;
+  overflow-y: auto;
 
   table {
     border-collapse: collapse;
-    width: 100%;
-    tbody {
-    }
+    width: 99.9%;
 
     th,
     td {
       border: 1px solid black;
     }
 
-    th div {
-      position: absolute;
-      margin-top: -20px;
+    td:nth-child(1) {
+      word-break: break-all;
+    }
+
+    thead {
+      background-color: black;
+      color: white;
+      position: sticky;
+      top: 0;
     }
   }
 }
 
+.create-fill {
+  background: $createColor;
+  color: white;
+}
+
+.create-white {
+  background: $createColor2;
+  color: black;
+}
+
+.join-fill {
+  background: $joinColor;
+  color: white;
+}
+
+.join-white {
+  background: $joinColor2;
+  color: black;
+}
+
 .box {
-  background: #ea47f3;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .container {
@@ -103,7 +149,7 @@ body {
   display: grid;
   grid-gap: 8px;
   padding: 8px;
-  background-color: green;
+  background-color: black;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(8, 1fr);
   grid-template-areas:
@@ -119,6 +165,8 @@ body {
 
 .header {
   grid-area: header;
+  color: white;
+  background-image: linear-gradient(to right, $createColor, $joinColor);
 }
 
 .form {
@@ -155,7 +203,6 @@ body {
 
 @media (min-width: 640px) {
   .grid {
-    background-color: yellow;
     display: grid;
     grid-gap: 8px;
     grid-template-columns: repeat(6, 1fr);
@@ -173,7 +220,6 @@ body {
 
 @media (min-width: 1024px) {
   .grid {
-    background-color: orange;
     grid-template-rows: repeat(8, 1fr);
   }
   .header {
@@ -184,7 +230,6 @@ body {
 
 @media (min-width: 1680px) {
   .grid {
-    background-color: red;
     display: grid;
     grid-gap: 8px;
     grid-template-columns: [page-start] repeat(12, 1fr) [page-end final];
@@ -227,4 +272,9 @@ body {
     grid-column: 11 / 12;
     grid-row: 10;
   }
+}
+
+input[type='button']:disabled,
+button:disabled {
+  color: grey !important;
 }

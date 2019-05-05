@@ -66,7 +66,8 @@ export default class MenuComponent {
         this.store.dispatch(chooseGame(game.name));
       });
       if (state.joinGame.chosenGame === game.name) {
-        row.style.backgroundColor = 'grey';
+        row.style.backgroundColor = '#5000f3';
+        row.style.color = 'white';
       }
       // @ts-ignore
       row.append(name, type, map, count);

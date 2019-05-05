@@ -9,19 +9,19 @@
     <div id="menu">
       <div class="grid">
         <div class="box header">
-          <h1>Robo game engine</h1>
+          <span class="title">Robo game engine</span>
         </div>
 
-        <div class="box create-header">
-          <h2>Create new game</h2>
+        <div class="box create-header create-fill">
+          <span class="title2">Create new game</span>
         </div>
 
-        <div class="box form">
+        <div class="box form create-fill">
           <form>
             <div class="type-row">
               <label
                 >Type:
-                <select id="gameTypeInput">
+                <select id="gameTypeInput" class="select create-white">
                   <option value="Free4all">Free for all</option>
                   <option disabled value="TeamFight">Team fight</option>
                   <option disabled value="CaptureTheFlag">Capture the flag</option>
@@ -31,7 +31,7 @@
             <div class="type-row">
               <label
                 >Map:
-                <select id="gameMapInput">
+                <select id="gameMapInput" class="select create-white">
                   <option value="Playground">Playground</option>
                   <option value="Boxes">Boxes</option>
                 </select>
@@ -41,7 +41,13 @@
         </div>
 
         <div class="box name">
-          <input id="gameNameInput" class="fill" placeholder="NAME" title="NAME" type="text" />
+          <input
+            id="gameNameInput"
+            class="fill create-white"
+            placeholder="NAME"
+            title="NAME"
+            type="text"
+          />
           <div class="validate">
             <label id="validateGameName">Please fill game name.</label>
             <label id="validateGameNameDuplicate">There is already a game with this name.</label>
@@ -49,14 +55,14 @@
         </div>
 
         <div class="box add">
-          <input id="createButton" class="full" type="button" value="CREATE" />
+          <input id="createButton" class="full create-fill" type="button" value="CREATE" />
         </div>
 
-        <div class="box join-header">
-          <h2>Join the game</h2>
+        <div class="box join-header join-fill">
+          <span class="title2">Join the game</span>
         </div>
 
-        <div class="box tab">
+        <div class="box tab join-white">
           <div id="scrolltable">
             <table>
               <thead>
@@ -75,23 +81,30 @@
             <label id="validateSelectedGame">Please select game.</label>
           </div>
         </div>
+
         <div class="box nick">
-          <input id="nickInput" class="fill" placeholder="NICK" title="NICK" type="text" />
+          <input
+            id="nickInput"
+            class="fill join-white"
+            placeholder="NICK"
+            title="NICK"
+            type="text"
+          />
           <div class="validate">
             <label id="validateNick">Please fill nickname.</label>
           </div>
         </div>
         <div class="box join">
-          <input id="joinGameButton" class="full" type="button" value="JOIN" />
+          <input id="joinGameButton" class="full join-fill" type="button" value="JOIN" />
         </div>
       </div>
     </div>
 
-    <div id="leftPanel">
+    <div id="leftPanel" style="display: none">
       <span>Active players:</span>
       <ul id="playersList"></ul>
     </div>
-    <div id="leftDownPanel">
+    <div id="leftDownPanel" style="display: none">
       <span>Weapons:</span>
       <ul id="weaponsList"></ul>
     </div>

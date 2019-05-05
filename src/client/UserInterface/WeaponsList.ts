@@ -1,9 +1,18 @@
 import IRenderable from '../interfaces/IRenderable';
 
 declare var weaponsList: HTMLUListElement;
+declare var leftDownPanel: HTMLDivElement;
 
 export default class WeaponListComponent implements IRenderable {
   constructor() {}
+
+  show() {
+    leftDownPanel.style.display = 'block';
+  }
+
+  hide() {
+    leftDownPanel.style.display = 'none';
+  }
 
   render({ selectedWeapon, weapons }) {
     weaponsList.innerHTML = '';
@@ -25,23 +34,5 @@ export default class WeaponListComponent implements IRenderable {
       // @ts-ignore
       weaponsList.append(li);
     });
-
-    // this.screen.ctx.font = '10pt Arial';
-    // this.screen.ctx.lineWidth = 1;
-    // this.screen.ctx.fillStyle = 'black';
-    // this.screen.ctx.textAlign = 'left';
-    // this.screen.ctx.fillText(
-    //     'Active players:',
-    //     10,
-    //     15
-    // );
-    // players.forEach((_player, i) => {
-    //     this.screen.ctx.fillStyle = _player.color;
-    //     this.screen.ctx.fillText(
-    //         `${_player.name}: ${_player.score}`,
-    //         10,
-    //         30 + i * 15
-    //     );
-    // });
   }
 }

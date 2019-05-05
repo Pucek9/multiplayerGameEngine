@@ -50,6 +50,8 @@ export default class GameState {
 
     this.map.init(this.screen);
     this.cursor.init(this.screen);
+    this.playersListComponent.show();
+    this.weaponsListComponent.show();
   }
 
   appendNewPlayer(newPlayer: NewPlayer) {
