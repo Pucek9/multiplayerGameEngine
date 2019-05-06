@@ -1,7 +1,7 @@
 import { gamesListActions, joinGameActions } from './actions';
 
 export function newGameReducer(
-  state = { name: '', type: 'Free4All', map: 'Playground', list: [] },
+  state = { roomName: '', type: 'Free4All', map: 'Playground', list: [] },
   action,
 ) {
   if (Object.keys(gamesListActions).includes(action.type) && action.payload) {

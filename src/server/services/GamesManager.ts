@@ -12,8 +12,8 @@ export default class GamesStore {
     this.games.push(new gameTypes[type](main, name, new maps[map]()));
   }
 
-  getGame(name: string) {
-    return this.games.find(game => game.name === name);
+  getGame(roomName: string) {
+    return this.games.find(game => game.roomName === roomName);
   }
 
   getGameByPlayer(id: string) {
@@ -23,7 +23,7 @@ export default class GamesStore {
   getGamesList(): GameInstance[] {
     return this.games.map(game => {
       return {
-        name: game.name,
+        roomName: game.roomName,
         type: game.type,
         map: game.map.mapName,
         count: game.players.length,

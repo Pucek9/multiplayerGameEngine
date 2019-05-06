@@ -230,7 +230,6 @@ export default class GameState {
   }
 
   updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
-    console.log(info);
     this.weaponsListComponent.render(info);
   }
 }

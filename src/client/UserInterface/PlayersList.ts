@@ -1,9 +1,7 @@
-import IRenderable from '../interfaces/IRenderable';
-
 declare var leftPanel: HTMLDivElement;
 declare var playersList: HTMLUListElement;
 
-export default class PlayerListComponent implements IRenderable {
+export default class PlayerListComponent {
   constructor() {}
 
   show() {

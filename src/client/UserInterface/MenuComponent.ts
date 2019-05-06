@@ -1,5 +1,6 @@
 import { chooseGame, setGameMap, setGameName, setGameType, setNick } from '../store/actions';
 import { Store } from 'redux';
+import GameInstance from '../../shared/apiModels/GameInstance';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -52,20 +53,20 @@ export default class MenuComponent {
   }
 
   renderTable(state) {
-    state.newGame.list.forEach(game => {
+    state.newGame.list.forEach((game: GameInstance) => {
       const name = document.createElement('td');
-      name.appendChild(document.createTextNode(game.name));
+      name.appendChild(document.createTextNode(game.roomName));
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');
       map.appendChild(document.createTextNode(game.map));
       const count = document.createElement('td');
-      count.appendChild(document.createTextNode(game.count));
+      count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
-        this.store.dispatch(chooseGame(game.name));
+        this.store.dispatch(chooseGame(game.roomName));
       });
-      if (state.joinGame.chosenGame === game.name) {
+      if (state.joinGame.chosenGame === game.roomName) {
         row.style.backgroundColor = '#5000f3';
         row.style.color = 'white';
       }

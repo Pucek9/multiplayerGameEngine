@@ -1,9 +1,7 @@
-import IRenderable from '../interfaces/IRenderable';
-
 declare var weaponsList: HTMLUListElement;
 declare var leftDownPanel: HTMLDivElement;
 
-export default class WeaponListComponent implements IRenderable {
+export default class WeaponListComponent {
   constructor() {}
 
   show() {

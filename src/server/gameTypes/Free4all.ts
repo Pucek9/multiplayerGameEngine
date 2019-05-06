@@ -7,21 +7,17 @@ import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
 import Direction from '../../shared/models/Direction';
 import { rand } from '../../shared/helpers';
-import Pistol from '../models/weapons/Pistol';
-import Shotgun from '../models/weapons/Shotgun';
-import NewBullet from '../../shared/apiModels/NewBullet';
-import Resizer from '../models/weapons/Resizer';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
-import Item from '../../shared/models/Item';
 import Weapon from '../models/weapons/Weapon';
+import Emitter from '../services/Emitter';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
   private interval;
 
   constructor(
-    public main,
-    public name: string,
+    public emitter: Emitter,
+    public roomName: string,
     public map: GameMap,
     public players: Player[] = [],
     public bullets: Bullet[] = [],
@@ -30,7 +26,7 @@ export default class Free4all implements GameModel {
       this.updatePlayersPosition();
       this.updateBullets();
       this.detectBulletsCollision();
-      this.main.emitGameState(this);
+      this.emitter.emitGameState(this);
     }, 1000 / 60);
   }
 
@@ -239,7 +235,7 @@ export default class Free4all implements GameModel {
     if (this.isPlayerAlive(mouseClick.owner)) {
       const shoot = this.shoot(mouseClick);
       if (shoot) {
-        this.main.sendNewBullets(this, shoot.bullets);
+        this.emitter.sendNewBullets(this.roomName, shoot.bullets);
         this.getWeaponInfo(shoot.owner);
       }
     } else {
@@ -248,7 +244,7 @@ export default class Free4all implements GameModel {
   }
 
   getWeaponInfo(player) {
-    this.main.updateWeaponInfo(player.id, {
+    this.emitter.updateWeaponInfo(player.id, {
       selectedWeapon: player.selectedWeapon,
       weapons: player.weapons.map((weapon: Weapon) => ({ type: weapon.type, id: weapon.id })),
     });
@@ -275,12 +271,12 @@ export default class Free4all implements GameModel {
         generator.deactivate();
         setTimeout(() => {
           generator.activate();
-          this.main.updateItemGenerator(this, new ItemGeneratorAPI(generator));
+          this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
         }, generator.time);
         const weapon = generator.generateItem();
         this.addWeapon(player, weapon);
         this.getWeaponInfo(player);
-        this.main.updateItemGenerator(this, new ItemGeneratorAPI(generator));
+        this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
       }
     });
   }

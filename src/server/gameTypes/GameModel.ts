@@ -5,8 +5,8 @@ import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
 
 export default interface GameModel {
-  main;
-  name: string;
+  emitter;
+  roomName: string;
   type: string;
   map: GameMap;
   players: Player[];

@@ -1,5 +1,5 @@
 export default interface GameInstance {
-  name: string;
+  roomName: string;
   type: string;
   map: string;
   count: number;

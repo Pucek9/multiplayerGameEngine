@@ -1,5 +1,4 @@
 import BulletModel from '../../shared/models/BulletModel';
-import PlayerModel from '../../shared/models/PlayerModel';
 import IRenderable from '../interfaces/IRenderable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';

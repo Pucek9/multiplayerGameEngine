@@ -52,10 +52,9 @@ class Main {
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      console.log('GET_GAMES_LIST', gamesList);
       store.dispatch(clearGamesList());
       gamesList.forEach(game =>
-        store.dispatch(addGame(game.name, game.type, game.map, game.count)),
+        store.dispatch(addGame(game.roomName, game.type, game.map, game.count)),
       );
     });
   }
