@@ -239,7 +239,7 @@ export default class Free4all implements GameModel {
     if (this.isPlayerAlive(mouseClick.owner)) {
       const shoot = this.shoot(mouseClick);
       if (shoot) {
-        this.main.sendNewBullets(shoot.bullets);
+        this.main.sendNewBullets(this, shoot.bullets);
         this.getWeaponInfo(shoot.owner);
       }
     } else {
@@ -275,12 +275,12 @@ export default class Free4all implements GameModel {
         generator.deactivate();
         setTimeout(() => {
           generator.activate();
-          this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
+          this.main.updateItemGenerator(this, new ItemGeneratorAPI(generator));
         }, generator.time);
         const weapon = generator.generateItem();
         this.addWeapon(player, weapon);
         this.getWeaponInfo(player);
-        this.main.updateItemGenerator(new ItemGeneratorAPI(generator));
+        this.main.updateItemGenerator(this, new ItemGeneratorAPI(generator));
       }
     });
   }
