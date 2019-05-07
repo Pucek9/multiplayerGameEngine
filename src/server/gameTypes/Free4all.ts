@@ -124,8 +124,6 @@ export default class Free4all implements GameModel {
   connectPlayer(id: string, newPlayer: NewUser): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000));
     // player.addWeapon(new Pistol());
-    // player.addWeapon(new Shotgun());
-    // player.addWeapon(new Resizer());
     // player.selectWeapon(0);
     this.getWeaponInfo(player);
     this.players.push(player);
@@ -134,6 +132,7 @@ export default class Free4all implements GameModel {
 
   disconnectPlayer(disconnected: Player) {
     this.players.splice(this.players.indexOf(disconnected), 1);
+    this.emitter.disconnectPlayer(this.roomName, disconnected);
   }
 
   updateKeys(id: string, keys: Array<string>) {
@@ -208,10 +207,9 @@ export default class Free4all implements GameModel {
       } else {
         player.removeAura();
       }
-      // if (player.keys.has('Escape')) {
-      //   this.disconnectPlayer(player);
-      //   this.main.disconnectPlayer(player.name);
-      // }
+      if (player.keys.has('Escape')) {
+        this.disconnectPlayer(player);
+      }
     }
   }
 

@@ -4,9 +4,11 @@ import Weapon from '../models/weapons/Weapon';
 import Item from '../../shared/models/Item';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import GameModel from '../gameTypes/GameModel';
+import Player from '../models/Player';
+import GamesManager from './GamesManager';
 
 export default class Emitter {
-  constructor(private socketIo) {}
+  constructor(private socketIo: SocketIO.Server, private gamesManager: GamesManager) {}
 
   emitGameState(gameState: GameModel) {
     this.socketIo.to(gameState.roomName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
@@ -23,5 +25,21 @@ export default class Emitter {
 
   updateItemGenerator(roomName: string, itemGenerator: ItemGeneratorAPI) {
     this.socketIo.to(roomName).emit(API.UPDATE_ITEM_GENERATOR, itemGenerator);
+  }
+
+  disconnectPlayer(roomName: string, disconnected: Player) {
+    const id = disconnected.id;
+    console.log(`[${id}] Player '${disconnected.name}' left '${roomName}'`);
+    this.socketIo.to(roomName).emit(API.DISCONNECT_PLAYER, id);
+    this.socketIo.emit(API.GET_GAMES_LIST, this.gamesManager.getGamesList());
+    this.socketIo.to(id).emit(API.LEAVE_GAME);
+
+    const socket = this.socketIo.sockets.connected[id];
+    if (socket) {
+      socket.removeAllListeners(API.UPDATE_KEYS);
+      socket.removeAllListeners(API.MOUSE_CLICK);
+      socket.removeAllListeners(API.UPDATE_DIRECTION);
+      socket.leave(roomName);
+    }
   }
 }

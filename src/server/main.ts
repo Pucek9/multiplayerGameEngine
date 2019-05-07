@@ -15,7 +15,7 @@ const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const gamesMamager = new GamesManager();
-const emitter = new Emitter(socketIo);
+const emitter = new Emitter(socketIo, gamesMamager);
 
 app.use(express.static('dist/client'));
 
@@ -24,7 +24,7 @@ function connection(socket: Socket) {
     console.log(`[${socket.id}] Connected`);
     setTimeout(() => {
       socketIo.emit(API.GET_GAMES_LIST, gamesMamager.getGamesList());
-      socket.emit(API.WELCOME_NEW_PLAYER, socket.id);
+      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, socket.id);
     }, TIMEOUT);
     registerGameMenuEvents();
   }
@@ -52,7 +52,6 @@ function connection(socket: Socket) {
       if (gameState) {
         const disconnected = gameState.getPlayer(socket.id);
         gameState.disconnectPlayer(disconnected);
-        disconnectPlayer(gameState, disconnected.name);
       }
     });
   }
@@ -80,24 +79,6 @@ function connection(socket: Socket) {
     socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
       gameState.updatePlayerDirection(mouseCoordinates);
     });
-  }
-
-  function disconnectPlayer(gameState, name) {
-    if (gameState) {
-      const roomName = gameState.roomName;
-      console.log(`[${socket.id}] Player '${name}' left '${roomName}'`);
-      socketIo.to(roomName).emit(API.DISCONNECT_PLAYER, socket.id);
-      socketIo.emit(API.GET_GAMES_LIST, gamesMamager.getGamesList());
-      socket.emit(API.LEAVE_GAME);
-      socket.leave(roomName);
-    }
-
-    // this.socket.removeAllListeners(API.UPDATE_KEYS);
-    // this.socket.removeAllListeners(API.MOUSE_CLICK);
-    // this.socket.removeAllListeners(API.UPDATE_DIRECTION);
-    // delete this.gameState;
-    // delete this.gameName;
-    // delete this.player;
   }
 
   init();

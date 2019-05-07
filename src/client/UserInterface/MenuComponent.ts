@@ -99,6 +99,6 @@ export default class MenuComponent {
   }
 
   show() {
-    menu.style.display = 'flex';
+    menu.style.display = 'block';
   }
 }

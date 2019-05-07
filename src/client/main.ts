@@ -37,7 +37,8 @@ const app = combineReducers({
 });
 const store = createStore(app, devToolsEnhancer());
 
-let mainInstance;
+let mainInstance: Main;
+let requestId: number;
 
 class Main {
   private menu: MenuComponent;
@@ -96,11 +97,14 @@ class Main {
 
     socket.on(API.GET_WEAPON_DETAILS, gameState.updateWeaponInfo.bind(gameState));
 
-    // socket.on(API.LEAVE_GAME, () => {
-    //   console.log('leave');
-    //   gameState.screen.renderer.domElement.remove();
-    //   this.menu.show();
-    // });
+    socket.on(API.LEAVE_GAME, () => {
+      this.leaveGame();
+    });
+
+    socket.on(API.DISCONNECT, () => {
+      console.log('Failed to connect to server');
+      this.leaveGame();
+    });
 
     window.addEventListener('mousedown', function(e: MouseEvent) {
       e.preventDefault();
@@ -149,7 +153,6 @@ class Main {
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
-
     return {
       camera: camera,
       scene: scene,
@@ -159,7 +162,25 @@ class Main {
 
   run() {
     mainInstance.gameState.tryRenderEverything();
-    requestAnimationFrame(mainInstance.run);
+    requestId = requestAnimationFrame(mainInstance.run);
+  }
+
+  leaveGame() {
+    cancelAnimationFrame(requestId);
+    socket.removeAllListeners(API.ADD_NEW_PLAYER);
+    socket.removeAllListeners(API.ADD_PLAYERS);
+    socket.removeAllListeners(API.GET_PLAYERS_STATE);
+    socket.removeAllListeners(API.GET_BULLETS);
+    socket.removeAllListeners(API.GET_STATIC_OBJECTS);
+    socket.removeAllListeners(API.GET_ITEM_GENERATORS);
+    socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
+    socket.removeAllListeners(API.DISCONNECT_PLAYER);
+    socket.removeAllListeners(API.GET_WEAPON_DETAILS);
+    socket.removeAllListeners(API.LEAVE_GAME);
+    socket.removeAllListeners(API.DISCONNECT);
+    this.gameState.dispose();
+    this.gameState = null;
+    this.menu.show();
   }
 }
 

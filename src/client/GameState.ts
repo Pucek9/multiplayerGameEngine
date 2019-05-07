@@ -232,4 +232,22 @@ export default class GameState {
   updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
     this.weaponsListComponent.render(info);
   }
+
+  dispose() {
+    console.log('dispose');
+    while (this.screen.scene.children.length > 0) {
+      this.screen.scene.remove(this.screen.scene.children[0]);
+    }
+    this.screen.renderer.dispose();
+    this.screen.renderer.forceContextLoss();
+    this.screen.renderer.context = null;
+    this.screen.renderer.domElement.remove();
+    this.screen.renderer.domElement = null;
+    this.screen.camera.remove();
+    this.screen.camera = null;
+    this.screen.scene = null;
+    this.screen.renderer = null;
+    this.playersListComponent.hide();
+    this.weaponsListComponent.hide();
+  }
 }
