@@ -43,6 +43,7 @@ let requestId: number;
 class Main {
   private menu: MenuComponent;
   private gameState: GameState;
+  private events: any;
 
   constructor() {
     this.menu = new MenuComponent(this, store);
@@ -60,10 +61,10 @@ class Main {
     });
   }
 
-  onAddNewGame({ name, type, map }: NewGame) {
-    const newGame = new NewGame(name, type, map);
+  onAddNewGame({ roomName, type, map }: NewGame) {
+    const newGame = new NewGame(roomName, type, map);
     socket.emit(API.CREATE_GAME, newGame);
-    store.dispatch(chooseGame(name));
+    store.dispatch(chooseGame(roomName));
   }
 
   onJoinGame() {
@@ -106,41 +107,45 @@ class Main {
       this.leaveGame();
     });
 
-    window.addEventListener('mousedown', function(e: MouseEvent) {
-      e.preventDefault();
-      const mouseClick = gameState.getMouseCoordinates();
-      socket.emit(API.MOUSE_CLICK, mouseClick);
-    });
-
-    window.addEventListener(
-      'mousemove',
-      function mouseMove(e: MouseEvent) {
+    this.events = {
+      mouseDown(e: MouseEvent) {
+        e.preventDefault();
+        const mouseClick = gameState.getMouseCoordinates();
+        socket.emit(API.MOUSE_CLICK, mouseClick);
+      },
+      mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
         if (mouseCoordinates) {
           socket.emit(API.UPDATE_DIRECTION, mouseCoordinates);
         }
       },
-      false,
-    );
-
-    window.addEventListener('keydown', function(e: KeyboardEvent) {
-      e.preventDefault();
-      if (!e.repeat) {
-        gameState.addKey(e);
+      keyDown(e: KeyboardEvent) {
+        e.preventDefault();
+        if (!e.repeat) {
+          gameState.addKey(e);
+          socket.emit(API.UPDATE_KEYS, gameState.getKeys());
+        }
+      },
+      keyUp(e: KeyboardEvent) {
+        e.preventDefault();
+        gameState.deleteKey(e);
         socket.emit(API.UPDATE_KEYS, gameState.getKeys());
-      }
-    });
+      },
+      wheel(e: WheelEvent) {
+        e.preventDefault();
+        gameState.wheel(e);
+      },
+    };
 
-    window.addEventListener('keyup', function(e: KeyboardEvent) {
-      e.preventDefault();
-      gameState.deleteKey(e);
-      socket.emit(API.UPDATE_KEYS, gameState.getKeys());
-    });
+    window.addEventListener('mousedown', this.events.mouseDown);
 
-    window.addEventListener('wheel', function(e: WheelEvent) {
-      e.preventDefault();
-      gameState.wheel(e);
-    });
+    window.addEventListener('mousemove', this.events.mouseMove, false);
+
+    window.addEventListener('keydown', this.events.keyDown);
+
+    window.addEventListener('keyup', this.events.keyUp);
+
+    window.addEventListener('wheel', this.events.wheel);
   }
 
   prepareScreen(): ScreenModel {
@@ -166,7 +171,13 @@ class Main {
   }
 
   leaveGame() {
+    // location.reload();
     cancelAnimationFrame(requestId);
+    window.removeEventListener('mousedown', this.events.mouseDown);
+    window.removeEventListener('mousemove', this.events.mouseMove);
+    window.removeEventListener('keydown', this.events.keyDown);
+    window.removeEventListener('keyup', this.events.keyUp);
+    window.removeEventListener('wheel', this.events.wheel);
     socket.removeAllListeners(API.ADD_NEW_PLAYER);
     socket.removeAllListeners(API.ADD_PLAYERS);
     socket.removeAllListeners(API.GET_PLAYERS_STATE);

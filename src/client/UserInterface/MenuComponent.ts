@@ -23,10 +23,10 @@ export default class MenuComponent {
     const unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', function() {
-      const name = gameNameInput.value;
+      const roomName = gameNameInput.value;
       const type = gameTypeInput.value;
       const map = gameMapInput.value;
-      main.onAddNewGame({ name, type, map });
+      main.onAddNewGame({ roomName, type, map });
       gameNameInput.value = '';
     });
 
@@ -54,8 +54,8 @@ export default class MenuComponent {
 
   renderTable(state) {
     state.newGame.list.forEach((game: GameInstance) => {
-      const name = document.createElement('td');
-      name.appendChild(document.createTextNode(game.roomName));
+      const roomName = document.createElement('td');
+      roomName.appendChild(document.createTextNode(game.roomName));
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');
@@ -71,7 +71,7 @@ export default class MenuComponent {
         row.style.color = 'white';
       }
       // @ts-ignore
-      row.append(name, type, map, count);
+      row.append(roomName, type, map, count);
       // @ts-ignore
       gamesListTable.append(row);
     });
@@ -84,18 +84,20 @@ export default class MenuComponent {
     const nickEmpty = state.joinGame.nick === '';
     const chosenGameEmpty = state.joinGame.chosenGame === null;
     const idEmpty = state.joinGame.id === null;
-    const nameEmpty = state.newGame.name === '';
-    const nameDuplicate = state.newGame.list.find(game => game.name === state.newGame.name);
+    const roomNameEmpty = state.newGame.roomName === '';
+    const roomNameDuplicate = state.newGame.list.find(
+      game => game.roomName === state.newGame.roomName,
+    );
     const typeEmpty = state.newGame.type === null;
     const mapEmpty = state.newGame.map === null;
 
     joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
-    createButton.disabled = nameEmpty || typeEmpty || mapEmpty || nameDuplicate;
+    createButton.disabled = roomNameEmpty || typeEmpty || mapEmpty || roomNameDuplicate;
 
     validateNick.style.display = nickEmpty ? 'block' : 'none';
     validateSelectedGame.style.display = chosenGameEmpty ? 'block' : 'none';
-    validateGameName.style.display = nameEmpty ? 'block' : 'none';
-    validateGameNameDuplicate.style.display = nameDuplicate ? 'block' : 'none';
+    validateGameName.style.display = roomNameEmpty ? 'block' : 'none';
+    validateGameNameDuplicate.style.display = roomNameDuplicate ? 'block' : 'none';
   }
 
   show() {

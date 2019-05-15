@@ -31,8 +31,8 @@ function connection(socket: Socket) {
 
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
-      console.log(`[${socket.id}] Created game '${newGame.name}'`);
-      gamesMamager.createGame(emitter, newGame.name, newGame.type, newGame.map);
+      console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
+      gamesMamager.createGame(emitter, newGame.roomName, newGame.type, newGame.map);
       socketIo.emit(API.GET_GAMES_LIST, gamesMamager.getGamesList());
     });
 

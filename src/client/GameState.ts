@@ -234,7 +234,20 @@ export default class GameState {
   }
 
   dispose() {
-    console.log('dispose');
+    this.user = null;
+    this.currentPlayer = null;
+    this.light = null;
+    this.camera = null;
+    this.playersListComponent.hide();
+    this.weaponsListComponent.hide();
+    this.playersListComponent = null;
+    this.weaponsListComponent = null;
+    this.players = null;
+    this.playersListString = null;
+    this.staticObjects = null;
+    this.itemGenerators = null;
+    this.map = null;
+    this.cursor = null;
     while (this.screen.scene.children.length > 0) {
       this.screen.scene.remove(this.screen.scene.children[0]);
     }
@@ -244,10 +257,5 @@ export default class GameState {
     this.screen.renderer.domElement.remove();
     this.screen.renderer.domElement = null;
     this.screen.camera.remove();
-    this.screen.camera = null;
-    this.screen.scene = null;
-    this.screen.renderer = null;
-    this.playersListComponent.hide();
-    this.weaponsListComponent.hide();
   }
 }

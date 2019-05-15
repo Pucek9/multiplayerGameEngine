@@ -48,13 +48,13 @@ export const setId = id => {
   };
 };
 
-export const setGameName = name => {
+export const setGameName = roomName => {
   return {
     type: gamesListActions.SET_GAME_NAME,
     payload: state => {
       return {
         ...state,
-        name,
+        roomName,
       };
     },
   };
