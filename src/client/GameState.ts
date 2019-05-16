@@ -1,5 +1,5 @@
 import Player from './models/Player';
-import Camera from './models/Camera';
+import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -18,6 +18,8 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
+import DynamicCamera from './models/DynamicCamera';
+import ICamera from './interfaces/ICamera';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -26,7 +28,7 @@ export default class GameState {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  camera: Camera;
+  camera: ICamera;
   light: Light;
   playersListComponent: PlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
@@ -69,8 +71,8 @@ export default class GameState {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
 
-      this.camera = new Camera(this.currentPlayer);
-      this.camera.init(this.screen);
+      this.camera = new StaticCamera(this.currentPlayer);
+      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor, this.screen.renderer);
       this.light.init(this.currentPlayer, this.cursor);
     }
   }
@@ -100,13 +102,7 @@ export default class GameState {
   }
 
   wheel(e: WheelEvent) {
-    if (e.deltaY > 0) {
-      // screen.camera.rotation.x += 0.1;
-      this.screen.camera.position.z += 10;
-    } else {
-      // screen.camera.rotation.x -= 0.1;
-      this.screen.camera.position.z -= 10;
-    }
+    this.camera.wheel(e);
   }
 
   appendNewBullets(newBullets: NewBullet[]) {
@@ -181,7 +177,7 @@ export default class GameState {
     );
     if (itemGenerator) {
       itemGenerator.ready = updatedItemGenerator.ready;
-      itemGenerator.render();
+      itemGenerator.update();
     }
   }
 
@@ -205,17 +201,25 @@ export default class GameState {
     return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
   }
 
-  tryRenderEverything() {
-    this.screen.renderer.render(this.screen.scene, this.screen.camera);
-    this.renderPlayerList();
+  updateObjects() {
     if (this.currentPlayer) {
       [this.camera, ...this.bullets, ...this.players, this.cursor, this.light].forEach(object =>
-        object.render(),
+        object.update(),
       );
     }
   }
+  render() {
+    if (this.camera) {
+      this.screen.renderer.render(this.screen.scene, this.camera.camera);
+    }
+  }
 
-  renderPlayerList() {
+  update() {
+    this.updatePlayerList();
+    this.updateObjects();
+  }
+
+  updatePlayerList() {
     const playersList = this.players.map(({ name, score, color, hp }) => ({
       name,
       score,
@@ -224,7 +228,7 @@ export default class GameState {
     }));
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {
-      this.playersListComponent.render(playersList);
+      this.playersListComponent.update(playersList);
       this.playersListString = _playersListString;
     }
   }
@@ -256,6 +260,6 @@ export default class GameState {
     this.screen.renderer.context = null;
     this.screen.renderer.domElement.remove();
     this.screen.renderer.domElement = null;
-    this.screen.camera.remove();
+    this.camera.remove();
   }
 }

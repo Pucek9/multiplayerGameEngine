@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
 import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
@@ -149,8 +149,6 @@ class Main {
   }
 
   prepareScreen(): ScreenModel {
-    const camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    camera.position.z = 400;
     const scene = new Scene();
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
@@ -159,15 +157,15 @@ class Main {
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
     return {
-      camera: camera,
-      scene: scene,
-      renderer: renderer,
+      scene,
+      renderer,
     };
   }
 
   run() {
-    mainInstance.gameState.tryRenderEverything();
     requestId = requestAnimationFrame(mainInstance.run);
+    mainInstance.gameState.update();
+    mainInstance.gameState.render();
   }
 
   leaveGame() {

@@ -12,7 +12,7 @@ export default class PlayerListComponent {
     leftPanel.style.display = 'none';
   }
 
-  render(players: any[]) {
+  update(players: any[]) {
     playersList.innerHTML = '';
     players.forEach(_player => {
       const li = document.createElement('li');

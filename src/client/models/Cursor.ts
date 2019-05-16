@@ -1,8 +1,8 @@
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
-export default class Cursor implements IRenderable {
+export default class Cursor implements IUpdatable {
   public x: number;
   public y: number;
   // public img: HTMLImageElement;
@@ -36,7 +36,7 @@ export default class Cursor implements IRenderable {
     screen.scene.add(this.object);
   }
 
-  render() {
+  update() {
     this.object.position.x = this.x;
     this.object.position.y = this.y;
     // this.screen.ctx.drawImage(

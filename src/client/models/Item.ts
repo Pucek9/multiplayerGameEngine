@@ -1,12 +1,12 @@
 import StaticCircularObject from './StaticCircularObject';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 
-export default class Item extends StaticCircularObject implements IRenderable {
+export default class Item extends StaticCircularObject implements IUpdatable {
   ready: boolean;
   time: number;
   id: number;
 
-  render() {
+  update() {
     this.object.visible = this.ready;
   }
 }

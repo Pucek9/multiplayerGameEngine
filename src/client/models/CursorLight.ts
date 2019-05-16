@@ -1,10 +1,10 @@
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import Cursor from './Cursor';
 import Player from './Player';
 import { PointLight } from 'three';
 
-export default class CursorLight implements IRenderable {
+export default class CursorLight implements IUpdatable {
   private light: PointLight;
   private activePlayer: Player;
   private cursor: Cursor;
@@ -33,7 +33,7 @@ export default class CursorLight implements IRenderable {
     this.screen.scene.remove(this.light);
   }
 
-  render() {
+  update() {
     this.light.position.set(0, 0, 500);
     this.light.position.set(this.cursor.x, this.cursor.y, 30);
   }
