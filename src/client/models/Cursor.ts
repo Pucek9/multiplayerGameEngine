@@ -5,6 +5,7 @@ import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 export default class Cursor implements IUpdatable {
   public x: number;
   public y: number;
+  public z = 50;
   // public img: HTMLImageElement;
   // private img;
   public object: Mesh;
@@ -32,7 +33,7 @@ export default class Cursor implements IUpdatable {
     this.setGeometry();
     this.setMaterial();
     this.object = new Mesh(this.geometry, this.material);
-    this.object.position.z = 50;
+    this.object.position.z = this.z;
     screen.scene.add(this.object);
   }
 

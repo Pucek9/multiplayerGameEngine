@@ -71,17 +71,23 @@ export default class GameState {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
 
-      this.camera = new StaticCamera(this.currentPlayer);
-      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor, this.screen.renderer);
+      // this.camera = new StaticCamera(this.currentPlayer);
+      this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
       this.light.init(this.currentPlayer, this.cursor);
     }
   }
 
-  appendPlayers(_players: NewPlayer[]) {
-    _players.forEach(_player => {
-      const existed = this.players.find(player => player.id === _player.id);
+  appendPlayers(newPlayers: NewPlayer[]) {
+    newPlayers.forEach(newPlayer => {
+      const existed = this.players.find(player => player.id === newPlayer.id);
       if (!existed) {
-        const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
+        const player = new Player(
+          newPlayer.id,
+          newPlayer.name,
+          newPlayer.color,
+          newPlayer.x,
+          newPlayer.y,
+        );
         player.init(this.screen);
         player.setAsEnemy();
         this.players.push(player);
