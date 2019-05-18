@@ -71,8 +71,8 @@ export default class GameState {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
 
-      // this.camera = new StaticCamera(this.currentPlayer);
-      this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
+      this.camera = new StaticCamera(this.currentPlayer);
+      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
       this.light.init(this.currentPlayer, this.cursor);
     }
   }
@@ -216,7 +216,7 @@ export default class GameState {
   }
   render() {
     if (this.camera) {
-      this.screen.renderer.render(this.screen.scene, this.camera.camera);
+      this.screen.renderer.render(this.screen.scene, this.camera.object);
     }
   }
 
@@ -247,6 +247,7 @@ export default class GameState {
     this.user = null;
     this.currentPlayer = null;
     this.light = null;
+    this.camera.remove();
     this.camera = null;
     this.playersListComponent.hide();
     this.weaponsListComponent.hide();
@@ -266,6 +267,5 @@ export default class GameState {
     this.screen.renderer.context = null;
     this.screen.renderer.domElement.remove();
     this.screen.renderer.domElement = null;
-    this.camera.remove();
   }
 }

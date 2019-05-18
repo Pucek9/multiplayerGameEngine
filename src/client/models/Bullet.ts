@@ -4,7 +4,6 @@ import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
 
 export default class Bullet extends BulletModel implements IUpdatable {
-  public screen: ScreenModel;
   private object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshBasicMaterial;
