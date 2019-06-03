@@ -71,10 +71,16 @@ export default class Free4all implements GameModel {
     return this.getItemGenerators().map(itemGenerator => new ItemGeneratorAPI(itemGenerator));
   }
 
+  deleteBulletIfInactive(bullet: Bullet, i) {
+    if (!bullet.isActive()) {
+      this.bullets.splice(i, 1);
+    }
+  }
+
   updateBullets() {
     this.bullets.forEach((bullet, i) => {
       bullet.updatePosition();
-      !bullet.isStillInAir() && this.bullets.splice(i, 1);
+      this.deleteBulletIfInactive(bullet, i);
     });
   }
 
@@ -84,7 +90,7 @@ export default class Free4all implements GameModel {
         if (bullet.owner !== object) {
           if (CollisionDetector.detectCollision(object, bullet)) {
             object.hitFromBullet(bullet);
-            this.bullets.splice(i, 1);
+            this.deleteBulletIfInactive(bullet, i);
           }
           if (object.aura) {
             if (CollisionDetector.detectCollision(object.aura, bullet)) {

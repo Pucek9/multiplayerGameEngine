@@ -2,5 +2,7 @@ import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectM
 import Bullet from './Bullet';
 
 export default class StaticCircularObject extends StaticCircularObjectModel {
-  hitFromBullet(bullet: Bullet) {}
+  hitFromBullet(bullet: Bullet) {
+    bullet.hit();
+  }
 }

@@ -11,6 +11,11 @@ export default class Bullet extends BulletModel {
   fromY: number;
   targetX: number;
   targetY: number;
+  active = true;
+  reverseX = 1;
+  reverseY = 1;
+  // dx: number
+  // dy: number
 
   constructor(params: Partial<Bullet>) {
     super(params);
@@ -45,11 +50,26 @@ export default class Bullet extends BulletModel {
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
     const b = (a - this.distance) / a;
-    this.x = this.targetX + b * (this.fromX - this.targetX);
-    this.y = this.targetY + b * (this.fromY - this.targetY);
+    this.x = this.targetX + this.reverseX * b * (this.fromX - this.targetX);
+    this.y = this.targetY + this.reverseY * b * (this.fromY - this.targetY);
+    if (!this.isStillInAir()) {
+      this.deactivate();
+    }
   }
 
   additionalAction() {}
 
   effectOnPlayer(player) {}
+
+  hit() {
+    this.deactivate();
+  }
+
+  deactivate() {
+    this.active = false;
+  }
+
+  isActive() {
+    return this.active;
+  }
 }

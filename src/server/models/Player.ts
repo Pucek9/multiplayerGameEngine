@@ -1,7 +1,6 @@
 import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
 import Aura from './Aura';
-// import Item from './weapons/Item';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 
 export default class Player extends PlayerModel {
@@ -39,6 +38,7 @@ export default class Player extends PlayerModel {
     if (this.isAlive()) {
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
+      bullet.hit();
       if (this.hp <= 0) {
         if (bullet.owner) {
           bullet.owner.addScore(100);
