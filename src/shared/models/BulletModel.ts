@@ -13,7 +13,5 @@ export default class BulletModel implements ICircle {
     this.id = params.id || generateId();
     params.size && (this.size = params.size);
     params.color && (this.color = params.color);
-    this.x = 0;
-    this.y = 0;
   }
 }

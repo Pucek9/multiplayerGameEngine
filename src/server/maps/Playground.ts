@@ -6,6 +6,7 @@ import GameMap from './GameMap';
 import Item from '../../shared/models/Item';
 import Shotgun from '../models/weapons/Shotgun';
 import Resizer from '../models/weapons/Resizer';
+import Grenade from '../models/weapons/Grenade';
 
 export default class Playground implements GameMap {
   mapName: string = 'Playground';
@@ -164,7 +165,6 @@ export default class Playground implements GameMap {
         depth: 100,
         color: 'blue',
       }),
-
       new StaticRectangleObject({
         x: 1150,
         y: 0,
@@ -220,6 +220,15 @@ export default class Playground implements GameMap {
         time: 20000,
         item: Shotgun,
         type: 'Shotgun',
+      }),
+      new ItemGenerator({
+        x: -1200,
+        y: -900,
+        size: 8,
+        color: 'black',
+        time: 10000,
+        item: Grenade,
+        type: 'Grenade',
       }),
     ];
   }

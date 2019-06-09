@@ -14,12 +14,16 @@ export default class Bullet extends BulletModel {
   active = true;
   reverseX = 1;
   reverseY = 1;
-  // dx: number
-  // dy: number
+  vectorFT: number;
 
   constructor(params: Partial<Bullet>) {
     super(params);
     Object.assign(this, params);
+    this.x = this.fromX;
+    this.y = this.fromY;
+    this.vectorFT = Math.sqrt(
+      Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
+    );
     Object.seal(this);
   }
 
@@ -46,12 +50,8 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    const a = Math.sqrt(
-      Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
-    );
-    const b = (a - this.distance) / a;
-    this.x = this.targetX + this.reverseX * b * (this.fromX - this.targetX);
-    this.y = this.targetY + this.reverseY * b * (this.fromY - this.targetY);
+    this.x -= (((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
+    this.y -= (((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
     if (!this.isStillInAir()) {
       this.deactivate();
     }
