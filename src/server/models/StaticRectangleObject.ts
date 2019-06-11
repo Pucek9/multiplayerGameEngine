@@ -2,7 +2,7 @@ import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjec
 import Bullet from './Bullet';
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel {
-  hitFromBullet(bullet: Bullet) {
-    bullet.hit();
+  hitFromBullet(bullet: Bullet, angle?) {
+    bullet.hit(angle);
   }
 }

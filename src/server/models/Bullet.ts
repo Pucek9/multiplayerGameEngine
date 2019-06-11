@@ -1,9 +1,10 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-  private defaultSpeed = 5;
-  private speed = 5;
-  private distance = 10;
+  defaultSpeed = 5;
+  minSpeed = 1;
+  speed = 5;
+  distance = 10;
   power = 10;
   range = 500;
   owner: any;
@@ -15,6 +16,8 @@ export default class Bullet extends BulletModel {
   reverseX = 1;
   reverseY = 1;
   vectorFT: number;
+  directionX: number;
+  directionY: number;
 
   constructor(params: Partial<Bullet>) {
     super(params);
@@ -24,6 +27,8 @@ export default class Bullet extends BulletModel {
     this.vectorFT = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
+    this.directionX = 0;
+    this.directionY = 0;
     Object.seal(this);
   }
 
@@ -31,7 +36,7 @@ export default class Bullet extends BulletModel {
     if (this.speed > value) {
       this.speed -= value;
     } else {
-      this.speed = 1;
+      this.speed = this.minSpeed;
     }
   }
 
@@ -50,8 +55,10 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    this.x -= (((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
-    this.y -= (((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.directionX = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
+    this.directionY = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.x += this.directionX;
+    this.y += this.directionY;
     if (!this.isStillInAir()) {
       this.deactivate();
     }
@@ -61,7 +68,7 @@ export default class Bullet extends BulletModel {
 
   effectOnPlayer(player) {}
 
-  hit() {
+  hit(angle) {
     this.deactivate();
   }
 

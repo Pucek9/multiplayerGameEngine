@@ -34,11 +34,11 @@ export default class Player extends PlayerModel {
     this.score = this.score + score;
   }
 
-  hitFromBullet(bullet: Bullet) {
+  hitFromBullet(bullet: Bullet, angle?) {
     if (this.isAlive()) {
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
-      bullet.hit();
+      bullet.hit(angle);
       if (this.hp <= 0) {
         if (bullet.owner) {
           bullet.owner.addScore(100);

@@ -3,12 +3,17 @@ import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
 import Direction from '../../shared/models/Direction';
 
+interface collision {
+  yes: boolean;
+  angle?: { x: number; y: number };
+}
+
 export default class CollisionDetector {
   static detectCollision(
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
     direction?: Direction,
-  ): boolean;
+  ): collision;
 
   static detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
     switch ([object1.shape, object2.shape].join()) {
@@ -23,27 +28,28 @@ export default class CollisionDetector {
     }
   }
 
-  static detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): boolean {
-    const dx = direction.x + o1.x - o2.x;
-    const dy = direction.y + o1.y - o2.y;
+  static detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): collision {
+    const dx = o1.x - o2.x + direction.x;
+    const dy = o1.y - o2.y + direction.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    return distance < o1.size + o2.size;
+    return { yes: distance < o1.size + o2.size, angle: { x: -1, y: -1 } };
   }
 
-  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): boolean {
-    return (
-      o2.x + o2.width > o1.x &&
-      o2.y + o2.height > o1.y &&
-      o1.x + o1.width + direction.x > o2.x &&
-      o1.y + o1.height + direction.y > o2.y
-    );
+  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): collision {
+    return {
+      yes:
+        o2.x + o2.width > o1.x &&
+        o2.y + o2.height > o1.y &&
+        o1.x + o1.width + direction.x > o2.x &&
+        o1.y + o1.height + direction.y > o2.y,
+    };
   }
 
   static detectRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ): boolean {
+  ): collision {
     if (rect.deg === 0) {
       return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
     } else {
@@ -55,7 +61,7 @@ export default class CollisionDetector {
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ): boolean {
+  ): collision {
     const deltaX =
       circle.x +
       direction.x -
@@ -64,14 +70,18 @@ export default class CollisionDetector {
       circle.y +
       direction.y -
       Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height));
-    return deltaX * deltaX + deltaY * deltaY < circle.size * circle.size;
+
+    return {
+      yes: deltaX * deltaX + deltaY * deltaY < circle.size * circle.size,
+      angle: deltaX > deltaY ? { x: -1, y: 1 } : { x: 1, y: -1 },
+    };
   }
 
   static detectRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ) {
+  ): collision {
     function distance(x1: number, y1: number, x2: number, y2: number) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
@@ -105,7 +115,12 @@ export default class CollisionDetector {
     } else {
       cy = rotateCircleY;
     }
-
-    return distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size;
+    return {
+      yes: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
+      angle:
+        Math.abs(rotateCircleX - rotateCircleY) > Math.abs(cx - cy)
+          ? { x: -1, y: 1 }
+          : { x: 1, y: -1 },
+    };
   }
 }

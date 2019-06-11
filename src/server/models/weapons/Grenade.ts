@@ -15,9 +15,18 @@ export default class Grenade extends Weapon {
     color: 'white',
     size: 5,
     power: 1,
-    range: 700,
-    hit() {
-      this.reverseX *= -1;
+    range: 400,
+    speed: 7,
+    minSpeed: 0.1,
+    hit(angle?: { x: number; y: number }) {
+      if (angle) {
+        this.reverseX *= angle.x;
+        this.reverseY *= angle.y;
+      }
+      this.decreaseSpeed(1);
+    },
+    additionalAction() {
+      this.decreaseSpeed(0.05);
     },
   };
 
