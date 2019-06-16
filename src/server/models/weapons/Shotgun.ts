@@ -24,7 +24,7 @@ export default class Shotgun extends Weapon {
     super();
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] {
+  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>): Bullet[] {
     const commonBulletInfo = {
       owner,
       fromX: owner.x + owner.size / 4,

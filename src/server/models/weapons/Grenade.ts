@@ -27,6 +27,12 @@ export default class Grenade extends Weapon {
     },
     additionalAction() {
       this.decreaseSpeed(0.05);
+      if (this.speed === this.minSpeed) {
+        this.deactivate();
+      }
+    },
+    deactivate() {
+      this.active = false;
     },
   };
 
@@ -34,7 +40,7 @@ export default class Grenade extends Weapon {
     super();
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel) {
+  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>) {
     return [
       new Bullet({
         owner,

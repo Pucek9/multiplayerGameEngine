@@ -20,7 +20,7 @@ export default abstract class Weapon implements Item {
     this.id = generateId();
   }
 
-  shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
+  shoot(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>): Bullet[] | undefined {
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;
@@ -49,7 +49,7 @@ export default abstract class Weapon implements Item {
     }
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] {
+  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>): Bullet[] {
     return [];
   }
 }

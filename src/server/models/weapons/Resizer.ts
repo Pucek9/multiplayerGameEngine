@@ -31,7 +31,7 @@ export default class Resizer extends Weapon {
     super();
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel) {
+  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>) {
     return [
       new Bullet({
         owner,
