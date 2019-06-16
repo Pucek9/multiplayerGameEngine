@@ -4,6 +4,7 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import ItemGenerator from '../models/ItemGenerator';
 import Pistol from '../models/weapons/Pistol';
 import Item from '../../shared/models/Item';
+import Grenade from '../models/weapons/Grenade';
 
 export default class Boxes implements GameMap {
   mapName: string = 'Boxes';
@@ -85,6 +86,42 @@ export default class Boxes implements GameMap {
         time: 10000,
         item: Pistol,
         type: 'Pistol',
+      }),
+      new ItemGenerator({
+        x: -100,
+        y: -100,
+        size: 8,
+        color: 'black',
+        time: 1000,
+        item: Grenade,
+        type: 'Grenade',
+      }),
+      new ItemGenerator({
+        x: 100,
+        y: 0,
+        size: 8,
+        color: 'black',
+        time: 1000,
+        item: Grenade,
+        type: 'Grenade',
+      }),
+      new ItemGenerator({
+        x: -100,
+        y: 100,
+        size: 8,
+        color: 'black',
+        time: 1000,
+        item: Grenade,
+        type: 'Grenade',
+      }),
+      new ItemGenerator({
+        x: 100,
+        y: 100,
+        size: 8,
+        color: 'black',
+        time: 1000,
+        item: Grenade,
+        type: 'Grenade',
       }),
     ];
   }

@@ -62,18 +62,20 @@ export default class CollisionDetector {
     rect: IRectangle,
     direction: Direction,
   ): collision {
-    const deltaX =
+    const deltaX = Math.abs(
       circle.x +
-      direction.x -
-      Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width));
-    const deltaY =
+        direction.x -
+        Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width)),
+    );
+    const deltaY = Math.abs(
       circle.y +
-      direction.y -
-      Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height));
-
+        direction.y -
+        Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height)),
+    );
     return {
-      yes: deltaX * deltaX + deltaY * deltaY < circle.size * circle.size,
-      angle: deltaX > deltaY ? { x: -1, y: 1 } : { x: 1, y: -1 },
+      yes: deltaX + deltaY < circle.size,
+      angle:
+        deltaX > deltaY ? { x: -1, y: 1 } : deltaX < deltaY ? { x: 1, y: -1 } : { x: -1, y: -1 },
     };
   }
 
