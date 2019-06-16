@@ -87,7 +87,7 @@ export default class CollisionDetector {
     direction: Direction,
   ): collision {
     function distance(x1: number, y1: number, x2: number, y2: number) {
-      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      return Math.abs(x2 - x1) + Math.abs(y2 - y1);
     }
 
     let cx, cy;
@@ -119,12 +119,23 @@ export default class CollisionDetector {
     } else {
       cy = rotateCircleY;
     }
+    // TODO angle need fix
     return {
       yes: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
-      angle:
-        Math.abs(rotateCircleX - rotateCircleY) > Math.abs(cx - cy)
-          ? { x: -1, y: 1 }
-          : { x: 1, y: -1 },
+      angle: {
+        x:
+          rotateCircleX > cx
+            ? -Math.abs(angleOfRad)
+            : rotateCircleX < cx
+            ? Math.abs(angleOfRad)
+            : -1 + Math.abs(angleOfRad),
+        y:
+          rotateCircleY > cy
+            ? -Math.abs(angleOfRad)
+            : rotateCircleY < cy
+            ? Math.abs(angleOfRad)
+            : -1 + Math.abs(angleOfRad),
+      },
     };
   }
 }
