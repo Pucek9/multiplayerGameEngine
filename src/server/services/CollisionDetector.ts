@@ -74,8 +74,10 @@ export default class CollisionDetector {
     );
     return {
       yes: deltaX + deltaY < circle.size,
-      angle:
-        deltaX > deltaY ? { x: -1, y: 1 } : deltaX < deltaY ? { x: 1, y: -1 } : { x: -1, y: -1 },
+      angle: {
+        x: deltaX >= deltaY ? -1 : 1,
+        y: deltaX <= deltaY ? -1 : 1,
+      },
     };
   }
 
