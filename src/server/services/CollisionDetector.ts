@@ -8,14 +8,14 @@ interface collision {
   angle?: { x: number; y: number };
 }
 
-export default class CollisionDetector {
-  static detectCollision(
+class CollisionDetector {
+  detectCollision(
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
     direction?: Direction,
   ): collision;
 
-  static detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
+  detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
     switch ([object1.shape, object2.shape].join()) {
       case 'circle,circle':
         return this.detectCircularCollision(object1, object2, direction);
@@ -28,14 +28,14 @@ export default class CollisionDetector {
     }
   }
 
-  static detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): collision {
+  detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): collision {
     const dx = o1.x - o2.x + direction.x;
     const dy = o1.y - o2.y + direction.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     return { yes: distance < o1.size + o2.size, angle: { x: -1, y: -1 } };
   }
 
-  static detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): collision {
+  detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): collision {
     return {
       yes:
         o2.x + o2.width > o1.x &&
@@ -45,7 +45,7 @@ export default class CollisionDetector {
     };
   }
 
-  static detectRectangleAndCircleCollision(
+  detectRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
@@ -57,7 +57,7 @@ export default class CollisionDetector {
     }
   }
 
-  static detectUnRotatedRectangleAndCircleCollision(
+  detectUnRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
@@ -81,7 +81,7 @@ export default class CollisionDetector {
     };
   }
 
-  static detectRotatedRectangleAndCircleCollision(
+  detectRotatedRectangleAndCircleCollision(
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
@@ -139,3 +139,6 @@ export default class CollisionDetector {
     };
   }
 }
+
+const collisionDetector = new CollisionDetector();
+export default collisionDetector;

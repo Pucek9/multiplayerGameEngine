@@ -1,4 +1,4 @@
-import CollisionDetector from '../services/CollisionDetector';
+import collisionDetector from '../services/CollisionDetector';
 import Bullet from '../models/Bullet';
 import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
@@ -92,12 +92,12 @@ export default class Free4all implements GameModel {
             x: bullet.directionX,
             y: bullet.directionY,
           };
-          const { yes, angle } = CollisionDetector.detectCollision(bullet, object, bulletDirection);
+          const { yes, angle } = collisionDetector.detectCollision(bullet, object, bulletDirection);
           if (yes) {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
           } else if (object.aura) {
-            if (CollisionDetector.detectCollision(bullet, object.aura, bulletDirection).yes) {
+            if (collisionDetector.detectCollision(bullet, object.aura, bulletDirection).yes) {
               bullet.decreaseSpeed();
             } else {
               bullet.increaseSpeed();
@@ -111,7 +111,7 @@ export default class Free4all implements GameModel {
   shoot(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
-      const bullets = owner.shoot(mouseClick);
+      const bullets = owner.shoot(mouseClick, this.roomName);
       if (bullets && bullets.length > 0) {
         this.bullets.push(...bullets);
         return {
@@ -124,6 +124,18 @@ export default class Free4all implements GameModel {
         };
       }
     }
+  }
+
+  generateBullets(bullets: Bullet[]) {
+    this.bullets.push(...bullets);
+    this.emitter.sendNewBullets(
+      this.roomName,
+      bullets.map(bullet => ({
+        id: bullet.id,
+        size: bullet.size,
+        color: bullet.color,
+      })),
+    );
   }
 
   revivePlayer(id: string) {
@@ -274,7 +286,7 @@ export default class Free4all implements GameModel {
   private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
       if (
-        CollisionDetector.detectCollision(player, generator, direction).yes &&
+        collisionDetector.detectCollision(player, generator, direction).yes &&
         generator.isReady()
       ) {
         generator.deactivate();
@@ -295,6 +307,6 @@ export default class Free4all implements GameModel {
     return [
       ...this.getStaticObjects(),
       ...this.alivePlayers().filter(object => player !== object),
-    ].some(object => CollisionDetector.detectCollision(player, object, direction).yes);
+    ].some(object => collisionDetector.detectCollision(player, object, direction).yes);
   }
 }

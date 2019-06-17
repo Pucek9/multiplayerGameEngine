@@ -15,12 +15,16 @@ export default abstract class Weapon implements Item {
   reloadTime: number;
   shootBulletsCount: number;
   id: number;
+  gameName: string;
+  ownerName: string;
 
   protected constructor() {
     this.id = generateId();
   }
 
-  shoot(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>): Bullet[] | undefined {
+  shoot(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>, game): Bullet[] | undefined {
+    this.gameName = game;
+    this.ownerName = owner.name;
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;

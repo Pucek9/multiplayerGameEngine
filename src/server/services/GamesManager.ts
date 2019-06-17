@@ -3,7 +3,7 @@ import maps from '../maps';
 import GameInstance from '../../shared/apiModels/GameInstance';
 import GameModel from '../gameTypes/GameModel';
 
-export default class GamesStore {
+class GamesManager {
   public games: GameModel[] = [];
 
   constructor() {}
@@ -31,3 +31,6 @@ export default class GamesStore {
     });
   }
 }
+
+const gamesManager = new GamesManager();
+export default gamesManager;

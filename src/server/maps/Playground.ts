@@ -221,15 +221,15 @@ export default class Playground implements GameMap {
         item: Shotgun,
         type: 'Shotgun',
       }),
-      new ItemGenerator({
-        x: -1200,
-        y: -900,
-        size: 8,
-        color: 'black',
-        time: 10000,
-        item: Grenade,
-        type: 'Grenade',
-      }),
+      // new ItemGenerator({
+      //   x: -1200,
+      //   y: -900,
+      //   size: 8,
+      //   color: 'black',
+      //   time: 10000,
+      //   item: Grenade,
+      //   type: 'Grenade',
+      // }),
     ];
   }
 

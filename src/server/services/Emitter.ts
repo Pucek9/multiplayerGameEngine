@@ -5,10 +5,10 @@ import Item from '../../shared/models/Item';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
-import GamesManager from './GamesManager';
+import gamesManager from './GamesManager';
 
 export default class Emitter {
-  constructor(private socketIo: SocketIO.Server, private gamesManager: GamesManager) {}
+  constructor(private socketIo: SocketIO.Server) {}
 
   emitGameState(gameState: GameModel) {
     this.socketIo.to(gameState.roomName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
@@ -31,7 +31,7 @@ export default class Emitter {
     const id = disconnected.id;
     console.log(`[${id}] Player '${disconnected.name}' left '${roomName}'`);
     this.socketIo.to(roomName).emit(API.DISCONNECT_PLAYER, id);
-    this.socketIo.emit(API.GET_GAMES_LIST, this.gamesManager.getGamesList());
+    this.socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
     this.socketIo.to(id).emit(API.LEAVE_GAME);
 
     const socket = this.socketIo.sockets.connected[id];

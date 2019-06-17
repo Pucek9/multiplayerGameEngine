@@ -2,6 +2,8 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
+import gamesManager from '../../services/GamesManager';
+import Shotgun from './Shotgun';
 
 export default class Grenade extends Weapon {
   type = 'Grenade';
@@ -32,6 +34,16 @@ export default class Grenade extends Weapon {
       }
     },
     deactivate() {
+      const game = gamesManager.getGame(this.gameName);
+      if (game) {
+        const shotgun = new Shotgun();
+        game.generateBullets(
+          shotgun.generateBullets(
+            { targetX: this.x, targetY: this.y, owner: null },
+            { x: this.x, y: this.y, size: this.size },
+          ),
+        );
+      }
       this.active = false;
     },
   };
@@ -48,6 +60,7 @@ export default class Grenade extends Weapon {
         fromY: owner.y + owner.size / 4,
         targetX: mouseClick.targetX,
         targetY: mouseClick.targetY,
+        gameName: this.gameName,
         ...this.bulletConfig,
       }),
     ];

@@ -18,6 +18,7 @@ export default class Bullet extends BulletModel {
   vectorFT: number;
   directionX: number;
   directionY: number;
+  gameName: string;
 
   constructor(params: Partial<Bullet>) {
     super(params);
