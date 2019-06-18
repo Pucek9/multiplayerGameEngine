@@ -63,6 +63,7 @@ export default class GameState {
       newPlayer.color,
       newPlayer.x,
       newPlayer.y,
+      newPlayer.roomName,
     );
     player.init(this.screen);
     player.setAsEnemy();
@@ -87,6 +88,7 @@ export default class GameState {
           newPlayer.color,
           newPlayer.x,
           newPlayer.y,
+          newPlayer.roomName,
         );
         player.init(this.screen);
         player.setAsEnemy();

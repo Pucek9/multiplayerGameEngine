@@ -77,7 +77,15 @@ export default class Player extends PlayerModel {
   }
 
   shoot(mouseClick: MouseCoordinates, game): Bullet[] {
-    return this.selectedWeapon ? this.selectedWeapon.shoot(mouseClick, this, game) : [];
+    return this.selectedWeapon
+      ? this.selectedWeapon.shoot({
+          ...mouseClick,
+          owner: this,
+          fromX: this.x,
+          fromY: this.y,
+          size: this.size,
+        })
+      : [];
   }
 
   addWeapon(weapon) {

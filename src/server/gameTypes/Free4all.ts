@@ -144,8 +144,15 @@ export default class Free4all implements GameModel {
   }
 
   connectPlayer(id: string, newPlayer: NewUser): Player {
-    const player = new Player(id, newPlayer.name, newPlayer.color, rand(1000), rand(1000));
-    this.getWeaponInfo(player);
+    const player = new Player(
+      id,
+      newPlayer.name,
+      newPlayer.color,
+      rand(1000),
+      rand(1000),
+      this.roomName,
+    );
+    this.emitWeaponInfo(player);
     this.players.push(player);
     return player;
   }
@@ -212,15 +219,15 @@ export default class Free4all implements GameModel {
       }
       if (player.keys.has('1')) {
         player.selectWeapon(0);
-        this.getWeaponInfo(player);
+        this.emitWeaponInfo(player);
       }
       if (player.keys.has('2')) {
         player.selectWeapon(1);
-        this.getWeaponInfo(player);
+        this.emitWeaponInfo(player);
       }
       if (player.keys.has('3')) {
         player.selectWeapon(2);
-        this.getWeaponInfo(player);
+        this.emitWeaponInfo(player);
       }
       if (player.keys.has('Shift')) {
         player.getAura();
@@ -254,14 +261,14 @@ export default class Free4all implements GameModel {
       const shoot = this.shoot(mouseClick);
       if (shoot) {
         this.emitter.sendNewBullets(this.roomName, shoot.bullets);
-        this.getWeaponInfo(shoot.owner);
+        this.emitWeaponInfo(shoot.owner);
       }
     } else {
       this.revivePlayer(mouseClick.owner);
     }
   }
 
-  getWeaponInfo(player) {
+  emitWeaponInfo(player) {
     this.emitter.updateWeaponInfo(player.id, {
       selectedWeapon: player.selectedWeapon,
       weapons: player.weapons.map((weapon: Weapon) => ({ type: weapon.type, id: weapon.id })),
@@ -296,7 +303,7 @@ export default class Free4all implements GameModel {
         }, generator.time);
         const weapon = generator.generateItem();
         this.addWeapon(player, weapon);
-        this.getWeaponInfo(player);
+        this.emitWeaponInfo(player);
         this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
       }
     });

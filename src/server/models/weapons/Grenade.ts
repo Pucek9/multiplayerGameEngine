@@ -1,9 +1,8 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import PlayerModel from '../../../shared/models/PlayerModel';
 import gamesManager from '../../services/GamesManager';
 import Shotgun from './Shotgun';
+import BulletData from '../../../shared/models/BulletData';
 
 export default class Grenade extends Weapon {
   type = 'Grenade';
@@ -34,14 +33,18 @@ export default class Grenade extends Weapon {
       }
     },
     deactivate() {
-      const game = gamesManager.getGame(this.gameName);
+      const game = gamesManager.getGame(this.owner.roomName);
       if (game) {
         const shotgun = new Shotgun();
         game.generateBullets(
-          shotgun.generateBullets(
-            { targetX: this.x, targetY: this.y, owner: null },
-            { x: this.x, y: this.y, size: this.size },
-          ),
+          shotgun.generateBullets({
+            targetX: this.x,
+            targetY: this.y,
+            fromX: this.x,
+            fromY: this.y,
+            size: this.size,
+            owner: this.owner,
+          }),
         );
       }
       this.active = false;
@@ -52,15 +55,14 @@ export default class Grenade extends Weapon {
     super();
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>) {
+  generateBullets(bulletData: BulletData) {
     return [
       new Bullet({
-        owner,
-        fromX: owner.x + owner.size / 4,
-        fromY: owner.y + owner.size / 4,
-        targetX: mouseClick.targetX,
-        targetY: mouseClick.targetY,
-        gameName: this.gameName,
+        owner: bulletData.owner,
+        fromX: bulletData.fromX + bulletData.size / 4,
+        fromY: bulletData.fromY + bulletData.size / 4,
+        targetX: bulletData.targetX,
+        targetY: bulletData.targetY,
         ...this.bulletConfig,
       }),
     ];

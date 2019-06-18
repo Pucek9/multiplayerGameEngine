@@ -3,6 +3,7 @@ import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import PlayerModel from '../../../shared/models/PlayerModel';
 import Item from '../../../shared/models/Item';
 import { generateId } from '../../../shared/helpers';
+import BulletData from '../../../shared/models/BulletData';
 
 export default abstract class Weapon implements Item {
   type: string;
@@ -15,16 +16,12 @@ export default abstract class Weapon implements Item {
   reloadTime: number;
   shootBulletsCount: number;
   id: number;
-  gameName: string;
-  ownerName: string;
 
   protected constructor() {
     this.id = generateId();
   }
 
-  shoot(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>, game): Bullet[] | undefined {
-    this.gameName = game;
-    this.ownerName = owner.name;
+  shoot(bulletData: BulletData): Bullet[] | undefined {
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;
@@ -35,7 +32,7 @@ export default abstract class Weapon implements Item {
         setTimeout(() => {
           this.ready = true;
         }, this.minTimeBetweenBullets);
-        return this.generateBullets(mouseClick, owner);
+        return this.generateBullets(bulletData);
       } else {
         this.reload();
       }
@@ -53,7 +50,7 @@ export default abstract class Weapon implements Item {
     }
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: Partial<PlayerModel>): Bullet[] {
+  generateBullets(bulletData: BulletData): Bullet[] {
     return [];
   }
 }

@@ -5,5 +5,6 @@ export default class NewPlayer {
     public color: string,
     public x: number,
     public y: number,
+    public roomName: string,
   ) {}
 }
