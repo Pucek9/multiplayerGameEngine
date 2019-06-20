@@ -1,8 +1,8 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
-import Shotgun from './Shotgun';
 import BulletData from '../../../shared/models/BulletData';
+import GrenadeExplosion from './GrenadeExplosion';
 
 export default class Grenade extends Weapon {
   type = 'Grenade';
@@ -35,9 +35,9 @@ export default class Grenade extends Weapon {
     deactivate() {
       const game = gamesManager.getGame(this.owner.roomName);
       if (game) {
-        const shotgun = new Shotgun();
+        const grenadeExplosion = new GrenadeExplosion();
         game.generateBullets(
-          shotgun.generateBullets({
+          grenadeExplosion.generateBullets({
             targetX: this.x,
             targetY: this.y,
             fromX: this.x,
