@@ -119,23 +119,24 @@ class CollisionDetector {
     } else {
       cy = rotateCircleY;
     }
-    // TODO angle need fix
     return {
       yes: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
-      angle: {
-        x:
-          rotateCircleX > cx
-            ? -Math.abs(angleOfRad)
-            : rotateCircleX < cx
-            ? Math.abs(angleOfRad)
-            : -1 + Math.abs(angleOfRad),
-        y:
-          rotateCircleY > cy
-            ? -Math.abs(angleOfRad)
-            : rotateCircleY < cy
-            ? Math.abs(angleOfRad)
-            : -1 + Math.abs(angleOfRad),
-      },
+      angle: { x: -1, y: -1 },
+      // TODO angle need fix
+      // angle: {
+      //   x:
+      //     rotateCircleX > cx
+      //       ? -Math.abs(angleOfRad)
+      //       : rotateCircleX < cx
+      //       ? Math.abs(angleOfRad)
+      //       : -1 + Math.abs(angleOfRad),
+      //   y:
+      //     rotateCircleY > cy
+      //       ? -Math.abs(angleOfRad)
+      //       : rotateCircleY < cy
+      //       ? Math.abs(angleOfRad)
+      //       : -1 + Math.abs(angleOfRad),
+      // },
     };
   }
 }

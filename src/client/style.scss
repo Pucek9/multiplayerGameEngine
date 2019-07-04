@@ -108,6 +108,13 @@ form {
       position: sticky;
       top: 0;
     }
+
+    tbody {
+      tr.active {
+        color: white;
+        background-color: $createColor;
+      }
+    }
   }
 }
 
@@ -151,7 +158,7 @@ form {
   padding: 8px;
   background-color: black;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-rows: repeat(9, 1fr);
   grid-template-areas:
     ' header header header header '
     ' create-header create-header create-header create-header '
@@ -160,7 +167,8 @@ form {
     ' join-header join-header join-header join-header '
     ' tab tab tab tab '
     ' tab tab tab tab '
-    ' nick nick nick join ';
+    ' nick nick nick join '
+    ' footer footer footer footer ';
 }
 
 .header {
@@ -201,6 +209,11 @@ form {
   grid-area: join-header;
 }
 
+.footer {
+  color: white;
+  grid-area: footer;
+}
+
 @media (min-width: 640px) {
   .grid {
     display: grid;
@@ -214,7 +227,8 @@ form {
       ' form form form tab tab tab '
       ' form form form tab tab tab '
       ' form form form tab tab tab '
-      ' name name add nick nick join ';
+      ' name name add nick nick join '
+      ' footer footer footer footer footer footer ';
   }
 }
 
@@ -233,7 +247,7 @@ form {
     display: grid;
     grid-gap: 8px;
     grid-template-columns: [page-start] repeat(12, 1fr) [page-end final];
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-rows: repeat(11, 1fr);
   }
 
   .header {
@@ -271,6 +285,10 @@ form {
   .join {
     grid-column: 11 / 12;
     grid-row: 10;
+  }
+  .footer {
+    grid-column: 3 / 11;
+    grid-row: 11;
   }
 }
 

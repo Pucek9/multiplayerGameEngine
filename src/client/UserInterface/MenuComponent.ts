@@ -67,8 +67,7 @@ export default class MenuComponent {
         this.store.dispatch(chooseGame(game.roomName));
       });
       if (state.joinGame.chosenGame === game.roomName) {
-        row.style.backgroundColor = '#5000f3';
-        row.style.color = 'white';
+        row.classList.add('active');
       }
       // @ts-ignore
       row.append(roomName, type, map, count);

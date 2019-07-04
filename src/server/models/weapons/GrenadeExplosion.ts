@@ -13,7 +13,7 @@ export default class GrenadeExplosion extends Weapon {
     range: 200,
     additionalAction() {
       this.power = this.power - 1;
-      this.size = this.size - 0.1;
+      // this.size = this.size - 0.1; //it looks better, but it causes a significant drop in performance
     },
   };
 
