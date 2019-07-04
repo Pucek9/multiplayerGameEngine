@@ -1,6 +1,4 @@
 import Bullet from '../Bullet';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import PlayerModel from '../../../shared/models/PlayerModel';
 import Item from '../../../shared/models/Item';
 import { generateId } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';

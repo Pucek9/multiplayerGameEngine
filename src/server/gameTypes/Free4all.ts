@@ -10,6 +10,7 @@ import { rand } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
+import AidKit from '../models/AidKit';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -301,9 +302,14 @@ export default class Free4all implements GameModel {
           generator.activate();
           this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
         }, generator.time);
-        const weapon = generator.generateItem();
-        this.addWeapon(player, weapon);
-        this.emitWeaponInfo(player);
+        const item = generator.generateItem();
+        console.log(item);
+        if (item instanceof Weapon) {
+          this.addWeapon(player, item);
+          this.emitWeaponInfo(player);
+        } else if (item instanceof AidKit) {
+          player.takeAidKit(item);
+        }
         this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
       }
     });

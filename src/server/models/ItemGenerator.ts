@@ -8,7 +8,7 @@ interface ParameterlessConstructor<T> {
 
 export default class ItemGenerator<T> extends StaticCircularObjectModel {
   item: ParameterlessConstructor<Item>;
-  itemProps: Partial<Item>;
+  itemProps: any;
   ready = true;
   type: string;
   time: number;

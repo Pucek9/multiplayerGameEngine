@@ -7,6 +7,7 @@ import Item from '../../shared/models/Item';
 import Shotgun from '../models/weapons/Shotgun';
 import Resizer from '../models/weapons/Resizer';
 import Grenade from '../models/weapons/Grenade';
+import AidKit from '../models/AidKit';
 
 export default class Playground implements GameMap {
   mapName: string = 'Playground';
@@ -198,7 +199,7 @@ export default class Playground implements GameMap {
         x: -500,
         y: 200,
         size: 4,
-        color: 'white',
+        color: 'yellow',
         time: 30000,
         item: Resizer,
         type: 'Resizer',
@@ -229,6 +230,16 @@ export default class Playground implements GameMap {
         time: 10000,
         item: Grenade,
         type: 'Grenade',
+      }),
+      new ItemGenerator({
+        x: 1350,
+        y: -900,
+        size: 4,
+        color: 'white',
+        time: 5000,
+        item: AidKit,
+        type: 'AidKit',
+        itemProps: { volume: 50 },
       }),
     ];
   }

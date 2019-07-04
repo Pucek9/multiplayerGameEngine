@@ -2,6 +2,7 @@ import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
 import Aura from './Aura';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
+import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
@@ -96,6 +97,15 @@ export default class Player extends PlayerModel {
   selectWeapon(index: number) {
     if (this.weapons[index]) {
       this.selectedWeapon = this.weapons[index];
+    }
+  }
+
+  takeAidKit(aidKit: AidKit) {
+    console.log(aidKit, this.baseHp);
+    if (this.hp + aidKit.volume > this.baseHp) {
+      this.hp = this.baseHp;
+    } else {
+      this.hp += aidKit.volume;
     }
   }
 }
