@@ -1,9 +1,9 @@
 import { combineReducers, createStore } from 'redux';
 import devToolsEnhancer from 'remote-redux-devtools';
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
-import { addGame, clearGamesList, setId } from './store/actions';
+import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
 import { joinGameReducer, newGameReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
@@ -11,7 +11,7 @@ import './style.scss';
 import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
-import GameItem from '../shared/apiModels/GameItem';
+import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
 
 let url = process.env.URL || 'localhost';
@@ -37,11 +37,13 @@ const app = combineReducers({
 });
 const store = createStore(app, devToolsEnhancer());
 
-let mainInstance;
+let mainInstance: Main;
+let requestId: number;
 
 class Main {
   private menu: MenuComponent;
   private gameState: GameState;
+  private events: any;
 
   constructor() {
     this.menu = new MenuComponent(this, store);
@@ -51,28 +53,23 @@ class Main {
       store.dispatch(setId(id));
     });
 
-    socket.on(API.GET_GAMES_LIST, function(gamesList: GameItem[]) {
-      console.log('GET_GAMES_LIST', gamesList);
+    socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
       store.dispatch(clearGamesList());
       gamesList.forEach(game =>
-        store.dispatch(addGame(game.name, game.type, game.map, game.count)),
+        store.dispatch(addGame(game.roomName, game.type, game.map, game.count)),
       );
     });
   }
 
-  onAddNewGame({ name, type, map }: NewGame) {
-    const newGame = new NewGame(name, type, map);
+  onAddNewGame({ roomName, type, map }: NewGame) {
+    const newGame = new NewGame(roomName, type, map);
     socket.emit(API.CREATE_GAME, newGame);
+    store.dispatch(chooseGame(roomName));
   }
 
   onJoinGame() {
     const userState = store.getState().joinGame;
-    const newPlayer = new NewUser(
-      userState.id,
-      userState.nick,
-      randColor(),
-      userState.chosenGame,
-    );
+    const newPlayer = new NewUser(userState.id, userState.nick, randColor(), userState.chosenGame);
     socket.emit(API.CREATE_PLAYER, newPlayer);
     const screen = this.prepareScreen();
     this.gameState = new GameState(newPlayer, screen);
@@ -93,56 +90,65 @@ class Main {
 
     socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
 
+    socket.on(API.GET_ITEM_GENERATORS, gameState.appendItemGenerators.bind(gameState));
+
+    socket.on(API.UPDATE_ITEM_GENERATOR, gameState.updateItemGenerator.bind(gameState));
+
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
     socket.on(API.GET_WEAPON_DETAILS, gameState.updateWeaponInfo.bind(gameState));
 
-    // socket.on(API.LEAVE_GAME, () => {
-    //   console.log('leave');
-    //   gameState.screen.renderer.domElement.remove();
-    //   this.menu.show();
-    // });
-
-    window.addEventListener('mousedown', function(e: MouseEvent) {
-      e.preventDefault();
-      const mouseClick = gameState.getMouseCoordinates();
-      socket.emit(API.MOUSE_CLICK, mouseClick);
+    socket.on(API.LEAVE_GAME, () => {
+      this.leaveGame();
     });
 
-    window.addEventListener(
-      'mousemove',
-      function mouseMove(e: MouseEvent) {
+    socket.on(API.DISCONNECT, () => {
+      console.log('Failed to connect to server');
+      this.leaveGame();
+    });
+
+    this.events = {
+      mouseDown(e: MouseEvent) {
+        e.preventDefault();
+        const mouseClick = gameState.getMouseCoordinates();
+        socket.emit(API.MOUSE_CLICK, mouseClick);
+      },
+      mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
         if (mouseCoordinates) {
           socket.emit(API.UPDATE_DIRECTION, mouseCoordinates);
         }
       },
-      false,
-    );
-
-    window.addEventListener('keydown', function(e: KeyboardEvent) {
-      e.preventDefault();
-      if (!e.repeat) {
-        gameState.addKey(e);
+      keyDown(e: KeyboardEvent) {
+        e.preventDefault();
+        if (!e.repeat) {
+          gameState.addKey(e);
+          socket.emit(API.UPDATE_KEYS, gameState.getKeys());
+        }
+      },
+      keyUp(e: KeyboardEvent) {
+        e.preventDefault();
+        gameState.deleteKey(e);
         socket.emit(API.UPDATE_KEYS, gameState.getKeys());
-      }
-    });
+      },
+      wheel(e: WheelEvent) {
+        e.preventDefault();
+        gameState.wheel(e);
+      },
+    };
 
-    window.addEventListener('keyup', function(e: KeyboardEvent) {
-      e.preventDefault();
-      gameState.deleteKey(e);
-      socket.emit(API.UPDATE_KEYS, gameState.getKeys());
-    });
+    window.addEventListener('mousedown', this.events.mouseDown);
 
-    window.addEventListener('wheel', function(e: WheelEvent) {
-      e.preventDefault();
-      gameState.wheel(e);
-    });
+    window.addEventListener('mousemove', this.events.mouseMove, false);
+
+    window.addEventListener('keydown', this.events.keyDown);
+
+    window.addEventListener('keyup', this.events.keyUp);
+
+    window.addEventListener('wheel', this.events.wheel);
   }
 
   prepareScreen(): ScreenModel {
-    const camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    camera.position.z = 400;
     const scene = new Scene();
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
@@ -150,17 +156,40 @@ class Main {
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
-
     return {
-      camera: camera,
-      scene: scene,
-      renderer: renderer,
+      scene,
+      renderer,
     };
   }
 
   run() {
-    mainInstance.gameState.tryRenderEverything();
-    requestAnimationFrame(mainInstance.run);
+    requestId = requestAnimationFrame(mainInstance.run);
+    mainInstance.gameState.update();
+    mainInstance.gameState.render();
+  }
+
+  leaveGame() {
+    // location.reload();
+    cancelAnimationFrame(requestId);
+    window.removeEventListener('mousedown', this.events.mouseDown);
+    window.removeEventListener('mousemove', this.events.mouseMove);
+    window.removeEventListener('keydown', this.events.keyDown);
+    window.removeEventListener('keyup', this.events.keyUp);
+    window.removeEventListener('wheel', this.events.wheel);
+    socket.removeAllListeners(API.ADD_NEW_PLAYER);
+    socket.removeAllListeners(API.ADD_PLAYERS);
+    socket.removeAllListeners(API.GET_PLAYERS_STATE);
+    socket.removeAllListeners(API.GET_BULLETS);
+    socket.removeAllListeners(API.GET_STATIC_OBJECTS);
+    socket.removeAllListeners(API.GET_ITEM_GENERATORS);
+    socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
+    socket.removeAllListeners(API.DISCONNECT_PLAYER);
+    socket.removeAllListeners(API.GET_WEAPON_DETAILS);
+    socket.removeAllListeners(API.LEAVE_GAME);
+    socket.removeAllListeners(API.DISCONNECT);
+    this.gameState.dispose();
+    this.gameState = null;
+    this.menu.show();
   }
 }
 

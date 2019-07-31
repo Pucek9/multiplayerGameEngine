@@ -1,7 +1,7 @@
-import Prototype1 from './Prototype1';
-import Prototype2 from './Prototype2';
+import Playground from './Playground';
+import Boxes from './Boxes';
 
 export default {
-  Prototype1,
-  Prototype2,
+  Playground,
+  Boxes,
 };

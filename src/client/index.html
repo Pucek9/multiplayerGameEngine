@@ -2,85 +2,119 @@
 <html>
   <head>
     <title>Robo-Game-Engine</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   </head>
 
   <body>
-    <div class="flex-container" id="menu">
-      <div class="header">
-        <h1>Robo game engine</h1>
-      </div>
-      <div class="join-game">
-        <div class="nick-row">
-          <label
-            >Nick:
-            <input id="nickInput" type="text" />
-          </label>
+    <div id="menu">
+      <div class="grid">
+        <div class="box header">
+          <span class="title">Robo game engine</span>
         </div>
-        <div class="table-row">
-          <table class="fixed_header">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Map</th>
-                <th>Players</th>
-              </tr>
-            </thead>
-            <tbody id="gamesListTable"></tbody>
-          </table>
+
+        <div class="box create-header create-fill">
+          <span class="title2">Create new game</span>
         </div>
-        <div class="join-row">
-          <input id="joinGameButton" type="button" value="Join" />
+
+        <div class="box form create-fill">
+          <form>
+            <div class="type-row">
+              <label
+                >Type:
+                <select id="gameTypeInput" class="select create-white">
+                  <option value="Free4all">Free for all</option>
+                  <option disabled value="TeamFight">Team fight</option>
+                  <option disabled value="CaptureTheFlag">Capture the flag</option>
+                </select>
+              </label>
+            </div>
+            <div class="type-row">
+              <label
+                >Map:
+                <select id="gameMapInput" class="select create-white">
+                  <option value="Playground">Playground</option>
+                  <option value="Boxes">Boxes</option>
+                </select>
+              </label>
+            </div>
+          </form>
         </div>
-        <div class="validate">
-          <label id="validateNick">Please fill nickname.</label>
-        </div>
-        <div class="validate">
-          <label id="validateSelectedGame">Please select game.</label>
-        </div>
-      </div>
-      <div class="add-game">
-        <form>
-          <div class="name-row">
-            <label
-              >Name:
-              <input id="gameNameInput" type="text" />
-            </label>
-          </div>
-          <div class="type-row">
-            <label
-              >Type:
-              <select id="gameTypeInput">
-                <option value="Free4all">Free for all</option>
-                <option disabled value="TeamFight">Team fight</option>
-                <option disabled value="CaptureTheFlag">Capture the flag</option>
-              </select>
-            </label>
-          </div>
-          <div class="type-row">
-            <label
-              >Map:
-              <select id="gameMapInput">
-                <option value="Prototype1">Prototype1</option>
-                <option value="Prototype2">Prototype2</option>
-              </select>
-            </label>
-          </div>
-          <div class="add-game-row">
-            <input id="addNewGameButton" type="button" value="Add new game" />
-          </div>
+
+        <div class="box name">
+          <input
+            id="gameNameInput"
+            class="fill create-white"
+            placeholder="NAME"
+            title="NAME"
+            type="text"
+          />
           <div class="validate">
             <label id="validateGameName">Please fill game name.</label>
+            <label id="validateGameNameDuplicate" style="display: none"
+              >There is already a game with this name.</label
+            >
           </div>
-        </form>
+        </div>
+
+        <div class="box add">
+          <input id="createButton" class="full create-fill" type="button" value="CREATE" />
+        </div>
+
+        <div class="box join-header join-fill">
+          <span class="title2">Join the game</span>
+        </div>
+
+        <div class="box tab join-fill">
+          <div id="scrolltable">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Map</th>
+                  <th>Players</th>
+                </tr>
+              </thead>
+              <tbody id="gamesListTable" class="join-white"></tbody>
+            </table>
+          </div>
+
+          <div class="validate">
+            <label id="validateSelectedGame">Please select game.</label>
+          </div>
+        </div>
+
+        <div class="box nick">
+          <input
+            id="nickInput"
+            class="fill join-white"
+            placeholder="NICK"
+            title="NICK"
+            type="text"
+          />
+          <div class="validate">
+            <label id="validateNick">Please fill nickname.</label>
+          </div>
+        </div>
+
+        <div class="box join">
+          <input id="joinGameButton" class="full join-fill" type="button" value="JOIN" />
+        </div>
+
+        <div class="box footer">
+          Copyright © 2019 Michał Gruca &nbsp
+          <a href="https://github.com/Pucek9/multiplayerGameEngine/tree/master" target="_blank">
+            Repo
+          </a>
+        </div>
       </div>
     </div>
 
-    <div id="leftPanel">
+    <div id="leftPanel" style="display: none">
       <span>Active players:</span>
       <ul id="playersList"></ul>
     </div>
-    <div id="leftDownPanel">
+    <div id="leftDownPanel" style="display: none">
       <span>Weapons:</span>
       <ul id="weaponsList"></ul>
     </div>

@@ -1,9 +1,10 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-  private defaultSpeed = 5;
-  private speed = 5;
-  private distance = 10;
+  defaultSpeed = 5;
+  minSpeed = 1;
+  speed = 5;
+  distance = 10;
   power = 10;
   range = 500;
   owner: any;
@@ -11,10 +12,24 @@ export default class Bullet extends BulletModel {
   fromY: number;
   targetX: number;
   targetY: number;
+  active = true;
+  reverseX = 1;
+  reverseY = 1;
+  vectorFT: number;
+  directionX: number;
+  directionY: number;
+  gameName?: string;
 
   constructor(params: Partial<Bullet>) {
     super(params);
     Object.assign(this, params);
+    this.x = this.fromX;
+    this.y = this.fromY;
+    this.vectorFT = Math.sqrt(
+      Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
+    );
+    this.directionX = 0;
+    this.directionY = 0;
     Object.seal(this);
   }
 
@@ -22,7 +37,7 @@ export default class Bullet extends BulletModel {
     if (this.speed > value) {
       this.speed -= value;
     } else {
-      this.speed = 1;
+      this.speed = this.minSpeed;
     }
   }
 
@@ -41,15 +56,28 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    const a = Math.sqrt(
-      Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
-    );
-    const b = (a - this.distance) / a;
-    this.x = this.targetX + b * (this.fromX - this.targetX);
-    this.y = this.targetY + b * (this.fromY - this.targetY);
+    this.directionX = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
+    this.directionY = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.x += this.directionX;
+    this.y += this.directionY;
+    if (!this.isStillInAir()) {
+      this.deactivate();
+    }
   }
 
   additionalAction() {}
 
   effectOnPlayer(player) {}
+
+  hit(angle) {
+    this.deactivate();
+  }
+
+  deactivate() {
+    this.active = false;
+  }
+
+  isActive() {
+    return this.active;
+  }
 }

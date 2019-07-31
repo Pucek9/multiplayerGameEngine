@@ -1,7 +1,7 @@
 import ICircle from '../interfaces/ICircle';
 
 export default class PlayerModel implements ICircle {
-  type: string = 'circle';
+  shape: string = 'circle';
 
   alive = false;
   direction = 0;
@@ -17,6 +17,7 @@ export default class PlayerModel implements ICircle {
     public color: string,
     public x: number,
     public y: number,
+    public roomName: string,
     public baseHp: number = 100,
     public baseSize: number = 20,
     public baseSpeed: number = 3,

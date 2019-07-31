@@ -1,5 +1,5 @@
 import Player from './models/Player';
-import Camera from './models/Camera';
+import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -16,6 +16,10 @@ import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
+import Item from './models/Item';
+import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
+import DynamicCamera from './models/DynamicCamera';
+import ICamera from './interfaces/ICamera';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -24,7 +28,7 @@ export default class GameState {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  camera: Camera;
+  camera: ICamera;
   light: Light;
   playersListComponent: PlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
@@ -32,7 +36,8 @@ export default class GameState {
   playersListString: string = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
-  staticObjects: any[];
+  staticObjects: any[] = [];
+  itemGenerators: Item[] = [];
   map: Map;
   cursor: Cursor;
 
@@ -47,6 +52,8 @@ export default class GameState {
 
     this.map.init(this.screen);
     this.cursor.init(this.screen);
+    this.playersListComponent.show();
+    this.weaponsListComponent.show();
   }
 
   appendNewPlayer(newPlayer: NewPlayer) {
@@ -56,6 +63,7 @@ export default class GameState {
       newPlayer.color,
       newPlayer.x,
       newPlayer.y,
+      newPlayer.roomName,
     );
     player.init(this.screen);
     player.setAsEnemy();
@@ -64,17 +72,24 @@ export default class GameState {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
 
-      this.camera = new Camera(this.currentPlayer);
-      this.camera.init(this.screen);
+      this.camera = new StaticCamera(this.currentPlayer);
+      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
       this.light.init(this.currentPlayer, this.cursor);
     }
   }
 
-  appendPlayers(_players: NewPlayer[]) {
-    _players.forEach(_player => {
-      const existed = this.players.find(player => player.id === _player.id);
+  appendPlayers(newPlayers: NewPlayer[]) {
+    newPlayers.forEach(newPlayer => {
+      const existed = this.players.find(player => player.id === newPlayer.id);
       if (!existed) {
-        const player = new Player(_player.id, _player.name, _player.color, _player.x, _player.y);
+        const player = new Player(
+          newPlayer.id,
+          newPlayer.name,
+          newPlayer.color,
+          newPlayer.x,
+          newPlayer.y,
+          newPlayer.roomName,
+        );
         player.init(this.screen);
         player.setAsEnemy();
         this.players.push(player);
@@ -95,13 +110,7 @@ export default class GameState {
   }
 
   wheel(e: WheelEvent) {
-    if (e.deltaY > 0) {
-      // screen.camera.rotation.x += 0.1;
-      this.screen.camera.position.z += 10;
-    } else {
-      // screen.camera.rotation.x -= 0.1;
-      this.screen.camera.position.z -= 10;
-    }
+    this.camera.wheel(e);
   }
 
   appendNewBullets(newBullets: NewBullet[]) {
@@ -126,7 +135,7 @@ export default class GameState {
       if (foundPlayer) {
         const size = player.size;
         Object.assign(player, foundPlayer);
-        if(player.size !== size) {
+        if (player.size !== size) {
           player.updateObjectGeometry();
         }
       }
@@ -139,7 +148,7 @@ export default class GameState {
       if (foundBullet) {
         const size = bullet.size;
         Object.assign(bullet, foundBullet);
-        if(bullet.size !== size) {
+        if (bullet.size !== size) {
           bullet.updateObjectGeometry();
         }
       } else {
@@ -149,16 +158,35 @@ export default class GameState {
     });
   }
 
-  appendStaticObjects(_staticObjects: any[]) {
-    this.staticObjects = _staticObjects;
-    this.staticObjects.forEach(_staticObject => {
-      if (_staticObject.type === 'rectangle') {
-        Object.setPrototypeOf(_staticObject, StaticRectangleObject.prototype);
+  appendStaticObjects(newObjects: any[]) {
+    newObjects.forEach(newObject => {
+      let staticObject;
+      if (newObject.shape === 'rectangle') {
+        staticObject = new StaticRectangleObject(newObject);
       } else {
-        Object.setPrototypeOf(_staticObject, StaticCircularObject.prototype);
+        staticObject = new StaticCircularObject(newObject);
       }
+      staticObject.init(this.screen);
+      this.staticObjects.push(staticObject);
     });
-    this.staticObjects.forEach(object => object.init(this.screen));
+  }
+
+  appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
+    newItemGenerators.forEach((newItemGenerator: ItemGeneratorAPI) => {
+      const itemGenerator = new Item(newItemGenerator);
+      itemGenerator.init(this.screen);
+      this.itemGenerators.push(itemGenerator);
+    });
+  }
+
+  updateItemGenerator(updatedItemGenerator: ItemGeneratorAPI) {
+    const itemGenerator = this.itemGenerators.find(
+      itemGenerator => itemGenerator.id === updatedItemGenerator.id,
+    );
+    if (itemGenerator) {
+      itemGenerator.ready = updatedItemGenerator.ready;
+      itemGenerator.update();
+    }
   }
 
   removePlayer(id: string) {
@@ -181,24 +209,25 @@ export default class GameState {
     return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
   }
 
-  tryRenderEverything() {
-    this.screen.renderer.render(this.screen.scene, this.screen.camera);
-
-    this.renderPlayerList();
+  updateObjects() {
     if (this.currentPlayer) {
-      [
-        this.camera,
-        this.map,
-        ...this.staticObjects,
-        ...this.bullets,
-        ...this.players,
-        this.cursor,
-        this.light,
-      ].forEach(object => object.render());
+      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light].forEach(object =>
+        object.update(),
+      );
+    }
+  }
+  render() {
+    if (this.camera) {
+      this.screen.renderer.render(this.screen.scene, this.camera.object);
     }
   }
 
-  renderPlayerList() {
+  update() {
+    this.updatePlayerList();
+    this.updateObjects();
+  }
+
+  updatePlayerList() {
     const playersList = this.players.map(({ name, score, color, hp }) => ({
       name,
       score,
@@ -207,12 +236,38 @@ export default class GameState {
     }));
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {
-      this.playersListComponent.render(playersList);
+      this.playersListComponent.update(playersList);
       this.playersListString = _playersListString;
     }
   }
 
-  updateWeaponInfo(info) {
-    this.weaponsListComponent.render(info)
+  updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
+    this.weaponsListComponent.render(info);
+  }
+
+  dispose() {
+    this.user = null;
+    this.currentPlayer = null;
+    this.light = null;
+    this.camera.remove();
+    this.camera = null;
+    this.playersListComponent.hide();
+    this.weaponsListComponent.hide();
+    this.playersListComponent = null;
+    this.weaponsListComponent = null;
+    this.players = null;
+    this.playersListString = null;
+    this.staticObjects = null;
+    this.itemGenerators = null;
+    this.map = null;
+    this.cursor = null;
+    while (this.screen.scene.children.length > 0) {
+      this.screen.scene.remove(this.screen.scene.children[0]);
+    }
+    this.screen.renderer.dispose();
+    this.screen.renderer.forceContextLoss();
+    this.screen.renderer.context = null;
+    this.screen.renderer.domElement.remove();
+    this.screen.renderer.domElement = null;
   }
 }

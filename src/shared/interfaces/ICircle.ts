@@ -1,5 +1,5 @@
 export default interface ICircle {
-  type: string;
+  shape: string;
   x: number;
   y: number;
   size: number;

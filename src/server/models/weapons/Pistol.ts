@@ -1,11 +1,10 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import PlayerModel from '../../../shared/models/PlayerModel';
+import BulletData from '../../../shared/models/BulletData';
 
 export default class Pistol extends Weapon {
   type = 'Pistol';
-  magazines = 30;
+  magazines = 5;
   maxBulletsInMagazine = 10;
   bulletsInMagazine = 10;
   minTimeBetweenBullets = 200;
@@ -21,14 +20,14 @@ export default class Pistol extends Weapon {
     super();
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel) {
+  generateBullets(bulletData: BulletData) {
     return [
       new Bullet({
-        owner,
-        fromX: owner.x + owner.size / 4,
-        fromY: owner.y + owner.size / 4,
-        targetX: mouseClick.targetX,
-        targetY: mouseClick.targetY,
+        owner: bulletData.owner,
+        fromX: bulletData.fromX + bulletData.size / 4,
+        fromY: bulletData.fromY + bulletData.size / 4,
+        targetX: bulletData.targetX,
+        targetY: bulletData.targetY,
         ...this.bulletConfig,
       }),
     ];

@@ -1,9 +1,9 @@
 import PlayerModel from '../../shared/models/PlayerModel';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
-export default class Map implements IRenderable {
+export default class Map implements IUpdatable {
   public img: HTMLImageElement;
   private object: Mesh;
 
@@ -24,5 +24,5 @@ export default class Map implements IRenderable {
     screen.scene.add(this.object);
   }
 
-  render(activePlayer: PlayerModel) {}
+  update() {}
 }

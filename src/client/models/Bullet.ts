@@ -1,11 +1,9 @@
 import BulletModel from '../../shared/models/BulletModel';
-import PlayerModel from '../../shared/models/PlayerModel';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
 
-export default class Bullet extends BulletModel implements IRenderable {
-  public screen: ScreenModel;
+export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshBasicMaterial;
@@ -35,7 +33,7 @@ export default class Bullet extends BulletModel implements IRenderable {
     screen.scene.remove(this.object);
   }
 
-  render(activePlayer: PlayerModel) {
+  update() {
     this.object.position.x = this.x;
     this.object.position.y = this.y;
   }

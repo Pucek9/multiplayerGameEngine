@@ -1,12 +1,12 @@
 import PlayerModel from '../../shared/models/PlayerModel';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(cumin);
 
-export default class Player extends PlayerModel implements IRenderable {
+export default class Player extends PlayerModel implements IUpdatable {
   public object;
   private initiated = false;
   private screen;
@@ -34,7 +34,7 @@ export default class Player extends PlayerModel implements IRenderable {
     if (!this.isInitiated()) {
       this.setGeometry();
       this.setMaterial();
-      this.object = new Mesh( this.geometry,  this.material);
+      this.object = new Mesh(this.geometry, this.material);
       this.object.name = this.id;
       this.object.receiveShadow = true;
       this.initiated = true;
@@ -71,7 +71,7 @@ export default class Player extends PlayerModel implements IRenderable {
     this.object.position.y = this.y;
   }
 
-  render() {
+  update() {
     if (this.isOnScene() && !this.isAlive()) {
       this.remove();
     } else if (!this.isOnScene() && this.isAlive()) {

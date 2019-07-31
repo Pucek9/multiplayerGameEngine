@@ -1,15 +1,17 @@
 import { chooseGame, setGameMap, setGameName, setGameType, setNick } from '../store/actions';
 import { Store } from 'redux';
+import GameInstance from '../../shared/apiModels/GameInstance';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
 declare var gameMapInput: HTMLSelectElement;
-declare var addNewGameButton: HTMLButtonElement;
+declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
 declare var menu: HTMLDivElement;
 declare var validateGameName: HTMLLabelElement;
+declare var validateGameNameDuplicate: HTMLLabelElement;
 declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
@@ -20,11 +22,11 @@ export default class MenuComponent {
     this.store = store;
     const unsubscribeRender = store.subscribe(() => this.render());
 
-    addNewGameButton.addEventListener('click', function() {
-      const name = gameNameInput.value;
+    createButton.addEventListener('click', function() {
+      const roomName = gameNameInput.value;
       const type = gameTypeInput.value;
       const map = gameMapInput.value;
-      main.onAddNewGame({ name, type, map });
+      main.onAddNewGame({ roomName, type, map });
       gameNameInput.value = '';
     });
 
@@ -51,24 +53,24 @@ export default class MenuComponent {
   }
 
   renderTable(state) {
-    state.newGame.list.forEach(game => {
-      const name = document.createElement('td');
-      name.appendChild(document.createTextNode(game.name));
+    state.newGame.list.forEach((game: GameInstance) => {
+      const roomName = document.createElement('td');
+      roomName.appendChild(document.createTextNode(game.roomName));
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');
       map.appendChild(document.createTextNode(game.map));
       const count = document.createElement('td');
-      count.appendChild(document.createTextNode(game.count));
+      count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
-        this.store.dispatch(chooseGame(game.name));
+        this.store.dispatch(chooseGame(game.roomName));
       });
-      if (state.joinGame.chosenGame === game.name) {
-        row.style.backgroundColor = 'grey';
+      if (state.joinGame.chosenGame === game.roomName) {
+        row.classList.add('active');
       }
       // @ts-ignore
-      row.append(name, type, map, count);
+      row.append(roomName, type, map, count);
       // @ts-ignore
       gamesListTable.append(row);
     });
@@ -78,19 +80,26 @@ export default class MenuComponent {
     gamesListTable.innerHTML = '';
     const state = this.store.getState();
     this.renderTable(state);
-    joinGameButton.disabled =
-      state.joinGame.nick === '' ||
-      state.joinGame.chosenGame === null ||
-      state.joinGame.id === null;
-    addNewGameButton.disabled =
-      state.newGame.name === '' || state.newGame.type === null || state.newGame.map === null;
-    validateNick.style.visibility = state.joinGame.nick === '' ? 'visible' : 'hidden';
-    validateSelectedGame.style.visibility =
-      state.joinGame.chosenGame === null ? 'visible' : 'hidden';
-    validateGameName.style.visibility = state.newGame.name === '' ? 'visible' : 'hidden';
+    const nickEmpty = state.joinGame.nick === '';
+    const chosenGameEmpty = state.joinGame.chosenGame === null;
+    const idEmpty = state.joinGame.id === null;
+    const roomNameEmpty = state.newGame.roomName === '';
+    const roomNameDuplicate = state.newGame.list.find(
+      game => game.roomName === state.newGame.roomName,
+    );
+    const typeEmpty = state.newGame.type === null;
+    const mapEmpty = state.newGame.map === null;
+
+    joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
+    createButton.disabled = roomNameEmpty || typeEmpty || mapEmpty || roomNameDuplicate;
+
+    validateNick.style.display = nickEmpty ? 'block' : 'none';
+    validateSelectedGame.style.display = chosenGameEmpty ? 'block' : 'none';
+    validateGameName.style.display = roomNameEmpty ? 'block' : 'none';
+    validateGameNameDuplicate.style.display = roomNameDuplicate ? 'block' : 'none';
   }
 
   show() {
-    menu.style.display = 'flex';
+    menu.style.display = 'block';
   }
 }

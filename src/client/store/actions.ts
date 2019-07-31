@@ -11,14 +11,14 @@ export const joinGameActions = {
   CHOOSE_GAME: 'CHOOSE_GAME',
 };
 
-export const addGame = (name, type, map, count) => {
+export const addGame = (roomName, type, map, count) => {
   return {
     type: gamesListActions.ADD_GAME,
     payload: state => {
       return {
         ...state,
-        list: [...state.list, { name, type, map, count }],
-        name: '',
+        list: [...state.list, { roomName, type, map, count }],
+        roomName: '',
       };
     },
   };
@@ -48,13 +48,13 @@ export const setId = id => {
   };
 };
 
-export const setGameName = name => {
+export const setGameName = roomName => {
   return {
     type: gamesListActions.SET_GAME_NAME,
     payload: state => {
       return {
         ...state,
-        name,
+        roomName,
       };
     },
   };

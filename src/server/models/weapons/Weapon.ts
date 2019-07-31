@@ -1,8 +1,9 @@
 import Bullet from '../Bullet';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import PlayerModel from '../../../shared/models/PlayerModel';
+import Item from '../../../shared/models/Item';
+import { generateId } from '../../../shared/helpers';
+import BulletData from '../../../shared/models/BulletData';
 
-export default abstract class Weapon {
+export default abstract class Weapon implements Item {
   type: string;
   ready = true;
   loaded = true;
@@ -12,10 +13,13 @@ export default abstract class Weapon {
   minTimeBetweenBullets: number;
   reloadTime: number;
   shootBulletsCount: number;
+  id: number;
 
-  protected constructor() {}
+  protected constructor() {
+    this.id = generateId();
+  }
 
-  shoot(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] | undefined {
+  shoot(bulletData: BulletData): Bullet[] | undefined {
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;
@@ -26,7 +30,7 @@ export default abstract class Weapon {
         setTimeout(() => {
           this.ready = true;
         }, this.minTimeBetweenBullets);
-        return this.generateBullets(mouseClick, owner);
+        return this.generateBullets(bulletData);
       } else {
         this.reload();
       }
@@ -44,7 +48,7 @@ export default abstract class Weapon {
     }
   }
 
-  generateBullets(mouseClick: MouseCoordinates, owner: PlayerModel): Bullet[] {
+  generateBullets(bulletData: BulletData): Bullet[] {
     return [];
   }
 }

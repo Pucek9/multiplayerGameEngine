@@ -1,12 +1,12 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const cumin = require('../games/balls/images/head.jpg');
 
-export default class StaticCircularObject extends StaticCircularObjectModel implements IRenderable {
-  private object: Mesh;
+export default class StaticCircularObject extends StaticCircularObjectModel implements IUpdatable {
+  protected object: Mesh;
 
   init(screen: ScreenModel) {
     const texture = new TextureLoader().load(cumin);
@@ -24,16 +24,5 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     screen.scene.add(this.object);
   }
 
-  render() {
-    // this.screen.ctx.fillStyle = this.color;
-    // this.screen.ctx.beginPath();
-    // this.screen.ctx.arc(
-    //     this.screen.canvas.width / 2 - (activePlayer.x - this.x),
-    //     this.screen.canvas.height / 2 - (activePlayer.y - this.y),
-    //     this.size,
-    //     0,
-    //     2 * Math.PI
-    // );
-    // this.screen.ctx.fill();
-  }
+  update() {}
 }

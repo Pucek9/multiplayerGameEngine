@@ -1,12 +1,12 @@
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
-import IRenderable from '../interfaces/IRenderable';
+import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { BoxGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 const box = require('../games/balls/images/box.png');
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel
-  implements IRenderable {
+  implements IUpdatable {
   private object: Mesh;
 
   init(screen: ScreenModel) {
@@ -29,7 +29,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel
     screen.scene.add(this.object);
   }
 
-  render() {}
+  update() {}
 
   //
   // renderUnRotated(activePlayer: PlayerModel) {
