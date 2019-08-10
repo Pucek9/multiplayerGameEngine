@@ -13,6 +13,7 @@ import Emitter from '../services/Emitter';
 import AidKit from '../models/AidKit';
 import SlowBullets from '../models/powers/SlowBullets';
 import Power from '../../shared/models/Power';
+import Teleport from '../models/powers/Teleport';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -153,6 +154,7 @@ export default class Free4all implements GameModel {
       this.roomName,
     );
     //
+    player.addAndSelectPower(new Teleport());
     player.addAndSelectPower(new SlowBullets());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
@@ -176,6 +178,7 @@ export default class Free4all implements GameModel {
 
   updatePlayerPosition(player: Player) {
     if (player) {
+      const shift = player.keys.has('Shift');
       if (player.keys.has('W') || player.keys.has('ArrowUp')) {
         if (
           !player.isAlive() ||
@@ -220,20 +223,37 @@ export default class Free4all implements GameModel {
           player.goRight();
         }
       }
-      if (player.keys.has('1')) {
+      if (player.keys.has('1') && !shift) {
         player.selectWeapon(0);
         this.emitWeaponInfo(player);
       }
-      if (player.keys.has('2')) {
+      if (player.keys.has('2') && !shift) {
         player.selectWeapon(1);
         this.emitWeaponInfo(player);
       }
-      if (player.keys.has('3')) {
+      if (player.keys.has('3') && !shift) {
         player.selectWeapon(2);
         this.emitWeaponInfo(player);
       }
-      if (player.keys.has('Shift')) {
+      if (player.keys.has('4') && !shift) {
+        player.selectWeapon(3);
+        this.emitWeaponInfo(player);
+      }
+      if (shift && player.keys.has('!')) {
+        player.selectPower(0);
+      }
+      if (shift && player.keys.has('@')) {
+        player.selectPower(1);
+      }
+      if (shift && player.keys.has('#')) {
+        player.selectPower(2);
+      }
+      if (shift && player.keys.has('$')) {
+        player.selectPower(3);
+      }
+      if (shift) {
         player.usePower();
+        this.emitPowerInfo(player);
       } else {
         player.releasePower();
       }
@@ -252,19 +272,18 @@ export default class Free4all implements GameModel {
     }
   }
 
-  isPlayerAlive(id: string) {
-    const player = this.getPlayer(id);
-    if (player) {
-      return this.getPlayer(id).isAlive();
-    }
-  }
-
   mouseClick(mouseClick: MouseCoordinates) {
-    if (this.isPlayerAlive(mouseClick.owner)) {
-      const shoot = this.shoot(mouseClick);
-      if (shoot) {
-        this.emitter.sendNewBullets(this.roomName, shoot.bullets);
-        this.emitWeaponInfo(shoot.owner);
+    const player = this.getPlayer(mouseClick.owner);
+    if (player.isAlive()) {
+      if (player.keys.has('Shift')) {
+        player.usePower(mouseClick);
+        this.emitPowerInfo(player);
+      } else {
+        const shoot = this.shoot(mouseClick);
+        if (shoot) {
+          this.emitter.sendNewBullets(this.roomName, shoot.bullets);
+          this.emitWeaponInfo(shoot.owner);
+        }
       }
     } else {
       this.revivePlayer(mouseClick.owner);

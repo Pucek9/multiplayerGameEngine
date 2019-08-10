@@ -46,8 +46,6 @@ export default interface GameModel {
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
 
-  isPlayerAlive(id: string);
-
   mouseClick(mouseClick: MouseCoordinates);
 
   generateBullets(bullets: Bullet[]);

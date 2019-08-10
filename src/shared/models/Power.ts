@@ -13,7 +13,7 @@ export default abstract class Power implements Item {
     this.active = false;
   }
 
-  protected use(owner?: Player) {}
+  protected use(owner?: Player, mouseClick?) {}
   protected isActive() {}
   protected release() {}
 }

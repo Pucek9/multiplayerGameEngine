@@ -21,8 +21,8 @@ export default class Player extends PlayerModel {
     this.hp = this.baseHp;
   }
 
-  usePower() {
-    this.selectedPower.use();
+  usePower(mouseClick?) {
+    this.selectedPower.use(this, mouseClick);
   }
 
   releasePower() {
@@ -93,7 +93,6 @@ export default class Player extends PlayerModel {
 
   addPower(power) {
     this.powers.push(power);
-    this.selectedPower = this.powers[this.powers.length - 1];
   }
 
   selectPower(index: number) {
@@ -122,19 +121,18 @@ export default class Player extends PlayerModel {
   }
 
   hasEnoughEnergy(cost: number) {
-    return this.energy > cost;
+    return this.energy >= cost;
   }
 
   useEnergy(cost: number) {
     this.energy -= cost;
-    if (this.energy < 0) {
-      this.energy = 0;
-    }
   }
 
   tryUseEnergy(cost: number) {
     if (this.hasEnoughEnergy(cost)) {
       this.useEnergy(cost);
+      return true;
     }
+    return false;
   }
 }
