@@ -19,4 +19,5 @@ export enum API {
   GET_GAMES_LIST = 'getGamesList',
   LEAVE_GAME = 'leaveGame',
   GET_WEAPON_DETAILS = 'getWeaponDetails',
+  GET_POWER_DETAILS = 'getPowerDetails',
 }

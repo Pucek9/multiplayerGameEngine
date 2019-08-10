@@ -229,7 +229,6 @@ export default class GameState {
 
   update() {
     this.updatePlayerList();
-    this.updatePowersInfo();
     this.updateObjects();
   }
 
@@ -251,8 +250,8 @@ export default class GameState {
     this.weaponsListComponent.render(info);
   }
 
-  updatePowersInfo() {
-    this.powersListComponent.render(this.currentPlayer);
+  updatePowersInfo(info: { selectedPower; powers; energy }) {
+    this.powersListComponent.render(info);
   }
 
   dispose() {

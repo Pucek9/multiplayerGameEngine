@@ -6,6 +6,7 @@ import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
 import gamesManager from './GamesManager';
+import Power from '../../shared/models/Power';
 
 export default class Emitter {
   constructor(private socketIo: SocketIO.Server) {}
@@ -21,6 +22,13 @@ export default class Emitter {
 
   updateWeaponInfo(id: string, weaponInfo: { selectedWeapon: Weapon; weapons: Item[] }) {
     this.socketIo.to(id).emit(API.GET_WEAPON_DETAILS, weaponInfo);
+  }
+
+  updatePowerInfo(
+    id: string,
+    powerInfo: { selectedPower: Power; powers: Power[]; energy: number },
+  ) {
+    this.socketIo.to(id).emit(API.GET_POWER_DETAILS, powerInfo);
   }
 
   updateItemGenerator(roomName: string, itemGenerator: ItemGeneratorAPI) {

@@ -12,6 +12,7 @@ import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
 import AidKit from '../models/AidKit';
 import SlowBullets from '../models/powers/SlowBullets';
+import Power from '../../shared/models/Power';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -99,7 +100,8 @@ export default class Free4all implements GameModel {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
           } else if (object.selectedPower) {
-            object.selectedPower.effect(bullet, bulletDirection, object);
+            object.selectedPower.effect(bullet, bulletDirection, object) &&
+              this.emitPowerInfo(object);
           }
         }
       });
@@ -152,6 +154,7 @@ export default class Free4all implements GameModel {
     );
     //
     player.addAndSelectPower(new SlowBullets());
+    this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);
     return player;
@@ -275,6 +278,14 @@ export default class Free4all implements GameModel {
     });
   }
 
+  emitPowerInfo(player) {
+    this.emitter.updatePowerInfo(player.id, {
+      selectedPower: player.selectedPower,
+      powers: player.powers.map((power: Power) => ({ type: power.type, id: power.id })),
+      energy: player.energy,
+    });
+  }
+
   private addWeapon(player, newWeapon) {
     const weapon = player.weapons.find(weapon => weapon.type === newWeapon.type);
     if (weapon) {
@@ -307,6 +318,7 @@ export default class Free4all implements GameModel {
           this.emitWeaponInfo(player);
         } else if (item instanceof AidKit) {
           player.takeAidKit(item);
+          this.emitPowerInfo(player);
         }
         this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
       }

@@ -98,6 +98,8 @@ class Main {
 
     socket.on(API.GET_WEAPON_DETAILS, gameState.updateWeaponInfo.bind(gameState));
 
+    socket.on(API.GET_POWER_DETAILS, gameState.updatePowersInfo.bind(gameState));
+
     socket.on(API.LEAVE_GAME, () => {
       this.leaveGame();
     });
@@ -169,27 +171,28 @@ class Main {
   }
 
   leaveGame() {
-    // location.reload();
-    cancelAnimationFrame(requestId);
-    window.removeEventListener('mousedown', this.events.mouseDown);
-    window.removeEventListener('mousemove', this.events.mouseMove);
-    window.removeEventListener('keydown', this.events.keyDown);
-    window.removeEventListener('keyup', this.events.keyUp);
-    window.removeEventListener('wheel', this.events.wheel);
-    socket.removeAllListeners(API.ADD_NEW_PLAYER);
-    socket.removeAllListeners(API.ADD_PLAYERS);
-    socket.removeAllListeners(API.GET_PLAYERS_STATE);
-    socket.removeAllListeners(API.GET_BULLETS);
-    socket.removeAllListeners(API.GET_STATIC_OBJECTS);
-    socket.removeAllListeners(API.GET_ITEM_GENERATORS);
-    socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
-    socket.removeAllListeners(API.DISCONNECT_PLAYER);
-    socket.removeAllListeners(API.GET_WEAPON_DETAILS);
-    socket.removeAllListeners(API.LEAVE_GAME);
-    socket.removeAllListeners(API.DISCONNECT);
-    this.gameState.dispose();
-    this.gameState = null;
-    this.menu.show();
+    location.reload();
+    // cancelAnimationFrame(requestId);
+    // window.removeEventListener('mousedown', this.events.mouseDown);
+    // window.removeEventListener('mousemove', this.events.mouseMove);
+    // window.removeEventListener('keydown', this.events.keyDown);
+    // window.removeEventListener('keyup', this.events.keyUp);
+    // window.removeEventListener('wheel', this.events.wheel);
+    // socket.removeAllListeners(API.ADD_NEW_PLAYER);
+    // socket.removeAllListeners(API.ADD_PLAYERS);
+    // socket.removeAllListeners(API.GET_PLAYERS_STATE);
+    // socket.removeAllListeners(API.GET_BULLETS);
+    // socket.removeAllListeners(API.GET_STATIC_OBJECTS);
+    // socket.removeAllListeners(API.GET_ITEM_GENERATORS);
+    // socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
+    // socket.removeAllListeners(API.DISCONNECT_PLAYER);
+    // socket.removeAllListeners(API.GET_WEAPON_DETAILS);
+    // socket.removeAllListeners(API.GET_POWER_DETAILS);
+    // socket.removeAllListeners(API.LEAVE_GAME);
+    // socket.removeAllListeners(API.DISCONNECT);
+    // this.gameState.dispose();
+    // this.gameState = null;
+    // this.menu.show();
   }
 }
 

@@ -15,22 +15,20 @@ export default class PowersListComponent {
     rightDownPanel.style.display = 'none';
   }
 
-  render(player: PlayerModel) {
-    if (player) {
-      powersList.innerHTML = '';
-      powersHeader.innerHTML = `Power (${Math.round(player.energy)})`;
-      player.powers.forEach((_power, index) => {
-        const li = document.createElement('li');
-        if (_power.id === player.selectedPower.id) {
-          li.style.fontWeight = 'bold';
-          li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
-        } else {
-          li.style.fontWeight = 'normal';
-          li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
-        }
-        // @ts-ignore
-        powersList.append(li);
-      });
-    }
+  render({ selectedPower, powers, energy }) {
+    powersList.innerHTML = '';
+    powersHeader.innerHTML = `Power (${Math.round(energy)})`;
+    powers.forEach((_power, index) => {
+      const li = document.createElement('li');
+      if (_power.id === selectedPower.id) {
+        li.style.fontWeight = 'bold';
+        li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
+      } else {
+        li.style.fontWeight = 'normal';
+        li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
+      }
+      // @ts-ignore
+      powersList.append(li);
+    });
   }
 }
