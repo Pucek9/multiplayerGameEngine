@@ -239,7 +239,7 @@ export default class Playground implements GameMap {
         time: 5000,
         item: AidKit,
         type: 'AidKit',
-        itemProps: { volume: 50 },
+        itemProps: { hp: 50, energy: 100 },
       }),
     ];
   }

@@ -1,7 +1,7 @@
 declare var weaponsList: HTMLUListElement;
 declare var leftDownPanel: HTMLDivElement;
 
-export default class WeaponListComponent {
+export default class WeaponsListComponent {
   constructor() {}
 
   show() {
@@ -14,23 +14,24 @@ export default class WeaponListComponent {
 
   render({ selectedWeapon, weapons }) {
     weaponsList.innerHTML = '';
-    weapons.forEach((_weapon, index) => {
-      const li = document.createElement('li');
-      if (_weapon.id === selectedWeapon.id) {
-        li.style.fontWeight = 'bold';
-        li.appendChild(
-          document.createTextNode(
-            `${index + 1} ${_weapon.type}: ${selectedWeapon.bulletsInMagazine}/${
-              selectedWeapon.maxBulletsInMagazine
-            } | ${selectedWeapon.magazines}`,
-          ),
-        );
-      } else {
-        li.style.fontWeight = 'normal';
-        li.appendChild(document.createTextNode(`${index + 1} ${_weapon.type}`));
-      }
-      // @ts-ignore
-      weaponsList.append(li);
-    });
+    weapons &&
+      weapons.forEach((_weapon, index) => {
+        const li = document.createElement('li');
+        if (_weapon.id === selectedWeapon.id) {
+          li.style.fontWeight = 'bold';
+          li.appendChild(
+            document.createTextNode(
+              `${index + 1} ${_weapon.type}: ${selectedWeapon.bulletsInMagazine}/${
+                selectedWeapon.maxBulletsInMagazine
+              } | ${selectedWeapon.magazines}`,
+            ),
+          );
+        } else {
+          li.style.fontWeight = 'normal';
+          li.appendChild(document.createTextNode(`${index + 1} ${_weapon.type}`));
+        }
+        // @ts-ignore
+        weaponsList.append(li);
+      });
   }
 }

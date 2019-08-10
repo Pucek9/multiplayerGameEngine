@@ -6,6 +6,7 @@ import StaticCircularObject from './models/StaticCircularObject';
 import Light from './models/Light';
 import PlayerListComponent from './UserInterface/PlayersList';
 import WeaponsListComponent from './UserInterface/WeaponsList';
+import PowersListComponent from './UserInterface/PowersList';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
 import ScreenModel from './types/ScreenModel';
@@ -20,6 +21,7 @@ import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 import DynamicCamera from './models/DynamicCamera';
 import ICamera from './interfaces/ICamera';
+import Power from '../shared/models/Power';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -32,6 +34,7 @@ export default class GameState {
   light: Light;
   playersListComponent: PlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
+  powersListComponent: PowersListComponent;
   players: Player[] = [];
   playersListString: string = '';
   bullets: Bullet[] = [];
@@ -47,6 +50,7 @@ export default class GameState {
     this.light = new Light(screen);
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
+    this.powersListComponent = new PowersListComponent();
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
 
@@ -54,6 +58,7 @@ export default class GameState {
     this.cursor.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
+    this.powersListComponent.show();
   }
 
   appendNewPlayer(newPlayer: NewPlayer) {
@@ -224,6 +229,7 @@ export default class GameState {
 
   update() {
     this.updatePlayerList();
+    this.updatePowersInfo();
     this.updateObjects();
   }
 
@@ -243,6 +249,10 @@ export default class GameState {
 
   updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
     this.weaponsListComponent.render(info);
+  }
+
+  updatePowersInfo() {
+    this.powersListComponent.render(this.currentPlayer);
   }
 
   dispose() {

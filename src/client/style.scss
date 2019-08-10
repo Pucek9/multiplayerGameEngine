@@ -51,6 +51,23 @@ body {
       padding-left: 5px;
     }
   }
+
+  #rightDownPanel {
+    overflow: hidden;
+    background: rgba(171, 205, 239, 0.3);
+    position: absolute;
+    bottom: 5%;
+    right: 0%;
+
+    span {
+      color: white;
+    }
+
+    ul#powersList {
+      list-style-type: none;
+      margin: 0;
+    }
+  }
 }
 
 form {

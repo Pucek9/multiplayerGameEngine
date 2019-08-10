@@ -1,12 +1,10 @@
 import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
-import Aura from './Aura';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
-  public aura: Aura;
 
   isAlive() {
     return this.alive;
@@ -23,12 +21,12 @@ export default class Player extends PlayerModel {
     this.hp = this.baseHp;
   }
 
-  getAura() {
-    this.aura = new Aura(this.x, this.y);
+  usePower() {
+    this.selectedPower.use();
   }
 
-  removeAura() {
-    this.aura = null;
+  releasePower() {
+    this.selectedPower.release();
   }
 
   addScore(score: number) {
@@ -41,6 +39,7 @@ export default class Player extends PlayerModel {
       bullet.effectOnPlayer(this);
       bullet.hit(angle);
       if (this.hp <= 0) {
+        this.hp = 0;
         if (bullet.owner) {
           bullet.owner.addScore(100);
         }
@@ -51,30 +50,18 @@ export default class Player extends PlayerModel {
 
   goLeft() {
     this.x -= this.speed;
-    if (this.aura) {
-      this.aura.x = this.x;
-    }
   }
 
   goRight() {
     this.x += this.speed;
-    if (this.aura) {
-      this.aura.x = this.x;
-    }
   }
 
   goDown() {
     this.y += this.speed;
-    if (this.aura) {
-      this.aura.y = this.y;
-    }
   }
 
   goUp() {
     this.y -= this.speed;
-    if (this.aura) {
-      this.aura.y = this.y;
-    }
   }
 
   shoot(mouseClick: MouseCoordinates, game): Bullet[] {
@@ -91,7 +78,6 @@ export default class Player extends PlayerModel {
 
   addWeapon(weapon) {
     this.weapons.push(weapon);
-    this.selectedWeapon = this.weapons[this.weapons.length - 1];
   }
 
   selectWeapon(index: number) {
@@ -100,12 +86,55 @@ export default class Player extends PlayerModel {
     }
   }
 
+  addAndSelectWeapon(weapon) {
+    this.addWeapon(weapon);
+    this.selectWeapon(this.weapons.length - 1);
+  }
+
+  addPower(power) {
+    this.powers.push(power);
+    this.selectedPower = this.powers[this.powers.length - 1];
+  }
+
+  selectPower(index: number) {
+    if (this.powers[index]) {
+      this.selectedPower = this.powers[index];
+    }
+  }
+
+  addAndSelectPower(power) {
+    this.addPower(power);
+    this.selectPower(this.powers.length - 1);
+  }
+
   takeAidKit(aidKit: AidKit) {
-    console.log(aidKit, this.baseHp);
-    if (this.hp + aidKit.volume > this.baseHp) {
+    if (this.hp + aidKit.hp > this.baseHp) {
       this.hp = this.baseHp;
     } else {
-      this.hp += aidKit.volume;
+      this.hp += aidKit.hp;
+    }
+
+    if (this.energy + aidKit.energy > this.baseEnergy) {
+      this.energy = this.baseEnergy;
+    } else {
+      this.energy += aidKit.energy;
+    }
+  }
+
+  hasEnoughEnergy(cost: number) {
+    return this.energy > cost;
+  }
+
+  useEnergy(cost: number) {
+    this.energy -= cost;
+    if (this.energy < 0) {
+      this.energy = 0;
+    }
+  }
+
+  tryUseEnergy(cost: number) {
+    if (this.hasEnoughEnergy(cost)) {
+      this.useEnergy(cost);
     }
   }
 }

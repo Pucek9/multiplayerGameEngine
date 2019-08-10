@@ -11,6 +11,7 @@ import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
 import AidKit from '../models/AidKit';
+import SlowBullets from '../models/powers/SlowBullets';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -97,12 +98,8 @@ export default class Free4all implements GameModel {
           if (yes) {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
-          } else if (object.aura) {
-            if (collisionDetector.detectCollision(bullet, object.aura, bulletDirection).yes) {
-              bullet.decreaseSpeed();
-            } else {
-              bullet.increaseSpeed();
-            }
+          } else if (object.selectedPower) {
+            object.selectedPower.effect(bullet, bulletDirection, object);
           }
         }
       });
@@ -153,6 +150,8 @@ export default class Free4all implements GameModel {
       rand(1000),
       this.roomName,
     );
+    //
+    player.addAndSelectPower(new SlowBullets());
     this.emitWeaponInfo(player);
     this.players.push(player);
     return player;
@@ -231,9 +230,9 @@ export default class Free4all implements GameModel {
         this.emitWeaponInfo(player);
       }
       if (player.keys.has('Shift')) {
-        player.getAura();
+        player.usePower();
       } else {
-        player.removeAura();
+        player.releasePower();
       }
       if (player.keys.has('Escape')) {
         this.disconnectPlayer(player);
@@ -287,7 +286,7 @@ export default class Free4all implements GameModel {
         weapon.reload();
       }
     } else {
-      player.addWeapon(newWeapon);
+      player.addAndSelectWeapon(newWeapon);
     }
   }
 
@@ -303,7 +302,6 @@ export default class Free4all implements GameModel {
           this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
         }, generator.time);
         const item = generator.generateItem();
-        console.log(item);
         if (item instanceof Weapon) {
           this.addWeapon(player, item);
           this.emitWeaponInfo(player);

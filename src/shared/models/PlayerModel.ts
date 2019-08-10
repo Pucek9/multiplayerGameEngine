@@ -7,9 +7,12 @@ export default class PlayerModel implements ICircle {
   direction = 0;
   weapons = [];
   selectedWeapon;
+  powers = [];
+  selectedPower;
   hp: number;
   speed: number;
   size: number;
+  energy: number;
 
   constructor(
     public id: string,
@@ -21,10 +24,12 @@ export default class PlayerModel implements ICircle {
     public baseHp: number = 100,
     public baseSize: number = 20,
     public baseSpeed: number = 3,
+    public baseEnergy: number = 100,
     public score: number = 0,
   ) {
     this.hp = this.baseHp;
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
+    this.energy = this.baseEnergy;
   }
 }

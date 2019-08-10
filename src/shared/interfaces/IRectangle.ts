@@ -1,7 +1,6 @@
-export default interface IRectangle {
-  shape: string;
-  x: number;
-  y: number;
+import IObject from './IObject';
+
+export default interface IRectangle extends IObject {
   width: number;
   height: number;
   deg: number;
