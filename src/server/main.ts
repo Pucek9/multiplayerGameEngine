@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as http from 'http';
+import * as cors from 'cors';
 import { listen, Socket } from 'socket.io';
 
 import { API } from '../shared/constants';
@@ -15,8 +16,12 @@ const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
+const corsOptions = {
+  origin: 'https://robo-game-engine.herokuapp.com/',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
-app.use(express.static('dist/client'));
+app.use(express.static('dist/client'), cors(corsOptions));
 
 function connection(socket: Socket) {
   function init() {

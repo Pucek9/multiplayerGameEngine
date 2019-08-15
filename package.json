@@ -53,6 +53,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "redux": "^4.0.4",
     "socket.io": "^2.2.0",
