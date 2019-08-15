@@ -17,7 +17,7 @@ const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
 const corsOptions = {
-  origin: 'https://robo-game-engine.herokuapp.com/',
+  origin: process.env.URL || '*',
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
