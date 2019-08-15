@@ -12,20 +12,12 @@ import Emitter from './services/Emitter';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
-const url = process.env.URL;
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
-const whiteList = [`http://${url}/`, `https://${url}/`];
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
