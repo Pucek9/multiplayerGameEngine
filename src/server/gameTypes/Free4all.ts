@@ -101,7 +101,7 @@ export default class Free4all implements GameModel {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
           } else if (object.selectedPower) {
-            object.selectedPower.effect(bullet, bulletDirection, object) &&
+            object.selectedPower.effect({ bullet, bulletDirection, object }) &&
               this.emitPowerInfo(object);
           }
         }
