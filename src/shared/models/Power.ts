@@ -1,6 +1,7 @@
 import Item from './Item';
 import { generateId } from '../helpers';
 import Player from '../../server/models/Player';
+import MouseCoordinates from "../apiModels/MouseCoordinates";
 
 export default abstract class Power implements Item {
   id: number;
@@ -13,7 +14,7 @@ export default abstract class Power implements Item {
     this.active = false;
   }
 
-  protected use(owner?: Player, mouseClick?) {}
+  protected use(owner?: Player, mouseClick?: MouseCoordinates) {}
   protected isActive() {}
   protected release() {}
 }
