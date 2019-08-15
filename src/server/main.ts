@@ -12,12 +12,13 @@ import Emitter from './services/Emitter';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
+const url = process.env.URL;
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
 const corsOptions = {
-  origin: true,
+  origin: [`http://${url}`, `https://${url}`],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
