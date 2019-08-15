@@ -14,14 +14,9 @@ import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
 
-let url = process.env.URL || 'localhost';
-url = `https://${url.toString()}`;
+const s = process.env.NODE_ENV === 'production' ? 's' : '';
+const url = `http${s}://${process.env.URL || 'localhost'}`;
 const socket = connect(url);
-
-const config = {
-  menu: false,
-  fps: 100,
-};
 
 function randRGB() {
   return Math.floor(Math.random() * 255);
