@@ -21,8 +21,8 @@ export default class Player extends PlayerModel {
     this.hp = this.baseHp;
   }
 
-  usePower(mouseClick?) {
-    this.selectedPower.use(this, mouseClick);
+  usePower(game, mouseClick?: MouseCoordinates) {
+    this.selectedPower.use({ owner: this, game, mouseClick });
   }
 
   releasePower() {

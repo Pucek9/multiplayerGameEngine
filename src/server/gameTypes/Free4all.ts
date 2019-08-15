@@ -252,7 +252,7 @@ export default class Free4all implements GameModel {
         player.selectPower(3);
       }
       if (shift) {
-        player.usePower();
+        player.usePower(this);
         this.emitPowerInfo(player);
       } else {
         player.releasePower();
@@ -276,7 +276,7 @@ export default class Free4all implements GameModel {
     const player = this.getPlayer(mouseClick.owner);
     if (player.isAlive()) {
       if (player.keys.has('Shift')) {
-        player.usePower(mouseClick);
+        player.usePower(this, mouseClick);
         this.emitPowerInfo(player);
       } else {
         const shoot = this.shoot(mouseClick);
@@ -305,7 +305,7 @@ export default class Free4all implements GameModel {
     });
   }
 
-  private addWeapon(player, newWeapon) {
+  addWeapon(player, newWeapon) {
     const weapon = player.weapons.find(weapon => weapon.type === newWeapon.type);
     if (weapon) {
       const sumBullets = weapon.bulletsInMagazine + newWeapon.bulletsInMagazine;
@@ -320,7 +320,7 @@ export default class Free4all implements GameModel {
     }
   }
 
-  private detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
+  detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
       if (
         collisionDetector.detectCollision(player, generator, direction).yes &&
@@ -344,11 +344,15 @@ export default class Free4all implements GameModel {
     });
   }
 
-  private detectPlayerCollision(player: Player, direction?: Direction) {
-    this.detectPlayerCollisionWithGenerator(player, direction);
+  detectPlayerCollisionWithObjects(player: Player, direction?: Direction) {
     return [
       ...this.getStaticObjects(),
       ...this.alivePlayers().filter(object => player !== object),
     ].some(object => collisionDetector.detectCollision(player, object, direction).yes);
+  }
+
+  detectPlayerCollision(player: Player, direction?: Direction) {
+    this.detectPlayerCollisionWithGenerator(player, direction);
+    return this.detectPlayerCollisionWithObjects(player, direction);
   }
 }

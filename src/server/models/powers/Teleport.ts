@@ -12,10 +12,20 @@ export default class Teleport extends Power {
     Object.seal(this);
   }
 
-  use(owner: Player, mouseClick: MouseCoordinates) {
-    if (mouseClick && owner.tryUseEnergy(this.cost)) {
+  use({ owner, game, mouseClick }: { owner: Player; game; mouseClick: MouseCoordinates }) {
+    if (
+      mouseClick &&
+      !game.detectPlayerCollisionWithObjects(({
+        x: mouseClick.targetX,
+        y: mouseClick.targetY,
+        size: owner.size,
+        shape: 'circle',
+      } as unknown) as Player) &&
+      owner.tryUseEnergy(this.cost)
+    ) {
       owner.x = mouseClick.targetX;
       owner.y = mouseClick.targetY;
+      game.detectPlayerCollisionWithGenerator(owner);
     }
   }
 }

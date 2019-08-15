@@ -14,7 +14,7 @@ export default abstract class Power implements Item {
     this.active = false;
   }
 
-  protected use(owner?: Player, mouseClick?: MouseCoordinates) {}
+  protected use(props: any) {}
   protected isActive() {}
   protected release() {}
   protected effect(props: any) {}
