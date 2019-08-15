@@ -15,7 +15,7 @@ import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
 
 let url = process.env.URL || 'localhost';
-url = `http://${url.toString()}`;
+url = `https://${url.toString()}`;
 const socket = connect(url);
 
 const config = {
