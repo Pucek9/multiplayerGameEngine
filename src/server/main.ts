@@ -17,8 +17,15 @@ const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
+const whiteList = [`http://${url}/`, `https://${url}/`];
 const corsOptions = {
-  origin: [`http://${url}`, `https://${url}`],
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
