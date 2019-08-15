@@ -27,7 +27,15 @@ export default class SlowBullets extends Power {
     this.active = false;
   }
 
-  effect(bullet: Bullet, bulletDirection: Direction, owner: Player): boolean {
+  effect({
+    bullet,
+    bulletDirection,
+    owner,
+  }: {
+    bullet: Bullet;
+    bulletDirection: Direction;
+    owner: Player;
+  }): boolean {
     const cost = this.cost * bullet.power;
     if (
       this.isActive() &&
