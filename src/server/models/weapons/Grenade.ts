@@ -13,6 +13,7 @@ export default class Grenade extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
+    flash: false,
     color: 'white',
     size: 5,
     power: 1,

@@ -60,7 +60,7 @@
     "three": "^0.107.0"
   },
   "engines": {
-    "node": "10.16.2"
+    "node": "^10.16.2"
   },
   "repository": {
     "type": "git",

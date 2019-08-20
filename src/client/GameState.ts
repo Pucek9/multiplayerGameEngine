@@ -11,8 +11,6 @@ import Map from './models/Map';
 import Cursor from './models/Cursor';
 import ScreenModel from './types/ScreenModel';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
-import NewBullet from '../shared/apiModels/NewBullet';
-import BulletUpdate from '../shared/apiModels/BulletUpdate';
 import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
 import PlayerModel from '../shared/models/PlayerModel';
@@ -22,6 +20,7 @@ import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 import DynamicCamera from './models/DynamicCamera';
 import ICamera from './interfaces/ICamera';
 import Power from '../shared/models/Power';
+import BulletModel from '../shared/models/BulletModel';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -118,7 +117,7 @@ export default class GameState {
     this.camera.wheel(e);
   }
 
-  appendNewBullets(newBullets: NewBullet[]) {
+  appendNewBullets(newBullets: BulletModel[]) {
     newBullets.forEach(newBullet => {
       const bullet = new Bullet(newBullet);
       bullet.init(this.screen);
@@ -147,7 +146,7 @@ export default class GameState {
     });
   }
 
-  updateBulletsState(_bullets: BulletUpdate[]) {
+  updateBulletsState(_bullets: BulletModel[]) {
     this.bullets.forEach(bullet => {
       const foundBullet = _bullets.find(_bullet => bullet.id === _bullet.id);
       if (foundBullet) {

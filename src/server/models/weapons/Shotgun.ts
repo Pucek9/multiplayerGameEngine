@@ -17,6 +17,7 @@ export default class Shotgun extends Weapon {
     size: 2,
     power: 8,
     range: 350,
+    flash: false,
   };
 
   constructor() {
@@ -35,6 +36,7 @@ export default class Shotgun extends Weapon {
         targetX: bulletData.targetX,
         targetY: bulletData.targetY,
         ...commonBulletInfo,
+        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX + rand(DISPERSION),

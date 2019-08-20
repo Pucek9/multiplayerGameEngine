@@ -11,6 +11,7 @@ export default class GrenadeExplosion extends Weapon {
     size: 4,
     power: 50,
     range: 200,
+    flash: false,
     additionalAction() {
       this.power = this.power - 1;
       // this.size = this.size - 0.1; //it looks better, but it causes a significant drop in performance
@@ -38,21 +39,25 @@ export default class GrenadeExplosion extends Weapon {
         targetX: bulletData.targetX + rand(DISPERSION),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
+        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX - rand(DISPERSION),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
+        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX - rand(DISPERSION),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
+        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX + rand(DISPERSION),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
+        flash: true,
       }),
       //
       new Bullet({
@@ -77,22 +82,22 @@ export default class GrenadeExplosion extends Weapon {
       }),
       //
       new Bullet({
-        targetX: bulletData.targetX + rand(DISPERSION * 2),
+        targetX: bulletData.targetX + rand(DISPERSION * 3),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
       }),
       new Bullet({
-        targetX: bulletData.targetX - rand(DISPERSION * 2),
+        targetX: bulletData.targetX - rand(DISPERSION * 3),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
       }),
       new Bullet({
-        targetX: bulletData.targetX - rand(DISPERSION * 2),
+        targetX: bulletData.targetX - rand(DISPERSION * 3),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
       }),
       new Bullet({
-        targetX: bulletData.targetX + rand(DISPERSION * 2),
+        targetX: bulletData.targetX + rand(DISPERSION * 3),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
       }),

@@ -14,6 +14,7 @@ import AidKit from '../models/AidKit';
 import SlowBullets from '../models/powers/SlowBullets';
 import Power from '../../shared/models/Power';
 import Teleport from '../models/powers/Teleport';
+import BulletModel from '../../shared/models/BulletModel';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -114,14 +115,9 @@ export default class Free4all implements GameModel {
     if (owner) {
       const bullets = owner.shoot(mouseClick, this.roomName);
       if (bullets && bullets.length > 0) {
-        this.bullets.push(...bullets);
         return {
           owner,
-          bullets: bullets.map(bullet => ({
-            id: bullet.id,
-            size: bullet.size,
-            color: bullet.color,
-          })),
+          bullets,
         };
       }
     }
@@ -129,16 +125,22 @@ export default class Free4all implements GameModel {
 
   generateBullets(bullets: Bullet[]) {
     this.bullets.push(...bullets);
-    this.emitter.sendNewBullets(
-      this.roomName,
-      bullets.map(bullet => ({
-        id: bullet.id,
-        size: bullet.size,
-        color: bullet.color,
-      })),
-    );
+    this.emitter.sendNewBullets(this.roomName, bullets.map(this.toBulletModel));
   }
 
+  toBulletModel(bullet: Bullet): BulletModel {
+    return {
+      shape: bullet.shape,
+      x: bullet.x,
+      y: bullet.y,
+      id: bullet.id,
+      size: bullet.size,
+      color: bullet.color,
+      targetX: bullet.targetX,
+      targetY: bullet.targetY,
+      flash: bullet.flash,
+    };
+  }
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
     player && !this.detectPlayerCollision(player) && player.revive();
@@ -281,7 +283,7 @@ export default class Free4all implements GameModel {
       } else {
         const shoot = this.shoot(mouseClick);
         if (shoot) {
-          this.emitter.sendNewBullets(this.roomName, shoot.bullets);
+          this.generateBullets(shoot.bullets);
           this.emitWeaponInfo(shoot.owner);
         }
       }

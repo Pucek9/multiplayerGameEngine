@@ -1,5 +1,4 @@
 import { API } from '../../shared/constants';
-import NewBullet from '../../shared/apiModels/NewBullet';
 import Weapon from '../models/weapons/Weapon';
 import Item from '../../shared/models/Item';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
@@ -7,6 +6,7 @@ import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
 import gamesManager from './GamesManager';
 import Power from '../../shared/models/Power';
+import BulletModel from '../../shared/models/BulletModel';
 
 export default class Emitter {
   constructor(private socketIo: SocketIO.Server) {}
@@ -16,7 +16,7 @@ export default class Emitter {
     this.socketIo.to(gameState.roomName).emit(API.GET_BULLETS, gameState.getBullets());
   }
 
-  sendNewBullets(roomName: string, bullets: NewBullet[]) {
+  sendNewBullets(roomName: string, bullets: BulletModel[]) {
     this.socketIo.to(roomName).emit(API.ADD_NEW_BULLET, bullets);
   }
 

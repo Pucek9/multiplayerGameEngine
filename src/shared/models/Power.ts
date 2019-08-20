@@ -1,7 +1,5 @@
 import Item from './Item';
 import { generateId } from '../helpers';
-import Player from '../../server/models/Player';
-import MouseCoordinates from '../apiModels/MouseCoordinates';
 
 export default abstract class Power implements Item {
   id: number;

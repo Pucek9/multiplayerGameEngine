@@ -1,21 +1,25 @@
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import Cursor from './Cursor';
-import Player from './Player';
 import { SpotLight } from 'three';
+
+interface Source {
+  x: number;
+  y: number;
+}
 
 export default class Light implements IUpdatable {
   private light: SpotLight;
-  private activePlayer: Player;
-  private cursor: Cursor;
+  private source: Source;
+  private dest: Cursor;
 
   constructor(public screen: ScreenModel) {}
 
-  init(activePlayer: Player, cursor: Cursor) {
-    this.activePlayer = activePlayer;
-    this.cursor = cursor;
-    this.light = new SpotLight(0xffffff, 20, 700);
-    this.light.position.set(100, 1000, 100);
+  init(source: Source, cursor: Cursor, intensity = 20) {
+    this.source = source;
+    this.dest = cursor;
+    this.light = new SpotLight(0xffffff, intensity, 700);
+    this.update();
     this.light.castShadow = true;
 
     this.light.shadow.mapSize.width = 300;
@@ -29,13 +33,9 @@ export default class Light implements IUpdatable {
   }
 
   update() {
-    this.light.position.set(this.activePlayer.x, this.activePlayer.y, 50);
-    if (this.cursor) {
-      this.light.target.position.set(
-        this.cursor.object.position.x,
-        this.cursor.object.position.y,
-        10,
-      );
+    this.light.position.set(this.source.x, this.source.y, 50);
+    if (this.dest) {
+      this.light.target.position.set(this.dest.object.position.x, this.dest.object.position.y, 10);
       this.light.target.updateMatrixWorld(true);
     }
   }
