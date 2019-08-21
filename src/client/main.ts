@@ -53,6 +53,11 @@ class Main {
       gamesList.forEach(game =>
         store.dispatch(addGame(game.roomName, game.type, game.map, game.count)),
       );
+      if (gamesList.length > 0) {
+        const game = gamesList[gamesList.length - 1].roomName;
+        store.dispatch(chooseGame(game));
+        mainInstance.menu.render();
+      }
     });
   }
 
