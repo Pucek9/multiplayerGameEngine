@@ -19,6 +19,7 @@ import BulletModel from '../../shared/models/BulletModel';
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
   private interval;
+  private customInterval;
 
   constructor(
     public emitter: Emitter,
@@ -33,6 +34,9 @@ export default class Free4all implements GameModel {
       this.detectBulletsCollision();
       this.emitter.emitGameState(this);
     }, 1000 / 60);
+    this.customInterval = setInterval(() => {
+      this.regeneratePlayers();
+    }, 1000);
   }
 
   getPlayer(id: string) {
@@ -113,7 +117,7 @@ export default class Free4all implements GameModel {
   shoot(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
-      const bullets = owner.shoot(mouseClick, this.roomName);
+      const bullets = owner.shoot(mouseClick);
       if (bullets && bullets.length > 0) {
         return {
           owner,
@@ -146,6 +150,13 @@ export default class Free4all implements GameModel {
     player && !this.detectPlayerCollision(player) && player.revive();
   }
 
+  regeneratePlayers(value?: number) {
+    this.alivePlayers().forEach(player => {
+      player.regenerate(value);
+      this.emitPowerInfo(player);
+    });
+  }
+
   connectPlayer(id: string, newPlayer: NewUser): Player {
     const player = new Player(
       id,
@@ -157,7 +168,7 @@ export default class Free4all implements GameModel {
     );
     //
     player.addAndSelectPower(new Teleport());
-    player.addAndSelectPower(new SlowBullets());
+    player.addPower(new SlowBullets());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);

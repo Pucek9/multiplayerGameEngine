@@ -5,6 +5,7 @@ import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
+  protected regeneration = 2.5;
 
   isAlive() {
     return this.alive;
@@ -19,6 +20,11 @@ export default class Player extends PlayerModel {
   revive() {
     this.alive = true;
     this.hp = this.baseHp;
+    this.energy = this.baseEnergy;
+  }
+
+  regenerate(value?: number) {
+    this.takeAidKit({ energy: value || this.regeneration });
   }
 
   usePower(game, mouseClick?: MouseCoordinates) {
@@ -64,7 +70,7 @@ export default class Player extends PlayerModel {
     this.y -= this.speed;
   }
 
-  shoot(mouseClick: MouseCoordinates, game): Bullet[] {
+  shoot(mouseClick: MouseCoordinates): Bullet[] {
     return this.selectedWeapon
       ? this.selectedWeapon.shoot({
           ...mouseClick,
@@ -106,17 +112,20 @@ export default class Player extends PlayerModel {
     this.selectPower(this.powers.length - 1);
   }
 
-  takeAidKit(aidKit: AidKit) {
-    if (this.hp + aidKit.hp > this.baseHp) {
-      this.hp = this.baseHp;
-    } else {
-      this.hp += aidKit.hp;
+  takeAidKit(aidKit: Partial<AidKit>) {
+    if (aidKit.hp) {
+      if (this.hp + aidKit.hp > this.baseHp) {
+        this.hp = this.baseHp;
+      } else {
+        this.hp += aidKit.hp;
+      }
     }
-
-    if (this.energy + aidKit.energy > this.baseEnergy) {
-      this.energy = this.baseEnergy;
-    } else {
-      this.energy += aidKit.energy;
+    if (aidKit.energy) {
+      if (this.energy + aidKit.energy > this.baseEnergy) {
+        this.energy = this.baseEnergy;
+      } else {
+        this.energy += aidKit.energy;
+      }
     }
   }
 

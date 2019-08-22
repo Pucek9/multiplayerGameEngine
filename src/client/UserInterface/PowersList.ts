@@ -17,7 +17,7 @@ export default class PowersListComponent {
 
   render({ selectedPower, powers, energy }) {
     powersList.innerHTML = '';
-    powersHeader.innerHTML = `Power (${Math.round(energy)})`;
+    powersHeader.innerHTML = `Power (${Math.floor(energy)})`;
     powers.forEach((_power, index) => {
       const li = document.createElement('li');
       if (_power.id === selectedPower.id) {
