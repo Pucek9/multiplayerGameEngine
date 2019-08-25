@@ -12,6 +12,7 @@ export default class Player extends PlayerModel {
   }
 
   die() {
+    this.deaths += 1;
     this.alive = false;
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
@@ -35,8 +36,8 @@ export default class Player extends PlayerModel {
     this.selectedPower.release();
   }
 
-  addScore(score: number) {
-    this.score = this.score + score;
+  addKills(score: number) {
+    this.kills += score;
   }
 
   hitFromBullet(bullet: Bullet, angle?) {
@@ -47,7 +48,7 @@ export default class Player extends PlayerModel {
       if (this.hp <= 0) {
         this.hp = 0;
         if (bullet.owner) {
-          bullet.owner.addScore(100);
+          bullet.owner.addKills(1);
         }
         this.die();
       }

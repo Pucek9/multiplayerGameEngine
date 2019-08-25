@@ -18,7 +18,9 @@ export default class PlayerListComponent {
       const li = document.createElement('li');
       li.style.color = _player.color;
       li.appendChild(
-        document.createTextNode(`${_player.name}: ${_player.hp}hp Score:${_player.score}`),
+        document.createTextNode(
+          `${_player.name}: ${_player.hp}hp Kills:${_player.kills} Deaths:${_player.deaths}`,
+        ),
       );
       // @ts-ignore
       playersList.append(li);

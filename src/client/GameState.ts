@@ -232,9 +232,10 @@ export default class GameState {
   }
 
   updatePlayerList() {
-    const playersList = this.players.map(({ name, score, color, hp }) => ({
+    const playersList = this.players.map(({ name, kills, deaths, color, hp }) => ({
       name,
-      score,
+      kills,
+      deaths,
       color,
       hp,
     }));

@@ -25,7 +25,8 @@ export default class PlayerModel implements ICircle {
     public baseSize: number = 20,
     public baseSpeed: number = 3,
     public baseEnergy: number = 100,
-    public score: number = 0,
+    public kills: number = 0,
+    public deaths: number = 0,
   ) {
     this.hp = this.baseHp;
     this.speed = this.baseSpeed;
