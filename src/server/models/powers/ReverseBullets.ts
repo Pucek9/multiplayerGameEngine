@@ -3,28 +3,14 @@ import Player from '../Player';
 import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';
 import Direction from '../../../shared/models/Direction';
+import SlowBullets from './SlowBullets';
 
-export default class SlowBullets extends Power {
-  type = 'SlowBullets';
-  size = 70;
+export default class ReverseBullets extends SlowBullets {
+  type = 'ReverseBullets';
   cost = 0.01;
 
   constructor(params?: Partial<SlowBullets>) {
-    super();
-    Object.assign(this, params);
-    Object.seal(this);
-  }
-
-  isActive(): boolean {
-    return this.active;
-  }
-
-  use() {
-    this.active = true;
-  }
-
-  release() {
-    this.active = false;
+    super(params);
   }
 
   effect({
@@ -47,10 +33,16 @@ export default class SlowBullets extends Power {
       ).yes
     ) {
       owner.useEnergy(cost);
-      bullet.decreaseSpeedToMin();
+      bullet.decreaseSpeedToMin(0.4);
+      if (bullet.isMinSpeed()) {
+        bullet.owner = owner;
+        bullet.distance = 0;
+        bullet.reverseX *= -1;
+        bullet.reverseY *= -1;
+      }
       return true;
     } else {
-      bullet.increaseSpeedToDefault();
+      bullet.increaseSpeedToDefault(0.4);
       return false;
     }
   }

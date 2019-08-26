@@ -15,6 +15,8 @@ import SlowBullets from '../models/powers/SlowBullets';
 import Power from '../../shared/models/Power';
 import Teleport from '../models/powers/Teleport';
 import BulletModel from '../../shared/models/BulletModel';
+import ReverseBullets from '../models/powers/ReverseBullets';
+import Accelerator from '../models/powers/Accelerator';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -167,7 +169,10 @@ export default class Free4all implements GameModel {
       this.roomName,
     );
     //
-    player.addAndSelectPower(new Teleport());
+
+    player.addAndSelectPower(new Accelerator());
+    player.addPower(new ReverseBullets());
+    player.addPower(new Teleport());
     player.addPower(new SlowBullets());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
@@ -268,7 +273,7 @@ export default class Free4all implements GameModel {
         player.usePower(this);
         this.emitPowerInfo(player);
       } else {
-        player.releasePower();
+        player.releasePower(this);
       }
       if (player.keys.has('Escape')) {
         this.disconnectPlayer(player);
@@ -288,7 +293,7 @@ export default class Free4all implements GameModel {
   mouseClick(mouseClick: MouseCoordinates) {
     const player = this.getPlayer(mouseClick.owner);
     if (player.isAlive()) {
-      if (player.keys.has('Shift')) {
+      if (player.selectedPower instanceof Teleport && player.keys.has('Shift')) {
         player.usePower(this, mouseClick);
         this.emitPowerInfo(player);
       } else {

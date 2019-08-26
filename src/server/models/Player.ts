@@ -29,11 +29,13 @@ export default class Player extends PlayerModel {
   }
 
   usePower(game, mouseClick?: MouseCoordinates) {
-    this.selectedPower.use({ owner: this, game, mouseClick });
+    if (this.isAlive()) {
+      this.selectedPower.use({ owner: this, game, mouseClick });
+    }
   }
 
-  releasePower() {
-    this.selectedPower.release();
+  releasePower(game) {
+    this.selectedPower.release({ owner: this, game });
   }
 
   addKills(score: number) {
@@ -144,5 +146,36 @@ export default class Player extends PlayerModel {
       return true;
     }
     return false;
+  }
+
+  decreaseSpeedToDefault(value: number = 0.2) {
+    if (this.speed - value > this.baseSpeed) {
+      this.speed -= value;
+    } else {
+      this.speed = this.baseSpeed;
+    }
+  }
+
+  increaseSpeedTo(maxSpeed: number, value: number = 0.2) {
+    if (maxSpeed > this.speed + value) {
+      this.speed += value;
+    } else {
+      this.speed = maxSpeed;
+    }
+  }
+
+  isMoveing() {
+    const moveKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'W', 'S', 'A', 'D'];
+    return moveKeys.some(key => this.keys.has(key));
+    // return (
+    //   this.keys.has('ArrowRight') ||
+    //   this.keys.has('ArrowLeft') ||
+    //   this.keys.has('ArrowUp') ||
+    //   this.keys.has('ArrowDown') ||
+    //   this.keys.has('W') ||
+    //   this.keys.has('S') ||
+    //   this.keys.has('A') ||
+    //   this.keys.has('D')
+    // );
   }
 }

@@ -14,6 +14,6 @@ export default abstract class Power implements Item {
 
   protected use(props: any) {}
   protected isActive() {}
-  protected release() {}
+  protected release(props: any) {}
   protected effect(props: any) {}
 }

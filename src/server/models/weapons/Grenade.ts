@@ -25,10 +25,10 @@ export default class Grenade extends Weapon {
         this.reverseX *= angle.x;
         this.reverseY *= angle.y;
       }
-      this.decreaseSpeed(1);
+      this.decreaseSpeedToMin(1);
     },
     additionalAction() {
-      this.decreaseSpeed(0.05);
+      this.decreaseSpeedToMin(0.05);
       if (this.speed === this.minSpeed) {
         this.deactivate();
       }
