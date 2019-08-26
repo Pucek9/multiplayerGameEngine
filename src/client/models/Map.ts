@@ -1,4 +1,3 @@
-import PlayerModel from '../../shared/models/PlayerModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
