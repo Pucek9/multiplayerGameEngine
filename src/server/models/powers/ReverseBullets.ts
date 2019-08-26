@@ -1,4 +1,3 @@
-import Power from '../../../shared/models/Power';
 import Player from '../Player';
 import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';

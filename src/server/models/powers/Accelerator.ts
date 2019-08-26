@@ -1,13 +1,10 @@
 import Power from '../../../shared/models/Power';
 import Player from '../Player';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import Bullet from '../Bullet';
-import Direction from '../../../shared/models/Direction';
-import collisionDetector from '../../services/CollisionDetector';
 
 export default class Accelerator extends Power {
   type = 'Accelerator';
   cost = 0.5;
+  speed = 10;
 
   constructor(params?: Partial<Accelerator>) {
     super();
@@ -31,7 +28,7 @@ export default class Accelerator extends Power {
 
   effect({ owner }: { owner: Player }): boolean {
     if (this.isActive() && owner.isMoveing() && owner.tryUseEnergy(this.cost)) {
-      owner.increaseSpeedTo(10);
+      owner.increaseSpeedTo(this.speed);
       return true;
     } else {
       owner.decreaseSpeedToDefault();
