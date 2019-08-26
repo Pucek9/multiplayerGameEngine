@@ -38,6 +38,7 @@ export default class ReverseBullets extends SlowBullets {
         bullet.distance = 0;
         bullet.reverseX *= -1;
         bullet.reverseY *= -1;
+        bullet.increaseSpeedToDefault(0.4);
       }
       return true;
     } else {
