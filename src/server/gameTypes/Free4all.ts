@@ -17,6 +17,7 @@ import Teleport from '../models/powers/Teleport';
 import BulletModel from '../../shared/models/BulletModel';
 import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
+import Pistol from '../models/weapons/Pistol';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -30,6 +31,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
+    this.createBot();
     this.interval = setInterval(() => {
       this.updatePlayersPosition();
       this.updateBullets();
@@ -39,6 +41,25 @@ export default class Free4all implements GameModel {
     this.customInterval = setInterval(() => {
       this.regeneratePlayers();
     }, 1000);
+  }
+
+  createBot() {
+    const bot = this.connectPlayer(
+      'bot',
+      {
+        id: 'bot',
+        gameName: this.roomName,
+        color: 'red',
+        name: 'bot',
+      },
+      200,
+      -300,
+    );
+
+    bot.hp = bot.baseHp = 1000;
+    bot.revive();
+    bot.keys.add('Shift');
+    return bot;
   }
 
   getPlayer(id: string) {
@@ -159,21 +180,14 @@ export default class Free4all implements GameModel {
     });
   }
 
-  connectPlayer(id: string, newPlayer: NewUser): Player {
-    const player = new Player(
-      id,
-      newPlayer.name,
-      newPlayer.color,
-      rand(1000),
-      rand(1000),
-      this.roomName,
-    );
+  connectPlayer(id: string, newPlayer: NewUser, x = rand(1000), y = rand(1000)): Player {
+    const player = new Player(id, newPlayer.name, newPlayer.color, x, y, this.roomName);
     //
-
-    player.addAndSelectPower(new Accelerator());
-    player.addPower(new ReverseBullets());
+    player.addAndSelectPower(new ReverseBullets());
+    player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
+    player.addAndSelectWeapon(new Pistol({ magazines: 50000 }));
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);

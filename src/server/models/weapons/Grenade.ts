@@ -29,7 +29,7 @@ export default class Grenade extends Weapon {
     },
     additionalAction() {
       this.decreaseSpeedToMin(0.05);
-      if (this.speed === this.minSpeed) {
+      if (this.isMinSpeed() && !this.customFlag) {
         this.deactivate();
       }
     },

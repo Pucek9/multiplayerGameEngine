@@ -16,8 +16,9 @@ export default class Pistol extends Weapon {
     range: 500,
   };
 
-  constructor() {
+  constructor(params?: Partial<Pistol>) {
     super();
+    Object.assign(this, params);
   }
 
   generateBullets(bulletData: BulletData) {

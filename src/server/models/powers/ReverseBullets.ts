@@ -6,7 +6,7 @@ import SlowBullets from './SlowBullets';
 
 export default class ReverseBullets extends SlowBullets {
   type = 'ReverseBullets';
-  cost = 0.01;
+  cost = 0.03;
 
   constructor(params?: Partial<SlowBullets>) {
     super(params);
@@ -32,17 +32,29 @@ export default class ReverseBullets extends SlowBullets {
       ).yes
     ) {
       owner.useEnergy(cost);
-      bullet.decreaseSpeedToMin(0.4);
+      bullet.customFlag = false;
+      bullet.decreaseSpeedToMin(0.3);
       if (bullet.isMinSpeed()) {
+        bullet.customFlag = true;
         bullet.owner = owner;
         bullet.distance = 0;
         bullet.reverseX *= -1;
         bullet.reverseY *= -1;
-        bullet.increaseSpeedToDefault();
+        bullet.increaseSpeedToDefault(0.3);
       }
       return true;
     } else {
-      bullet.increaseSpeedToDefault();
+      bullet.customFlag = true;
+
+      // if (
+      //   collisionDetector.detectCollision(
+      //     bullet,
+      //     { shape: 'circle', size: this.size * 2, x: owner.x, y: owner.y },
+      //     bulletDirection,
+      //   ).yes
+      // ) {
+      //   bullet.increaseSpeedToDefault(0.3);
+      // }
       return false;
     }
   }

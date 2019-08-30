@@ -47,10 +47,20 @@ export default class SlowBullets extends Power {
       ).yes
     ) {
       owner.useEnergy(cost);
+      bullet.customFlag = false;
       bullet.decreaseSpeedToMin();
       return true;
     } else {
-      bullet.increaseSpeedToDefault();
+      bullet.customFlag = true;
+      // if (
+      //   collisionDetector.detectCollision(
+      //     bullet,
+      //     { shape: 'circle', size: this.size * 2, x: owner.x, y: owner.y },
+      //     bulletDirection,
+      //   ).yes
+      // ) {
+      //   bullet.increaseSpeedToDefault();
+      // }
       return false;
     }
   }

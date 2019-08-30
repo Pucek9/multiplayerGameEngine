@@ -18,7 +18,8 @@ export default class Bullet extends BulletModel {
   vectorFT: number;
   directionX: number;
   directionY: number;
-  gameName?: string;
+  customFlag = true;
+  // gameName?: string;
 
   constructor(params: Partial<Bullet>) {
     super(params);
@@ -34,22 +35,30 @@ export default class Bullet extends BulletModel {
   }
 
   decreaseSpeedToMin(value: number = 1) {
-    if (this.speed > value) {
-      this.speed -= value;
-    } else {
-      this.speed = this.minSpeed;
+    if (!this.isMinSpeed()) {
+      if (this.speed > value) {
+        this.speed -= value;
+      } else {
+        this.speed = this.minSpeed;
+      }
     }
   }
 
-  isMinSpeed() {
+  isDefaultSpeed(): boolean {
+    return this.speed === this.defaultSpeed;
+  }
+
+  isMinSpeed(): boolean {
     return this.speed === this.minSpeed;
   }
 
   increaseSpeedToDefault(value: number = 1) {
-    if (this.defaultSpeed > this.speed + value) {
-      this.speed += value;
-    } else {
-      this.speed = this.defaultSpeed;
+    if (!this.isDefaultSpeed()) {
+      if (this.defaultSpeed > this.speed + value) {
+        this.speed += value;
+      } else {
+        this.speed = this.defaultSpeed;
+      }
     }
   }
 
@@ -69,7 +78,11 @@ export default class Bullet extends BulletModel {
     }
   }
 
-  additionalAction() {}
+  additionalAction() {
+    if (this.customFlag) {
+      this.increaseSpeedToDefault();
+    }
+  }
 
   effectOnPlayer(player) {}
 
