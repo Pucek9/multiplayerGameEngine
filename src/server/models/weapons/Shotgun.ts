@@ -27,8 +27,8 @@ export default class Shotgun extends Weapon {
   generateBullets(bulletData: BulletData): Bullet[] {
     const commonBulletInfo = {
       owner: bulletData.owner,
-      fromX: bulletData.fromX + bulletData.size / 4,
-      fromY: bulletData.fromY + bulletData.size / 4,
+      fromX: bulletData.fromX,
+      fromY: bulletData.fromY,
       ...this.bulletConfig,
     };
     return [

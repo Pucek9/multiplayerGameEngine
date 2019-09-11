@@ -60,8 +60,8 @@ export default class Grenade extends Weapon {
     return [
       new Bullet({
         owner: bulletData.owner,
-        fromX: bulletData.fromX + bulletData.size / 4,
-        fromY: bulletData.fromY + bulletData.size / 4,
+        fromX: bulletData.fromX,
+        fromY: bulletData.fromY,
         targetX: bulletData.targetX,
         targetY: bulletData.targetY,
         ...this.bulletConfig,

@@ -2,32 +2,25 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
 
-export default class Resizer extends Weapon {
-  type = 'Resizer';
-  magazines = 3;
-  maxBulletsInMagazine = 10;
-  bulletsInMagazine = 10;
-  minTimeBetweenBullets = 100;
-  reloadTime = 1000;
+export default class Knife extends Weapon {
+  type = 'Knife';
+  magazines = Infinity;
+  maxBulletsInMagazine = Infinity;
+  bulletsInMagazine = Infinity;
+  minTimeBetweenBullets = 0;
+  reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
-    color: 'white',
+    flash: false,
     size: 5,
-    power: 1,
-    range: 700,
-    effectOnPlayer(player) {
-      player.size += 2;
-      if (player.speed > 0.5) {
-        player.speed -= 0.5;
-      }
-    },
-    additionalAction() {
-      this.size += 0.1;
-    },
+    power: 40,
+    range: 50,
+    color: 'gray',
   };
 
-  constructor() {
+  constructor(params?: Partial<Knife>) {
     super();
+    Object.assign(this, params);
   }
 
   generateBullets(bulletData: BulletData) {

@@ -18,6 +18,7 @@ import BulletModel from '../../shared/models/BulletModel';
 import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
+import Knife from '../models/weapons/Knife';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -31,7 +32,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
-    this.createBot();
+    const bot = this.createBot();
     this.interval = setInterval(() => {
       this.updatePlayersPosition();
       this.updateBullets();
@@ -39,6 +40,7 @@ export default class Free4all implements GameModel {
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
+      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
       this.regeneratePlayers();
     }, 1000);
   }
@@ -188,6 +190,7 @@ export default class Free4all implements GameModel {
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
     player.addAndSelectWeapon(new Pistol({ magazines: 50000 }));
+    player.addWeapon(new Knife());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);
