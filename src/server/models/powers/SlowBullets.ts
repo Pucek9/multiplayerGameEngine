@@ -39,6 +39,7 @@ export default class SlowBullets extends Power {
     const cost = this.cost * bullet.power;
     if (
       this.isActive() &&
+      bullet.power > 0 &&
       owner.hasEnoughEnergy(cost) &&
       collisionDetector.detectCollision(
         bullet,
@@ -52,15 +53,6 @@ export default class SlowBullets extends Power {
       return true;
     } else {
       bullet.customFlag = true;
-      // if (
-      //   collisionDetector.detectCollision(
-      //     bullet,
-      //     { shape: 'circle', size: this.size * 2, x: owner.x, y: owner.y },
-      //     bulletDirection,
-      //   ).yes
-      // ) {
-      //   bullet.increaseSpeedToDefault();
-      // }
       return false;
     }
   }

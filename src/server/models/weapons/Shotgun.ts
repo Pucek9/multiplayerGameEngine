@@ -20,10 +20,10 @@ export default class Shotgun extends Weapon {
     flash: false,
   };
 
-  constructor() {
+  constructor(params?: Partial<Shotgun>) {
     super();
+    Object.assign(this, params);
   }
-
   generateBullets(bulletData: BulletData): Bullet[] {
     const commonBulletInfo = {
       owner: bulletData.owner,

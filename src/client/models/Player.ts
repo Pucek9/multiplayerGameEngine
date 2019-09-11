@@ -3,8 +3,8 @@ import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
-const cumin = require('../games/balls/images/head.jpg');
-const texture = new TextureLoader().load(cumin);
+const head = require('../games/balls/images/head.jpg');
+const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements IUpdatable {
   public object;

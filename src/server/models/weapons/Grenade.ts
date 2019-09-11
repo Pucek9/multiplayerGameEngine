@@ -16,7 +16,7 @@ export default class Grenade extends Weapon {
     flash: false,
     color: 'white',
     size: 5,
-    power: 1,
+    power: 0,
     range: 400,
     speed: 7,
     minSpeed: 0.1,
@@ -29,7 +29,7 @@ export default class Grenade extends Weapon {
     },
     additionalAction() {
       this.decreaseSpeedToMin(0.05);
-      if (this.isMinSpeed() && !this.customFlag) {
+      if (this.isMinSpeed()) {
         this.deactivate();
       }
     },
@@ -52,8 +52,9 @@ export default class Grenade extends Weapon {
     },
   };
 
-  constructor() {
+  constructor(params?: Partial<Grenade>) {
     super();
+    Object.assign(this, params);
   }
 
   generateBullets(bulletData: BulletData) {

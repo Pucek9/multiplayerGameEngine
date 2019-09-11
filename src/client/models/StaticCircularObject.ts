@@ -3,7 +3,7 @@ import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
-const cumin = require('../games/balls/images/head.jpg');
+const cumin = require('../games/balls/images/cumin.jpg');
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements IUpdatable {
   protected object: Mesh;

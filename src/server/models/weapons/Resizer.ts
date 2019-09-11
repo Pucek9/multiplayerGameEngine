@@ -26,8 +26,9 @@ export default class Resizer extends Weapon {
     },
   };
 
-  constructor() {
+  constructor(params?: Partial<Resizer>) {
     super();
+    Object.assign(this, params);
   }
 
   generateBullets(bulletData: BulletData) {

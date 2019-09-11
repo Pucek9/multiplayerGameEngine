@@ -5,7 +5,7 @@ import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
-  protected regeneration = 2.5;
+  public regeneration = 2.5;
 
   isAlive() {
     return this.alive;
@@ -80,7 +80,7 @@ export default class Player extends PlayerModel {
           owner: this,
           fromX: this.x,
           fromY: this.y,
-          size: this.size,
+          // size: this.size,
         })
       : [];
   }
@@ -164,7 +164,7 @@ export default class Player extends PlayerModel {
     }
   }
 
-  isMoveing() {
+  isMoving() {
     const moveKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'W', 'S', 'A', 'D'];
     return moveKeys.some(key => this.keys.has(key));
     // return (

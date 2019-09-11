@@ -19,6 +19,7 @@ import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
+import Grenade from '../models/weapons/Grenade';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -57,10 +58,12 @@ export default class Free4all implements GameModel {
       200,
       -300,
     );
-
+    bot.direction = -1.5;
     bot.hp = bot.baseHp = 1000;
+    bot.energy = bot.baseEnergy = 1000;
     bot.revive();
     bot.keys.add('Shift');
+    bot.addAndSelectWeapon(new Pistol());
     return bot;
   }
 
@@ -189,8 +192,9 @@ export default class Free4all implements GameModel {
     player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
-    player.addAndSelectWeapon(new Pistol({ magazines: 50000 }));
-    player.addWeapon(new Knife());
+    player.addAndSelectWeapon(new Knife());
+    // player.addWeapon(new Pistol({ magazines: 500 }));
+    // player.addWeapon(new Grenade({ magazines: 500 }));
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);
@@ -274,6 +278,10 @@ export default class Free4all implements GameModel {
         player.selectWeapon(3);
         this.emitWeaponInfo(player);
       }
+      if (player.keys.has('5') && !shift) {
+        player.selectWeapon(4);
+        this.emitWeaponInfo(player);
+      }
       if (shift && player.keys.has('!')) {
         player.selectPower(0);
       }
@@ -303,7 +311,7 @@ export default class Free4all implements GameModel {
     if (owner) {
       const dx = mouseCoordinates.targetX - owner.x;
       const dy = mouseCoordinates.targetY - owner.y;
-      owner.direction = Math.atan2(dy, dx) - 80;
+      owner.direction = Math.atan2(dy, dx); // - 80;
     }
   }
 

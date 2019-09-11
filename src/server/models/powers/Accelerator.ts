@@ -27,7 +27,7 @@ export default class Accelerator extends Power {
   }
 
   effect({ owner }: { owner: Player }): boolean {
-    if (this.isActive() && owner.isMoveing() && owner.tryUseEnergy(this.cost)) {
+    if (this.isActive() && owner.isMoving() && owner.tryUseEnergy(this.cost)) {
       owner.increaseSpeedTo(this.speed);
       return true;
     } else {

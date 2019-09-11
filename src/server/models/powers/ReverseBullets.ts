@@ -24,6 +24,7 @@ export default class ReverseBullets extends SlowBullets {
     const cost = this.cost * bullet.power;
     if (
       this.isActive() &&
+      bullet.power > 0 &&
       owner.hasEnoughEnergy(cost) &&
       collisionDetector.detectCollision(
         bullet,
@@ -37,24 +38,13 @@ export default class ReverseBullets extends SlowBullets {
       if (bullet.isMinSpeed()) {
         bullet.customFlag = true;
         bullet.owner = owner;
-        bullet.distance = 0;
+        bullet.distance = 10;
         bullet.reverseX *= -1;
         bullet.reverseY *= -1;
-        bullet.increaseSpeedToDefault(0.3);
       }
       return true;
     } else {
       bullet.customFlag = true;
-
-      // if (
-      //   collisionDetector.detectCollision(
-      //     bullet,
-      //     { shape: 'circle', size: this.size * 2, x: owner.x, y: owner.y },
-      //     bulletDirection,
-      //   ).yes
-      // ) {
-      //   bullet.increaseSpeedToDefault(0.3);
-      // }
       return false;
     }
   }
