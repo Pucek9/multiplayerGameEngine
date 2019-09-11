@@ -19,7 +19,6 @@ import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
-import Grenade from '../models/weapons/Grenade';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -63,7 +62,7 @@ export default class Free4all implements GameModel {
     bot.energy = bot.baseEnergy = 1000;
     bot.revive();
     bot.keys.add('Shift');
-    bot.addAndSelectWeapon(new Pistol());
+    bot.addAndSelectWeapon(new Pistol({ magazines: 5000 }));
     return bot;
   }
 
