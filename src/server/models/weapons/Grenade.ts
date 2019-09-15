@@ -20,6 +20,7 @@ export default class Grenade extends Weapon {
     range: 400,
     speed: 7,
     minSpeed: 0.1,
+    allowForManipulate: false,
     hit(angle?: { x: number; y: number }) {
       if (angle) {
         this.reverseX *= angle.x;

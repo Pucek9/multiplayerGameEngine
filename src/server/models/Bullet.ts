@@ -4,7 +4,7 @@ export default class Bullet extends BulletModel {
   defaultSpeed = 5;
   minSpeed = 1;
   speed = 5;
-  distance = 10;
+  distance = 0;
   power = 10;
   range = 500;
   owner: any;
@@ -19,6 +19,7 @@ export default class Bullet extends BulletModel {
   directionX: number;
   directionY: number;
   customFlag = true;
+  allowForManipulate = true;
   // gameName?: string;
 
   constructor(params: Partial<Bullet>) {

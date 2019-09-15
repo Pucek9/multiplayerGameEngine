@@ -5,6 +5,7 @@ import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
 
 export default interface GameModel {
+  steering;
   emitter;
   roomName: string;
   type: string;
@@ -40,9 +41,9 @@ export default interface GameModel {
 
   updateKeys(id: string, keys: Array<string>);
 
-  updatePlayerPosition(player: Player);
+  performKeysOperation(player: Player);
 
-  updatePlayersPosition();
+  performKeysOperationForPlayers();
 
   updatePlayerDirection(mouseCoordinates: MouseCoordinates);
 

@@ -8,8 +8,8 @@ class GamesManager {
 
   constructor() {}
 
-  createGame(emitter, name: string, type: string, map: string) {
-    this.games.push(new gameTypes[type](emitter, name, new maps[map]()));
+  createGame(steering, emitter, name: string, type: string, map: string) {
+    this.games.push(new gameTypes[type](steering, emitter, name, new maps[map]()));
   }
 
   getGame(roomName: string) {

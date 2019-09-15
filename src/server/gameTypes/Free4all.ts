@@ -5,7 +5,7 @@ import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
-import Direction from '../../shared/models/Direction';
+import { Direction } from '../../shared/models/Direction';
 import { rand } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
@@ -19,6 +19,7 @@ import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
+import SteeringService from '../services/Steering';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -26,6 +27,7 @@ export default class Free4all implements GameModel {
   private customInterval;
 
   constructor(
+    public steering: SteeringService,
     public emitter: Emitter,
     public roomName: string,
     public map: GameMap,
@@ -34,13 +36,13 @@ export default class Free4all implements GameModel {
   ) {
     const bot = this.createBot();
     this.interval = setInterval(() => {
-      this.updatePlayersPosition();
+      this.performKeysOperationForPlayers();
       this.updateBullets();
       this.detectBulletsCollision();
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
-      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
+      // this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
       this.regeneratePlayers();
     }, 1000);
   }
@@ -210,98 +212,13 @@ export default class Free4all implements GameModel {
     player && (player.keys = new Set(keys));
   }
 
-  updatePlayersPosition() {
-    this.players.forEach(player => this.updatePlayerPosition(player));
+  performKeysOperationForPlayers() {
+    this.players.forEach(player => this.performKeysOperation(player));
   }
 
-  updatePlayerPosition(player: Player) {
+  performKeysOperation(player: Player) {
     if (player) {
-      const shift = player.keys.has('Shift');
-      if (player.keys.has('W') || player.keys.has('ArrowUp')) {
-        if (
-          !player.isAlive() ||
-          !this.detectPlayerCollision(player, {
-            x: 0,
-            y: player.speed,
-          })
-        ) {
-          player.goDown();
-        }
-      }
-      if (player.keys.has('S') || player.keys.has('ArrowDown')) {
-        if (
-          !player.isAlive() ||
-          !this.detectPlayerCollision(player, {
-            x: 0,
-            y: -player.speed,
-          })
-        ) {
-          player.goUp();
-        }
-      }
-      if (player.keys.has('A') || player.keys.has('ArrowLeft')) {
-        if (
-          !player.isAlive() ||
-          !this.detectPlayerCollision(player, {
-            x: -player.speed,
-            y: 0,
-          })
-        ) {
-          player.goLeft();
-        }
-      }
-      if (player.keys.has('D') || player.keys.has('ArrowRight')) {
-        if (
-          !player.isAlive() ||
-          !this.detectPlayerCollision(player, {
-            x: player.speed,
-            y: 0,
-          })
-        ) {
-          player.goRight();
-        }
-      }
-      if (player.keys.has('1') && !shift) {
-        player.selectWeapon(0);
-        this.emitWeaponInfo(player);
-      }
-      if (player.keys.has('2') && !shift) {
-        player.selectWeapon(1);
-        this.emitWeaponInfo(player);
-      }
-      if (player.keys.has('3') && !shift) {
-        player.selectWeapon(2);
-        this.emitWeaponInfo(player);
-      }
-      if (player.keys.has('4') && !shift) {
-        player.selectWeapon(3);
-        this.emitWeaponInfo(player);
-      }
-      if (player.keys.has('5') && !shift) {
-        player.selectWeapon(4);
-        this.emitWeaponInfo(player);
-      }
-      if (shift && player.keys.has('!')) {
-        player.selectPower(0);
-      }
-      if (shift && player.keys.has('@')) {
-        player.selectPower(1);
-      }
-      if (shift && player.keys.has('#')) {
-        player.selectPower(2);
-      }
-      if (shift && player.keys.has('$')) {
-        player.selectPower(3);
-      }
-      if (shift) {
-        player.usePower(this);
-        this.emitPowerInfo(player);
-      } else {
-        player.releasePower(this);
-      }
-      if (player.keys.has('Escape')) {
-        this.disconnectPlayer(player);
-      }
+      this.steering.performKeysOperation(this, player);
     }
   }
 

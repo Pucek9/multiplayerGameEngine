@@ -9,6 +9,7 @@ import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
 import Emitter from './services/Emitter';
+import SteeringService from './services/Steering';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
@@ -16,6 +17,7 @@ const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
 const emitter = new Emitter(socketIo);
+const steeringService = new SteeringService();
 const corsOptions = {
   origin: true,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -36,7 +38,13 @@ function connection(socket: Socket) {
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
-      gamesManager.createGame(emitter, newGame.roomName, newGame.type, newGame.map);
+      gamesManager.createGame(
+        steeringService,
+        emitter,
+        newGame.roomName,
+        newGame.type,
+        newGame.map,
+      );
       socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
     });
 

@@ -1,4 +1,5 @@
 import PlayerModel from './PlayerModel';
+import { Dir } from './Direction';
 
 export default interface BulletData {
   targetX: number;
@@ -7,4 +8,5 @@ export default interface BulletData {
   fromY: number;
   size: number;
   owner: PlayerModel;
+  dir?: Array<Dir>;
 }

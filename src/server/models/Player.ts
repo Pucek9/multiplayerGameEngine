@@ -1,11 +1,13 @@
-import Bullet from './Bullet';
 import PlayerModel from '../../shared/models/PlayerModel';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
+import { Dir } from '../../shared/models/Direction';
+import Bullet from './Bullet';
 import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
+  private lastDir: Array<Dir>;
 
   isAlive() {
     return this.alive;
@@ -59,18 +61,22 @@ export default class Player extends PlayerModel {
 
   goLeft() {
     this.x -= this.speed;
+    this.lastDir = [Dir.LEFT];
   }
 
   goRight() {
     this.x += this.speed;
+    this.lastDir = [Dir.RIGHT];
   }
 
   goDown() {
     this.y += this.speed;
+    this.lastDir = [Dir.DOWN];
   }
 
   goUp() {
     this.y -= this.speed;
+    this.lastDir = [Dir.UP];
   }
 
   shoot(mouseClick: MouseCoordinates): Bullet[] {
@@ -78,9 +84,10 @@ export default class Player extends PlayerModel {
       ? this.selectedWeapon.shoot({
           ...mouseClick,
           owner: this,
-          fromX: this.x,
-          fromY: this.y,
-          // size: this.size,
+          fromX: this.x + this.size * Math.cos(this.direction),
+          fromY: this.y + this.size * Math.sin(this.direction),
+          dir: this.isMoving() ? this.lastDir : [],
+          size: this.size,
         })
       : [];
   }

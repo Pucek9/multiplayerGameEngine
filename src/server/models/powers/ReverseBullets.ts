@@ -1,7 +1,7 @@
 import Player from '../Player';
 import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';
-import Direction from '../../../shared/models/Direction';
+import { Direction } from '../../../shared/models/Direction';
 import SlowBullets from './SlowBullets';
 
 export default class ReverseBullets extends SlowBullets {
@@ -24,7 +24,7 @@ export default class ReverseBullets extends SlowBullets {
     const cost = this.cost * bullet.power;
     if (
       this.isActive() &&
-      bullet.power > 0 &&
+      bullet.allowForManipulate &&
       owner.hasEnoughEnergy(cost) &&
       collisionDetector.detectCollision(
         bullet,
@@ -38,7 +38,7 @@ export default class ReverseBullets extends SlowBullets {
       if (bullet.isMinSpeed()) {
         bullet.customFlag = true;
         bullet.owner = owner;
-        bullet.distance = 10;
+        bullet.distance = 0;
         bullet.reverseX *= -1;
         bullet.reverseY *= -1;
       }

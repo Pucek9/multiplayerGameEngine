@@ -2,7 +2,7 @@ import Power from '../../../shared/models/Power';
 import Player from '../Player';
 import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';
-import Direction from '../../../shared/models/Direction';
+import { Direction } from '../../../shared/models/Direction';
 
 export default class SlowBullets extends Power {
   type = 'SlowBullets';
@@ -39,7 +39,7 @@ export default class SlowBullets extends Power {
     const cost = this.cost * bullet.power;
     if (
       this.isActive() &&
-      bullet.power > 0 &&
+      bullet.allowForManipulate &&
       owner.hasEnoughEnergy(cost) &&
       collisionDetector.detectCollision(
         bullet,
