@@ -34,7 +34,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
-    const bot = this.createBot();
+    // const bot = this.createBot();
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
       this.updateBullets();
