@@ -120,9 +120,7 @@ export default class SteeringService {
     ];
     const powerPressed = [power1, power2, power3, power4, power5].some(has => has);
     if (shift && powerPressed) {
-      console.log(player.speed);
       player.releasePower(game);
-      console.log(player.speed);
     }
     if (shift && power1) {
       player.selectPower(0);
