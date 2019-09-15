@@ -31,7 +31,7 @@ export default class Accelerator extends Power {
       owner.increaseSpeedTo(this.speed);
       return true;
     } else {
-      owner.decreaseSpeedToDefault();
+      owner.decreaseSpeedToDefault(this.speed);
       return false;
     }
   }

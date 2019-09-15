@@ -13,7 +13,7 @@ export default class Knife extends Weapon {
   shootBulletsCount = 1;
   bulletConfig = {
     flash: false,
-    size: 13,
+    size: 8,
     power: 40,
     range: 40,
     allowForManipulate: false,

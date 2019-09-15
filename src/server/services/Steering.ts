@@ -106,21 +106,43 @@ export default class SteeringService {
 
   performPowerChange(game, player) {
     const shift = player.keys.has('Shift');
-
-    if (shift && player.keys.has('!')) {
+    const [power1, power2, power3, power4, power5, power6, power7, power8, power9, power10] = [
+      player.keys.has('!'),
+      player.keys.has('@'),
+      player.keys.has('#'),
+      player.keys.has('$'),
+      player.keys.has('%'),
+      player.keys.has('^'),
+      player.keys.has('&'),
+      player.keys.has('*'),
+      player.keys.has('('),
+      player.keys.has(')'),
+    ];
+    const powerPressed = [power1, power2, power3, power4, power5].some(has => has);
+    if (shift && powerPressed) {
+      console.log(player.speed);
+      player.releasePower(game);
+      console.log(player.speed);
+    }
+    if (shift && power1) {
       player.selectPower(0);
     }
-    if (shift && player.keys.has('@')) {
+    if (shift && power2) {
       player.selectPower(1);
     }
-    if (shift && player.keys.has('#')) {
+    if (shift && power3) {
       player.selectPower(2);
     }
-    if (shift && player.keys.has('$')) {
+    if (shift && power4) {
       player.selectPower(3);
     }
-    if (shift) {
+    if (shift && power5) {
+      player.selectPower(5);
+    }
+    if (shift && !powerPressed) {
       player.usePower(game);
+    }
+    if (shift) {
       game.emitPowerInfo(player);
     } else {
       player.releasePower(game);
