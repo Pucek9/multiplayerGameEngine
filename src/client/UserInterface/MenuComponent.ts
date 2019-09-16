@@ -1,4 +1,12 @@
-import { chooseGame, setGameMap, setGameName, setGameType, setNick } from '../store/actions';
+import {
+  chooseGame,
+  setBlinking,
+  setBulletShadow,
+  setGameMap,
+  setGameName,
+  setGameType,
+  setNick,
+} from '../store/actions';
 import { Store } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
 
@@ -8,6 +16,8 @@ declare var gameMapInput: HTMLSelectElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
+declare var blinkingCheckbox: HTMLInputElement;
+declare var bulletShadowCheckbox: HTMLInputElement;
 declare var joinGameButton: HTMLButtonElement;
 declare var menu: HTMLDivElement;
 declare var validateGameName: HTMLLabelElement;
@@ -49,6 +59,13 @@ export default class MenuComponent {
 
     nickInput.addEventListener('keyup', function() {
       store.dispatch(setNick(nickInput.value));
+    });
+
+    blinkingCheckbox.addEventListener('change', function() {
+      store.dispatch(setBlinking(blinkingCheckbox.checked));
+    });
+    bulletShadowCheckbox.addEventListener('change', function() {
+      store.dispatch(setBulletShadow(bulletShadowCheckbox.checked));
     });
   }
 

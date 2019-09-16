@@ -28,6 +28,7 @@ export default class Model3D extends StaticCircularObjectModel implements IUpdat
       this.object.scale.set(model.scale, model.scale, model.scale);
       this.object.position.y = this.y;
       this.object.position.x = this.x;
+      this.object.position.z = 15;
       this.object.castShadow = true;
       this.object.receiveShadow = true;
       this.object.traverse(child => {

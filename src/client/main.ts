@@ -4,7 +4,7 @@ import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
 import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
-import { joinGameReducer, newGameReducer } from './store/reducers';
+import { joinGameReducer, newGameReducer, optionsReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
 import './style.scss';
@@ -29,6 +29,7 @@ function randColor() {
 const app = combineReducers({
   newGame: newGameReducer,
   joinGame: joinGameReducer,
+  options: optionsReducer,
 });
 const store = createStore(app, devToolsEnhancer());
 
@@ -78,7 +79,7 @@ class Main {
       );
       socket.emit(API.CREATE_PLAYER, newPlayer);
       const screen = this.prepareScreen();
-      this.gameState = new GameState(newPlayer, screen);
+      this.gameState = new GameState(newPlayer, screen, store);
       this.registerEvents(this.gameState);
       this.run();
     });

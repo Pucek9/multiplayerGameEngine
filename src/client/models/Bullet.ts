@@ -4,6 +4,7 @@ import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
 import Light from './Light';
 import Cursor from './Cursor';
+import { Store } from 'redux';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
@@ -23,14 +24,20 @@ export default class Bullet extends BulletModel implements IUpdatable {
     this.object.geometry = new BufferGeometry().fromGeometry(this.geometry);
   }
 
-  init(screen: ScreenModel) {
+  init(screen: ScreenModel, store: Store) {
+    const state = store.getState();
     this.setGeometry();
     this.setMaterial();
     this.object = new Mesh(this.geometry, this.material);
     this.object.position.z = 10;
+
+    if (state.options.bulletShadow) {
+      this.object.castShadow = true;
+    }
+
     this.update();
     screen.scene.add(this.object);
-    if (this.flash) {
+    if (this.flash && state.options.blinking) {
       this.showFlash(screen);
     }
   }

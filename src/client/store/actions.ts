@@ -11,6 +11,11 @@ export const joinGameActions = {
   CHOOSE_GAME: 'CHOOSE_GAME',
 };
 
+export const optionsActions = {
+  SET_BLINKING: 'SET_BLINKING',
+  SET_BULLET_SHADOW: 'SET_BULLET_SHADOW',
+};
+
 export const addGame = (roomName, type, map, count) => {
   return {
     type: gamesListActions.ADD_GAME,
@@ -103,6 +108,30 @@ export const clearGamesList = () => {
       return {
         ...state,
         list: [],
+      };
+    },
+  };
+};
+
+export const setBlinking = value => {
+  return {
+    type: optionsActions.SET_BLINKING,
+    payload: state => {
+      return {
+        ...state,
+        blinking: value,
+      };
+    },
+  };
+};
+
+export const setBulletShadow = value => {
+  return {
+    type: optionsActions.SET_BULLET_SHADOW,
+    payload: state => {
+      return {
+        ...state,
+        bulletShadow: value,
       };
     },
   };

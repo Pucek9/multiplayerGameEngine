@@ -1,3 +1,4 @@
+import { Store } from 'redux';
 import Player from './models/Player';
 import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
@@ -29,6 +30,7 @@ export default class GameState {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
+  store: Store;
   camera: ICamera;
   light: Light;
   playersListComponent: PlayerListComponent;
@@ -43,9 +45,10 @@ export default class GameState {
   map: Map;
   cursor: Cursor;
 
-  constructor(user: NewUser, screen: ScreenModel) {
+  constructor(user: NewUser, screen: ScreenModel, store) {
     this.user = user;
     this.screen = screen;
+    this.store = store;
     this.light = new Light(screen);
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
@@ -128,7 +131,7 @@ export default class GameState {
   appendNewBullets(newBullets: BulletModel[]) {
     newBullets.forEach(newBullet => {
       const bullet = new Bullet(newBullet);
-      bullet.init(this.screen);
+      bullet.init(this.screen, this.store);
       this.bullets.push(bullet);
     });
   }
