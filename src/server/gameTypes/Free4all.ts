@@ -189,10 +189,10 @@ export default class Free4all implements GameModel {
   connectPlayer(id: string, newPlayer: NewUser, x = rand(1000), y = rand(1000)): Player {
     const player = new Player(id, newPlayer.name, newPlayer.color, x, y, this.roomName);
     //
-    player.addAndSelectPower(new ReverseBullets());
-    player.addPower(new Accelerator());
+    player.addAndSelectPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
+    player.addPower(new ReverseBullets());
     player.addAndSelectWeapon(new Knife());
     // player.addWeapon(new Pistol({ magazines: 500 }));
     // player.addWeapon(new Grenade({ magazines: 500 }));
