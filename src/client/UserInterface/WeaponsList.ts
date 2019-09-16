@@ -21,9 +21,11 @@ export default class WeaponsListComponent {
           li.style.fontWeight = 'bold';
           li.appendChild(
             document.createTextNode(
-              `${index + 1} ${_weapon.type}: ${selectedWeapon.bulletsInMagazine}/${
-                selectedWeapon.maxBulletsInMagazine
-              } | ${selectedWeapon.magazines}`,
+              `${index + 1} ${_weapon.type}${
+                selectedWeapon.magazines !== null
+                  ? `: ${selectedWeapon.bulletsInMagazine}/${selectedWeapon.maxBulletsInMagazine} | ${selectedWeapon.magazines}`
+                  : ``
+              }`,
             ),
           );
         } else {

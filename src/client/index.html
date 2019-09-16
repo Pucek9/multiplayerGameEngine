@@ -9,12 +9,13 @@
     <div id="menu">
       <div class="grid">
         <div class="box options create-fill">
-          <div class="type-row" style="height: 50%">
-            <input id="control" class="full create-fill" type="button" value="Control" />
-          </div>
-          <div class="type-row" style="height: 50%">
-            <input id="options" class="full create-fill" type="button" value="Options" />
-          </div>
+          <form action="#popupControl" class="type-row" style="height: 50%">
+            <input class="full create-fill" type="submit" value="Control" />
+          </form>
+
+          <form action="#popupOptions" class="type-row" style="height: 50%">
+            <input class="full create-fill" type="submit" value="Options" />
+          </form>
         </div>
 
         <div class="box header">
@@ -130,6 +131,42 @@
     <div id="rightDownPanel" style="display: none">
       <span id="powersHeader">Power:</span>
       <ul id="powersList"></ul>
+    </div>
+
+    <div id="popupControl" class="overlay">
+      <a class="cancel" href="#"></a>
+      <div class="popup">
+        <h2>Control (F7)</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+          <p>W or ↑ - Up</p>
+          <p>S or ↓ - Down</p>
+          <p>A or ← - Left</p>
+          <p>D or → - Right</p>
+
+          <p>1,2,3... - Weapons</p>
+          <p>Mouse Click - Shoot</p>
+
+          <p>Shift + 1,2,3... - Powers</p>
+          <p>Shift (+ Mouse Click) - Use power</p>
+
+          <p>F7 - Control</p>
+          <p>F8 - Options</p>
+          <p>F11 - Fullscreen</p>
+          <p>Escape - Go to main menu</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="popupOptions" class="overlay">
+      <a class="cancel" href="#"></a>
+      <div class="popup">
+        <h2>Options (F8)</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+          <p>Blink while shooting:</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>

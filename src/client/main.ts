@@ -68,13 +68,32 @@ class Main {
   }
 
   onJoinGame() {
-    const userState = store.getState().joinGame;
-    const newPlayer = new NewUser(userState.id, userState.nick, randColor(), userState.chosenGame);
-    socket.emit(API.CREATE_PLAYER, newPlayer);
-    const screen = this.prepareScreen();
-    this.gameState = new GameState(newPlayer, screen);
-    this.registerEvents(this.gameState);
-    this.run();
+    document.body.requestFullscreen().then(() => {
+      const userState = store.getState().joinGame;
+      const newPlayer = new NewUser(
+        userState.id,
+        userState.nick,
+        randColor(),
+        userState.chosenGame,
+      );
+      socket.emit(API.CREATE_PLAYER, newPlayer);
+      const screen = this.prepareScreen();
+      this.gameState = new GameState(newPlayer, screen);
+      this.registerEvents(this.gameState);
+      this.run();
+    });
+  }
+
+  checkFunctionalButton(e: KeyboardEvent) {
+    if (e.key === 'F7') {
+      location.href = location.href.includes('#popupControl') ? '#' : '#popupControl';
+    }
+    if (e.key === 'F8') {
+      location.href = location.href.includes('#popupOptions') ? '#' : '#popupOptions';
+    }
+    if (e.key === 'F11') {
+      document.body.requestFullscreen();
+    }
   }
 
   registerEvents(gameState: GameState) {
@@ -124,6 +143,7 @@ class Main {
       keyDown(e: KeyboardEvent) {
         e.preventDefault();
         if (!e.repeat) {
+          mainInstance.checkFunctionalButton(e);
           gameState.addKey(e);
           socket.emit(API.UPDATE_KEYS, gameState.getKeys());
         }
@@ -148,6 +168,8 @@ class Main {
     window.addEventListener('keyup', this.events.keyUp);
 
     window.addEventListener('wheel', this.events.wheel);
+
+    window.addEventListener('resize', mainInstance.gameState.handleResize, false);
   }
 
   prepareScreen(): ScreenModel {
@@ -171,28 +193,8 @@ class Main {
   }
 
   leaveGame() {
+    location.href = '#';
     location.reload();
-    // cancelAnimationFrame(requestId);
-    // window.removeEventListener('mousedown', this.events.mouseDown);
-    // window.removeEventListener('mousemove', this.events.mouseMove);
-    // window.removeEventListener('keydown', this.events.keyDown);
-    // window.removeEventListener('keyup', this.events.keyUp);
-    // window.removeEventListener('wheel', this.events.wheel);
-    // socket.removeAllListeners(API.ADD_NEW_PLAYER);
-    // socket.removeAllListeners(API.ADD_PLAYERS);
-    // socket.removeAllListeners(API.GET_PLAYERS_STATE);
-    // socket.removeAllListeners(API.GET_BULLETS);
-    // socket.removeAllListeners(API.GET_STATIC_OBJECTS);
-    // socket.removeAllListeners(API.GET_ITEM_GENERATORS);
-    // socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
-    // socket.removeAllListeners(API.DISCONNECT_PLAYER);
-    // socket.removeAllListeners(API.GET_WEAPON_DETAILS);
-    // socket.removeAllListeners(API.GET_POWER_DETAILS);
-    // socket.removeAllListeners(API.LEAVE_GAME);
-    // socket.removeAllListeners(API.DISCONNECT);
-    // this.gameState.dispose();
-    // this.gameState = null;
-    // this.menu.show();
   }
 }
 

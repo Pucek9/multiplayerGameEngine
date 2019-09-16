@@ -82,6 +82,14 @@ export default class GameState {
     }
   }
 
+  handleResize = () => {
+    if (this.camera && this.screen) {
+      this.camera.object.aspect = window.innerWidth / window.innerHeight;
+      this.camera.object.updateProjectionMatrix();
+      this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+    }
+  };
+
   appendPlayers(newPlayers: NewPlayer[]) {
     newPlayers.forEach(newPlayer => {
       const existed = this.players.find(player => player.id === newPlayer.id);
