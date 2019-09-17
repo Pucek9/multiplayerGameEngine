@@ -1,17 +1,23 @@
+import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 import PlayerModel from '../../shared/models/PlayerModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
-import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
+import Light from './Light';
 
 const head = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements IUpdatable {
   public object;
+  private light;
   private initiated = false;
   private screen;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
+
+  setLight(light: Light) {
+    this.light = light;
+  }
 
   setGeometry() {
     this.geometry = new SphereGeometry(this.size, 10, 10, 1);
@@ -74,8 +80,10 @@ export default class Player extends PlayerModel implements IUpdatable {
   update() {
     if (this.isOnScene() && !this.isAlive()) {
       this.remove();
+      this.light && this.light.setColor(0xff0000);
     } else if (!this.isOnScene() && this.isAlive()) {
       this.addToScene();
+      this.light && this.light.setColor(0xffffff);
     } else {
       this.updateBody();
     }

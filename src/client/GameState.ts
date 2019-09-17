@@ -82,6 +82,7 @@ export default class GameState {
       this.camera = new StaticCamera(this.currentPlayer);
       // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
       this.light.init(this.currentPlayer, this.cursor);
+      this.currentPlayer.setLight(this.light);
     }
   }
 
@@ -263,31 +264,5 @@ export default class GameState {
 
   updatePowersInfo(info: { selectedPower; powers; energy }) {
     this.powersListComponent.render(info);
-  }
-
-  dispose() {
-    this.user = null;
-    this.currentPlayer = null;
-    this.light = null;
-    this.camera.remove();
-    this.camera = null;
-    this.playersListComponent.hide();
-    this.weaponsListComponent.hide();
-    this.playersListComponent = null;
-    this.weaponsListComponent = null;
-    this.players = null;
-    this.playersListString = null;
-    this.staticObjects = null;
-    this.itemGenerators = null;
-    this.map = null;
-    this.cursor = null;
-    while (this.screen.scene.children.length > 0) {
-      this.screen.scene.remove(this.screen.scene.children[0]);
-    }
-    this.screen.renderer.dispose();
-    this.screen.renderer.forceContextLoss();
-    this.screen.renderer.context = null;
-    this.screen.renderer.domElement.remove();
-    this.screen.renderer.domElement = null;
   }
 }

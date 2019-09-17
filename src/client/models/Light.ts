@@ -1,7 +1,7 @@
+import { Color, SpotLight } from 'three';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import Cursor from './Cursor';
-import { SpotLight } from 'three';
 
 interface Source {
   x: number;
@@ -18,7 +18,7 @@ export default class Light implements IUpdatable {
   init(source: Source, cursor: Cursor, intensity = 20) {
     this.source = source;
     this.dest = cursor;
-    this.light = new SpotLight(0xffffff, intensity, 700);
+    this.light = new SpotLight(0xff0000, intensity, 700);
     this.update();
     this.light.castShadow = true;
 
@@ -38,5 +38,9 @@ export default class Light implements IUpdatable {
       this.light.target.position.set(this.dest.object.position.x, this.dest.object.position.y, 10);
       this.light.target.updateMatrixWorld(true);
     }
+  }
+
+  setColor(color: number) {
+    this.light.color = new Color(color);
   }
 }
