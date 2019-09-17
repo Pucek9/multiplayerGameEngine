@@ -81,7 +81,7 @@ export default class GameState {
 
       this.camera = new StaticCamera(this.currentPlayer);
       // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
-      this.light.init(this.currentPlayer, this.cursor);
+      this.light.init(this.currentPlayer, this.cursor, 20, 0xff0000);
       this.currentPlayer.setLight(this.light);
     }
   }

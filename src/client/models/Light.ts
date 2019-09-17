@@ -15,10 +15,10 @@ export default class Light implements IUpdatable {
 
   constructor(public screen: ScreenModel) {}
 
-  init(source: Source, cursor: Cursor, intensity = 20) {
+  init(source: Source, cursor: Cursor, intensity = 20, color = 0xffffff) {
     this.source = source;
     this.dest = cursor;
-    this.light = new SpotLight(0xff0000, intensity, 700);
+    this.light = new SpotLight(color, intensity, 700);
     this.update();
     this.light.castShadow = true;
 
