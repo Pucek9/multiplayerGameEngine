@@ -14,6 +14,7 @@ export default class Player extends PlayerModel {
   }
 
   die() {
+    this.timeToRevive = this.baseTimeToRevive;
     this.deaths += 1;
     this.alive = false;
     this.speed = this.baseSpeed;
@@ -21,9 +22,11 @@ export default class Player extends PlayerModel {
   }
 
   revive() {
-    this.alive = true;
-    this.hp = this.baseHp;
-    this.energy = this.baseEnergy;
+    if (this.canRevive()) {
+      this.alive = true;
+      this.hp = this.baseHp;
+      this.energy = this.baseEnergy;
+    }
   }
 
   regenerate(value?: number) {
@@ -174,15 +177,15 @@ export default class Player extends PlayerModel {
   isMoving() {
     const moveKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'W', 'S', 'A', 'D'];
     return moveKeys.some(key => this.keys.has(key));
-    // return (
-    //   this.keys.has('ArrowRight') ||
-    //   this.keys.has('ArrowLeft') ||
-    //   this.keys.has('ArrowUp') ||
-    //   this.keys.has('ArrowDown') ||
-    //   this.keys.has('W') ||
-    //   this.keys.has('S') ||
-    //   this.keys.has('A') ||
-    //   this.keys.has('D')
-    // );
+  }
+
+  decreaseTimeToRevive(time: number = 1) {
+    if (this.timeToRevive > 0) {
+      this.timeToRevive -= time;
+    }
+  }
+
+  canRevive() {
+    return this.timeToRevive === 0;
   }
 }

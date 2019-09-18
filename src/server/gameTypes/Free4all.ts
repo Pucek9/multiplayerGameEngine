@@ -44,6 +44,7 @@ export default class Free4all implements GameModel {
     this.customInterval = setInterval(() => {
       // this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
       this.regeneratePlayers();
+      this.updateTimeForDeadPlayers();
     }, 1000);
   }
 
@@ -194,8 +195,6 @@ export default class Free4all implements GameModel {
     player.addPower(new SlowBullets());
     player.addPower(new ReverseBullets());
     player.addAndSelectWeapon(new Knife());
-    // player.addWeapon(new Pistol({ magazines: 500 }));
-    // player.addWeapon(new Grenade({ magazines: 500 }));
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);
@@ -313,5 +312,11 @@ export default class Free4all implements GameModel {
   detectPlayerCollision(player: Player, direction?: Direction) {
     this.detectPlayerCollisionWithGenerator(player, direction);
     return this.detectPlayerCollisionWithObjects(player, direction);
+  }
+
+  updateTimeForDeadPlayers() {
+    this.players
+      .filter(player => !player.isAlive())
+      .forEach(player => player.decreaseTimeToRevive());
   }
 }

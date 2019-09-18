@@ -13,6 +13,7 @@ export default class PlayerModel implements ICircle {
   speed: number;
   size: number;
   energy: number;
+  timeToRevive: number;
 
   constructor(
     public id: string,
@@ -25,6 +26,7 @@ export default class PlayerModel implements ICircle {
     public baseSize: number = 20,
     public baseSpeed: number = 3,
     public baseEnergy: number = 100,
+    public baseTimeToRevive: number = 5,
     public kills: number = 0,
     public deaths: number = 0,
   ) {
@@ -32,5 +34,6 @@ export default class PlayerModel implements ICircle {
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
     this.energy = this.baseEnergy;
+    this.timeToRevive = 0;
   }
 }
