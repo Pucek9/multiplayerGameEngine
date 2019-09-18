@@ -205,6 +205,10 @@ export default class GameState {
     }
   }
 
+  updateTimeToRevive(time: number) {
+    console.log(time);
+  }
+
   removePlayer(id: string) {
     const disconnected = this.players.find((player: Player) => player.id === id);
     if (disconnected) {

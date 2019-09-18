@@ -114,6 +114,8 @@ class Main {
 
     socket.on(API.UPDATE_ITEM_GENERATOR, gameState.updateItemGenerator.bind(gameState));
 
+    socket.on(API.UPDATE_TIME_TO_REVIVE, gameState.updateTimeToRevive.bind(gameState));
+
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
     socket.on(API.GET_WEAPON_DETAILS, gameState.updateWeaponInfo.bind(gameState));

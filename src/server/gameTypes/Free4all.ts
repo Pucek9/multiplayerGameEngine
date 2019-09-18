@@ -316,7 +316,10 @@ export default class Free4all implements GameModel {
 
   updateTimeForDeadPlayers() {
     this.players
-      .filter(player => !player.isAlive())
-      .forEach(player => player.decreaseTimeToRevive());
+      .filter(player => !player.isAlive() && player.timeToRevive !== 0)
+      .forEach(player => {
+        player.decreaseTimeToRevive();
+        this.emitter.updateTimeToRevive(player);
+      });
   }
 }

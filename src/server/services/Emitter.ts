@@ -35,6 +35,10 @@ export default class Emitter {
     this.socketIo.to(roomName).emit(API.UPDATE_ITEM_GENERATOR, itemGenerator);
   }
 
+  updateTimeToRevive(player) {
+    this.socketIo.to(player.id).emit(API.UPDATE_TIME_TO_REVIVE, player.timeToRevive);
+  }
+
   disconnectPlayer(roomName: string, disconnected: Player) {
     const id = disconnected.id;
     console.log(`[${id}] Player '${disconnected.name}' left '${roomName}'`);
