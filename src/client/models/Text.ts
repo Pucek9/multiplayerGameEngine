@@ -16,8 +16,8 @@ export default class Text implements IUpdatable {
   private material: MeshPhongMaterial;
   public offsetX = -20;
   public offsetY = 30;
-  public text = '';
   public color = 0x4444fff;
+  public text: string;
 
   constructor() {}
 
