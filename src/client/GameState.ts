@@ -22,6 +22,7 @@ import DynamicCamera from './models/DynamicCamera';
 import ICamera from './interfaces/ICamera';
 import Power from '../shared/models/Power';
 import BulletModel from '../shared/models/BulletModel';
+import Text from './models/Text';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -44,6 +45,7 @@ export default class GameState {
   itemGenerators: Item[] = [];
   map: Map;
   cursor: Cursor;
+  text: Text;
 
   constructor(user: NewUser, screen: ScreenModel, store) {
     this.user = user;
@@ -53,10 +55,11 @@ export default class GameState {
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
+    this.text = new Text();
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
-
     this.map.init(this.screen);
+    this.text.init(this.screen);
     this.cursor.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
@@ -147,6 +150,8 @@ export default class GameState {
         };
         this.cursor.x -= diff.x;
         this.cursor.y -= diff.y;
+        this.text.x = foundPlayer.x;
+        this.text.y = foundPlayer.y + 100;
       }
       if (foundPlayer) {
         const size = player.size;
@@ -207,6 +212,9 @@ export default class GameState {
 
   updateTimeToRevive(time: number) {
     console.log(time);
+    // const text = new TextGeometry(time.toString(), { size: 80 });
+    // @ts-ignore
+    // this.text.text = time.toString();
   }
 
   removePlayer(id: string) {
@@ -231,8 +239,8 @@ export default class GameState {
 
   updateObjects() {
     if (this.currentPlayer) {
-      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light].forEach(object =>
-        object.update(),
+      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light, this.text].forEach(
+        object => object.update(),
       );
     }
   }
