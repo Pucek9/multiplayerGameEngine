@@ -150,8 +150,8 @@ export default class GameState {
         };
         this.cursor.x -= diff.x;
         this.cursor.y -= diff.y;
-        this.text.x = foundPlayer.x;
-        this.text.y = foundPlayer.y + 100;
+        this.text.x = this.cursor.x + this.text.offsetX;
+        this.text.y = this.cursor.y + this.text.offsetY;
       }
       if (foundPlayer) {
         const size = player.size;
@@ -211,10 +211,12 @@ export default class GameState {
   }
 
   updateTimeToRevive(time: number) {
-    console.log(time);
-    // const text = new TextGeometry(time.toString(), { size: 80 });
-    // @ts-ignore
-    // this.text.text = time.toString();
+    if (time > 0) {
+      this.text.show();
+      this.text.setText(time.toString());
+    } else {
+      this.text.hide();
+    }
   }
 
   removePlayer(id: string) {
