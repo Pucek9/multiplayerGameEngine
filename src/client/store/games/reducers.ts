@@ -1,37 +1,37 @@
-import * as GamesListActions from './actions';
-import { initialState, NewGameState } from './state';
+import * as GamesActions from './actions';
+import { initialState, GamesState } from './state';
 
-export function newGameReducer(
-  state: NewGameState = initialState,
+export function gamesReducer(
+  state: GamesState = initialState,
   { type, payload }: { type: string; payload: any },
 ) {
   switch (type) {
-    case GamesListActions.ADD_GAME:
+    case GamesActions.ADD_GAME:
       return {
         ...state,
         list: [...state.list, payload],
         roomName: '',
       };
 
-    case GamesListActions.SET_GAME_NAME:
+    case GamesActions.SET_GAME_NAME:
       return {
         ...state,
         roomName: payload,
       };
 
-    case GamesListActions.SET_GAME_TYPE:
+    case GamesActions.SET_GAME_TYPE:
       return {
         ...state,
         type: payload,
       };
 
-    case GamesListActions.SET_GAME_MAP:
+    case GamesActions.SET_GAME_MAP:
       return {
         ...state,
         map: payload,
       };
 
-    case GamesListActions.CLEAR_GAMES_LIST:
+    case GamesActions.CLEAR_GAMES_LIST:
       return {
         ...state,
         list: [],

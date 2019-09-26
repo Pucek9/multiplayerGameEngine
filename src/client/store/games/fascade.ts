@@ -1,9 +1,9 @@
 import { Store } from 'redux';
 import * as GamesListActions from './actions';
-import { NewGameState } from './state';
+import { GamesState } from './state';
 
-export class GamesListService {
-  constructor(public store: Store<NewGameState>) {}
+export class GamesService {
+  constructor(public store: Store) {}
 
   addGame(roomName: string, type: string, map: string, count: number) {
     this.store.dispatch({
@@ -37,5 +37,9 @@ export class GamesListService {
     this.store.dispatch({
       type: GamesListActions.CLEAR_GAMES_LIST,
     });
+  }
+
+  getState(): GamesState {
+    return this.store.getState().games;
   }
 }

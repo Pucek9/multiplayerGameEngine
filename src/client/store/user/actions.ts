@@ -17,4 +17,4 @@ export class ChooseGame {
   constructor(public payload) {}
 }
 
-export type JoinGameActions = SetNick | SetId | ChooseGame;
+export type UserActions = SetNick | SetId | ChooseGame;

@@ -1,9 +1,9 @@
 import { Store } from 'redux';
 import * as JoinGameActions from './actions';
-import { JoinGameState } from './state';
+import { UserState } from './state';
 
-export class JoinGameService {
-  constructor(public store: Store<JoinGameState>) {}
+export class UserService {
+  constructor(public store: Store) {}
 
   setNick(nick) {
     this.store.dispatch({ type: JoinGameActions.SET_NICK, payload: nick });
@@ -17,7 +17,7 @@ export class JoinGameService {
     this.store.dispatch({ type: JoinGameActions.CHOOSE_GAME, payload: chosenGame });
   }
 
-  // get() {
-  //   return this.store.getState().joinGame;
-  // }
+  getState(): UserState {
+    return this.store.getState().user;
+  }
 }

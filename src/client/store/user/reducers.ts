@@ -1,22 +1,22 @@
-import * as JoinGameActions from './actions';
-import { initialState, JoinGameState } from './state';
+import * as UserActions from './actions';
+import { initialState, UserState } from './state';
 
-export function joinGameReducer(
-  state: JoinGameState = initialState,
+export function userReducer(
+  state: UserState = initialState,
   { type, payload }: { type: string; payload: any },
 ) {
   switch (type) {
-    case JoinGameActions.SET_NICK:
+    case UserActions.SET_NICK:
       return {
         ...state,
         nick: payload,
       };
-    case JoinGameActions.SET_ID:
+    case UserActions.SET_ID:
       return {
         ...state,
         id: payload,
       };
-    case JoinGameActions.CHOOSE_GAME:
+    case UserActions.CHOOSE_GAME:
       return {
         ...state,
         chosenGame: payload,

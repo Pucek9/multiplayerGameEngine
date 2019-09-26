@@ -1,6 +1,6 @@
 import { Unsubscribe } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
-import { store, gamesListService, joinGameService, optionsService } from '../store/store';
+import { store, gamesService, userService, optionsService } from '../store/store';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -37,19 +37,19 @@ export default class MenuComponent {
     });
 
     gameNameInput.addEventListener('keyup', function() {
-      gamesListService.setGameName(gameNameInput.value);
+      gamesService.setGameName(gameNameInput.value);
     });
 
     gameTypeInput.addEventListener('change', function() {
-      gamesListService.setGameType(gameTypeInput.value);
+      gamesService.setGameType(gameTypeInput.value);
     });
 
     gameMapInput.addEventListener('change', function() {
-      gamesListService.setGameMap(gameMapInput.value);
+      gamesService.setGameMap(gameMapInput.value);
     });
 
     nickInput.addEventListener('keyup', function() {
-      joinGameService.setNick(nickInput.value);
+      userService.setNick(nickInput.value);
     });
 
     blinkingCheckbox.addEventListener('change', function() {
@@ -60,8 +60,8 @@ export default class MenuComponent {
     });
   }
 
-  renderTable(state) {
-    state.newGame.list.forEach((game: GameInstance) => {
+  renderTable(user, games) {
+    games.list.forEach((game: GameInstance) => {
       const roomName = document.createElement('td');
       roomName.appendChild(document.createTextNode(game.roomName));
       const type = document.createElement('td');
@@ -72,9 +72,9 @@ export default class MenuComponent {
       count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
-        joinGameService.chooseGame(game.roomName);
+        userService.chooseGame(game.roomName);
       });
-      if (state.joinGame.chosenGame === game.roomName) {
+      if (user.chosenGame === game.roomName) {
         row.classList.add('active');
       }
       // @ts-ignore
@@ -86,18 +86,16 @@ export default class MenuComponent {
 
   render() {
     gamesListTable.innerHTML = '';
-    const state = store.getState();
-    console.log(state);
-    this.renderTable(state);
-    const nickEmpty = state.joinGame.nick === '';
-    const chosenGameEmpty = state.joinGame.chosenGame === null;
-    const idEmpty = state.joinGame.id === null;
-    const roomNameEmpty = state.newGame.roomName === '';
-    const roomNameDuplicate = state.newGame.list.find(
-      game => game.roomName === state.newGame.roomName,
-    );
-    const typeEmpty = state.newGame.type === null;
-    const mapEmpty = state.newGame.map === null;
+    const user = userService.getState();
+    const games = gamesService.getState();
+    this.renderTable(user, games);
+    const nickEmpty = user.nick === '';
+    const chosenGameEmpty = user.chosenGame === null;
+    const idEmpty = user.id === null;
+    const roomNameEmpty = games.roomName === '';
+    const roomNameDuplicate = Boolean(games.list.find(game => game.roomName === games.roomName));
+    const typeEmpty = games.type === null;
+    const mapEmpty = games.map === null;
 
     joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
     createButton.disabled = roomNameEmpty || typeEmpty || mapEmpty || roomNameDuplicate;

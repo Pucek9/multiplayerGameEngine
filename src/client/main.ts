@@ -9,7 +9,7 @@ import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
-import { store, gamesListService, joinGameService } from './store/store';
+import { gamesService, userService } from './store/store';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
@@ -36,17 +36,17 @@ class Main {
     mainInstance = this;
 
     socket.on(API.WELCOME_NEW_PLAYER, function(id: string) {
-      joinGameService.setId(id);
+      userService.setId(id);
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      gamesListService.clearGamesList();
+      gamesService.clearGamesList();
       gamesList.forEach(game =>
-        gamesListService.addGame(game.roomName, game.type, game.map, game.count),
+        gamesService.addGame(game.roomName, game.type, game.map, game.count),
       );
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1].roomName;
-        joinGameService.chooseGame(game);
+        userService.chooseGame(game);
         mainInstance.menu.render();
       }
     });
@@ -55,12 +55,12 @@ class Main {
   onAddNewGame({ roomName, type, map }: NewGame) {
     const newGame = new NewGame(roomName, type, map);
     socket.emit(API.CREATE_GAME, newGame);
-    joinGameService.chooseGame(roomName);
+    userService.chooseGame(roomName);
   }
 
   onJoinGame() {
     document.body.requestFullscreen().then(() => {
-      const userState = store.getState().joinGame;
+      const userState = userService.getState();
       const newPlayer = new NewUser(
         userState.id,
         userState.nick,
