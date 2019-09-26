@@ -2,9 +2,13 @@ interface GameState {
   roomName: string;
   type: string;
   map: string;
+  count: number;
 }
 
-export interface GamesState extends GameState {
+export interface GamesState {
+  roomName: string;
+  type: string;
+  map: string;
   list: GameState[];
 }
 
