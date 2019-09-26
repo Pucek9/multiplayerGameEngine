@@ -1,4 +1,3 @@
-import { Store } from 'redux';
 import Player from './models/Player';
 import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
@@ -31,7 +30,6 @@ export default class GameState {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  store: Store;
   camera: ICamera;
   light: Light;
   playersListComponent: PlayerListComponent;
