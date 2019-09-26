@@ -1,5 +1,4 @@
 import { combineReducers, createStore, Store } from 'redux';
-
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { newGameReducer } from './newGame/reducers';

@@ -1,9 +1,11 @@
 import * as JoinGameActions from './actions';
 import { initialState, JoinGameState } from './state';
 
-export function joinGameReducer(state: JoinGameState = initialState, action) {
-  const payload = action.payload;
-  switch (action.type) {
+export function joinGameReducer(
+  state: JoinGameState = initialState,
+  { type, payload }: { type: string; payload: any },
+) {
+  switch (type) {
     case JoinGameActions.SET_NICK:
       return {
         ...state,

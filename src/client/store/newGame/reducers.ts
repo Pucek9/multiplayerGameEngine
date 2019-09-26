@@ -1,9 +1,11 @@
 import * as GamesListActions from './actions';
 import { initialState, NewGameState } from './state';
 
-export function newGameReducer(state: NewGameState = initialState, action) {
-  const payload = action.payload;
-  switch (action.type) {
+export function newGameReducer(
+  state: NewGameState = initialState,
+  { type, payload }: { type: string; payload: any },
+) {
+  switch (type) {
     case GamesListActions.ADD_GAME:
       return {
         ...state,
