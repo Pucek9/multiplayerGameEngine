@@ -4,7 +4,7 @@ import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
 import Light from './Light';
 import Cursor from './Cursor';
-import { Store } from 'redux';
+import { store } from '../store/store';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
@@ -24,7 +24,7 @@ export default class Bullet extends BulletModel implements IUpdatable {
     this.object.geometry = new BufferGeometry().fromGeometry(this.geometry);
   }
 
-  init(screen: ScreenModel, store: Store) {
+  init(screen: ScreenModel) {
     const state = store.getState();
     this.setGeometry();
     this.setMaterial();

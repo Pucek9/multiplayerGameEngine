@@ -47,10 +47,9 @@ export default class GameState {
   cursor: Cursor;
   text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel, store) {
+  constructor(user: NewUser, screen: ScreenModel) {
     this.user = user;
     this.screen = screen;
-    this.store = store;
     this.light = new Light(screen);
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
@@ -135,7 +134,7 @@ export default class GameState {
   appendNewBullets(newBullets: BulletModel[]) {
     newBullets.forEach(newBullet => {
       const bullet = new Bullet(newBullet);
-      bullet.init(this.screen, this.store);
+      bullet.init(this.screen);
       this.bullets.push(bullet);
     });
   }

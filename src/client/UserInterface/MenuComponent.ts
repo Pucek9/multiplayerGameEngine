@@ -1,14 +1,6 @@
-import {
-  chooseGame,
-  setBlinking,
-  setBulletShadow,
-  setGameMap,
-  setGameName,
-  setGameType,
-  setNick,
-} from '../store/actions';
-import { Store } from 'redux';
+import { Unsubscribe } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
+import { store, gamesListService, joinGameService, optionsService } from '../store/store';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -26,11 +18,10 @@ declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
 export default class MenuComponent {
-  private store: Store;
+  unsubscribeRender: Unsubscribe;
 
-  constructor(main, store: Store) {
-    this.store = store;
-    const unsubscribeRender = store.subscribe(() => this.render());
+  constructor(main) {
+    this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', function() {
       const roomName = gameNameInput.value;
@@ -46,26 +37,26 @@ export default class MenuComponent {
     });
 
     gameNameInput.addEventListener('keyup', function() {
-      store.dispatch(setGameName(gameNameInput.value));
+      gamesListService.setGameName(gameNameInput.value);
     });
 
     gameTypeInput.addEventListener('change', function() {
-      store.dispatch(setGameType(gameTypeInput.value));
+      gamesListService.setGameType(gameTypeInput.value);
     });
 
     gameMapInput.addEventListener('change', function() {
-      store.dispatch(setGameMap(gameMapInput.value));
+      gamesListService.setGameMap(gameMapInput.value);
     });
 
     nickInput.addEventListener('keyup', function() {
-      store.dispatch(setNick(nickInput.value));
+      joinGameService.setNick(nickInput.value);
     });
 
     blinkingCheckbox.addEventListener('change', function() {
-      store.dispatch(setBlinking(blinkingCheckbox.checked));
+      optionsService.setBlinking(blinkingCheckbox.checked);
     });
     bulletShadowCheckbox.addEventListener('change', function() {
-      store.dispatch(setBulletShadow(bulletShadowCheckbox.checked));
+      optionsService.setBulletShadow(bulletShadowCheckbox.checked);
     });
   }
 
@@ -81,7 +72,7 @@ export default class MenuComponent {
       count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
-        this.store.dispatch(chooseGame(game.roomName));
+        joinGameService.chooseGame(game.roomName);
       });
       if (state.joinGame.chosenGame === game.roomName) {
         row.classList.add('active');
@@ -95,7 +86,7 @@ export default class MenuComponent {
 
   render() {
     gamesListTable.innerHTML = '';
-    const state = this.store.getState();
+    const state = store.getState();
     this.renderTable(state);
     const nickEmpty = state.joinGame.nick === '';
     const chosenGameEmpty = state.joinGame.chosenGame === null;
@@ -118,5 +109,10 @@ export default class MenuComponent {
 
   show() {
     menu.style.display = 'block';
+  }
+
+  hide() {
+    menu.style.display = 'none';
+    this.unsubscribeRender();
   }
 }

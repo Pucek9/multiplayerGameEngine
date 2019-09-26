@@ -1,10 +1,6 @@
-import { combineReducers, createStore } from 'redux';
-import devToolsEnhancer from 'remote-redux-devtools';
 import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
-import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
-import { joinGameReducer, newGameReducer, optionsReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
 import GameState from './GameState';
 import './style.scss';
@@ -13,6 +9,7 @@ import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
+import { store, gamesListService, joinGameService } from './store/store';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
@@ -26,13 +23,6 @@ function randColor() {
   return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
-const app = combineReducers({
-  newGame: newGameReducer,
-  joinGame: joinGameReducer,
-  options: optionsReducer,
-});
-const store = createStore(app, devToolsEnhancer());
-
 let mainInstance: Main;
 let requestId: number;
 
@@ -42,21 +32,21 @@ class Main {
   private events: any;
 
   constructor() {
-    this.menu = new MenuComponent(this, store);
+    this.menu = new MenuComponent(this);
     mainInstance = this;
 
     socket.on(API.WELCOME_NEW_PLAYER, function(id: string) {
-      store.dispatch(setId(id));
+      joinGameService.setId(id);
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      store.dispatch(clearGamesList());
+      gamesListService.clearGamesList();
       gamesList.forEach(game =>
-        store.dispatch(addGame(game.roomName, game.type, game.map, game.count)),
+        gamesListService.addGame(game.roomName, game.type, game.map, game.count),
       );
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1].roomName;
-        store.dispatch(chooseGame(game));
+        joinGameService.chooseGame(game);
         mainInstance.menu.render();
       }
     });
@@ -65,7 +55,7 @@ class Main {
   onAddNewGame({ roomName, type, map }: NewGame) {
     const newGame = new NewGame(roomName, type, map);
     socket.emit(API.CREATE_GAME, newGame);
-    store.dispatch(chooseGame(roomName));
+    joinGameService.chooseGame(roomName);
   }
 
   onJoinGame() {
@@ -79,8 +69,9 @@ class Main {
       );
       socket.emit(API.CREATE_PLAYER, newPlayer);
       const screen = this.prepareScreen();
-      this.gameState = new GameState(newPlayer, screen, store);
+      this.gameState = new GameState(newPlayer, screen);
       this.registerEvents(this.gameState);
+      this.menu.hide();
       this.run();
     });
   }
