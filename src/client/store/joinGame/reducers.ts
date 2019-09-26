@@ -3,8 +3,7 @@ import { initialState, JoinGameState } from './state';
 
 export function joinGameReducer(state: JoinGameState = initialState, action) {
   const payload = action.payload;
-
-  switch (action.payload) {
+  switch (action.type) {
     case JoinGameActions.SET_NICK:
       return {
         ...state,

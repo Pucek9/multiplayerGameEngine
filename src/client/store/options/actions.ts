@@ -11,4 +11,4 @@ export class SetBulletShadow {
   constructor(public payload) {}
 }
 
-// export type OptionsActions = SET_BLINKING | SET_BULLET_SHADOW;
+export type OptionsActions = SetBlinking | SetBulletShadow;

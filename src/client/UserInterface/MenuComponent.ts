@@ -87,6 +87,7 @@ export default class MenuComponent {
   render() {
     gamesListTable.innerHTML = '';
     const state = store.getState();
+    console.log(state);
     this.renderTable(state);
     const nickEmpty = state.joinGame.nick === '';
     const chosenGameEmpty = state.joinGame.chosenGame === null;

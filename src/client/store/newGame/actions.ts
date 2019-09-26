@@ -29,9 +29,4 @@ export class ClearGamesList {
   constructor() {}
 }
 
-// export type GamesListActions =
-//   | ADD_GAME
-//   | SET_GAME_NAME
-//   | SET_GAME_TYPE
-//   | SET_GAME_MAP
-//   | CLEAR_GAMES_LIST;
+export type GamesListActions = AddGame | SetGameName | SetGameType | SetGameMap | ClearGamesList;

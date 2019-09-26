@@ -10,7 +10,7 @@ export class JoinGameService {
   }
 
   setId(id) {
-    this.store.dispatch({ type: JoinGameActions.SET_NICK, payload: id });
+    this.store.dispatch({ type: JoinGameActions.SET_ID, payload: id });
   }
 
   chooseGame(chosenGame) {

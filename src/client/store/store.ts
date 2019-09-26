@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
 
 export const store: Store = createStore(rootReducer, composeWithDevTools());
 
-export type AppState = ReturnType<typeof rootReducer>;
+// export type AppState = ReturnType<typeof rootReducer>;
 
 export const gamesListService = new GamesListService(store);
 export const joinGameService = new JoinGameService(store);
