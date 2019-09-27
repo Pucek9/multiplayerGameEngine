@@ -78,10 +78,10 @@ class Main {
 
   checkFunctionalButton(e: KeyboardEvent) {
     if (e.key === 'F7') {
-      location.href = location.href.includes('#popupControl') ? '#' : '#popupControl';
+      location.hash = location.hash === '#popupControl' ? '' : '#popupControl';
     }
     if (e.key === 'F8') {
-      location.href = location.href.includes('#popupOptions') ? '#' : '#popupOptions';
+      location.hash = location.hash === '#popupOptions' ? '' : '#popupOptions';
     }
     if (e.key === 'F11') {
       document.body.requestFullscreen();
@@ -187,7 +187,7 @@ class Main {
   }
 
   leaveGame() {
-    location.href = '#';
+    location.hash = '';
     location.reload();
   }
 }
