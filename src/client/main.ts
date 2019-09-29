@@ -128,6 +128,12 @@ class Main {
         const mouseClick = gameState.getMouseCoordinates();
         socket.emit(API.MOUSE_CLICK, mouseClick);
       },
+      mouseUp(e: MouseEvent) {
+        e.preventDefault();
+        const mouseClick = gameState.getMouseCoordinates();
+        socket.emit(API.MOUSE_UP, mouseClick);
+      },
+
       mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
         if (mouseCoordinates) {
@@ -154,6 +160,8 @@ class Main {
     };
 
     window.addEventListener('mousedown', this.events.mouseDown);
+
+    window.addEventListener('mouseup', this.events.mouseUp);
 
     window.addEventListener('mousemove', this.events.mouseMove, false);
 

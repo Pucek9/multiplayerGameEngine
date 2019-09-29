@@ -88,6 +88,9 @@ function connection(socket: Socket) {
     socket.on(API.MOUSE_CLICK, (mouseClick: MouseCoordinates) => {
       gameState.mouseClick(mouseClick);
     });
+    socket.on(API.MOUSE_UP, (mouseClick: MouseCoordinates) => {
+      gameState.mouseUp(mouseClick);
+    });
     socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
       gameState.updatePlayerDirection(mouseCoordinates);
     });

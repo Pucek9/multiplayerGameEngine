@@ -49,5 +49,7 @@ export default interface GameModel {
 
   mouseClick(mouseClick: MouseCoordinates);
 
+  mouseUp(mouseClick: MouseCoordinates);
+
   generateBullets(bullets: Bullet[]);
 }

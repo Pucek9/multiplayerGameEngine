@@ -6,6 +6,7 @@ import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
+  public mouse = false;
   public regeneration = 2.5;
   private lastDir: Array<Dir>;
 
@@ -27,6 +28,18 @@ export default class Player extends PlayerModel {
       this.hp = this.baseHp;
       this.energy = this.baseEnergy;
     }
+  }
+
+  setMouseDown() {
+    this.mouse = true;
+  }
+
+  setMouseUp() {
+    this.mouse = false;
+  }
+
+  isMouseDown() {
+    return this.mouse;
   }
 
   regenerate(value?: number) {

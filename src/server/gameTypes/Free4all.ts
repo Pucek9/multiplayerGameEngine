@@ -233,6 +233,7 @@ export default class Free4all implements GameModel {
   mouseClick(mouseClick: MouseCoordinates) {
     const player = this.getPlayer(mouseClick.owner);
     if (player.isAlive()) {
+      player.setMouseDown();
       if (player.selectedPower instanceof Teleport && player.keys.has('Shift')) {
         player.usePower(this, mouseClick);
         this.emitPowerInfo(player);
@@ -245,6 +246,13 @@ export default class Free4all implements GameModel {
       }
     } else {
       this.revivePlayer(mouseClick.owner);
+    }
+  }
+
+  mouseUp(mouseCoordinates: MouseCoordinates) {
+    const player = this.getPlayer(mouseCoordinates.owner);
+    if (player.isAlive()) {
+      player.setMouseUp();
     }
   }
 

@@ -50,6 +50,7 @@ export default class Emitter {
     if (socket) {
       socket.removeAllListeners(API.UPDATE_KEYS);
       socket.removeAllListeners(API.MOUSE_CLICK);
+      socket.removeAllListeners(API.MOUSE_UP);
       socket.removeAllListeners(API.UPDATE_DIRECTION);
       socket.leave(roomName);
     }
