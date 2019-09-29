@@ -39,7 +39,7 @@ export default class Grenade extends Weapon {
       if (game) {
         const grenadeExplosion = new GrenadeExplosion();
         game.generateBullets(
-          grenadeExplosion.generateBullets({
+          grenadeExplosion.prepareBullets({
             targetX: this.x,
             targetY: this.y,
             fromX: this.x,
@@ -58,7 +58,7 @@ export default class Grenade extends Weapon {
     Object.assign(this, params);
   }
 
-  generateBullets(bulletData: BulletData) {
+  prepareBullets(bulletData: BulletData) {
     return [
       new Bullet({
         owner: bulletData.owner,

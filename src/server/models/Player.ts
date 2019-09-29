@@ -8,6 +8,7 @@ export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public mouse = false;
   public regeneration = 2.5;
+  public cursor = { x: 0, y: 0 };
   private lastDir: Array<Dir>;
 
   isAlive() {
@@ -77,35 +78,41 @@ export default class Player extends PlayerModel {
 
   goLeft() {
     this.x -= this.speed;
+    this.cursor.x -= this.speed;
     this.lastDir = [Dir.LEFT];
   }
 
   goRight() {
     this.x += this.speed;
+    this.cursor.x += this.speed;
     this.lastDir = [Dir.RIGHT];
   }
 
   goDown() {
     this.y += this.speed;
+    this.cursor.y += this.speed;
     this.lastDir = [Dir.DOWN];
   }
 
   goUp() {
     this.y -= this.speed;
+    this.cursor.y -= this.speed;
     this.lastDir = [Dir.UP];
   }
 
-  shoot(mouseClick: MouseCoordinates): Bullet[] {
-    return this.selectedWeapon
-      ? this.selectedWeapon.shoot({
+  shoot(mouseClick: MouseCoordinates, game) {
+    this.selectedWeapon &&
+      this.selectedWeapon.shoot(
+        {
           ...mouseClick,
           owner: this,
           fromX: this.x + this.size * Math.cos(this.direction),
           fromY: this.y + this.size * Math.sin(this.direction),
           dir: this.isMoving() ? this.lastDir : [],
           size: this.size,
-        })
-      : [];
+        },
+        game,
+      );
   }
 
   addWeapon(weapon) {
@@ -114,6 +121,7 @@ export default class Player extends PlayerModel {
 
   selectWeapon(index: number) {
     if (this.weapons[index]) {
+      this.setMouseUp();
       this.selectedWeapon = this.weapons[index];
     }
   }
@@ -200,5 +208,12 @@ export default class Player extends PlayerModel {
 
   canRevive() {
     return this.timeToRevive === 0;
+  }
+
+  updateDirection(mouseCoordinates: MouseCoordinates) {
+    this.cursor = { x: mouseCoordinates.targetX, y: mouseCoordinates.targetY };
+    const dx = this.cursor.x - this.x;
+    const dy = this.cursor.y - this.y;
+    this.direction = Math.atan2(dy, dx); // - 80;
   }
 }

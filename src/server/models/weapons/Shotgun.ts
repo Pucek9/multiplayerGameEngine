@@ -24,7 +24,7 @@ export default class Shotgun extends Weapon {
     super();
     Object.assign(this, params);
   }
-  generateBullets(bulletData: BulletData): Bullet[] {
+  prepareBullets(bulletData: BulletData): Bullet[] {
     const commonBulletInfo = {
       owner: bulletData.owner,
       fromX: bulletData.fromX,

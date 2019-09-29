@@ -24,7 +24,7 @@ export default class Knife extends Weapon {
     Object.assign(this, params);
   }
 
-  generateBullets(bulletData: BulletData) {
+  prepareBullets(bulletData: BulletData) {
     return [
       new Bullet({
         owner: bulletData.owner,

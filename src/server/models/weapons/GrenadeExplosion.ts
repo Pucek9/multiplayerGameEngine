@@ -27,7 +27,7 @@ export default class GrenadeExplosion extends Weapon {
     super();
   }
 
-  generateBullets(bulletData: BulletData): Bullet[] {
+  prepareBullets(bulletData: BulletData): Bullet[] {
     const commonBulletInfo = {
       owner: bulletData.owner,
       fromX: bulletData.fromX,

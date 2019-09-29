@@ -20,6 +20,7 @@ import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
 import SteeringService from '../services/Steering';
+import Ak47 from '../models/weapons/Ak47';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -147,13 +148,7 @@ export default class Free4all implements GameModel {
   shoot(mouseClick: MouseCoordinates) {
     const owner = this.getPlayer(mouseClick.owner);
     if (owner) {
-      const bullets = owner.shoot(mouseClick);
-      if (bullets && bullets.length > 0) {
-        return {
-          owner,
-          bullets,
-        };
-      }
+      owner.shoot(mouseClick, this);
     }
   }
 
@@ -195,6 +190,7 @@ export default class Free4all implements GameModel {
     player.addPower(new SlowBullets());
     player.addPower(new ReverseBullets());
     player.addAndSelectWeapon(new Knife());
+    player.addWeapon(new Ak47());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);
@@ -224,9 +220,7 @@ export default class Free4all implements GameModel {
   updatePlayerDirection(mouseCoordinates: MouseCoordinates) {
     const owner = this.getPlayer(mouseCoordinates.owner);
     if (owner) {
-      const dx = mouseCoordinates.targetX - owner.x;
-      const dy = mouseCoordinates.targetY - owner.y;
-      owner.direction = Math.atan2(dy, dx); // - 80;
+      owner.updateDirection(mouseCoordinates);
     }
   }
 
@@ -238,11 +232,7 @@ export default class Free4all implements GameModel {
         player.usePower(this, mouseClick);
         this.emitPowerInfo(player);
       } else {
-        const shoot = this.shoot(mouseClick);
-        if (shoot) {
-          this.generateBullets(shoot.bullets);
-          this.emitWeaponInfo(shoot.owner);
-        }
+        this.shoot(mouseClick);
       }
     } else {
       this.revivePlayer(mouseClick.owner);
