@@ -20,7 +20,6 @@ import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
 import SteeringService from '../services/Steering';
-import Ak47 from '../models/weapons/Ak47';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -190,7 +189,6 @@ export default class Free4all implements GameModel {
     player.addPower(new SlowBullets());
     player.addPower(new ReverseBullets());
     player.addAndSelectWeapon(new Knife());
-    player.addWeapon(new Ak47());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
     this.players.push(player);

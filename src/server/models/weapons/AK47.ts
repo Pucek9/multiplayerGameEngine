@@ -3,7 +3,7 @@ import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
 
 export default class Ak47 extends Weapon {
-  type = 'Ak47';
+  type = 'AK47';
   magazines = 5;
   maxBulletsInMagazine = 30;
   bulletsInMagazine = 30;

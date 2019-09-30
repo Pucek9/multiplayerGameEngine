@@ -9,6 +9,7 @@ import { Math } from 'three';
 const loader = new FBXLoader();
 const models = {
   Shotgun: { scale: 0.07, color: 'black' },
+  AK47: { scale: 0.07, color: 'black' },
   Resizer: { scale: 0.06, color: 'brown' },
   Pistol: { scale: 0.03, color: 'black' },
   AidKit: { scale: 0.22 },
