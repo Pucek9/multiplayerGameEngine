@@ -1,8 +1,8 @@
-import Power from '../../../shared/models/Power';
 import Player from '../Player';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
+import ClickPower from './ClickPower';
 
-export default class Teleport extends Power {
+export default class Teleport extends ClickPower {
   type = 'Teleport';
   cost = 25;
 

@@ -3,8 +3,9 @@ import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';
 import { Direction } from '../../../shared/models/Direction';
 import SlowBullets from './SlowBullets';
+import Aura from './Aura';
 
-export default class ReverseBullets extends SlowBullets {
+export default class ReverseBullets extends SlowBullets implements Aura {
   type = 'ReverseBullets';
   cost = 0.03;
 

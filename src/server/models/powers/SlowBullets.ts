@@ -1,10 +1,10 @@
-import Power from '../../../shared/models/Power';
 import Player from '../Player';
 import Bullet from '../Bullet';
 import collisionDetector from '../../services/CollisionDetector';
 import { Direction } from '../../../shared/models/Direction';
+import Aura from './Aura';
 
-export default class SlowBullets extends Power {
+export default class SlowBullets extends Aura {
   type = 'SlowBullets';
   size = 70;
   cost = 0.01;

@@ -20,6 +20,8 @@ import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
 import SteeringService from '../services/Steering';
+import Aura from '../models/powers/Aura';
+import ClickPower from '../models/powers/ClickPower';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -73,7 +75,7 @@ export default class Free4all implements GameModel {
     return this.players.find(player => player.id === id);
   }
 
-  alivePlayers() {
+  getAlivePlayers() {
     return this.players.filter(player => player.alive === true);
   }
 
@@ -125,7 +127,7 @@ export default class Free4all implements GameModel {
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.alivePlayers()].forEach((object: Player) => {
+      [...this.getStaticObjects(), ...this.getAlivePlayers()].forEach((object: Player) => {
         if (bullet.owner !== object) {
           const bulletDirection = {
             x: bullet.directionX,
@@ -135,7 +137,7 @@ export default class Free4all implements GameModel {
           if (yes) {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
-          } else if (object.selectedPower instanceof SlowBullets) {
+          } else if (object.selectedPower instanceof Aura) {
             object.selectedPower.effect({ bullet, bulletDirection, owner: object }) &&
               this.emitPowerInfo(object);
           }
@@ -175,7 +177,7 @@ export default class Free4all implements GameModel {
   }
 
   regeneratePlayers(value?: number) {
-    this.alivePlayers().forEach(player => {
+    this.getAlivePlayers().forEach(player => {
       player.regenerate(value);
       this.emitPowerInfo(player);
     });
@@ -226,7 +228,7 @@ export default class Free4all implements GameModel {
     const player = this.getPlayer(mouseClick.owner);
     if (player.isAlive()) {
       player.setMouseDown();
-      if (player.selectedPower instanceof Teleport && player.keys.has('Shift')) {
+      if (player.selectedPower instanceof ClickPower && player.keys.has('Shift')) {
         player.usePower(this, mouseClick);
         this.emitPowerInfo(player);
       } else {
@@ -301,7 +303,7 @@ export default class Free4all implements GameModel {
   detectPlayerCollisionWithObjects(player: Player, direction?: Direction) {
     return [
       ...this.getStaticObjects(),
-      ...this.alivePlayers().filter(object => player !== object),
+      ...this.getAlivePlayers().filter(object => player !== object),
     ].some(object => collisionDetector.detectCollision(player, object, direction).yes);
   }
 

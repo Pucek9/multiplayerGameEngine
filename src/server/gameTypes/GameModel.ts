@@ -15,7 +15,7 @@ export default interface GameModel {
 
   getPlayer(id: string);
 
-  alivePlayers();
+  getAlivePlayers();
 
   getPlayers();
 
