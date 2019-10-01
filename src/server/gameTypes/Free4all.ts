@@ -22,6 +22,8 @@ import Knife from '../models/weapons/Knife';
 import SteeringService from '../services/Steering';
 import Aura from '../models/powers/Aura';
 import ClickPower from '../models/powers/ClickPower';
+import StaticRectangleObject from '../models/StaticRectangleObject';
+import StaticCircularObject from '../models/StaticCircularObject';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -100,7 +102,7 @@ export default class Free4all implements GameModel {
     return this.map.getMapName();
   }
 
-  getStaticObjects() {
+  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
     return this.map.getStaticObjects();
   }
 
@@ -127,22 +129,28 @@ export default class Free4all implements GameModel {
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.getAlivePlayers()].forEach((object: Player) => {
-        if (bullet.owner !== object) {
-          const bulletDirection = {
-            x: bullet.directionX,
-            y: bullet.directionY,
-          };
-          const { yes, angle } = collisionDetector.detectCollision(bullet, object, bulletDirection);
-          if (yes) {
-            object.hitFromBullet(bullet, angle);
-            this.deleteBulletIfInactive(bullet, i);
-          } else if (object.selectedPower instanceof Aura) {
-            object.selectedPower.effect({ bullet, bulletDirection, owner: object }) &&
-              this.emitPowerInfo(object);
+      [...this.getStaticObjects(), ...this.getAlivePlayers()].forEach(
+        (object: StaticCircularObject | StaticRectangleObject | Player) => {
+          if (bullet.owner !== object) {
+            const bulletDirection = {
+              x: bullet.directionX,
+              y: bullet.directionY,
+            };
+            const { yes, angle } = collisionDetector.detectCollision(
+              bullet,
+              object,
+              bulletDirection,
+            );
+            if (yes) {
+              object.hitFromBullet(bullet, angle);
+              this.deleteBulletIfInactive(bullet, i);
+            } else if (object instanceof Player && object.selectedPower instanceof Aura) {
+              object.selectedPower.effect({ bullet, bulletDirection, owner: object }) &&
+                this.emitPowerInfo(object);
+            }
           }
-        }
-      });
+        },
+      );
     });
   }
 
