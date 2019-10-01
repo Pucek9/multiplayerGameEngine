@@ -308,14 +308,14 @@ export default class Free4all implements GameModel {
     });
   }
 
-  detectPlayerCollisionWithObjects(player: Player, direction?: Direction) {
+  detectPlayerCollisionWithObjects(player: Player, direction?: Direction): boolean {
     return [
       ...this.getStaticObjects(),
       ...this.getAlivePlayers().filter(object => player !== object),
     ].some(object => collisionDetector.detectCollision(player, object, direction).yes);
   }
 
-  detectPlayerCollision(player: Player, direction?: Direction) {
+  detectPlayerCollision(player: Player, direction?: Direction): boolean {
     this.detectPlayerCollisionWithGenerator(player, direction);
     return this.detectPlayerCollisionWithObjects(player, direction);
   }
