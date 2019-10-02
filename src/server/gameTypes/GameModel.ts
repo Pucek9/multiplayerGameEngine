@@ -35,7 +35,7 @@ export default interface GameModel {
 
   revivePlayer(id: string);
 
-  connectPlayer(id: string, newPlayer: NewUser);
+  connectPlayer(newPlayer: NewUser);
 
   disconnectPlayer(disconnected: Player);
 

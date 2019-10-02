@@ -6,7 +6,7 @@ import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
 import { Direction } from '../../shared/models/Direction';
-import { rand } from '../../shared/helpers';
+import { generateId, rand, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
@@ -24,6 +24,7 @@ import Aura from '../models/powers/Aura';
 import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
+import Bot from '../models/Bot';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -38,7 +39,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
-    // const bot = this.createBot();
+    this.generateBots(1);
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
       this.updateBullets();
@@ -46,31 +47,42 @@ export default class Free4all implements GameModel {
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
-      // this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
+      this.letBotsDoSomething();
       this.regeneratePlayers();
       this.updateTimeForDeadPlayers();
     }, 1000);
   }
 
-  createBot() {
-    const bot = this.connectPlayer(
-      'bot',
-      {
-        id: 'bot',
-        gameName: this.roomName,
-        color: 'red',
-        name: 'bot',
-      },
+  generateBots(counter: number) {
+    times(counter, index => this.createBot(index));
+  }
+
+  createBot(index) {
+    const bot = new Bot(
+      `Bot_${generateId()}`,
+      `Bot_${index}`,
+      randColor(),
       200,
       -300,
+      this.roomName,
     );
+    //
+    this.players.push(bot);
     bot.direction = -1.5;
-    bot.hp = bot.baseHp = 1000;
-    bot.energy = bot.baseEnergy = 1000;
-    bot.revive();
     bot.keys.add('Shift');
-    bot.addAndSelectWeapon(new Pistol({ magazines: 5000 }));
+    bot.addAndSelectPower(new ReverseBullets());
+    bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
     return bot;
+  }
+
+  getBots() {
+    return this.players.filter(player => player instanceof Bot);
+  }
+
+  letBotsDoSomething() {
+    this.getBots().forEach(bot =>
+      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id }),
+    );
   }
 
   getPlayer(id: string) {
@@ -145,8 +157,11 @@ export default class Free4all implements GameModel {
               object.hitFromBullet(bullet, angle);
               this.deleteBulletIfInactive(bullet, i);
             } else if (object instanceof Player && object.selectedPower instanceof Aura) {
-              object.selectedPower.effect({ bullet, bulletDirection, owner: object }) &&
-                this.emitPowerInfo(object);
+              object.selectedPower.effect({
+                bullet,
+                bulletDirection,
+                owner: object,
+              }) && this.emitPowerInfo(object);
             }
           }
         },
@@ -191,8 +206,8 @@ export default class Free4all implements GameModel {
     });
   }
 
-  connectPlayer(id: string, newPlayer: NewUser, x = rand(1000), y = rand(1000)): Player {
-    const player = new Player(id, newPlayer.name, newPlayer.color, x, y, this.roomName);
+  connectPlayer(newPlayer: NewUser, x = rand(1000), y = rand(1000)): Player {
+    const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, x, y, this.roomName);
     //
     player.addAndSelectPower(new Accelerator());
     player.addPower(new Teleport());
@@ -257,14 +272,20 @@ export default class Free4all implements GameModel {
   emitWeaponInfo(player) {
     this.emitter.updateWeaponInfo(player.id, {
       selectedWeapon: player.selectedWeapon,
-      weapons: player.weapons.map((weapon: Weapon) => ({ type: weapon.type, id: weapon.id })),
+      weapons: player.weapons.map((weapon: Weapon) => ({
+        type: weapon.type,
+        id: weapon.id,
+      })),
     });
   }
 
   emitPowerInfo(player) {
     this.emitter.updatePowerInfo(player.id, {
       selectedPower: player.selectedPower,
-      powers: player.powers.map((power: Power) => ({ type: power.type, id: power.id })),
+      powers: player.powers.map((power: Power) => ({
+        type: power.type,
+        id: power.id,
+      })),
       energy: player.energy,
     });
   }

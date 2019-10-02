@@ -13,3 +13,15 @@ export function rand(dispersion: number) {
 export function normalizeKey(key: string): string {
   return key.length !== 1 ? key : key.toUpperCase();
 }
+
+export function randRGB() {
+  return Math.floor(Math.random() * 255);
+}
+
+export function randColor() {
+  return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
+}
+
+export function times(count, callback) {
+  Array.from(Array(count).keys()).forEach(callback);
+}

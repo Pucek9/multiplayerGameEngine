@@ -10,18 +10,11 @@ import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './types/ScreenModel';
 import { gamesService, userService } from './store/store';
+import { randColor } from '../shared/helpers';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
 const socket = connect(url);
-
-function randRGB() {
-  return Math.floor(Math.random() * 255);
-}
-
-function randColor() {
-  return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
-}
 
 let mainInstance: Main;
 let requestId: number;

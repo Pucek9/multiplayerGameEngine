@@ -73,7 +73,7 @@ function connection(socket: Socket) {
   }
 
   function initNewPlayer(newPlayer, gameState) {
-    const player = gameState.connectPlayer(socket.id, newPlayer);
+    const player = gameState.connectPlayer(newPlayer);
     socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
     socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
     socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
