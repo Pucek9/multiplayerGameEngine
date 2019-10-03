@@ -53,8 +53,8 @@ export default class Free4all implements GameModel {
     }, 1000);
   }
 
-  generateBots(counter: number) {
-    times(counter, index => this.createBot(index));
+  generateBots(count: number) {
+    times(count, index => this.createBot(index));
   }
 
   createBot(index) {
