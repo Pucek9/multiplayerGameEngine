@@ -21,6 +21,7 @@ export default class Player extends PlayerModel {
     this.alive = false;
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
+    this.mouse = false;
   }
 
   revive() {

@@ -12,6 +12,8 @@ import AidKit from '../models/AidKit';
 
 export default class Playground implements GameMap {
   mapName: string = 'Playground';
+  width = 2920;
+  height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 

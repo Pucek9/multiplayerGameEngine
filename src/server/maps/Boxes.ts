@@ -8,6 +8,8 @@ import Grenade from '../models/weapons/Grenade';
 
 export default class Boxes implements GameMap {
   mapName: string = 'Boxes';
+  width = 2920;
+  height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 

@@ -25,6 +25,7 @@ import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
+import botService from '../services/BotService';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -39,7 +40,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
-    this.generateBots(1);
+    this.generateBots(30);
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
       this.updateBullets();
@@ -58,15 +59,8 @@ export default class Free4all implements GameModel {
   }
 
   createBot(index) {
-    const bot = new Bot(
-      `Bot_${generateId()}`,
-      `Bot_${index}`,
-      randColor(),
-      200,
-      -300,
-      this.roomName,
-    );
-    //
+    const { x, y } = botService.randNonCollisionPosition(30, this);
+    const bot = new Bot(`Bot_${generateId()}`, `Bot_${index}`, randColor(), x, y, this.roomName);
     this.players.push(bot);
     bot.direction = -1.5;
     bot.keys.add('Shift');
@@ -80,9 +74,9 @@ export default class Free4all implements GameModel {
   }
 
   letBotsDoSomething() {
-    this.getBots().forEach(bot =>
-      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id }),
-    );
+    this.getBots().forEach(bot => {
+      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
+    });
   }
 
   getPlayer(id: string) {
@@ -330,10 +324,11 @@ export default class Free4all implements GameModel {
   }
 
   detectPlayerCollisionWithObjects(player: Player, direction?: Direction): boolean {
-    return [
+    const allObjects = [
       ...this.getStaticObjects(),
       ...this.getAlivePlayers().filter(object => player !== object),
-    ].some(object => collisionDetector.detectCollision(player, object, direction).yes);
+    ];
+    return collisionDetector.detectObjectCollisionWithOtherObjects(player, allObjects, direction);
   }
 
   detectPlayerCollision(player: Player, direction?: Direction): boolean {

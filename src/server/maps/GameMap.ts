@@ -5,6 +5,8 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 
 export default interface GameMap {
   mapName: string;
+  width: number;
+  height: number;
 
   getMapName(): string;
 

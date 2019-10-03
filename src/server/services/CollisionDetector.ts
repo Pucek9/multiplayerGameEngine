@@ -139,6 +139,10 @@ class CollisionDetector {
       // },
     };
   }
+
+  detectObjectCollisionWithOtherObjects(target: ICircle | IRectangle, objects: (ICircle | IRectangle)[], direction?: Direction, ): boolean {
+    return objects.some(object => collisionDetector.detectCollision(target, object, direction).yes);
+  }
 }
 
 const collisionDetector = new CollisionDetector();
