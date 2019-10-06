@@ -6,7 +6,7 @@ export function generateId() {
   return Date.now() + Math.floor(Math.random() * 100);
 }
 
-export function rand(max: number, min = 0 ) {
+export function rand(max: number, min = 0) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
