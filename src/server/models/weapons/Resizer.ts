@@ -23,6 +23,9 @@ export default class Resizer extends Weapon {
     },
     additionalAction() {
       this.size += 0.1;
+      if (this.customFlag) {
+        this.increaseSpeedToDefault();
+      }
     },
   };
 

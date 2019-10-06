@@ -4,7 +4,7 @@ import { degToRad } from '../../shared/helpers';
 import { Direction } from '../../shared/models/Direction';
 
 interface collision {
-  yes: boolean;
+  collision: boolean;
   angle?: { x: number; y: number };
 }
 
@@ -32,12 +32,12 @@ class CollisionDetector {
     const dx = o1.x - o2.x + direction.x;
     const dy = o1.y - o2.y + direction.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    return { yes: distance < o1.size + o2.size, angle: { x: -1, y: -1 } };
+    return { collision: distance < o1.size + o2.size, angle: { x: -1, y: -1 } };
   }
 
   detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): collision {
     return {
-      yes:
+      collision:
         o2.x + o2.width > o1.x &&
         o2.y + o2.height > o1.y &&
         o1.x + o1.width + direction.x > o2.x &&
@@ -73,7 +73,7 @@ class CollisionDetector {
         Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height)),
     );
     return {
-      yes: deltaX + deltaY < circle.size,
+      collision: deltaX + deltaY < circle.size,
       angle: {
         x: deltaX >= deltaY ? -1 : 1,
         y: deltaX <= deltaY ? -1 : 1,
@@ -120,7 +120,7 @@ class CollisionDetector {
       cy = rotateCircleY;
     }
     return {
-      yes: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
+      collision: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
       angle: { x: -1, y: -1 },
       // TODO angle need fix
       // angle: {
@@ -145,7 +145,9 @@ class CollisionDetector {
     objects: (ICircle | IRectangle)[],
     direction?: Direction,
   ): boolean {
-    return objects.some(object => collisionDetector.detectCollision(target, object, direction).yes);
+    return objects.some(
+      object => collisionDetector.detectCollision(target, object, direction).collision,
+    );
   }
 }
 

@@ -7,13 +7,13 @@ export default abstract class Power implements Item {
   active: boolean;
   cost: number;
 
-  protected constructor() {
+  public constructor() {
     this.id = generateId();
     this.active = false;
   }
 
-  protected use(props: any) {}
-  protected isActive() {}
-  protected release(props: any) {}
-  protected effect(props: any) {}
+  public use(props: any) {}
+  public isActive() {}
+  public release(props: any) {}
+  public effect(props: any) {}
 }

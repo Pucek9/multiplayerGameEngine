@@ -148,6 +148,9 @@ export default class SteeringService {
   }
 
   performOtherKeys(game, player) {
+    if (player.keys.has('L')) {
+      console.log('log', game.players);
+    }
     if (player.keys.has('Escape')) {
       game.disconnectPlayer(player);
     }

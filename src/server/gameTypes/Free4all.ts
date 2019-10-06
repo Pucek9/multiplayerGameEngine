@@ -45,6 +45,7 @@ export default class Free4all implements GameModel {
       this.performKeysOperationForPlayers();
       this.updateBullets();
       this.detectBulletsCollision();
+      this.revertBulletsState();
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
@@ -133,6 +134,39 @@ export default class Free4all implements GameModel {
     });
   }
 
+  revertBulletsState() {
+    this.bullets
+      .filter(bullet => bullet.allowForManipulate)
+      .forEach(bullet => {
+        const BreakException = {};
+        try {
+          this.getAlivePlayers()
+            .filter(
+              player =>
+                bullet.owner !== player &&
+                player.selectedPower instanceof Aura &&
+                player.selectedPower.isActive(),
+            )
+            .forEach(player => {
+              const { collision } = collisionDetector.detectCollision(bullet, {
+                ...player,
+                size: player.selectedPower.getSize(),
+              });
+              if (
+                collision &&
+                player.selectedPower.effect({
+                  bullet,
+                  owner: player,
+                })
+              ) {
+                this.emitPowerInfo(player);
+                throw BreakException;
+              }
+            });
+        } catch (e) {}
+      });
+  }
+
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers()].forEach(
@@ -142,20 +176,14 @@ export default class Free4all implements GameModel {
               x: bullet.directionX,
               y: bullet.directionY,
             };
-            const { yes, angle } = collisionDetector.detectCollision(
+            const { collision, angle } = collisionDetector.detectCollision(
               bullet,
               object,
               bulletDirection,
             );
-            if (yes) {
+            if (collision) {
               object.hitFromBullet(bullet, angle);
               this.deleteBulletIfInactive(bullet, i);
-            } else if (object instanceof Player && object.selectedPower instanceof Aura) {
-              object.selectedPower.effect({
-                bullet,
-                bulletDirection,
-                owner: object,
-              }) && this.emitPowerInfo(object);
             }
           }
         },
@@ -302,7 +330,7 @@ export default class Free4all implements GameModel {
   detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
     this.getItemGenerators().forEach(generator => {
       if (
-        collisionDetector.detectCollision(player, generator, direction).yes &&
+        collisionDetector.detectCollision(player, generator, direction).collision &&
         generator.isReady()
       ) {
         generator.deactivate();
