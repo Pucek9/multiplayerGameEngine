@@ -12,7 +12,7 @@ export default class Pistol extends Weapon {
   shootBulletsCount = 1;
   bulletConfig = {
     size: 3,
-    power: 10,
+    power: 20,
     range: 500,
   };
 

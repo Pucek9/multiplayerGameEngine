@@ -45,7 +45,7 @@ export default class Free4all implements GameModel {
       this.performKeysOperationForPlayers();
       this.updateBullets();
       this.detectBulletsCollision();
-      this.revertBulletsState();
+      this.bulletsDetectPower();
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
@@ -134,36 +134,26 @@ export default class Free4all implements GameModel {
     });
   }
 
-  revertBulletsState() {
+  bulletsDetectPower() {
     this.bullets
       .filter(bullet => bullet.allowForManipulate)
       .forEach(bullet => {
-        const BreakException = {};
-        try {
-          this.getAlivePlayers()
-            .filter(
-              player =>
-                bullet.owner !== player &&
-                player.selectedPower instanceof Aura &&
-                player.selectedPower.isActive(),
-            )
-            .forEach(player => {
-              const { collision } = collisionDetector.detectCollision(bullet, {
-                ...player,
-                size: player.selectedPower.getSize(),
-              });
-              if (
-                collision &&
-                player.selectedPower.effect({
-                  bullet,
-                  owner: player,
-                })
-              ) {
-                this.emitPowerInfo(player);
-                throw BreakException;
-              }
-            });
-        } catch (e) {}
+        const foundPlayerWithAura = this.getAlivePlayers().find(
+          player =>
+            bullet.owner !== player &&
+            player.selectedPower instanceof Aura &&
+            player.selectedPower.isActive() &&
+            collisionDetector.detectCollision(bullet, {
+              ...player,
+              size: player.selectedPower.getSize(),
+            }).collision,
+        );
+        foundPlayerWithAura &&
+          foundPlayerWithAura.selectedPower.effect({
+            bullet,
+            owner: foundPlayerWithAura,
+          }) &&
+          this.emitPowerInfo(foundPlayerWithAura);
       });
   }
 

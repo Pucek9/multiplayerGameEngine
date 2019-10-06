@@ -15,7 +15,7 @@ export default class Shotgun extends Weapon {
   shootBulletsCount = 5;
   bulletConfig = {
     size: 2,
-    power: 8,
+    power: 15,
     range: 350,
     flash: false,
   };
