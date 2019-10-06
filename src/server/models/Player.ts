@@ -6,9 +6,8 @@ import AidKit from './AidKit';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
-  public mouse = false;
   public regeneration = 2.5;
-  public cursor = { x: 0, y: 0 };
+  public cursor = { x: 0, y: 0, down: false };
   private lastDir: Array<Dir>;
 
   isAlive() {
@@ -21,7 +20,7 @@ export default class Player extends PlayerModel {
     this.alive = false;
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
-    this.mouse = false;
+    this.cursor.down = false;
   }
 
   revive() {
@@ -33,15 +32,15 @@ export default class Player extends PlayerModel {
   }
 
   setMouseDown() {
-    this.mouse = true;
+    this.cursor.down = true;
   }
 
   setMouseUp() {
-    this.mouse = false;
+    this.cursor.down = false;
   }
 
   isMouseDown() {
-    return this.mouse;
+    return this.cursor.down;
   }
 
   regenerate(value?: number) {
@@ -212,7 +211,8 @@ export default class Player extends PlayerModel {
   }
 
   updateDirection(mouseCoordinates: MouseCoordinates) {
-    this.cursor = { x: mouseCoordinates.targetX, y: mouseCoordinates.targetY };
+    this.cursor.x = mouseCoordinates.targetX;
+    this.cursor.y = mouseCoordinates.targetY;
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;
     this.direction = Math.atan2(dy, dx); // - 80;
