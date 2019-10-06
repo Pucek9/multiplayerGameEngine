@@ -31,8 +31,7 @@ export default class SlowBullets extends Aura {
 
   effect({ bullet, owner }: { bullet: Bullet; owner: Player }): boolean {
     const cost = this.cost * bullet.power;
-    if (owner.hasEnoughEnergy(cost)) {
-      owner.useEnergy(cost);
+    if (owner.tryUseEnergy(cost)) {
       bullet.customFlag = false;
       bullet.decreaseSpeedToMin();
       return true;

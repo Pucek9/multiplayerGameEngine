@@ -13,8 +13,7 @@ export default class ReverseBullets extends SlowBullets implements Aura {
 
   effect({ bullet, owner }: { bullet: Bullet; owner: Player }): boolean {
     const cost = this.cost * bullet.power;
-    if (owner.hasEnoughEnergy(cost)) {
-      owner.useEnergy(cost);
+    if (owner.tryUseEnergy(cost)) {
       bullet.customFlag = false;
       bullet.decreaseSpeedToMin(0.3);
       if (bullet.isMinSpeed()) {
