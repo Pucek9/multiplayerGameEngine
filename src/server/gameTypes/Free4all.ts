@@ -38,10 +38,10 @@ export default class Free4all implements GameModel {
     public steering: SteeringService,
     public emitter: Emitter,
     public roomName: string,
+    public botsCount: number,
     public map: GameMap,
-  ) // public botCount: number,
-  {
-    this.generateBots(0);
+  ) {
+    this.generateBots(this.botsCount);
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
       this.updateBullets();

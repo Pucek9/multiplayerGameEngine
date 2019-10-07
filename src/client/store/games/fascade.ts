@@ -33,6 +33,13 @@ export class GamesService {
     });
   }
 
+  setBotsCount(count: number) {
+    this.store.dispatch({
+      type: GamesListActions.SET_BOTS_COUNT,
+      payload: count,
+    });
+  }
+
   clearGamesList() {
     this.store.dispatch({
       type: GamesListActions.CLEAR_GAMES_LIST,

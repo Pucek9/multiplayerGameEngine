@@ -10,6 +10,7 @@ export default interface GameModel {
   roomName: string;
   type: string;
   map: GameMap;
+  botsCount: number;
   players: Player[];
   bullets: Bullet[];
 

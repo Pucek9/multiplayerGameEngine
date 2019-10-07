@@ -5,6 +5,7 @@ import { store, gamesService, userService, optionsService } from '../store/store
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
 declare var gameMapInput: HTMLSelectElement;
+declare var botsCountInput: HTMLInputElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
@@ -24,10 +25,8 @@ export default class MenuComponent {
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', function() {
-      const roomName = gameNameInput.value;
-      const type = gameTypeInput.value;
-      const map = gameMapInput.value;
-      main.onAddNewGame({ roomName, type, map });
+      const { roomName, type, map, bots } = gamesService.getState();
+      main.onAddNewGame({ roomName, type, map, bots });
       gameNameInput.value = '';
     });
 
@@ -46,6 +45,13 @@ export default class MenuComponent {
 
     gameMapInput.addEventListener('change', function() {
       gamesService.setGameMap(gameMapInput.value);
+    });
+
+    botsCountInput.addEventListener('change', function() {
+      if (botsCountInput.value == '') {
+        botsCountInput.value = '0';
+      }
+      gamesService.setBotsCount(parseInt(botsCountInput.value));
     });
 
     nickInput.addEventListener('keyup', function() {

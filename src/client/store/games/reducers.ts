@@ -31,6 +31,12 @@ export function gamesReducer(
         map: payload,
       };
 
+    case GamesActions.SET_BOTS_COUNT:
+      return {
+        ...state,
+        bots: payload,
+      };
+
     case GamesActions.CLEAR_GAMES_LIST:
       return {
         ...state,

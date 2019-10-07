@@ -1,3 +1,8 @@
 export default class NewGame {
-  constructor(public roomName: string, public type: string, public map: string) {}
+  constructor(
+    public roomName: string,
+    public type: string,
+    public map: string,
+    public bots: number,
+  ) {}
 }

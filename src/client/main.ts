@@ -45,8 +45,8 @@ class Main {
     });
   }
 
-  onAddNewGame({ roomName, type, map }: NewGame) {
-    const newGame = new NewGame(roomName, type, map);
+  onAddNewGame({ roomName, type, map, bots }: NewGame) {
+    const newGame = new NewGame(roomName, type, map, bots);
     socket.emit(API.CREATE_GAME, newGame);
     userService.chooseGame(roomName);
   }
