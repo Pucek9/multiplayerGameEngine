@@ -100,7 +100,6 @@ export default class Bullet extends BulletModel {
   }
 
   getAngle() {
-    //angle of ball with the dx axis
     return Math.atan2(this.dy, this.dx);
-  };
+  }
 }

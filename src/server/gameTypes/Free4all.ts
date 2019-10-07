@@ -40,7 +40,7 @@ export default class Free4all implements GameModel {
     public players: Player[] = [],
     public bullets: Bullet[] = [],
   ) {
-    this.generateBots(30);
+    this.generateBots(0);
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
       this.updateBullets();

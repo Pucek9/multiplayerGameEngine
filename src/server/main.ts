@@ -13,6 +13,7 @@ import SteeringService from './services/Steering';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
+const url = process.env.URL || 'localhost';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
@@ -104,5 +105,5 @@ socketIo.on(API.CONNECTION, (socket: Socket) => {
 });
 
 httpServer.listen(parseInt(port, 0), function() {
-  console.log(`App listening on *:${port}`);
+  console.log(`App listening on ${url}:${port}`);
 });
