@@ -26,20 +26,21 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
+import botService from '../services/BotService';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
   private interval;
   private customInterval;
-
+  public players: Player[] = [];
+  public bullets: Bullet[] = [];
   constructor(
     public steering: SteeringService,
     public emitter: Emitter,
     public roomName: string,
     public map: GameMap,
-    public players: Player[] = [],
-    public bullets: Bullet[] = [],
-  ) {
+  ) // public botCount: number,
+  {
     this.generateBots(0);
     this.interval = setInterval(() => {
       this.performKeysOperationForPlayers();
@@ -76,7 +77,15 @@ export default class Free4all implements GameModel {
 
   letBotsDoSomething() {
     this.getBots().forEach(bot => {
-      this.mouseClick({ targetX: bot.x, targetY: bot.y - 100, owner: bot.id });
+      const closestPlayer = botService.trackClosestPlayer(bot, this);
+      if (closestPlayer) {
+        this.updatePlayerDirection({
+          targetX: closestPlayer.x,
+          targetY: closestPlayer.y,
+          owner: bot.id,
+        });
+        this.mouseClick({ targetX: closestPlayer.x, targetY: closestPlayer.y, owner: bot.id });
+      }
     });
   }
 
