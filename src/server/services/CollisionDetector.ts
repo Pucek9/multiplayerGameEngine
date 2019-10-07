@@ -11,14 +11,13 @@ interface CollisionInfo {
 }
 
 class CollisionDetector {
-
   getDistance(x1: number, y1: number, x2: number, y2: number) {
     const deltaX = Math.abs(x2 - x1);
     const deltaY = Math.abs(y2 - y1);
     const distance = deltaX + deltaY;
     return { deltaX, deltaY, distance };
   }
-  
+
   detectCollision(
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
