@@ -16,8 +16,8 @@ export default class Bullet extends BulletModel {
   reverseX = 1;
   reverseY = 1;
   vectorFT: number;
-  directionX: number;
-  directionY: number;
+  dx: number;
+  dy: number;
   customFlag = true;
   allowForManipulate = true;
   // gameName?: string;
@@ -30,8 +30,8 @@ export default class Bullet extends BulletModel {
     this.vectorFT = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
-    this.directionX = 0;
-    this.directionY = 0;
+    this.dx = 0;
+    this.dy = 0;
     Object.seal(this);
   }
 
@@ -70,10 +70,10 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    this.directionX = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
-    this.directionY = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
-    this.x += this.directionX;
-    this.y += this.directionY;
+    this.dx = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
+    this.dy = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.x += this.dx;
+    this.y += this.dy;
     if (!this.isStillInAir()) {
       this.deactivate();
     }
@@ -98,4 +98,9 @@ export default class Bullet extends BulletModel {
   isActive() {
     return this.active;
   }
+
+  getAngle() {
+    //angle of ball with the dx axis
+    return Math.atan2(this.dy, this.dx);
+  };
 }

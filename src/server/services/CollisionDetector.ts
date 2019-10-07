@@ -2,6 +2,7 @@ import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
 import { Direction } from '../../shared/models/Direction';
+import Bullet from '../models/Bullet';
 
 interface CollisionInfo {
   collision: boolean;
@@ -16,7 +17,7 @@ class CollisionDetector {
     direction?: Direction,
   ): CollisionInfo;
 
-  detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
+  detectCollision(object1, object2, direction: Direction = { dx: 0, dy: 0 }) {
     switch ([object1.shape, object2.shape].join()) {
       case 'circle,circle':
         return this.detectCircularCollision(object1, object2, direction);
@@ -30,10 +31,27 @@ class CollisionDetector {
   }
 
   detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): CollisionInfo {
-    const dx = o1.x - o2.x + direction.x;
-    const dy = o1.y - o2.y + direction.y;
+    const dx = o1.x - o2.x + direction.dx;
+    const dy = o1.y - o2.y + direction.dy;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    return { collision: distance < o1.size + o2.size, angle: { x: -1, y: -1 }, distance };
+    let [x, y] = [-1, -1];
+    if (o1 instanceof Bullet) {
+      const theta = o1.getAngle();
+      const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
+      const dx =
+        ((o1.speed * Math.cos(theta - phi) * (o1.size ** 3 - o2.size ** 3)) /
+          (o1.size ** 3 + o2.size ** 3)) *
+          Math.cos(phi) +
+        o1.speed * Math.sin(theta - phi) * Math.cos(phi + Math.PI / 2);
+      const dy =
+        ((o1.speed * Math.cos(theta - phi) * (o1.size ** 3 - o2.size ** 3)) /
+          (o1.size ** 3 + o2.size ** 3)) *
+          Math.sin(phi) +
+        o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
+      x = dx / direction.dx;
+      y = dy / direction.dy;
+    }
+    return { collision: distance < o1.size + o2.size, angle: { x, y }, distance };
   }
 
   detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): CollisionInfo {
@@ -41,8 +59,8 @@ class CollisionDetector {
       collision:
         o2.x + o2.width > o1.x &&
         o2.y + o2.height > o1.y &&
-        o1.x + o1.width + direction.x > o2.x &&
-        o1.y + o1.height + direction.y > o2.y,
+        o1.x + o1.width + direction.dx > o2.x &&
+        o1.y + o1.height + direction.dy > o2.y,
     };
   }
 
@@ -65,13 +83,13 @@ class CollisionDetector {
   ): CollisionInfo {
     const deltaX = Math.abs(
       circle.x +
-        direction.x -
-        Math.max(rect.x, Math.min(circle.x + direction.x, rect.x + rect.width)),
+        direction.dx -
+        Math.max(rect.x, Math.min(circle.x + direction.dx, rect.x + rect.width)),
     );
     const deltaY = Math.abs(
       circle.y +
-        direction.y -
-        Math.max(rect.y, Math.min(circle.y + direction.y, rect.y + rect.height)),
+        direction.dy -
+        Math.max(rect.y, Math.min(circle.y + direction.dy, rect.y + rect.height)),
     );
     return {
       collision: deltaX + deltaY < circle.size,
@@ -97,12 +115,12 @@ class CollisionDetector {
     const rectCenterY = rect.y + rect.height / 2;
 
     const rotateCircleX =
-      Math.cos(angleOfRad) * (circle.x + direction.x - rectCenterX) -
-      Math.sin(angleOfRad) * (circle.y + direction.y - rectCenterY) +
+      Math.cos(angleOfRad) * (circle.x + direction.dx - rectCenterX) -
+      Math.sin(angleOfRad) * (circle.y + direction.dy - rectCenterY) +
       rectCenterX;
     const rotateCircleY =
-      Math.sin(angleOfRad) * (circle.x + direction.x - rectCenterX) +
-      Math.cos(angleOfRad) * (circle.y + direction.y - rectCenterY) +
+      Math.sin(angleOfRad) * (circle.x + direction.dx - rectCenterX) +
+      Math.cos(angleOfRad) * (circle.y + direction.dy - rectCenterY) +
       rectCenterY;
 
     if (rotateCircleX < rect.x) {
@@ -125,13 +143,13 @@ class CollisionDetector {
       angle: { x: -1, y: -1 },
       // TODO angle need fix
       // angle: {
-      //   x:
+      //   dx:
       //     rotateCircleX > cx
       //       ? -Math.abs(angleOfRad)
       //       : rotateCircleX < cx
       //       ? Math.abs(angleOfRad)
       //       : -1 + Math.abs(angleOfRad),
-      //   y:
+      //   dy:
       //     rotateCircleY > cy
       //       ? -Math.abs(angleOfRad)
       //       : rotateCircleY < cy

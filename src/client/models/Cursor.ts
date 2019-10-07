@@ -40,10 +40,5 @@ export default class Cursor implements IUpdatable {
   update() {
     this.object.position.x = this.x;
     this.object.position.y = this.y;
-    // this.screen.ctx.drawImage(
-    //     this.img,
-    //     this.x - this.img.width / 2,
-    //     this.y - this.img.height / 2
-    // );
   }
 }

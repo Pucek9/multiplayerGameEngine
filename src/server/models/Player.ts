@@ -215,6 +215,6 @@ export default class Player extends PlayerModel {
     this.cursor.y = mouseCoordinates.targetY;
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;
-    this.direction = Math.atan2(dy, dx); // - 80;
+    this.direction = Math.atan2(dy, dx);
   }
 }

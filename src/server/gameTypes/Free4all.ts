@@ -163,8 +163,8 @@ export default class Free4all implements GameModel {
         (object: StaticCircularObject | StaticRectangleObject | Player) => {
           if (bullet.owner !== object) {
             const bulletDirection = {
-              x: bullet.directionX,
-              y: bullet.directionY,
+              dx: bullet.dx,
+              dy: bullet.dy,
             };
             const { collision, angle } = collisionDetector.detectCollision(
               bullet,

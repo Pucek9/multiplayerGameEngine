@@ -16,8 +16,8 @@ export default class SteeringService {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          x: 0,
-          y: player.speed,
+          dx: 0,
+          dy: player.speed,
         })
       ) {
         player.goDown();
@@ -27,8 +27,8 @@ export default class SteeringService {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          x: 0,
-          y: -player.speed,
+          dx: 0,
+          dy: -player.speed,
         })
       ) {
         player.goUp();
@@ -38,8 +38,8 @@ export default class SteeringService {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          x: -player.speed,
-          y: 0,
+          dx: -player.speed,
+          dy: 0,
         })
       ) {
         player.goLeft();
@@ -49,8 +49,8 @@ export default class SteeringService {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          x: player.speed,
-          y: 0,
+          dx: player.speed,
+          dy: 0,
         })
       ) {
         player.goRight();
