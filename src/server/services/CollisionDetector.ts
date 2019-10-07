@@ -3,9 +3,10 @@ import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
 import { Direction } from '../../shared/models/Direction';
 
-interface collision {
+interface CollisionInfo {
   collision: boolean;
   angle?: { x: number; y: number };
+  distance?: number;
 }
 
 class CollisionDetector {
@@ -13,7 +14,7 @@ class CollisionDetector {
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
     direction?: Direction,
-  ): collision;
+  ): CollisionInfo;
 
   detectCollision(object1, object2, direction: Direction = { x: 0, y: 0 }) {
     switch ([object1.shape, object2.shape].join()) {
@@ -28,14 +29,14 @@ class CollisionDetector {
     }
   }
 
-  detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): collision {
+  detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): CollisionInfo {
     const dx = o1.x - o2.x + direction.x;
     const dy = o1.y - o2.y + direction.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    return { collision: distance < o1.size + o2.size, angle: { x: -1, y: -1 } };
+    return { collision: distance < o1.size + o2.size, angle: { x: -1, y: -1 }, distance };
   }
 
-  detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): collision {
+  detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): CollisionInfo {
     return {
       collision:
         o2.x + o2.width > o1.x &&
@@ -49,7 +50,7 @@ class CollisionDetector {
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ): collision {
+  ): CollisionInfo {
     if (rect.deg === 0) {
       return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
     } else {
@@ -61,7 +62,7 @@ class CollisionDetector {
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ): collision {
+  ): CollisionInfo {
     const deltaX = Math.abs(
       circle.x +
         direction.x -
@@ -85,7 +86,7 @@ class CollisionDetector {
     circle: ICircle,
     rect: IRectangle,
     direction: Direction,
-  ): collision {
+  ): CollisionInfo {
     function distance(x1: number, y1: number, x2: number, y2: number) {
       return Math.abs(x2 - x1) + Math.abs(y2 - y1);
     }
@@ -145,9 +146,7 @@ class CollisionDetector {
     objects: (ICircle | IRectangle)[],
     direction?: Direction,
   ): boolean {
-    return objects.some(
-      object => collisionDetector.detectCollision(target, object, direction).collision,
-    );
+    return objects.some(object => this.detectCollision(target, object, direction).collision);
   }
 }
 

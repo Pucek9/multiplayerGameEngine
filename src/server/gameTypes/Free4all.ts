@@ -25,7 +25,7 @@ import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
-import botService from '../services/BotService';
+import playerService from '../services/PlayerService';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -60,7 +60,7 @@ export default class Free4all implements GameModel {
   }
 
   createBot(index) {
-    const { x, y } = botService.randNonCollisionPosition(30, this);
+    const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(`Bot_${generateId()}`, `Bot_${index}`, randColor(), x, y, this.roomName);
     this.players.push(bot);
     bot.direction = -1.5;
@@ -218,7 +218,8 @@ export default class Free4all implements GameModel {
     });
   }
 
-  connectPlayer(newPlayer: NewUser, x = rand(1000), y = rand(1000)): Player {
+  connectPlayer(newPlayer: NewUser): Player {
+    const { x, y } = playerService.randNonCollisionPosition(30, this);
     const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, x, y, this.roomName);
     //
     player.addAndSelectPower(new Accelerator());
