@@ -11,6 +11,14 @@ interface CollisionInfo {
 }
 
 class CollisionDetector {
+
+  getDistance(x1: number, y1: number, x2: number, y2: number) {
+    const deltaX = Math.abs(x2 - x1);
+    const deltaY = Math.abs(y2 - y1);
+    const distance = deltaX + deltaY;
+    return { deltaX, deltaY, distance };
+  }
+  
   detectCollision(
     object1: ICircle | IRectangle,
     object2: ICircle | IRectangle,
@@ -79,18 +87,16 @@ class CollisionDetector {
     rect: IRectangle,
     direction: Direction,
   ): CollisionInfo {
-    const deltaX = Math.abs(
-      circle.x +
-        direction.dx -
-        Math.max(rect.x, Math.min(circle.x + direction.dx, rect.x + rect.width)),
+    const { deltaX, deltaY, distance } = this.getDistance(
+      circle.x + direction.dx,
+      circle.y + direction.dy,
+      Math.max(rect.x, Math.min(circle.x + direction.dx, rect.x + rect.width)),
+      Math.max(rect.y, Math.min(circle.y + direction.dy, rect.y + rect.height)),
     );
-    const deltaY = Math.abs(
-      circle.y +
-        direction.dy -
-        Math.max(rect.y, Math.min(circle.y + direction.dy, rect.y + rect.height)),
-    );
+
     return {
-      collision: deltaX + deltaY < circle.size,
+      collision: distance < circle.size,
+      distance: distance,
       angle: {
         x: deltaX >= deltaY ? -1 : 1,
         y: deltaX <= deltaY ? -1 : 1,
@@ -103,10 +109,6 @@ class CollisionDetector {
     rect: IRectangle,
     direction: Direction,
   ): CollisionInfo {
-    function distance(x1: number, y1: number, x2: number, y2: number) {
-      return Math.abs(x2 - x1) + Math.abs(y2 - y1);
-    }
-
     let cx, cy;
     const angleOfRad = degToRad(-rect.deg);
     const rectCenterX = rect.x + rect.width / 2;
@@ -136,8 +138,10 @@ class CollisionDetector {
     } else {
       cy = rotateCircleY;
     }
+    const { distance } = this.getDistance(rotateCircleX, rotateCircleY, cx, cy);
     return {
-      collision: distance(rotateCircleX, rotateCircleY, cx, cy) < circle.size,
+      collision: distance < circle.size,
+      distance,
       angle: { x: -1, y: -1 },
       // TODO angle need fix
       // angle: {
