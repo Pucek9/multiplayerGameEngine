@@ -39,13 +39,11 @@ class CollisionDetector {
       const theta = o1.getAngle();
       const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
       const dx =
-        ((o1.speed * Math.cos(theta - phi) * (o1.size ** 3 - o2.size ** 3)) /
-          (o1.size ** 3 + o2.size ** 3)) *
+        ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
           Math.cos(phi) +
         o1.speed * Math.sin(theta - phi) * Math.cos(phi + Math.PI / 2);
       const dy =
-        ((o1.speed * Math.cos(theta - phi) * (o1.size ** 3 - o2.size ** 3)) /
-          (o1.size ** 3 + o2.size ** 3)) *
+        ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
           Math.sin(phi) +
         o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
       x = dx / direction.dx;
