@@ -120,16 +120,7 @@ const config = [
 
     devtool: 'cheap-module-source-map',
 
-    plugins: [
-      new TsConfigPathsPlugin({ configFileName: 'tsconfig.json' }),
-      new CheckerPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          URL: JSON.stringify(url),
-          NODE_ENV: JSON.stringify(environment),
-        },
-      }),
-    ],
+    plugins: [new TsConfigPathsPlugin({ configFileName: 'tsconfig.json' }), new CheckerPlugin()],
   },
 ];
 
