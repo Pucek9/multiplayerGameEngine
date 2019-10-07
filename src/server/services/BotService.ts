@@ -1,4 +1,5 @@
 import collisionDetector from './CollisionDetector';
+import { randItem } from '../../shared/helpers';
 
 export class BotService {
   trackClosestPlayer(bot, gameState) {
@@ -12,6 +13,16 @@ export class BotService {
         const { distance } = collisionDetector.detectCollision(bot, currentPlayer);
         return distance < previousClosestDistance ? currentPlayer : previousPlayer;
       });
+    }
+  }
+
+  performRandKeys(bot) {
+    const keys = ['W', 'A', 'S', 'D'];
+    keys.forEach(key => bot.keys.delete(key));
+    if (bot.isAlive()) {
+      const keysCombinations = [...keys, 'WA', 'AS', 'SD', 'DW'];
+      const newKeys = randItem(keysCombinations);
+      newKeys.split('').forEach(key => bot.keys.add(key));
     }
   }
 }

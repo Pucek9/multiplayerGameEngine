@@ -6,7 +6,7 @@ import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
 import { Direction } from '../../shared/models/Direction';
-import { generateId, rand, randColor, times } from '../../shared/helpers';
+import { generateId, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
@@ -43,6 +43,7 @@ export default class Free4all implements GameModel {
   ) {
     this.generateBots(this.botsCount);
     this.interval = setInterval(() => {
+      this.updateBots();
       this.performKeysOperationForPlayers();
       this.updateBullets();
       this.detectBulletsCollision();
@@ -75,17 +76,25 @@ export default class Free4all implements GameModel {
     return this.players.filter(player => player instanceof Bot);
   }
 
+  updateBots() {
+    this.getBots()
+      .filter(bot => bot.isAlive())
+      .forEach(bot => {
+        const closestPlayer = botService.trackClosestPlayer(bot, this);
+        if (closestPlayer) {
+          this.updatePlayerDirection({
+            targetX: closestPlayer.x,
+            targetY: closestPlayer.y,
+            owner: bot.id,
+          });
+        }
+      });
+  }
+
   letBotsDoSomething() {
     this.getBots().forEach(bot => {
-      const closestPlayer = botService.trackClosestPlayer(bot, this);
-      if (closestPlayer) {
-        this.updatePlayerDirection({
-          targetX: closestPlayer.x,
-          targetY: closestPlayer.y,
-          owner: bot.id,
-        });
-        this.mouseClick({ targetX: closestPlayer.x, targetY: closestPlayer.y, owner: bot.id });
-      }
+      botService.performRandKeys(bot);
+      this.mouseClick({ targetX: bot.cursor.x, targetY: bot.cursor.y, owner: bot.id });
     });
   }
 

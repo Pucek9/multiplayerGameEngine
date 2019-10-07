@@ -10,6 +10,10 @@ export function rand(max: number, min = 0) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+export function randItem(items: Array<any>) {
+  return items[rand(items.length - 1)];
+}
+
 export function normalizeKey(key: string): string {
   return key.length !== 1 ? key : key.toUpperCase();
 }
