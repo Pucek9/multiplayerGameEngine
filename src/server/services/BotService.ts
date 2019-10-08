@@ -20,16 +20,7 @@ export class BotService {
     const keys = [['W'], ['A'], ['S'], ['D']];
     bot.keys.clear();
     if (bot.isAlive()) {
-      const keysCombinations = [
-        ...keys,
-        ['W', 'A'],
-        ['A', 'S'],
-        ['S', 'D'],
-        ['D', 'W'],
-        ['1'],
-        ['2'],
-        ['3'],
-      ];
+      const keysCombinations = [...keys, ['W', 'A'], ['A', 'S'], ['S', 'D'], ['D', 'W'], ['1']];
       const newKeys = randItem(keysCombinations);
       newKeys.push(randItem(['Shift', '']));
       newKeys.forEach(key => bot.keys.add(key));

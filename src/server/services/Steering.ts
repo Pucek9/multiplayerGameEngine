@@ -99,6 +99,21 @@ export default class SteeringService {
     if (weapon5 && !shift) {
       player.selectWeapon(4);
     }
+    if (weapon6 && !shift) {
+      player.selectWeapon(5);
+    }
+    if (weapon7 && !shift) {
+      player.selectWeapon(6);
+    }
+    if (weapon8 && !shift) {
+      player.selectWeapon(7);
+    }
+    if (weapon9 && !shift) {
+      player.selectWeapon(8);
+    }
+    if (weapon10 && !shift) {
+      player.selectWeapon(9);
+    }
     if (weaponPressed && !shift) {
       game.emitWeaponInfo(player);
     }
