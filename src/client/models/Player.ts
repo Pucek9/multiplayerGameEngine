@@ -2,7 +2,7 @@ import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader 
 import PlayerModel from '../../shared/models/PlayerModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
-import Light from './Light';
+import { Lighting } from './Light/Light';
 
 const head = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
@@ -15,7 +15,7 @@ export default class Player extends PlayerModel implements IUpdatable {
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
 
-  setLight(light: Light) {
+  setLight(light: Lighting) {
     this.light = light;
   }
 

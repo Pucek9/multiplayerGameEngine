@@ -2,7 +2,7 @@ import BulletModel from '../../shared/models/BulletModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
 import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
-import Light from './Light';
+import FlashLight from './Light/FlashLight';
 import Cursor from './Cursor';
 import { optionsService } from '../store/store';
 
@@ -47,16 +47,17 @@ export default class Bullet extends BulletModel implements IUpdatable {
   }
 
   showFlash(screen: ScreenModel) {
-    const light = new Light(screen);
-    light.init(
-      this.object.position,
-      ({
+    const light = new FlashLight(screen);
+    light.init({
+      source: this.object.position,
+      cursor: ({
         object: {
           position: { x: this.targetX, y: this.targetY, z: this.object.position.z },
         },
       } as unknown) as Cursor,
-      20,
-    );
+      intensity: 20,
+    });
+
     setTimeout(() => {
       light.remove();
     }, 100);

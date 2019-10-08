@@ -3,7 +3,12 @@ import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
-import Light from './models/Light';
+
+import { Lighting } from './models/Light/Light';
+import AmbientLight from './models/Light/AmbientLight';
+import FlashLight from './models/Light/FlashLight';
+import CursorLight from './models/Light/CursorLight';
+
 import PlayerListComponent from './UserInterface/PlayersList';
 import WeaponsListComponent from './UserInterface/WeaponsList';
 import PowersListComponent from './UserInterface/PowersList';
@@ -17,9 +22,7 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import DynamicCamera from './models/DynamicCamera';
 import ICamera from './interfaces/ICamera';
-import Power from '../shared/models/Power';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 
@@ -31,7 +34,7 @@ export default class GameState {
   screen: ScreenModel;
   currentPlayer: Player;
   camera: ICamera;
-  light: Light;
+  light: Lighting;
   playersListComponent: PlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
@@ -48,7 +51,9 @@ export default class GameState {
   constructor(user: NewUser, screen: ScreenModel) {
     this.user = user;
     this.screen = screen;
-    this.light = new Light(screen);
+    this.light = new FlashLight(screen);
+    // this.light = new AmbientLight(screen);
+    // this.light = new CursorLight(screen);
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
@@ -81,7 +86,7 @@ export default class GameState {
 
       this.camera = new StaticCamera(this.currentPlayer);
       // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
-      this.light.init(this.currentPlayer, this.cursor, 20, 0xff0000);
+      this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       this.currentPlayer.setLight(this.light);
     }
   }
