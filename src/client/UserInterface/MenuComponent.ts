@@ -5,6 +5,7 @@ import { store, gamesService, userService, optionsService } from '../store/store
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
 declare var gameMapInput: HTMLSelectElement;
+declare var gameLightInput: HTMLSelectElement;
 declare var botsCountInput: HTMLInputElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
@@ -25,8 +26,8 @@ export default class MenuComponent {
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', function() {
-      const { roomName, type, map, bots } = gamesService.getState();
-      main.onAddNewGame({ roomName, type, map, bots });
+      const { roomName, type, map, light, bots } = gamesService.getState();
+      main.onAddNewGame({ roomName, type, map, light, bots });
       gameNameInput.value = '';
     });
 
@@ -41,6 +42,10 @@ export default class MenuComponent {
 
     gameTypeInput.addEventListener('change', function() {
       gamesService.setGameType(gameTypeInput.value);
+    });
+
+    gameLightInput.addEventListener('change', function() {
+      gamesService.setLight(gameLightInput.value);
     });
 
     gameMapInput.addEventListener('change', function() {

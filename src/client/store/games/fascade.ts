@@ -1,14 +1,14 @@
 import { Store } from 'redux';
 import * as GamesListActions from './actions';
-import { GamesState } from './state';
+import { GamesState, GameState } from './state';
 
 export class GamesService {
   constructor(public store: Store) {}
 
-  addGame(roomName: string, type: string, map: string, count: number) {
+  addGame(payload: GameState) {
     this.store.dispatch({
       type: GamesListActions.ADD_GAME,
-      payload: { roomName, type, map, count },
+      payload: payload,
     });
   }
 
@@ -30,6 +30,13 @@ export class GamesService {
     this.store.dispatch({
       type: GamesListActions.SET_GAME_MAP,
       payload: map,
+    });
+  }
+
+  setLight(light: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_LIGHT,
+      payload: light,
     });
   }
 

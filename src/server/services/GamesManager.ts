@@ -8,9 +8,17 @@ class GamesManager {
 
   constructor() {}
 
-  createGame(steering, emitter, name: string, type: string, map: string, bots: number) {
-    console.log(type, name, bots, map);
-    this.games.push(new gameTypes[type](steering, emitter, name, bots, new maps[map]()));
+  createGame(
+    steering,
+    emitter,
+    name: string,
+    type: string,
+    map: string,
+    light: string,
+    bots: number,
+  ) {
+    console.log(type, name, light, bots, map);
+    this.games.push(new gameTypes[type](steering, emitter, name, light, bots, new maps[map]()));
   }
 
   getGame(roomName: string) {
@@ -27,6 +35,7 @@ class GamesManager {
         roomName: game.roomName,
         type: game.type,
         map: game.map.mapName,
+        light: game.light,
         count: game.players.length,
       };
     });

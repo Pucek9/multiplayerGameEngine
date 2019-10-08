@@ -9,6 +9,7 @@ export default interface GameModel {
   emitter;
   roomName: string;
   type: string;
+  light: string;
   map: GameMap;
   botsCount: number;
   players: Player[];

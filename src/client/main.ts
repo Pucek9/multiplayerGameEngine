@@ -2,7 +2,7 @@ import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
 import MenuComponent from './UserInterface/MenuComponent';
-import GameState from './GameState';
+import Game from './Game';
 import './style.scss';
 import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
@@ -21,7 +21,7 @@ let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  private gameState: GameState;
+  private gameState: Game;
   private events: any;
 
   constructor() {
@@ -34,9 +34,7 @@ class Main {
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
       gamesService.clearGamesList();
-      gamesList.forEach(game =>
-        gamesService.addGame(game.roomName, game.type, game.map, game.count),
-      );
+      gamesList.forEach(game => gamesService.addGame(game));
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1].roomName;
         userService.chooseGame(game);
@@ -45,10 +43,9 @@ class Main {
     });
   }
 
-  onAddNewGame({ roomName, type, map, bots }: NewGame) {
-    const newGame = new NewGame(roomName, type, map, bots);
+  onAddNewGame(newGame: NewGame) {
     socket.emit(API.CREATE_GAME, newGame);
-    userService.chooseGame(roomName);
+    userService.chooseGame(newGame.roomName);
   }
 
   onJoinGame() {
@@ -60,9 +57,12 @@ class Main {
         randColor(),
         userState.chosenGame,
       );
+      const gameConfig = gamesService
+        .getState()
+        .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
       const screen = this.prepareScreen();
-      this.gameState = new GameState(newPlayer, screen);
+      this.gameState = new Game(newPlayer, screen, gameConfig);
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();
@@ -81,7 +81,7 @@ class Main {
     }
   }
 
-  registerEvents(gameState: GameState) {
+  registerEvents(gameState: Game) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));
@@ -126,7 +126,6 @@ class Main {
         const mouseClick = gameState.getMouseCoordinates();
         socket.emit(API.MOUSE_UP, mouseClick);
       },
-
       mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
         if (mouseCoordinates) {

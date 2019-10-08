@@ -19,7 +19,6 @@ export default class AmbientLight extends Lighting {
     this.source = source;
     this.dest = cursor;
     this.light = new HemisphereLight(color, null, intensity);
-    // this.update();
     this.screen.scene.add(this.light);
   }
 

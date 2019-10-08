@@ -5,9 +5,7 @@ import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
 
 import { Lighting } from './models/Light/Light';
-import AmbientLight from './models/Light/AmbientLight';
-import FlashLight from './models/Light/FlashLight';
-import CursorLight from './models/Light/CursorLight';
+import Lights from './models/Light/index';
 
 import PlayerListComponent from './UserInterface/PlayersList';
 import WeaponsListComponent from './UserInterface/WeaponsList';
@@ -25,11 +23,12 @@ import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 import ICamera from './interfaces/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
+import { GameState } from './store/games/state';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
-export default class GameState {
+export default class Game {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
@@ -48,12 +47,10 @@ export default class GameState {
   cursor: Cursor;
   text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel) {
+  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameState) {
     this.user = user;
     this.screen = screen;
-    this.light = new FlashLight(screen);
-    // this.light = new AmbientLight(screen);
-    // this.light = new CursorLight(screen);
+    this.light = new Lights[gameConfig.light](this.screen);
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();

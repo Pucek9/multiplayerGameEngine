@@ -31,6 +31,12 @@ export function gamesReducer(
         map: payload,
       };
 
+    case GamesActions.SET_LIGHT:
+      return {
+        ...state,
+        light: payload,
+      };
+
     case GamesActions.SET_BOTS_COUNT:
       return {
         ...state,

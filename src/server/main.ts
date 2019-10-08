@@ -45,6 +45,7 @@ function connection(socket: Socket) {
         newGame.roomName,
         newGame.type,
         newGame.map,
+        newGame.light,
         newGame.bots,
       );
       socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
