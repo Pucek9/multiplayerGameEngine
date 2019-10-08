@@ -6,7 +6,7 @@ import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
 import { Direction } from '../../shared/models/Direction';
-import { generateId, randColor, times } from '../../shared/helpers';
+import { generateId, randColor, randItem, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
@@ -65,9 +65,8 @@ export default class Free4all implements GameModel {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(`Bot_${generateId()}`, `Bot_${index}`, randColor(), x, y, this.roomName);
     this.players.push(bot);
-    bot.direction = -1.5;
-    bot.keys.add('Shift');
-    bot.addAndSelectPower(new ReverseBullets());
+    const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
+    bot.addAndSelectPower(new SuperPower());
     bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
     return bot;
   }

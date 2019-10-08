@@ -17,12 +17,22 @@ export class BotService {
   }
 
   performRandKeys(bot) {
-    const keys = ['W', 'A', 'S', 'D'];
-    keys.forEach(key => bot.keys.delete(key));
+    const keys = [['W'], ['A'], ['S'], ['D']];
+    bot.keys.clear();
     if (bot.isAlive()) {
-      const keysCombinations = [...keys, 'WA', 'AS', 'SD', 'DW'];
+      const keysCombinations = [
+        ...keys,
+        ['W', 'A'],
+        ['A', 'S'],
+        ['S', 'D'],
+        ['D', 'W'],
+        ['1'],
+        ['2'],
+        ['3'],
+      ];
       const newKeys = randItem(keysCombinations);
-      newKeys.split('').forEach(key => bot.keys.add(key));
+      newKeys.push(randItem(['Shift', '']));
+      newKeys.forEach(key => bot.keys.add(key));
     }
   }
 }
