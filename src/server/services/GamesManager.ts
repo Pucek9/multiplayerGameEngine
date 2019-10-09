@@ -2,6 +2,7 @@ import gameTypes from '../gameTypes';
 import maps from '../maps';
 import GameInstance from '../../shared/apiModels/GameInstance';
 import GameModel from '../gameTypes/GameModel';
+import Steering from './Steering';
 
 class GamesManager {
   public games: GameModel[] = [];
@@ -9,7 +10,7 @@ class GamesManager {
   constructor() {}
 
   createGame(
-    steering,
+    steering: string,
     emitter,
     name: string,
     type: string,
@@ -18,7 +19,9 @@ class GamesManager {
     bots: number,
   ) {
     console.log(type, name, light, bots, map);
-    this.games.push(new gameTypes[type](steering, emitter, name, light, bots, new maps[map]()));
+    this.games.push(
+      new gameTypes[type](Steering[steering], emitter, name, light, bots, new maps[map]()),
+    );
   }
 
   getGame(roomName: string) {

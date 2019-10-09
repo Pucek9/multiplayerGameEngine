@@ -1,13 +1,14 @@
 import { Dir } from '../../../shared/models/Direction';
 import Steering from './Steering';
 
-export class RotateSteering implements Steering {
+export class EightDirectionSteering implements Steering {
   performKeysOperation(game, player) {
     this.performSteering(game, player);
     this.performWeaponChange(game, player);
     this.performPowerChange(game, player);
     this.performOtherKeys(game, player);
   }
+
   goLeft(player) {
     player.x -= player.speed;
     player.cursor.x -= player.speed;
@@ -21,18 +22,14 @@ export class RotateSteering implements Steering {
   }
 
   goUp(player) {
-    player.x += player.speed * Math.cos(player.direction);
-    player.y += player.speed * Math.sin(player.direction);
-    player.cursor.x += player.speed * Math.cos(player.direction);
-    player.cursor.y += player.speed * Math.sin(player.direction);
+    player.y += player.speed;
+    player.cursor.y += player.speed;
     player.lastDir = [Dir.UP];
   }
 
   goDown(player) {
-    player.x -= player.speed * Math.cos(player.direction);
-    player.y -= player.speed * Math.sin(player.direction);
-    player.cursor.x -= player.speed * Math.cos(player.direction);
-    player.cursor.y -= player.speed * Math.sin(player.direction);
+    player.y -= player.speed;
+    player.cursor.y -= player.speed;
     player.lastDir = [Dir.DOWN];
   }
 
@@ -46,8 +43,8 @@ export class RotateSteering implements Steering {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          dx: player.speed * Math.cos(player.direction),
-          dy: player.speed * Math.sin(player.direction),
+          dx: 0,
+          dy: player.speed,
         })
       ) {
         this.goUp(player);
@@ -57,34 +54,34 @@ export class RotateSteering implements Steering {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          dx: -player.speed * Math.cos(player.direction),
-          dy: -player.speed * Math.sin(player.direction),
+          dx: 0,
+          dy: -player.speed,
         })
       ) {
         this.goDown(player);
       }
     }
     if (a) {
-      // if (
-      // !player.isAlive() ||
-      // !game.detectPlayerCollision(player, {
-      //   dx: -player.speed,
-      //   dy: 0,
-      // })
-      // ) {
-      this.goLeft(player);
-      // }
+      if (
+        !player.isAlive() ||
+        !game.detectPlayerCollision(player, {
+          dx: -player.speed,
+          dy: 0,
+        })
+      ) {
+        this.goLeft(player);
+      }
     }
     if (d) {
-      // if (
-      // !player.isAlive() ||
-      // !game.detectPlayerCollision(player, {
-      //   dx: player.speed,
-      //   dy: 0,
-      // })
-      // ) {
-      this.goRight(player);
-      // }
+      if (
+        !player.isAlive() ||
+        !game.detectPlayerCollision(player, {
+          dx: player.speed,
+          dy: 0,
+        })
+      ) {
+        this.goRight(player);
+      }
     }
   }
 
@@ -202,5 +199,5 @@ export class RotateSteering implements Steering {
   }
 }
 
-const rotateSteering = new RotateSteering();
-export default rotateSteering;
+const eightDirectionSteering = new EightDirectionSteering();
+export default eightDirectionSteering;

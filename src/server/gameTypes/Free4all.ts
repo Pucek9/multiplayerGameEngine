@@ -19,7 +19,6 @@ import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
-import SteeringService from '../services/Steering/Steering';
 import Aura from '../models/powers/Aura';
 import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';
@@ -27,6 +26,7 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
 import botService from '../services/BotService';
+import Steering from '../services/Steering/Steering';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -35,7 +35,7 @@ export default class Free4all implements GameModel {
   public players: Player[] = [];
   public bullets: Bullet[] = [];
   constructor(
-    public steering: SteeringService,
+    public steering: Steering,
     public emitter: Emitter,
     public roomName: string,
     public light: string,
