@@ -9,14 +9,18 @@ export class RotateSteering implements Steering {
     this.performOtherKeys(game, player);
   }
   goLeft(player) {
-    player.x -= player.speed;
-    player.cursor.x -= player.speed;
+    player.x -= player.speed * Math.sin(player.direction);
+    player.y += player.speed * Math.cos(player.direction);
+    player.cursor.x -= player.speed * Math.sin(player.direction);
+    player.cursor.x += player.speed * Math.cos(player.direction);
     player.lastDir = [Dir.LEFT];
   }
 
   goRight(player) {
-    player.x += player.speed;
-    player.cursor.x += player.speed;
+    player.x += player.speed * Math.sin(player.direction);
+    player.y -= player.speed * Math.cos(player.direction);
+    player.cursor.x += player.speed * Math.sin(player.direction);
+    player.cursor.x -= player.speed * Math.cos(player.direction);
     player.lastDir = [Dir.RIGHT];
   }
 
@@ -65,26 +69,26 @@ export class RotateSteering implements Steering {
       }
     }
     if (a) {
-      // if (
-      // !player.isAlive() ||
-      // !game.detectPlayerCollision(player, {
-      //   dx: -player.speed,
-      //   dy: 0,
-      // })
-      // ) {
-      this.goLeft(player);
-      // }
+      if (
+        !player.isAlive() ||
+        !game.detectPlayerCollision(player, {
+          dx: -player.speed * Math.sin(player.direction),
+          dy: player.speed * Math.cos(player.direction),
+        })
+      ) {
+        this.goLeft(player);
+      }
     }
     if (d) {
-      // if (
-      // !player.isAlive() ||
-      // !game.detectPlayerCollision(player, {
-      //   dx: player.speed,
-      //   dy: 0,
-      // })
-      // ) {
-      this.goRight(player);
-      // }
+      if (
+        !player.isAlive() ||
+        !game.detectPlayerCollision(player, {
+          dx: player.speed * Math.sin(player.direction),
+          dy: -player.speed * Math.cos(player.direction),
+        })
+      ) {
+        this.goRight(player);
+      }
     }
   }
 
