@@ -37,9 +37,9 @@ export default class Knife extends Weapon {
             : 0),
         fromY:
           bulletData.fromY -
-          (bulletData.dir.includes(Dir.UP)
+          (bulletData.dir.includes(Dir.DOWN)
             ? bulletData.size
-            : bulletData.dir.includes(Dir.DOWN)
+            : bulletData.dir.includes(Dir.UP)
             ? -bulletData.size
             : 0),
         targetX: bulletData.targetX,

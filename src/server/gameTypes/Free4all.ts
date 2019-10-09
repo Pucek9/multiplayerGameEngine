@@ -19,7 +19,7 @@ import ReverseBullets from '../models/powers/ReverseBullets';
 import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
-import SteeringService from '../services/Steering';
+import SteeringService from '../services/Steering/Steering';
 import Aura from '../models/powers/Aura';
 import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';

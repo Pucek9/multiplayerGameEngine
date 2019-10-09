@@ -76,30 +76,6 @@ export default class Player extends PlayerModel {
     }
   }
 
-  goLeft() {
-    this.x -= this.speed;
-    this.cursor.x -= this.speed;
-    this.lastDir = [Dir.LEFT];
-  }
-
-  goRight() {
-    this.x += this.speed;
-    this.cursor.x += this.speed;
-    this.lastDir = [Dir.RIGHT];
-  }
-
-  goDown() {
-    this.y += this.speed;
-    this.cursor.y += this.speed;
-    this.lastDir = [Dir.DOWN];
-  }
-
-  goUp() {
-    this.y -= this.speed;
-    this.cursor.y -= this.speed;
-    this.lastDir = [Dir.UP];
-  }
-
   shoot(mouseClick: MouseCoordinates, game) {
     this.selectedWeapon &&
       this.selectedWeapon.shoot(

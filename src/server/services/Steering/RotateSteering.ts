@@ -1,9 +1,35 @@
-export default class SteeringService {
+import { Dir } from '../../../shared/models/Direction';
+
+export default class RotateSteering {
   performKeysOperation(game, player) {
     this.performSteering(game, player);
     this.performWeaponChange(game, player);
     this.performPowerChange(game, player);
     this.performOtherKeys(game, player);
+  }
+
+  goLeft(player) {
+    player.x -= player.speed;
+    player.cursor.x -= player.speed;
+    player.lastDir = [Dir.LEFT];
+  }
+
+  goRight(player) {
+    player.x += player.speed;
+    player.cursor.x += player.speed;
+    player.lastDir = [Dir.RIGHT];
+  }
+
+  goUp(player) {
+    player.y += player.speed * Math.cos(player.direction);
+    player.cursor.y += player.speed * Math.cos(player.direction);
+    player.lastDir = [Dir.UP];
+  }
+
+  goDown(player) {
+    player.y -= player.speed * Math.cos(player.direction);
+    player.cursor.y -= player.speed * Math.cos(player.direction);
+    player.lastDir = [Dir.DOWN];
   }
 
   performSteering(game, player) {
@@ -16,11 +42,11 @@ export default class SteeringService {
       if (
         !player.isAlive() ||
         !game.detectPlayerCollision(player, {
-          dx: 0,
-          dy: player.speed,
+          dx: player.speed * Math.cos(player.direction),
+          dy: player.speed * Math.sin(player.direction),
         })
       ) {
-        player.goDown();
+        this.goUp(player);
       }
     }
     if (s) {
@@ -31,7 +57,7 @@ export default class SteeringService {
           dy: -player.speed,
         })
       ) {
-        player.goUp();
+        this.goDown(player);
       }
     }
     if (a) {
@@ -42,7 +68,7 @@ export default class SteeringService {
           dy: 0,
         })
       ) {
-        player.goLeft();
+        this.goLeft(player);
       }
     }
     if (d) {
@@ -53,7 +79,7 @@ export default class SteeringService {
           dy: 0,
         })
       ) {
-        player.goRight();
+        this.goRight(player);
       }
     }
   }

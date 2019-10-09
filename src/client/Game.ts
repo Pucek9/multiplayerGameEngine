@@ -24,6 +24,7 @@ import ICamera from './interfaces/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameState } from './store/games/state';
+// import DynamicCamera from './models/DynamicCamera';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');

@@ -9,7 +9,7 @@ import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
 import Emitter from './services/Emitter';
-import SteeringService from './services/Steering';
+import SteeringService from './services/Steering/Steering';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
