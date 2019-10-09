@@ -3,6 +3,7 @@ export const SET_GAME_NAME = 'SET_GAME_NAME';
 export const SET_GAME_TYPE = 'SET_GAME_TYPE';
 export const SET_GAME_MAP = 'SET_GAME_MAP';
 export const SET_LIGHT = 'SET_LIGHT';
+export const SET_STEERING = 'SET_STEERING';
 export const SET_BOTS_COUNT = 'SET_BOTS_COUNT';
 export const CLEAR_GAMES_LIST = 'CLEAR_GAMES_LIST';
 
@@ -28,6 +29,11 @@ export class SetGameMap {
 
 export class SetLight {
   readonly type = SET_LIGHT;
+  constructor(public payload) {}
+}
+
+export class SetSteering {
+  readonly type = SET_STEERING;
   constructor(public payload) {}
 }
 

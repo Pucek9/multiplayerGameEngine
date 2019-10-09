@@ -3,5 +3,6 @@ export default interface NewGame {
   type: string;
   map: string;
   light: string;
+  steering: string;
   bots: number;
 }

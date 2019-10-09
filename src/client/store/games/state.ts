@@ -11,6 +11,7 @@ export interface GamesState {
   type: string;
   map: string;
   light: string;
+  steering: string;
   bots: number;
   list: GameState[];
 }
@@ -20,6 +21,7 @@ export const initialState: GamesState = {
   type: 'Free4all',
   map: 'Playground',
   light: 'FlashLight',
+  steering: 'eightDirectionSteering',
   bots: 0,
   list: [],
 };

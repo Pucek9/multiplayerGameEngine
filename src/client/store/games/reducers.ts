@@ -37,6 +37,12 @@ export function gamesReducer(
         light: payload,
       };
 
+    case GamesActions.SET_STEERING:
+      return {
+        ...state,
+        steering: payload,
+      };
+
     case GamesActions.SET_BOTS_COUNT:
       return {
         ...state,

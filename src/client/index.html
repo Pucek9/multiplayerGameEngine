@@ -48,7 +48,7 @@
             </div>
             <div class="type-row">
               <label
-              >Light:
+                >Light:
                 <select id="gameLightInput" class="select create-white">
                   <option value="FlashLight">FlashLight</option>
                   <option value="AmbientLight">Ambient</option>
@@ -58,8 +58,24 @@
             </div>
             <div class="type-row">
               <label
+                >Steering:
+                <select id="steeringInput" class="select create-white">
+                  <option value="eightDirectionSteering">Eight direction</option>
+                  <option value="rotateSteering">Rotate</option>
+                </select>
+              </label>
+            </div>
+            <div class="type-row">
+              <label
                 >Bots:&nbsp;
-                <input id="botsCountInput" type="number" min="0" max="30" value="0" class="input create-white" />
+                <input
+                  id="botsCountInput"
+                  type="number"
+                  min="0"
+                  max="30"
+                  value="0"
+                  class="input create-white"
+                />
               </label>
             </div>
           </form>

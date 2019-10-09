@@ -38,8 +38,7 @@ function connection(socket: Socket) {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
       gamesManager.createGame(
-        'rotateSteering',
-        // 'eightDirectionSteering',
+        newGame.steering,
         emitter,
         newGame.roomName,
         newGame.type,

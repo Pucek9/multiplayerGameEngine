@@ -40,6 +40,13 @@ export class GamesService {
     });
   }
 
+  setSteering(steering: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_STEERING,
+      payload: steering,
+    });
+  }
+
   setBotsCount(count: number) {
     this.store.dispatch({
       type: GamesListActions.SET_BOTS_COUNT,
