@@ -1,7 +1,6 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
-import { Dir } from '../../../shared/models/Direction';
 
 export default class Knife extends Weapon {
   type = 'Knife';
@@ -30,18 +29,18 @@ export default class Knife extends Weapon {
         owner: bulletData.owner,
         fromX:
           bulletData.fromX -
-          (bulletData.dir.includes(Dir.LEFT)
-            ? bulletData.size
-            : bulletData.dir.includes(Dir.RIGHT)
-            ? -bulletData.size
-            : 0),
+          (bulletData.dir.dx === 0
+            ? 0
+            : bulletData.dir.dx < 0
+            ? bulletData.dir.dx + bulletData.size
+            : bulletData.dir.dx - bulletData.size),
         fromY:
           bulletData.fromY -
-          (bulletData.dir.includes(Dir.DOWN)
-            ? bulletData.size
-            : bulletData.dir.includes(Dir.UP)
-            ? -bulletData.size
-            : 0),
+          (bulletData.dir.dy === 0
+            ? 0
+            : bulletData.dir.dy < 0
+            ? bulletData.dir.dy + bulletData.size
+            : bulletData.dir.dy - bulletData.size),
         targetX: bulletData.targetX,
         targetY: bulletData.targetY,
         color: bulletData.owner.color,

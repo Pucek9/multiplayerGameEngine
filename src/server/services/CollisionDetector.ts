@@ -1,7 +1,7 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
-import { Direction } from '../../shared/models/Direction';
+import Direction from '../../shared/models/Direction';
 import Bullet from '../models/Bullet';
 
 interface CollisionInfo {

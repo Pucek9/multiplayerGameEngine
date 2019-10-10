@@ -5,7 +5,7 @@ import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
-import { Direction } from '../../shared/models/Direction';
+import Direction from '../../shared/models/Direction';
 import { generateId, randColor, randItem, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';

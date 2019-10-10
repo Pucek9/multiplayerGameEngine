@@ -1,6 +1,6 @@
 import PlayerModel from '../../shared/models/PlayerModel';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
-import { Dir } from '../../shared/models/Direction';
+import Direction from '../../shared/models/Direction';
 import Bullet from './Bullet';
 import AidKit from './AidKit';
 
@@ -8,7 +8,7 @@ export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
   public cursor = { x: 0, y: 0, down: false };
-  private lastDir: Array<Dir>;
+  private lastDir: Direction;
 
   isAlive() {
     return this.alive;
@@ -84,7 +84,7 @@ export default class Player extends PlayerModel {
           owner: this,
           fromX: this.x + this.size * Math.cos(this.direction),
           fromY: this.y + this.size * Math.sin(this.direction),
-          dir: this.isMoving() ? this.lastDir : [],
+          dir: this.lastDir,
           size: this.size,
         },
         game,
@@ -171,9 +171,16 @@ export default class Player extends PlayerModel {
     }
   }
 
+  go(dir: Direction) {
+    this.x += dir.dx;
+    this.y += dir.dy;
+    this.cursor.x += dir.dx;
+    this.cursor.y += dir.dy;
+    this.lastDir = dir;
+  }
+
   isMoving() {
-    const moveKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'W', 'S', 'A', 'D'];
-    return moveKeys.some(key => this.keys.has(key));
+    return this.lastDir.dx !== 0 && this.lastDir.dy;
   }
 
   decreaseTimeToRevive(time: number = 1) {
