@@ -180,7 +180,7 @@ export default class Player extends PlayerModel {
   }
 
   isMoving() {
-    return this.lastDir.dx !== 0 && this.lastDir.dy;
+    return this.lastDir.dx !== 0 || this.lastDir.dy !== 0;
   }
 
   decreaseTimeToRevive(time: number = 1) {
