@@ -48,9 +48,7 @@ export default abstract class Weapon implements Item {
     }
   }
 
-  prepareBullets(bulletData: BulletData): Bullet[] {
-    return [];
-  }
+  abstract prepareBullets(bulletData: BulletData): Bullet[];
 
   generateBullets(bullets, game, owner) {
     if (bullets && bullets.length > 0) {
