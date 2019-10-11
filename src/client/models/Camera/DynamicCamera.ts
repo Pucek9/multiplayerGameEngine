@@ -11,11 +11,11 @@ export default class DynamicCamera implements IUpdatable, ICamera {
 
   constructor() {}
 
-  init({ activePlayer, cursor }: { activePlayer: PlayerModel,  cursor: Cursor }) {
+  init({ activePlayer, cursor }: { activePlayer: PlayerModel, cursor: Cursor }) {
     this.activePlayer = activePlayer;
     this.cursor = cursor;
     this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    this.object.position.z = 300;
+    this.object.position.z = 200;
   }
 
   wheel(e: WheelEvent) {
@@ -30,6 +30,7 @@ export default class DynamicCamera implements IUpdatable, ICamera {
     this.object.position.x = this.activePlayer.x;
     this.object.position.y = this.activePlayer.y;
     this.object.lookAt(this.cursor.x, this.cursor.y, this.cursor.z);
+    this.object.rotation.z = this.activePlayer.direction + 180;
   }
 
   remove() {
