@@ -43,6 +43,7 @@ function connection(socket: Socket) {
         newGame.roomName,
         newGame.type,
         newGame.map,
+        newGame.camera,
         newGame.light,
         newGame.bots,
       );

@@ -1,5 +1,5 @@
 import Player from './models/Player';
-import StaticCamera from './models/StaticCamera';
+import Camera from './models/Camera'
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -20,11 +20,10 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import ICamera from './interfaces/ICamera';
+import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameState } from './store/games/state';
-// import DynamicCamera from './models/DynamicCamera';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -52,6 +51,7 @@ export default class Game {
     this.user = user;
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
+    this.camera = new Camera[gameConfig.camera]();
     this.playersListComponent = new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
@@ -82,8 +82,8 @@ export default class Game {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
 
-      this.camera = new StaticCamera(this.currentPlayer);
       // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
+      this.camera.init({activePlayer: this.currentPlayer, cursor: this.cursor});
       this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       this.currentPlayer.setLight(this.light);
     }

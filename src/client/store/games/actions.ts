@@ -2,6 +2,7 @@ export const ADD_GAME = 'ADD_GAME';
 export const SET_GAME_NAME = 'SET_GAME_NAME';
 export const SET_GAME_TYPE = 'SET_GAME_TYPE';
 export const SET_GAME_MAP = 'SET_GAME_MAP';
+export const SET_CAMERA = 'SET_CAMERA';
 export const SET_LIGHT = 'SET_LIGHT';
 export const SET_STEERING = 'SET_STEERING';
 export const SET_BOTS_COUNT = 'SET_BOTS_COUNT';
@@ -24,6 +25,11 @@ export class SetGameType {
 
 export class SetGameMap {
   readonly type = SET_GAME_MAP;
+  constructor(public payload) {}
+}
+
+export class SetGameCamera {
+  readonly type = SET_CAMERA;
   constructor(public payload) {}
 }
 

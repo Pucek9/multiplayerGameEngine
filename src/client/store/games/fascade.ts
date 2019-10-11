@@ -33,6 +33,13 @@ export class GamesService {
     });
   }
 
+  setCamera(map: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_CAMERA,
+      payload: map,
+    });
+  }
+
   setLight(light: string) {
     this.store.dispatch({
       type: GamesListActions.SET_LIGHT,

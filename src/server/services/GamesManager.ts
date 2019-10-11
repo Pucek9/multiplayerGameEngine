@@ -15,12 +15,13 @@ class GamesManager {
     name: string,
     type: string,
     map: string,
+    camera: string,
     light: string,
     bots: number,
   ) {
-    console.log(type, name, light, bots, map);
+    console.log(name, type, camera, light, map, bots);
     this.games.push(
-      new gameTypes[type](Steering[steering], emitter, name, light, bots, new maps[map]()),
+      new gameTypes[type](Steering[steering], emitter, name, camera, light, bots, new maps[map]()),
     );
   }
 

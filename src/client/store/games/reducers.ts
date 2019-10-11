@@ -37,6 +37,12 @@ export function gamesReducer(
         light: payload,
       };
 
+    case GamesActions.SET_CAMERA:
+      return {
+        ...state,
+        camera: payload,
+      };
+
     case GamesActions.SET_STEERING:
       return {
         ...state,
