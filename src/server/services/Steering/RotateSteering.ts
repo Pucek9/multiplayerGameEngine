@@ -1,4 +1,5 @@
 import Steering from './Steering';
+import { hasKeys } from "../../../shared/helpers";
 
 export class RotateSteering implements Steering {
   performKeysOperation(game, player) {
@@ -9,10 +10,10 @@ export class RotateSteering implements Steering {
   }
 
   performSteering(game, player) {
-    const up = player.keys.has('W') || player.keys.has('ArrowUp');
-    const down = player.keys.has('S') || player.keys.has('ArrowDown');
-    const left = player.keys.has('A') || player.keys.has('ArrowLeft');
-    const right = player.keys.has('D') || player.keys.has('ArrowRight');
+    const up = hasKeys(player.keys, ['W', 'ArrowUp']);
+    const down = hasKeys(player.keys, ['S', 'ArrowDown']);
+    const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
+    const right = hasKeys(player.keys, ['D', 'ArrowRight']);
 
     if (up) {
       const dir = {

@@ -29,3 +29,7 @@ export function randColor() {
 export function times(count, callback) {
   Array.from(Array(count).keys()).forEach(callback);
 }
+
+export function hasKeys(set: Set<string>, keys: Array<string>) {
+  return keys.some((key: string) => set.has(key));
+}

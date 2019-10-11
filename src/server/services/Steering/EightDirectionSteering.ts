@@ -1,4 +1,6 @@
 import Steering from './Steering';
+import Direction from '../../../shared/models/Direction';
+import { hasKeys } from '../../../shared/helpers';
 
 export class EightDirectionSteering implements Steering {
   performKeysOperation(game, player) {
@@ -9,52 +11,48 @@ export class EightDirectionSteering implements Steering {
   }
 
   performSteering(game, player) {
-    const up = player.keys.has('W') || player.keys.has('ArrowUp');
-    const down = player.keys.has('S') || player.keys.has('ArrowDown');
-    const left = player.keys.has('A') || player.keys.has('ArrowLeft');
-    const right = player.keys.has('D') || player.keys.has('ArrowRight');
+    const up = hasKeys(player.keys, ['W', 'ArrowUp']);
+    const down = hasKeys(player.keys, ['S', 'ArrowDown']);
+    const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
+    const right = hasKeys(player.keys, ['D', 'ArrowRight']);
 
-    if (up) {
-      const dir = {
-        dx: 0,
-        dy: player.speed,
-      };
-      if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
-        player.go(dir);
-      }
+    const dir: Direction = {
+      dx: 0,
+      dy: 0,
+    };
+    if (up && !left && !right) {
+      dir.dx = 0;
+      dir.dy = player.speed;
     }
-    if (down) {
-      const dir = {
-        dx: 0,
-        dy: -player.speed,
-      };
-      if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
-        player.go(dir);
-      }
+    if (up && left && !right) {
+      dir.dx = (-Math.sqrt(2) / 2) * player.speed;
+      dir.dy = (Math.sqrt(2) / 2) * player.speed;
     }
-    if (left) {
-      const dir = {
-        dx: -player.speed,
-        dy: 0,
-      };
-      if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
-        player.go(dir);
-      }
+    if (up && !left && right) {
+      dir.dx = (Math.sqrt(2) / 2) * player.speed;
+      dir.dy = (Math.sqrt(2) / 2) * player.speed;
     }
-    if (right) {
-      const dir = {
-        dx: player.speed,
-        dy: 0,
-      };
-      if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
-        player.go(dir);
-      }
+    if (down && !left && !right) {
+      dir.dx = 0;
+      dir.dy = -player.speed;
     }
-    if (!right && !left && !up && !down) {
-      const dir = {
-        dx: 0,
-        dy: 0,
-      };
+    if (down && left && !right) {
+      dir.dx = (-Math.sqrt(2) / 2) * player.speed;
+      dir.dy = (-Math.sqrt(2) / 2) * player.speed;
+    }
+    if (down && !left && right) {
+      dir.dx = (Math.sqrt(2) / 2) * player.speed;
+      dir.dy = (-Math.sqrt(2) / 2) * player.speed;
+    }
+    if (left && !up && !down) {
+      dir.dx = -player.speed;
+      dir.dy = 0;
+    }
+    if (right && !up && !down) {
+      dir.dx = player.speed;
+      dir.dy = 0;
+    }
+    if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
       player.go(dir);
     }
   }
