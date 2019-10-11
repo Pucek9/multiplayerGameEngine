@@ -20,35 +20,35 @@ export class EightDirectionSteering implements Steering {
       dx: 0,
       dy: 0,
     };
-    if (up && !left && !right) {
+    if (up && !down && !left && !right) {
       dir.dx = 0;
       dir.dy = player.speed;
     }
-    if (up && left && !right) {
+    if (up && !down && left && !right) {
       dir.dx = (-Math.sqrt(2) / 2) * player.speed;
       dir.dy = (Math.sqrt(2) / 2) * player.speed;
     }
-    if (up && !left && right) {
+    if (up && !down && !left && right) {
       dir.dx = (Math.sqrt(2) / 2) * player.speed;
       dir.dy = (Math.sqrt(2) / 2) * player.speed;
     }
-    if (down && !left && !right) {
+    if (!up && down && !left && !right) {
       dir.dx = 0;
       dir.dy = -player.speed;
     }
-    if (down && left && !right) {
+    if (!up && down && left && !right) {
       dir.dx = (-Math.sqrt(2) / 2) * player.speed;
       dir.dy = (-Math.sqrt(2) / 2) * player.speed;
     }
-    if (down && !left && right) {
+    if (!up && down && !left && right) {
       dir.dx = (Math.sqrt(2) / 2) * player.speed;
       dir.dy = (-Math.sqrt(2) / 2) * player.speed;
     }
-    if (left && !up && !down) {
+    if (!up && !down && left && !right) {
       dir.dx = -player.speed;
       dir.dy = 0;
     }
-    if (right && !up && !down) {
+    if (!up && !down && !left && right) {
       dir.dx = player.speed;
       dir.dy = 0;
     }
