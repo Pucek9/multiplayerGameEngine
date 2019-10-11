@@ -33,17 +33,23 @@ class GamesManager {
     return this.games.find(game => game.isPlayerInThisGame(id));
   }
 
+  // getGamesList(): GameInstance[] {
+  //   return this.games.map(game => ({ ...game, map: game.map.mapName, count: game.players.length }));
+  // }
+
   getGamesList(): GameInstance[] {
     return this.games.map(game => {
       return {
         roomName: game.roomName,
         type: game.type,
         map: game.map.mapName,
+        camera: game.camera,
         light: game.light,
         count: game.players.length,
       };
     });
   }
+
 }
 
 const gamesManager = new GamesManager();

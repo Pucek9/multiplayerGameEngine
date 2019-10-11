@@ -28,7 +28,7 @@ export class SetGameMap {
   constructor(public payload) {}
 }
 
-export class SetGameCamera {
+export class SetCamera {
   readonly type = SET_CAMERA;
   constructor(public payload) {}
 }
@@ -53,4 +53,13 @@ export class ClearGamesList {
   constructor() {}
 }
 
-export type GamesActions = AddGame | SetGameName | SetGameType | SetGameMap | ClearGamesList;
+export type GamesActions =
+  | AddGame
+  | SetGameName
+  | SetGameType
+  | SetGameMap
+  | SetCamera
+  | SetLight
+  | SetSteering
+  | SetBotsCount
+  | ClearGamesList;

@@ -6,6 +6,7 @@ declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
 declare var gameMapInput: HTMLSelectElement;
 declare var gameLightInput: HTMLSelectElement;
+declare var cameraInput: HTMLSelectElement;
 declare var steeringInput: HTMLSelectElement;
 declare var botsCountInput: HTMLInputElement;
 declare var createButton: HTMLButtonElement;
@@ -27,8 +28,8 @@ export default class MenuComponent {
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', function() {
-      const { roomName, type, map, light, steering, bots } = gamesService.getState();
-      main.onAddNewGame({ roomName, type, map, light, steering, bots });
+      const { roomName, type, map, camera, light, steering, bots } = gamesService.getState();
+      main.onAddNewGame({ roomName, type, map, camera, light, steering, bots });
       gameNameInput.value = '';
     });
 
@@ -47,6 +48,10 @@ export default class MenuComponent {
 
     gameLightInput.addEventListener('change', function() {
       gamesService.setLight(gameLightInput.value);
+    });
+
+    cameraInput.addEventListener('change', function() {
+      gamesService.setCamera(cameraInput.value);
     });
 
     steeringInput.addEventListener('change', function() {

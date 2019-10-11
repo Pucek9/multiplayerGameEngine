@@ -1,5 +1,5 @@
 import Player from './models/Player';
-import Camera from './models/Camera'
+import Camera from './models/Camera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -81,16 +81,14 @@ export default class Game {
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
-
-      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
-      this.camera.init({activePlayer: this.currentPlayer, cursor: this.cursor});
+      this.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
       this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       this.currentPlayer.setLight(this.light);
     }
   }
 
   handleResize = () => {
-    if (this.camera && this.screen) {
+    if (this.camera && this.camera.object && this.screen) {
       this.camera.object.aspect = window.innerWidth / window.innerHeight;
       this.camera.object.updateProjectionMatrix();
       this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);

@@ -38,8 +38,8 @@ export default class Free4all implements GameModel {
     public steering: Steering,
     public emitter: Emitter,
     public roomName: string,
-    public light: string,
     public camera: string,
+    public light: string,
     public botsCount: number,
     public map: GameMap,
   ) {
