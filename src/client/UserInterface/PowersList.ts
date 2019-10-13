@@ -1,5 +1,3 @@
-import PlayerModel from '../../shared/models/PlayerModel';
-
 declare var powersList: HTMLUListElement;
 declare var rightDownPanel: HTMLDivElement;
 declare var powersHeader: HTMLSpanElement;

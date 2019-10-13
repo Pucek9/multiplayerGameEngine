@@ -10,46 +10,55 @@ export const CLEAR_GAMES_LIST = 'CLEAR_GAMES_LIST';
 
 export class AddGame {
   readonly type = ADD_GAME;
+
   constructor(public payload) {}
 }
 
 export class SetGameName {
   readonly type = SET_GAME_NAME;
+
   constructor(public payload) {}
 }
 
 export class SetGameType {
   readonly type = SET_GAME_TYPE;
+
   constructor(public payload) {}
 }
 
 export class SetGameMap {
   readonly type = SET_GAME_MAP;
+
   constructor(public payload) {}
 }
 
 export class SetCamera {
   readonly type = SET_CAMERA;
+
   constructor(public payload) {}
 }
 
 export class SetLight {
   readonly type = SET_LIGHT;
+
   constructor(public payload) {}
 }
 
 export class SetSteering {
   readonly type = SET_STEERING;
+
   constructor(public payload) {}
 }
 
 export class SetBotsCount {
   readonly type = SET_BOTS_COUNT;
+
   constructor(public payload) {}
 }
 
 export class ClearGamesList {
   readonly type = CLEAR_GAMES_LIST;
+
   constructor() {}
 }
 

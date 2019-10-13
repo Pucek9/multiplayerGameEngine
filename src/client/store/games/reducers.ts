@@ -1,5 +1,5 @@
 import * as GamesActions from './actions';
-import { initialState, GamesState } from './state';
+import { GamesState, initialState } from './state';
 
 export function gamesReducer(
   state: GamesState = initialState,

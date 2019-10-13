@@ -229,6 +229,8 @@ export default class Game {
     if (this.currentPlayer) {
       this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
       this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
+      // this.cursor.movementX = e.movementX;
+      // this.cursor.movementY = e.movementY;
       return this.getMouseCoordinates();
     }
   }
@@ -244,6 +246,7 @@ export default class Game {
       );
     }
   }
+
   render() {
     if (this.camera) {
       this.screen.renderer.render(this.screen.scene, this.camera.object);

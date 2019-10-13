@@ -1,7 +1,7 @@
 import BulletModel from '../../shared/models/BulletModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
-import { Mesh, MeshBasicMaterial, SphereGeometry, BufferGeometry } from 'three';
+import { BufferGeometry, Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
 import FlashLight from './Light/FlashLight';
 import Cursor from './Cursor';
 import { optionsService } from '../store/store';

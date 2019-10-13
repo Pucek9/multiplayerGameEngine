@@ -30,10 +30,11 @@ import Steering from '../services/Steering/Steering';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
-  private interval;
-  private customInterval;
   public players: Player[] = [];
   public bullets: Bullet[] = [];
+  private interval;
+  private customInterval;
+
   constructor(
     public steering: Steering,
     public emitter: Emitter,
@@ -225,6 +226,7 @@ export default class Free4all implements GameModel {
       flash: bullet.flash,
     };
   }
+
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
     player && !this.detectPlayerCollision(player) && player.revive();

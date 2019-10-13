@@ -1,10 +1,9 @@
-import { Group, Mesh, MeshPhongMaterial } from 'three';
+import { Group, Math, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../types/ScreenModel';
-import { Math } from 'three';
 
 const loader = new FBXLoader();
 const models = {
@@ -17,8 +16,8 @@ const models = {
 };
 
 export default class Model3D extends StaticCircularObjectModel implements IUpdatable {
-  protected object: Group;
   public type: string;
+  protected object: Group;
 
   init(screen: ScreenModel) {
     const model = models[this.type];

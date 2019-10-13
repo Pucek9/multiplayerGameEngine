@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Robo-Game-Engine</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta content="width=device-width,initial-scale=1.0" name="viewport" />
   </head>
 
   <body>
@@ -10,10 +10,14 @@
       <div class="grid">
         <div class="box options create-fill">
           <div class="type-row" style="height: 50%; width: 100%;">
-            <a href="#popupControl"><button class="full create-fill">Control</button></a>
+            <a href="#popupControl">
+              <button class="full create-fill">Control</button>
+            </a>
           </div>
           <div class="type-row" style="height: 50%; width: 100%;">
-            <a href="#popupOptions"><button class="full create-fill">Options</button></a>
+            <a href="#popupOptions">
+              <button class="full create-fill">Options</button>
+            </a>
           </div>
         </div>
 
@@ -30,7 +34,7 @@
             <div class="type-row">
               <label
                 >Type:
-                <select id="gameTypeInput" class="select create-white">
+                <select class="select create-white" id="gameTypeInput">
                   <option value="Free4all">Free for all</option>
                   <option disabled value="TeamFight">Team fight</option>
                   <option disabled value="CaptureTheFlag">Capture the flag</option>
@@ -40,7 +44,7 @@
             <div class="type-row">
               <label
                 >Map:
-                <select id="gameMapInput" class="select create-white">
+                <select class="select create-white" id="gameMapInput">
                   <option value="Playground">Playground</option>
                   <option value="Boxes">Boxes</option>
                 </select>
@@ -49,7 +53,7 @@
             <div class="type-row">
               <label
                 >Camera:
-                <select id="cameraInput" class="select create-white">
+                <select class="select create-white" id="cameraInput">
                   <option value="StaticCamera">Static</option>
                   <option value="DynamicCamera">Dynamic</option>
                 </select>
@@ -58,7 +62,7 @@
             <div class="type-row">
               <label
                 >Light:
-                <select id="gameLightInput" class="select create-white">
+                <select class="select create-white" id="gameLightInput">
                   <option value="FlashLight">FlashLight</option>
                   <option value="AmbientLight">Ambient</option>
                   <option value="CursorLight">Cursor</option>
@@ -68,7 +72,7 @@
             <div class="type-row">
               <label
                 >Steering:
-                <select id="steeringInput" class="select create-white">
+                <select class="select create-white" id="steeringInput">
                   <option value="eightDirectionSteering">Eight direction</option>
                   <option value="rotateSteering">Rotate</option>
                 </select>
@@ -78,12 +82,12 @@
               <label
                 >Bots:&nbsp;
                 <input
-                  id="botsCountInput"
-                  type="number"
-                  min="0"
-                  max="30"
-                  value="0"
                   class="input create-white"
+                  id="botsCountInput"
+                  max="30"
+                  min="0"
+                  type="number"
+                  value="0"
                 />
               </label>
             </div>
@@ -92,8 +96,8 @@
 
         <div class="box name">
           <input
-            id="gameNameInput"
             class="fill create-white"
+            id="gameNameInput"
             placeholder="NAME"
             title="NAME"
             type="text"
@@ -107,7 +111,7 @@
         </div>
 
         <div class="box add">
-          <input id="createButton" class="full create-fill" type="button" value="CREATE" />
+          <input class="full create-fill" id="createButton" type="button" value="CREATE" />
         </div>
 
         <div class="box join-header join-fill">
@@ -125,7 +129,7 @@
                   <th>Players</th>
                 </tr>
               </thead>
-              <tbody id="gamesListTable" class="join-white"></tbody>
+              <tbody class="join-white" id="gamesListTable"></tbody>
             </table>
           </div>
 
@@ -136,8 +140,8 @@
 
         <div class="box nick">
           <input
-            id="nickInput"
             class="fill join-white"
+            id="nickInput"
             placeholder="NICK"
             title="NICK"
             type="text"
@@ -148,7 +152,7 @@
         </div>
 
         <div class="box join">
-          <input id="joinGameButton" class="full join-fill" type="button" value="JOIN" />
+          <input class="full join-fill" id="joinGameButton" type="button" value="JOIN" />
         </div>
 
         <div class="box footer">
@@ -173,7 +177,7 @@
       <ul id="powersList"></ul>
     </div>
 
-    <div id="popupControl" class="overlay">
+    <div class="overlay" id="popupControl">
       <a class="cancel" href="#"></a>
       <div class="popup">
         <h2>Control (F7)</h2>
@@ -198,7 +202,7 @@
       </div>
     </div>
 
-    <div id="popupOptions" class="overlay">
+    <div class="overlay" id="popupOptions">
       <a class="cancel" href="#"></a>
       <div class="popup">
         <h2>Options (F8)</h2>
@@ -206,11 +210,11 @@
         <div class="content">
           <p>
             <label
-              >Blink while shooting (experimental): <input type="checkbox" id="blinkingCheckbox"
+              >Blink while shooting (experimental): <input id="blinkingCheckbox" type="checkbox"
             /></label>
           </p>
           <p>
-            <label>Bullet shadow: <input type="checkbox" id="bulletShadowCheckbox" checked/></label>
+            <label>Bullet shadow: <input checked id="bulletShadowCheckbox" type="checkbox"/></label>
           </p>
         </div>
       </div>

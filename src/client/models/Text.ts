@@ -11,13 +11,13 @@ export default class Text implements IUpdatable {
   public y: number;
   public z = 50;
   public object: Mesh;
-  private screen;
-  private geometry: TextGeometry;
-  private material: MeshPhongMaterial;
   public offsetX = -20;
   public offsetY = 30;
   public color = 0x4444fff;
   public text: string;
+  private screen: ScreenModel;
+  private geometry: TextGeometry;
+  private material: MeshPhongMaterial;
 
   constructor() {}
 

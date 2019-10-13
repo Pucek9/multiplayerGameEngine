@@ -20,6 +20,7 @@ export default class Bullet extends BulletModel {
   dy: number;
   customFlag = true;
   allowForManipulate = true;
+
   // gameName?: string;
 
   constructor(params: Partial<Bullet>) {

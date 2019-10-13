@@ -49,7 +49,6 @@ class GamesManager {
       };
     });
   }
-
 }
 
 const gamesManager = new GamesManager();

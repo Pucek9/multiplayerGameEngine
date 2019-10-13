@@ -13,7 +13,10 @@ export default abstract class Power implements Item {
   }
 
   public use(props: any) {}
+
   public isActive() {}
+
   public release(props: any) {}
+
   public effect(props: any) {}
 }

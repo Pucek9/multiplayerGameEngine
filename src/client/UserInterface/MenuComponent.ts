@@ -1,6 +1,6 @@
 import { Unsubscribe } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
-import { store, gamesService, userService, optionsService } from '../store/store';
+import { gamesService, optionsService, store, userService } from '../store/store';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;

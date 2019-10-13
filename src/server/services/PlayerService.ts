@@ -18,5 +18,6 @@ export class PlayerService {
     return { x, y };
   }
 }
+
 const playerService = new PlayerService();
 export default playerService;

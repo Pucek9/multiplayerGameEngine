@@ -8,16 +8,21 @@ export interface Source {
   y: number;
 }
 
-export class Lighting implements IUpdatable {
+export abstract class Lighting implements IUpdatable {
   light: Light;
   source?: Source;
   dest?: Cursor;
+
   constructor(public screen: ScreenModel) {}
-  update() {}
-  init(params: any) {}
+
+  update() {};
+
+  abstract init?(params: any);
+
   remove() {
     this.screen.scene.remove(this.light);
   }
+
   setColor(color: number) {
     this.light.color = new Color(color);
   }
