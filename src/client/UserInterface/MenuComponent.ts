@@ -127,6 +127,22 @@ export default class MenuComponent {
     validateGameNameDuplicate.style.display = roomNameDuplicate ? 'block' : 'none';
   }
 
+  closePopup() {
+    location.hash = '';
+  }
+
+  togglePopup(e: KeyboardEvent, key: string, popupId: string) {
+    if (e.key === key) {
+      location.hash = location.hash === popupId ? '' : popupId;
+    }
+  }
+
+  requestFullscreen(e: KeyboardEvent, key: string) {
+    if (e.key === key) {
+      document.body.requestFullscreen();
+    }
+  }
+
   show() {
     menu.style.display = 'block';
   }

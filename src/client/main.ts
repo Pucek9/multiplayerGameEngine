@@ -70,15 +70,9 @@ class Main {
   }
 
   checkFunctionalButton(e: KeyboardEvent) {
-    if (e.key === 'F7') {
-      location.hash = location.hash === '#popupControl' ? '' : '#popupControl';
-    }
-    if (e.key === 'F8') {
-      location.hash = location.hash === '#popupOptions' ? '' : '#popupOptions';
-    }
-    if (e.key === 'F11') {
-      document.body.requestFullscreen();
-    }
+    this.menu.togglePopup(e, 'F7', '#popupControl');
+    this.menu.togglePopup(e, 'F8', '#popupOptions');
+    this.menu.requestFullscreen(e, 'F11');
   }
 
   registerEvents(gameState: Game) {
@@ -187,7 +181,7 @@ class Main {
   }
 
   leaveGame() {
-    location.hash = '';
+    this.menu.closePopup();
     location.reload();
   }
 }
