@@ -227,10 +227,17 @@ export default class Game {
 
   getUpdatedMouseCoordinates(e: MouseEvent): MouseCoordinates {
     if (this.currentPlayer) {
-      this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
-      this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
+      // this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
+      // this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
       this.cursor.movementX = e.movementX;
       this.cursor.movementY = e.movementY;
+
+      const range = 200;
+      this.cursor.x =
+        this.currentPlayer.x + range * Math.cos(this.currentPlayer.direction - e.movementX / 50);
+      this.cursor.y =
+        this.currentPlayer.y + range * Math.sin(this.currentPlayer.direction - e.movementX / 50);
+
       return this.getMouseCoordinates();
     }
   }
