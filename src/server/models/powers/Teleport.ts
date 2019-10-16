@@ -11,9 +11,10 @@ export default class Teleport extends ClickPower {
     Object.seal(this);
   }
 
-  use({ owner, game }: { owner: Player; game }) {
+  use({ owner, game, click }: { owner: Player; game; click: boolean }) {
     if (
-       !game.detectPlayerCollisionWithObjects(({
+      click &&
+      !game.detectPlayerCollisionWithObjects(({
         x: owner.cursor.x,
         y: owner.cursor.y,
         size: owner.size,
@@ -21,8 +22,17 @@ export default class Teleport extends ClickPower {
       } as unknown) as Player) &&
       owner.tryUseEnergy(this.cost)
     ) {
+      const diff = {
+        x: owner.x - owner.cursor.x,
+        y: owner.y - owner.cursor.y,
+      };
       owner.x = owner.cursor.x;
       owner.y = owner.cursor.y;
+      owner.cursor.x -= diff.x;
+      owner.cursor.y -= diff.y;
+      // exchange?
+      // owner.cursor.x += diff.x;
+      // owner.cursor.y += diff.y;
       game.detectPlayerCollisionWithGenerator(owner);
     }
   }

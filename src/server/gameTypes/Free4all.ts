@@ -285,7 +285,7 @@ export default class Free4all implements GameModel {
     if (player.isAlive()) {
       player.setMouseDown();
       if (player.selectedPower instanceof ClickPower && player.keys.has('Shift')) {
-        player.usePower(this);
+        player.usePower(this, true);
         this.emitPowerInfo(player);
       } else {
         this.shoot(owner);

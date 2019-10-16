@@ -46,9 +46,9 @@ export default class Player extends PlayerModel {
     this.takeAidKit({ energy: value || this.regeneration });
   }
 
-  usePower(game) {
+  usePower(game, click: boolean) {
     if (this.isAlive()) {
-      this.selectedPower.use({ owner: this, game});
+      this.selectedPower.use({ owner: this, game, click});
     }
   }
 
