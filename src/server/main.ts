@@ -37,16 +37,7 @@ function connection(socket: Socket) {
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
-      gamesManager.createGame(
-        newGame.steering,
-        emitter,
-        newGame.roomName,
-        newGame.type,
-        newGame.map,
-        newGame.camera,
-        newGame.light,
-        newGame.bots,
-      );
+      gamesManager.createGame(emitter, newGame);
       socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
     });
 
@@ -87,14 +78,14 @@ function connection(socket: Socket) {
     socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
       gameState.updateKeys(socket.id, keys);
     });
-    socket.on(API.MOUSE_CLICK, (mouseClick: MouseCoordinates) => {
-      gameState.mouseClick(mouseClick);
+    socket.on(API.MOUSE_CLICK, (owner: string) => {
+      gameState.mouseClick(owner);
     });
-    socket.on(API.MOUSE_UP, (mouseClick: MouseCoordinates) => {
-      gameState.mouseUp(mouseClick);
+    socket.on(API.MOUSE_UP, (owner: string) => {
+      gameState.mouseUp(owner);
     });
     socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
-      gameState.updatePlayerDirection(mouseCoordinates);
+      gameState.updateCursor(mouseCoordinates);
     });
   }
 

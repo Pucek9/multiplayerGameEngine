@@ -5,5 +5,6 @@ export default interface NewGame {
   camera: string;
   light: string;
   steering: string;
+  cursor: string;
   bots: number;
 }

@@ -25,8 +25,8 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
-import botService from '../services/BotService';
 import Steering from '../services/Steering/Steering';
+import Cursor from "../services/Cursor/Cursor";
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -37,12 +37,13 @@ export default class Free4all implements GameModel {
 
   constructor(
     public steering: Steering,
+    public cursor: Cursor,
     public emitter: Emitter,
+    public map: GameMap,
     public roomName: string,
     public camera: string,
     public light: string,
     public botsCount: number,
-    public map: GameMap,
   ) {
     this.generateBots(this.botsCount);
     this.interval = setInterval(() => {
@@ -74,29 +75,26 @@ export default class Free4all implements GameModel {
     return bot;
   }
 
-  getBots() {
+  getBots(): Player[] {
     return this.players.filter(player => player instanceof Bot);
   }
 
   updateBots() {
     this.getBots()
-      .filter(bot => bot.isAlive())
-      .forEach(bot => {
-        const closestPlayer = botService.trackClosestPlayer(bot, this);
+      .filter((bot: Bot) => bot.isAlive())
+      .forEach((bot: Bot) => {
+        const closestPlayer = bot.trackClosestPlayer( this);
         if (closestPlayer) {
-          this.updatePlayerDirection({
-            targetX: closestPlayer.x,
-            targetY: closestPlayer.y,
-            owner: bot.id,
-          });
+          bot.updateCursor(closestPlayer);
+          bot.updateDirection();
         }
       });
   }
 
   letBotsDoSomething() {
-    this.getBots().forEach(bot => {
-      botService.performRandKeys(bot);
-      this.mouseClick({ targetX: bot.cursor.x, targetY: bot.cursor.y, owner: bot.id });
+    this.getBots().forEach((bot: Bot) => {
+      bot.performRandKeys();
+      this.mouseClick(bot.id);
     });
   }
 
@@ -201,10 +199,10 @@ export default class Free4all implements GameModel {
     });
   }
 
-  shoot(mouseClick: MouseCoordinates) {
-    const owner = this.getPlayer(mouseClick.owner);
-    if (owner) {
-      owner.shoot(mouseClick, this);
+  shoot(owner: string) {
+    const player = this.getPlayer(owner);
+    if (player) {
+      player.shoot(this);
     }
   }
 
@@ -274,31 +272,32 @@ export default class Free4all implements GameModel {
     }
   }
 
-  updatePlayerDirection(mouseCoordinates: MouseCoordinates) {
+  updateCursor(mouseCoordinates: MouseCoordinates) {
     const owner = this.getPlayer(mouseCoordinates.owner);
     if (owner) {
-      owner.updateDirection(mouseCoordinates);
+      this.cursor.updateCursor(mouseCoordinates, owner);
+      owner.updateDirection();
     }
   }
 
-  mouseClick(mouseClick: MouseCoordinates) {
-    const player = this.getPlayer(mouseClick.owner);
+  mouseClick(owner: string) {
+    const player = this.getPlayer(owner);
     if (player.isAlive()) {
       player.setMouseDown();
       if (player.selectedPower instanceof ClickPower && player.keys.has('Shift')) {
-        player.usePower(this, mouseClick);
+        player.usePower(this);
         this.emitPowerInfo(player);
       } else {
-        this.shoot(mouseClick);
+        this.shoot(owner);
       }
     } else {
-      this.revivePlayer(mouseClick.owner);
+      this.revivePlayer(owner);
     }
   }
 
-  mouseUp(mouseCoordinates: MouseCoordinates) {
-    const player = this.getPlayer(mouseCoordinates.owner);
-    if (player.isAlive()) {
+  mouseUp(owner: string) {
+    const player = this.getPlayer(owner);
+    if (player && player.isAlive()) {
       player.setMouseUp();
     }
   }

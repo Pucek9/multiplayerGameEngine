@@ -14,6 +14,7 @@ export default class PlayerModel implements ICircle {
   size: number;
   energy: number;
   timeToRevive: number;
+  cursor = { x: 0, y: 0, down: false };
 
   constructor(
     public id: string,

@@ -11,8 +11,6 @@ export default class Cursor implements IUpdatable {
   public object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
-  public movementX = 0;
-  public movementY = 0;
 
   constructor(public src: string) {
     // this.img = new Image();

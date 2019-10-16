@@ -1,5 +1,4 @@
 import Player from '../Player';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import ClickPower from './ClickPower';
 
 export default class Teleport extends ClickPower {
@@ -12,19 +11,18 @@ export default class Teleport extends ClickPower {
     Object.seal(this);
   }
 
-  use({ owner, game, mouseClick }: { owner: Player; game; mouseClick: MouseCoordinates }) {
+  use({ owner, game }: { owner: Player; game }) {
     if (
-      mouseClick &&
-      !game.detectPlayerCollisionWithObjects(({
-        x: mouseClick.targetX,
-        y: mouseClick.targetY,
+       !game.detectPlayerCollisionWithObjects(({
+        x: owner.cursor.x,
+        y: owner.cursor.y,
         size: owner.size,
         shape: 'circle',
       } as unknown) as Player) &&
       owner.tryUseEnergy(this.cost)
     ) {
-      owner.x = mouseClick.targetX;
-      owner.y = mouseClick.targetY;
+      owner.x = owner.cursor.x;
+      owner.y = owner.cursor.y;
       game.detectPlayerCollisionWithGenerator(owner);
     }
   }

@@ -14,6 +14,7 @@ export interface GamesState {
   camera: string;
   light: string;
   steering: string;
+  cursor: string;
   bots: number;
   list: GameState[];
 }
@@ -25,6 +26,7 @@ export const initialState: GamesState = {
   camera: 'StaticCamera',
   light: 'FlashLight',
   steering: 'eightDirectionSteering',
+  cursor: 'freeCursor',
   bots: 0,
   list: [],
 };

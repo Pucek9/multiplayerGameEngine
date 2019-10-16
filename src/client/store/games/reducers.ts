@@ -49,6 +49,12 @@ export function gamesReducer(
         steering: payload,
       };
 
+    case GamesActions.SET_CURSOR:
+      return {
+        ...state,
+        cursor: payload,
+      };
+
     case GamesActions.SET_BOTS_COUNT:
       return {
         ...state,

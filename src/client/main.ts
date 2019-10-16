@@ -112,13 +112,11 @@ class Main {
     this.events = {
       mouseDown(e: MouseEvent) {
         e.preventDefault();
-        const mouseClick = gameState.getMouseCoordinates();
-        socket.emit(API.MOUSE_CLICK, mouseClick);
+        socket.emit(API.MOUSE_CLICK, gameState.getUserID());
       },
       mouseUp(e: MouseEvent) {
         e.preventDefault();
-        const mouseClick = gameState.getMouseCoordinates();
-        socket.emit(API.MOUSE_UP, mouseClick);
+        socket.emit(API.MOUSE_UP, gameState.getUserID());
       },
       mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);

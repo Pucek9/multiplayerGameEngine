@@ -142,12 +142,15 @@ export default class Game {
     this.players.forEach(player => {
       const foundPlayer = _players.find(_player => player.id === _player.id);
       if (this.currentPlayer && foundPlayer && foundPlayer.id === this.currentPlayer.id) {
-        const diff = {
-          x: player.x - foundPlayer.x,
-          y: player.y - foundPlayer.y,
-        };
-        this.cursor.x -= diff.x;
-        this.cursor.y -= diff.y;
+        // const diff = {
+        //   x: player.x - foundPlayer.x,
+        //   y: player.y - foundPlayer.y,
+        // };
+        // this.cursor.x -= diff.x;
+        // this.cursor.y -= diff.y;
+        this.cursor.x = foundPlayer.cursor.x;
+        this.cursor.y = foundPlayer.cursor.y;
+
         this.text.x = this.cursor.x + this.text.offsetX;
         this.text.y = this.cursor.y + this.text.offsetY;
       }
@@ -227,23 +230,20 @@ export default class Game {
 
   getUpdatedMouseCoordinates(e: MouseEvent): MouseCoordinates {
     if (this.currentPlayer) {
-      // this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
-      // this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
-      this.cursor.movementX = e.movementX;
-      this.cursor.movementY = e.movementY;
-
-      const range = 200;
-      this.cursor.x =
-        this.currentPlayer.x + range * Math.cos(this.currentPlayer.direction - e.movementX / 50);
-      this.cursor.y =
-        this.currentPlayer.y + range * Math.sin(this.currentPlayer.direction - e.movementX / 50);
-
-      return this.getMouseCoordinates();
+      return {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        movementX: e.movementX,
+        movementY: e.movementY,
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        owner: this.currentPlayer.id
+      };
     }
   }
 
-  getMouseCoordinates(): MouseCoordinates {
-    return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
+  getUserID(): string {
+    return this.user.id;
   }
 
   updateObjects() {

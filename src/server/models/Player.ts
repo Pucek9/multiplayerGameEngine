@@ -7,7 +7,6 @@ import AidKit from './AidKit';
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
-  public cursor = { x: 0, y: 0, down: false };
   private lastDir: Direction;
 
   isAlive() {
@@ -47,9 +46,9 @@ export default class Player extends PlayerModel {
     this.takeAidKit({ energy: value || this.regeneration });
   }
 
-  usePower(game, mouseClick?: MouseCoordinates) {
+  usePower(game) {
     if (this.isAlive()) {
-      this.selectedPower.use({ owner: this, game, mouseClick });
+      this.selectedPower.use({ owner: this, game});
     }
   }
 
@@ -76,14 +75,15 @@ export default class Player extends PlayerModel {
     }
   }
 
-  shoot(mouseClick: MouseCoordinates, game) {
+  shoot(game) {
     this.selectedWeapon &&
       this.selectedWeapon.shoot(
         {
-          ...mouseClick,
           owner: this,
           fromX: this.x + this.size * Math.cos(this.direction),
           fromY: this.y + this.size * Math.sin(this.direction),
+          targetX: this.cursor.x,
+          targetY: this.cursor.y,
           dir: this.lastDir,
           size: this.size,
         },
@@ -193,9 +193,7 @@ export default class Player extends PlayerModel {
     return this.timeToRevive === 0;
   }
 
-  updateDirection(mouseCoordinates: MouseCoordinates) {
-    this.cursor.x = mouseCoordinates.targetX;
-    this.cursor.y = mouseCoordinates.targetY;
+  updateDirection() {
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;
     this.direction = Math.atan2(dy, dx);

@@ -54,6 +54,13 @@ export class GamesService {
     });
   }
 
+  setCursor(cursor: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_CURSOR,
+      payload: cursor,
+    });
+  }
+
   setBotsCount(count: number) {
     this.store.dispatch({
       type: GamesListActions.SET_BOTS_COUNT,

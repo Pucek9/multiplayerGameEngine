@@ -5,6 +5,7 @@ export const SET_GAME_MAP = 'SET_GAME_MAP';
 export const SET_CAMERA = 'SET_CAMERA';
 export const SET_LIGHT = 'SET_LIGHT';
 export const SET_STEERING = 'SET_STEERING';
+export const SET_CURSOR = 'SET_CURSOR';
 export const SET_BOTS_COUNT = 'SET_BOTS_COUNT';
 export const CLEAR_GAMES_LIST = 'CLEAR_GAMES_LIST';
 
@@ -50,6 +51,12 @@ export class SetSteering {
   constructor(public payload) {}
 }
 
+export class SetCursor {
+  readonly type = SET_CURSOR;
+
+  constructor(public payload) {}
+}
+
 export class SetBotsCount {
   readonly type = SET_BOTS_COUNT;
 
@@ -70,5 +77,6 @@ export type GamesActions =
   | SetCamera
   | SetLight
   | SetSteering
+  | SetCursor
   | SetBotsCount
   | ClearGamesList;

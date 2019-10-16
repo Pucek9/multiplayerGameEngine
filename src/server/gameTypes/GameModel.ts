@@ -3,10 +3,14 @@ import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import Bullet from '../models/Bullet';
 import GameMap from '../maps/GameMap';
+import Steering from "../services/Steering/Steering";
+import Cursor from "../services/Cursor/Cursor";
+import Emitter from "../services/Emitter";
 
 export default interface GameModel {
-  steering;
-  emitter;
+  steering: Steering;
+  cursor : Cursor;
+  emitter: Emitter;
   roomName: string;
   type: string;
   camera: string;
@@ -34,7 +38,7 @@ export default interface GameModel {
 
   detectBulletsCollision();
 
-  shoot(mouseClick: MouseCoordinates);
+  shoot(id: string);
 
   revivePlayer(id: string);
 
@@ -48,11 +52,11 @@ export default interface GameModel {
 
   performKeysOperationForPlayers();
 
-  updatePlayerDirection(mouseCoordinates: MouseCoordinates);
+  updateCursor(mouseCoordinates: MouseCoordinates);
 
-  mouseClick(mouseClick: MouseCoordinates);
+  mouseClick(id: string);
 
-  mouseUp(mouseClick: MouseCoordinates);
+  mouseUp(id: string);
 
   generateBullets(bullets: Bullet[]);
 }
