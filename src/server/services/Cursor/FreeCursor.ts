@@ -1,6 +1,7 @@
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
+import Cursor from "./Cursor";
 
-export class FreeCursor {
+export class FreeCursor extends Cursor {
   updateCursor(mouseCoordinates: MouseCoordinates, owner) {
     owner.cursor.x =
       mouseCoordinates.clientX + owner.x - mouseCoordinates.innerWidth / 2;

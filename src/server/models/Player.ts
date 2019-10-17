@@ -7,7 +7,7 @@ import AidKit from './AidKit';
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
-  private lastDir: Direction;
+  private lastDir: Direction = { dx: 0, dy: 0 };
 
   isAlive() {
     return this.alive;
@@ -48,7 +48,7 @@ export default class Player extends PlayerModel {
 
   usePower(game, click: boolean) {
     if (this.isAlive()) {
-      this.selectedPower.use({ owner: this, game, click});
+      this.selectedPower.use({ owner: this, game, click });
     }
   }
 
@@ -171,12 +171,12 @@ export default class Player extends PlayerModel {
     }
   }
 
-  go(dir: Direction) {
+  go(dir: Direction, rememberDir: Direction = dir) {
     this.x += dir.dx;
     this.y += dir.dy;
     this.cursor.x += dir.dx;
     this.cursor.y += dir.dy;
-    this.lastDir = dir;
+    this.lastDir = rememberDir;
   }
 
   isMoving() {
