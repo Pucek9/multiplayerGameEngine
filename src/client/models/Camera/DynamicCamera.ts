@@ -27,10 +27,12 @@ export default class DynamicCamera implements IUpdatable, ICamera {
   }
 
   update() {
-    this.object.position.x = this.activePlayer.x;
-    this.object.position.y = this.activePlayer.y;
+    const range = 200;
+    this.object.position.x = this.activePlayer.x - range *  Math.cos( this.activePlayer.direction);
+    this.object.position.y = this.activePlayer.y - range * Math.sin(this.activePlayer.direction);
+
     this.object.lookAt(this.cursor.x, this.cursor.y, this.cursor.z);
-    this.object.rotation.z = this.activePlayer.direction - 1.75;
+    this.object.rotation.z = this.activePlayer.direction - 1.66;
   }
 
   remove() {
