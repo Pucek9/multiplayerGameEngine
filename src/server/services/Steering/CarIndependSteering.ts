@@ -5,7 +5,7 @@ import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 
 export class CarIndependSteering extends Steering {
   private lastDir;
-  constructor(public sensitivity = 0.05, public range = 200) {
+  constructor(public allowForStaticRotate = true, public sensitivity = 0.05, public range = 200) {
     super();
   }
   performSteering(game, player) {
@@ -34,11 +34,13 @@ export class CarIndependSteering extends Steering {
       rememberDir.dx = player.speed * Math.cos(lastDir);
       rememberDir.dy = player.speed * Math.sin(lastDir);
     }
-    if (!up && !down && left && !right) {
-      // player.direction += this.sensitivity;
+    if (!up && !down && left && !right && this.allowForStaticRotate) {
+      rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
+      rememberDir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
     }
-    if (!up && !down && !left && right) {
-      // player.direction -= this.sensitivity;
+    if (!up && !down && !left && right && this.allowForStaticRotate) {
+      rememberDir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
+      rememberDir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
     }
     if (up && !down && left && !right) {
       dir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
@@ -67,7 +69,7 @@ export class CarIndependSteering extends Steering {
 
     if (
       !player.isAlive() ||
-      (!game.detectPlayerCollision(player, dir) && (dir.dx !== 0 || dir.dy !== 0))
+      (!game.detectPlayerCollision(player, dir) && (rememberDir.dx !== 0 || rememberDir.dy !== 0))
     ) {
       player.go(dir, rememberDir);
     }
