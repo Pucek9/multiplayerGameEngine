@@ -235,6 +235,15 @@ export default class Playground implements GameMap {
         type: 'Grenade',
       }),
       new ItemGenerator({
+        x: -1000,
+        y: 800,
+        size: 4,
+        color: 'white',
+        time: 5000,
+        item: AK47,
+        type: 'AK47',
+      }),
+      new ItemGenerator({
         x: 1350,
         y: -900,
         size: 4,
@@ -245,13 +254,14 @@ export default class Playground implements GameMap {
         itemProps: { hp: 50, energy: 100 },
       }),
       new ItemGenerator({
-        x: -1000,
-        y: 800,
+        x: -1350,
+        y: 900,
         size: 4,
         color: 'white',
         time: 5000,
-        item: AK47,
-        type: 'AK47',
+        item: AidKit,
+        type: 'AidKit',
+        itemProps: { hp: 50, energy: 100 },
       }),
     ];
   }
