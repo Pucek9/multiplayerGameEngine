@@ -25,14 +25,14 @@ export class CarIndependentSteering extends Steering {
     if (up && !down && !left && !right) {
       dir.dx = player.speed * Math.cos(lastDir);
       dir.dy = player.speed * Math.sin(lastDir);
-      rememberDir.dx = player.speed * Math.cos(lastDir);
-      rememberDir.dy = player.speed * Math.sin(lastDir);
+      rememberDir.dx = dir.dx;
+      rememberDir.dy = dir.dy;
     }
     if (!up && down && !left && !right) {
       dir.dx = -player.speed * Math.cos(lastDir);
       dir.dy = -player.speed * Math.sin(lastDir);
-      rememberDir.dx = player.speed * Math.cos(lastDir);
-      rememberDir.dy = player.speed * Math.sin(lastDir);
+      rememberDir.dx = -dir.dx;
+      rememberDir.dy = -dir.dy;
     }
     if (!up && !down && left && !right && this.allowForStaticRotate) {
       rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
@@ -45,26 +45,26 @@ export class CarIndependentSteering extends Steering {
     if (up && !down && left && !right) {
       dir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
       dir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
-      rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
-      rememberDir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
+      rememberDir.dx = dir.dx;
+      rememberDir.dy = dir.dy;
     }
     if (up && !down && !left && right) {
       dir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
       dir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
-      rememberDir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
-      rememberDir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
+      rememberDir.dx = dir.dx;
+      rememberDir.dy = dir.dy;
     }
     if (!up && down && left && !right) {
       dir.dx = -player.speed * Math.cos(lastDir + this.sensitivity);
       dir.dy = -player.speed * Math.sin(lastDir + this.sensitivity);
-      rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
-      rememberDir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
+      rememberDir.dx = -dir.dx;
+      rememberDir.dy = -dir.dy;
     }
     if (!up && down && !left && right) {
       dir.dx = -player.speed * Math.cos(lastDir - this.sensitivity);
       dir.dy = -player.speed * Math.sin(lastDir - this.sensitivity);
-      rememberDir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
-      rememberDir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
+      rememberDir.dx = -dir.dx;
+      rememberDir.dy = -dir.dy;
     }
 
     if (
