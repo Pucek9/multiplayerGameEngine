@@ -72,6 +72,8 @@ export class CarIndependentSteering extends Steering {
       (!game.detectPlayerCollision(player, dir) && (rememberDir.dx !== 0 || rememberDir.dy !== 0))
     ) {
       player.go(dir, rememberDir);
+    } else if (this.allowForStaticRotate && (rememberDir.dx !== 0 || rememberDir.dy !== 0)) {
+      player.go({ dx: 0, dy: 0 }, rememberDir);
     }
   }
 }
