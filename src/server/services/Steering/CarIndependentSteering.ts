@@ -3,7 +3,7 @@ import { hasKeys } from '../../../shared/helpers';
 import Direction from '../../../shared/models/Direction';
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 
-export class CarIndependSteering extends Steering {
+export class CarIndependentSteering extends Steering {
   private lastDir;
   constructor(public allowForStaticRotate = true, public sensitivity = 0.05, public range = 200) {
     super();
@@ -76,5 +76,5 @@ export class CarIndependSteering extends Steering {
   }
 }
 
-const carIndependSteering = new CarIndependSteering();
-export default carIndependSteering;
+const carIndependentSteering = new CarIndependentSteering();
+export default carIndependentSteering;
