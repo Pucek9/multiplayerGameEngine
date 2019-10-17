@@ -23,16 +23,12 @@ export class CarIndependentSteering extends Steering {
       dy: 0,
     };
     if (up && !down && !left && !right) {
-      dir.dx = player.speed * Math.cos(lastDir);
-      dir.dy = player.speed * Math.sin(lastDir);
-      rememberDir.dx = dir.dx;
-      rememberDir.dy = dir.dy;
+      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir);
+      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir);
     }
     if (!up && down && !left && !right) {
-      dir.dx = -player.speed * Math.cos(lastDir);
-      dir.dy = -player.speed * Math.sin(lastDir);
-      rememberDir.dx = -dir.dx;
-      rememberDir.dy = -dir.dy;
+      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir));
+      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir));
     }
     if (!up && !down && left && !right && this.allowForStaticRotate) {
       rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
@@ -43,28 +39,20 @@ export class CarIndependentSteering extends Steering {
       rememberDir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
     }
     if (up && !down && left && !right) {
-      dir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
-      dir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
-      rememberDir.dx = dir.dx;
-      rememberDir.dy = dir.dy;
+      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
+      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
     }
     if (up && !down && !left && right) {
-      dir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
-      dir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
-      rememberDir.dx = dir.dx;
-      rememberDir.dy = dir.dy;
+      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
+      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
     }
     if (!up && down && left && !right) {
-      dir.dx = -player.speed * Math.cos(lastDir + this.sensitivity);
-      dir.dy = -player.speed * Math.sin(lastDir + this.sensitivity);
-      rememberDir.dx = -dir.dx;
-      rememberDir.dy = -dir.dy;
+      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir + this.sensitivity));
+      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir + this.sensitivity));
     }
     if (!up && down && !left && right) {
-      dir.dx = -player.speed * Math.cos(lastDir - this.sensitivity);
-      dir.dy = -player.speed * Math.sin(lastDir - this.sensitivity);
-      rememberDir.dx = -dir.dx;
-      rememberDir.dy = -dir.dy;
+      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir - this.sensitivity));
+      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir - this.sensitivity));
     }
 
     if (
