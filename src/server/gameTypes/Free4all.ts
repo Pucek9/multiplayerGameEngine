@@ -26,7 +26,7 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
 import Steering from '../services/Steering/Steering';
-import Cursor from "../services/Cursor/Cursor";
+import Cursor from '../services/Cursor/Cursor';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -67,7 +67,15 @@ export default class Free4all implements GameModel {
 
   createBot(index) {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
-    const bot = new Bot(`Bot_${generateId()}`, `Bot_${index}`, randColor(), x, y, this.roomName);
+    const bot = new Bot(
+      `Bot_${generateId()}`,
+      `Bot_${index}`,
+      `Bot_${index}`,
+      randColor(),
+      x,
+      y,
+      this.roomName,
+    );
     this.players.push(bot);
     const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
     bot.addAndSelectPower(new SuperPower());
@@ -83,7 +91,7 @@ export default class Free4all implements GameModel {
     this.getBots()
       .filter((bot: Bot) => bot.isAlive())
       .forEach((bot: Bot) => {
-        const closestPlayer = bot.trackClosestPlayer( this);
+        const closestPlayer = bot.trackClosestPlayer(this);
         if (closestPlayer) {
           bot.updateCursor(closestPlayer);
           bot.updateDirection();
@@ -177,25 +185,26 @@ export default class Free4all implements GameModel {
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.getAlivePlayers()].forEach(
-        (object: StaticCircularObject | StaticRectangleObject | Player) => {
-          if (bullet.owner !== object) {
-            const bulletDirection = {
-              dx: bullet.dx,
-              dy: bullet.dy,
-            };
-            const { collision, angle } = collisionDetector.detectCollision(
-              bullet,
-              object,
-              bulletDirection,
-            );
-            if (collision) {
-              object.hitFromBullet(bullet, angle);
-              this.deleteBulletIfInactive(bullet, i);
-            }
+      [...this.getStaticObjects(), ...this.getAlivePlayers()]
+        .filter(
+          (object: StaticCircularObject | StaticRectangleObject | Player) =>
+            bullet.owner !== object,
+        )
+        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+          const bulletDirection = {
+            dx: bullet.dx,
+            dy: bullet.dy,
+          };
+          const { collision, angle } = collisionDetector.detectCollision(
+            bullet,
+            object,
+            bulletDirection,
+          );
+          if (collision) {
+            object.hitFromBullet(bullet, angle);
+            this.deleteBulletIfInactive(bullet, i);
           }
-        },
-      );
+        });
     });
   }
 
@@ -239,7 +248,15 @@ export default class Free4all implements GameModel {
 
   connectPlayer(newPlayer: NewUser): Player {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
-    const player = new Player(newPlayer.id, newPlayer.name, newPlayer.color, x, y, this.roomName);
+    const player = new Player(
+      newPlayer.id,
+      newPlayer.name,
+      newPlayer.team,
+      newPlayer.color,
+      x,
+      y,
+      this.roomName,
+    );
     //
     player.addAndSelectPower(new Accelerator());
     player.addPower(new Teleport());

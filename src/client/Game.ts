@@ -70,6 +70,7 @@ export default class Game {
     const player = new Player(
       newPlayer.id,
       newPlayer.name,
+      newPlayer.team,
       newPlayer.color,
       newPlayer.x,
       newPlayer.y,
@@ -102,6 +103,7 @@ export default class Game {
         const player = new Player(
           newPlayer.id,
           newPlayer.name,
+          newPlayer.team,
           newPlayer.color,
           newPlayer.x,
           newPlayer.y,
