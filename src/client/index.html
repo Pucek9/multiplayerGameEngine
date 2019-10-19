@@ -36,10 +36,24 @@
                 >Type:
                 <select class="select create-white" id="gameTypeInput">
                   <option value="Free4all">Free for all</option>
-                  <option disabled value="TeamFight">Team fight</option>
+                  <option value="TeamBattle">Team Battle</option>
                   <option disabled value="CaptureTheFlag">Capture the flag</option>
                 </select>
               </label>
+            </div>
+            <div class="type-row" id="teams" style="display: none">
+              <label
+                >Teams:
+                <input
+                  class="input create-white"
+                  id="teamsCountInput"
+                  max="4"
+                  min="2"
+                  type="number"
+                  value="2"
+                />
+              </label>
+              <div class="type-row" id="teamsList"></div>
             </div>
             <div class="type-row">
               <label
@@ -82,7 +96,7 @@
             </div>
             <div class="type-row">
               <label
-              >Cursor:
+                >Cursor:
                 <select class="select create-white" id="cursorInput">
                   <option value="freeCursor">Free</option>
                   <option value="circleCursor">Circle</option>

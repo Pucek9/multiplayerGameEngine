@@ -74,6 +74,38 @@ export class GamesService {
     });
   }
 
+  clearTeamsList() {
+    this.store.dispatch({
+      type: GamesListActions.CLEAR_TEAMS,
+    });
+  }
+
+  setTeamsCount(count: number) {
+    this.store.dispatch({
+      type: GamesListActions.SET_TEAMS_COUNT,
+      payload: count,
+    });
+  }
+
+  setTeamName(index, name) {
+    this.store.dispatch({
+      type: GamesListActions.SET_TEAM_NAME,
+      payload: { index, name },
+    });
+  }
+
+  enableTeams() {
+    this.store.dispatch({
+      type: GamesListActions.ENABLE_TEAMS,
+    });
+  }
+
+  disableTeams() {
+    this.store.dispatch({
+      type: GamesListActions.DISABLE_TEAMS,
+    });
+  }
+
   getState(): GamesState {
     return this.store.getState().games;
   }

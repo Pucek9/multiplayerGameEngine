@@ -5,6 +5,10 @@ export interface GameState {
   camera: string;
   light: string;
   count: number;
+  teams?: Array<{
+    name: string;
+    count: number;
+  }>;
 }
 
 export interface GamesState {
@@ -17,6 +21,10 @@ export interface GamesState {
   cursor: string;
   bots: number;
   list: GameState[];
+  teams?: {
+    count: number;
+    list: string[];
+  };
 }
 
 export const initialState: GamesState = {
@@ -29,4 +37,5 @@ export const initialState: GamesState = {
   cursor: 'freeCursor',
   bots: 0,
   list: [],
+  teams: null,
 };

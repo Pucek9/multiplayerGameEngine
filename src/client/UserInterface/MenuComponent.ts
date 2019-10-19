@@ -1,6 +1,7 @@
 import { Unsubscribe } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
 import { gamesService, optionsService, store, userService } from '../store/store';
+import { times } from '../../shared/helpers';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -10,6 +11,9 @@ declare var cameraInput: HTMLSelectElement;
 declare var steeringInput: HTMLSelectElement;
 declare var cursorInput: HTMLSelectElement;
 declare var botsCountInput: HTMLInputElement;
+declare var teamsCountInput: HTMLInputElement;
+declare var teams: HTMLDivElement;
+declare var teamsList: HTMLDivElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
@@ -24,64 +28,111 @@ declare var validateSelectedGame: HTMLLabelElement;
 
 export default class MenuComponent {
   unsubscribeRender: Unsubscribe;
+  listeners = [];
 
   constructor(main) {
     this.unsubscribeRender = store.subscribe(() => this.render());
 
-    createButton.addEventListener('click', function() {
+    createButton.addEventListener('click', () => {
       main.onAddNewGame(gamesService.getState());
       gameNameInput.value = '';
     });
 
-    joinGameButton.addEventListener('click', function() {
+    joinGameButton.addEventListener('click', () => {
       menu.style.display = 'none';
       main.onJoinGame();
     });
 
-    gameNameInput.addEventListener('keyup', function() {
+    gameNameInput.addEventListener('keyup', () => {
       gamesService.setGameName(gameNameInput.value);
     });
 
-    gameTypeInput.addEventListener('change', function() {
+    gameTypeInput.addEventListener('change', () => {
       gamesService.setGameType(gameTypeInput.value);
+      if (gameTypeInput.value === 'Free4all') {
+        this.hideTeamsSection();
+        this.clearTeamsInputsList();
+        gamesService.disableTeams();
+      } else {
+        gamesService.enableTeams();
+        this.showTeamsSection();
+        this.prepareTeamSection();
+      }
     });
 
-    gameLightInput.addEventListener('change', function() {
+    gameLightInput.addEventListener('change', () => {
       gamesService.setLight(gameLightInput.value);
     });
 
-    cameraInput.addEventListener('change', function() {
+    cameraInput.addEventListener('change', () => {
       gamesService.setCamera(cameraInput.value);
     });
 
-    steeringInput.addEventListener('change', function() {
+    steeringInput.addEventListener('change', () => {
       gamesService.setSteering(steeringInput.value);
     });
 
-    cursorInput.addEventListener('change', function() {
+    cursorInput.addEventListener('change', () => {
       gamesService.setCursor(cursorInput.value);
     });
 
-    gameMapInput.addEventListener('change', function() {
+    gameMapInput.addEventListener('change', () => {
       gamesService.setGameMap(gameMapInput.value);
     });
 
-    botsCountInput.addEventListener('change', function() {
+    botsCountInput.addEventListener('change', () => {
       if (botsCountInput.value == '') {
         botsCountInput.value = '0';
       }
       gamesService.setBotsCount(parseInt(botsCountInput.value));
     });
 
-    nickInput.addEventListener('keyup', function() {
+    teamsCountInput.addEventListener('change', () => {
+      this.prepareTeamSection();
+    });
+
+    nickInput.addEventListener('keyup', () => {
       userService.setNick(nickInput.value);
     });
 
-    blinkingCheckbox.addEventListener('change', function() {
+    blinkingCheckbox.addEventListener('change', () => {
       optionsService.setBlinking(blinkingCheckbox.checked);
     });
-    bulletShadowCheckbox.addEventListener('change', function() {
+    bulletShadowCheckbox.addEventListener('change', () => {
       optionsService.setBulletShadow(bulletShadowCheckbox.checked);
+    });
+  }
+
+  prepareTeamSection() {
+    if (teamsCountInput.value == '') {
+      teamsCountInput.value = '2';
+    }
+    const value = parseInt(teamsCountInput.value);
+    // gamesService.clearTeamsList();
+    gamesService.setTeamsCount(value);
+    this.prepareTeamsInputsList(value);
+  }
+
+  clearTeamsInputsList() {
+    teamsList.childNodes.forEach((input, index) =>
+      input.removeEventListener('keyup', this.listeners[index]),
+    );
+    this.listeners = [];
+    teamsList.innerHTML = '';
+  }
+
+  prepareTeamsInputsList(count: number) {
+    this.clearTeamsInputsList();
+    times(count, index => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('data-event', 'text');
+      const listeners = this.listeners;
+      input.addEventListener('keyup', function inputListener() {
+        gamesService.setTeamName(index, input.value);
+        listeners.push(inputListener);
+      });
+      teamsList.appendChild(input);
     });
   }
 
@@ -145,6 +196,14 @@ export default class MenuComponent {
     if (e.key === key) {
       document.body.requestFullscreen();
     }
+  }
+
+  showTeamsSection() {
+    teams.style.display = 'block';
+  }
+
+  hideTeamsSection() {
+    teams.style.display = 'none';
   }
 
   show() {

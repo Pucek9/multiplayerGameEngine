@@ -54,6 +54,7 @@ class Main {
       const newPlayer = new NewUser(
         userState.id,
         userState.nick,
+        userState.team || userState.nick,
         randColor(),
         userState.chosenGame,
       );
@@ -187,3 +188,4 @@ class Main {
 window.onload = function() {
   const main = new Main();
 };
+

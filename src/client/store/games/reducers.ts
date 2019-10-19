@@ -1,5 +1,6 @@
 import * as GamesActions from './actions';
 import { GamesState, initialState } from './state';
+import { createArrayFilledValue } from '../../../shared/helpers';
 
 export function gamesReducer(
   state: GamesState = initialState,
@@ -23,6 +24,47 @@ export function gamesReducer(
       return {
         ...state,
         type: payload,
+      };
+
+    case GamesActions.SET_TEAMS_COUNT:
+      return {
+        ...state,
+        teams: {
+          count: payload,
+          list: createArrayFilledValue(payload, ''),
+        },
+      };
+
+    case GamesActions.ENABLE_TEAMS:
+      return {
+        ...state,
+        teams: {},
+      };
+
+    case GamesActions.DISABLE_TEAMS:
+      return {
+        ...state,
+        teams: null,
+      };
+
+    case GamesActions.CLEAR_TEAMS:
+      return {
+        ...state,
+        teams: {
+          ...state.teams,
+          list: [],
+        },
+      };
+
+    case GamesActions.SET_TEAM_NAME:
+      return {
+        ...state,
+        teams: {
+          ...state.teams,
+          list: state.teams.list.map((team, index) =>
+            index === payload.index ? payload.name : team,
+          ),
+        },
       };
 
     case GamesActions.SET_GAME_MAP:

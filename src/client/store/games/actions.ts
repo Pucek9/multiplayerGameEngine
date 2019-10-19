@@ -8,6 +8,11 @@ export const SET_STEERING = 'SET_STEERING';
 export const SET_CURSOR = 'SET_CURSOR';
 export const SET_BOTS_COUNT = 'SET_BOTS_COUNT';
 export const CLEAR_GAMES_LIST = 'CLEAR_GAMES_LIST';
+export const CLEAR_TEAMS = 'CLEAR_TEAMS';
+export const SET_TEAMS_COUNT = 'SET_TEAMS_COUNT';
+export const SET_TEAM_NAME = 'SET_TEAM_NAME';
+export const ENABLE_TEAMS = 'ENABLE_TEAMS';
+export const DISABLE_TEAMS = 'DISABLE_TEAMS';
 
 export class AddGame {
   readonly type = ADD_GAME;
@@ -60,7 +65,35 @@ export class SetCursor {
 export class SetBotsCount {
   readonly type = SET_BOTS_COUNT;
 
-  constructor(public payload) {}
+  constructor(public payload: number) {}
+}
+
+export class ClearTeams {
+  readonly type = CLEAR_TEAMS;
+}
+
+export class EnableTeams {
+  readonly type = ENABLE_TEAMS;
+
+  constructor() {}
+}
+
+export class DisableTeams {
+  readonly type = DISABLE_TEAMS;
+
+  constructor() {}
+}
+
+export class SetTeamsCount {
+  readonly type = SET_TEAMS_COUNT;
+
+  constructor(public payload: number) {}
+}
+
+export class SetTeamName {
+  readonly type = SET_TEAM_NAME;
+
+  constructor(public payload: { index: number; name: string }) {}
 }
 
 export class ClearGamesList {
@@ -79,4 +112,9 @@ export type GamesActions =
   | SetSteering
   | SetCursor
   | SetBotsCount
-  | ClearGamesList;
+  | ClearGamesList
+  | ClearTeams
+  | SetTeamsCount
+  | SetTeamName
+  | EnableTeams
+  | DisableTeams;

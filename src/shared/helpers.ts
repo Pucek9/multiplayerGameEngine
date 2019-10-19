@@ -30,6 +30,10 @@ export function times(count, callback) {
   Array.from(Array(count).keys()).forEach(callback);
 }
 
+export function createArrayFilledValue(length, value) {
+  return Array.from({ length }, () => value)
+}
+
 export function hasKeys(set: Set<string>, keys: Array<string>) {
   return keys.some((key: string) => set.has(key));
 }

@@ -5,16 +5,19 @@ import { UserState } from './state';
 export class UserService {
   constructor(public store: Store) {}
 
-  setNick(nick) {
+  setNick(nick: string) {
     this.store.dispatch({ type: JoinGameActions.SET_NICK, payload: nick });
   }
 
-  setId(id) {
+  setId(id: string) {
     this.store.dispatch({ type: JoinGameActions.SET_ID, payload: id });
   }
 
-  chooseGame(chosenGame) {
+  chooseGame(chosenGame: string) {
     this.store.dispatch({ type: JoinGameActions.CHOOSE_GAME, payload: chosenGame });
+  }
+  chooseTeam(team: string) {
+    this.store.dispatch({ type: JoinGameActions.CHOOSE_TEAM, payload: team });
   }
 
   getState(): UserState {
