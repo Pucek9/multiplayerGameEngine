@@ -15,7 +15,7 @@ export abstract class Lighting implements IUpdatable {
 
   constructor(public screen: ScreenModel) {}
 
-  update() {};
+  update() {}
 
   abstract init?(params: any);
 

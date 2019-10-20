@@ -188,4 +188,3 @@ class Main {
 window.onload = function() {
   const main = new Main();
 };
-

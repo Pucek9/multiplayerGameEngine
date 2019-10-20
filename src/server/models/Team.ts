@@ -3,6 +3,6 @@ export default class Team {
   public points = 0;
   constructor(params: Partial<Team>) {
     Object.assign(this, params);
-    Object.seal(this)
+    Object.seal(this);
   }
 }

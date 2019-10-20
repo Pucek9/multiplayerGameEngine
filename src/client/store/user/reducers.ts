@@ -21,7 +21,7 @@ export function userReducer(
         ...state,
         chosenGame: payload,
       };
-      case UserActions.CHOOSE_TEAM:
+    case UserActions.CHOOSE_TEAM:
       return {
         ...state,
         team: payload,

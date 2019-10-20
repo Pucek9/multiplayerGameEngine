@@ -239,7 +239,7 @@ export default class Game {
         movementY: e.movementY,
         innerWidth: window.innerWidth,
         innerHeight: window.innerHeight,
-        owner: this.currentPlayer.id
+        owner: this.currentPlayer.id,
       };
     }
   }

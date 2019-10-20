@@ -14,9 +14,7 @@ export default class TeamBattle extends Free4all {
     this.teams.push(new Team(params));
   }
 
-  deleteTeam() {
-
-  }
+  deleteTeam() {}
 
   bulletsDetectPower() {
     this.bullets
