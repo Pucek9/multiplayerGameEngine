@@ -1,6 +1,6 @@
 import Player from './Player';
-import collisionDetector from "../services/CollisionDetector";
-import { randItem } from "../../shared/helpers";
+import collisionDetector from '../services/CollisionDetector';
+import { randItem } from '../../shared/helpers';
 
 export default class Bot extends Player {
   die() {
@@ -18,8 +18,8 @@ export default class Bot extends Player {
     if (players && players.length) {
       return players.reduce((previousPlayer, currentPlayer) => {
         const { distance: previousClosestDistance } = collisionDetector.detectCollision(
-            this,
-            previousPlayer,
+          this,
+          previousPlayer,
         );
         const { distance } = collisionDetector.detectCollision(this, currentPlayer);
         return distance < previousClosestDistance ? currentPlayer : previousPlayer;

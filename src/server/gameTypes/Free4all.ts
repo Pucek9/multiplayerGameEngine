@@ -26,7 +26,7 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
 import Steering from '../services/Steering/Steering';
-import Cursor from "../services/Cursor/Cursor";
+import Cursor from '../services/Cursor/Cursor';
 
 export default class Free4all implements GameModel {
   public type: string = 'Free for all';
@@ -83,7 +83,7 @@ export default class Free4all implements GameModel {
     this.getBots()
       .filter((bot: Bot) => bot.isAlive())
       .forEach((bot: Bot) => {
-        const closestPlayer = bot.trackClosestPlayer( this);
+        const closestPlayer = bot.trackClosestPlayer(this);
         if (closestPlayer) {
           bot.updateCursor(closestPlayer);
           bot.updateDirection();
