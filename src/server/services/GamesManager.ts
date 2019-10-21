@@ -1,10 +1,11 @@
 import gameTypes from '../gameTypes';
-import maps from '../maps';
 import GameInstance from '../../shared/apiModels/GameInstance';
 import GameModel from '../gameTypes/GameModel';
-import Steering from './Steering';
-import Cursor from './Cursor';
 import NewGame from '../../shared/apiModels/NewGame';
+import Steerings from './Steering';
+import Maps from './Maps';
+import Cursors from './Cursor';
+import Team from '../models/Team';
 
 class GamesManager {
   public games: GameModel[] = [];
@@ -12,19 +13,16 @@ class GamesManager {
   constructor() {}
 
   createGame(emitter, newGame: NewGame) {
-    const { roomName, type, camera, light, map, bots, steering, cursor } = newGame;
-    console.log(roomName, type, camera, light, map, bots, steering, cursor);
+    console.log(newGame);
+    const { type, map, steering, cursor, teams } = newGame;
     this.games.push(
-      new gameTypes[type](
-        Steering[steering],
-        Cursor[cursor],
-        emitter,
-        new maps[map](),
-        roomName,
-        camera,
-        light,
-        bots,
-      ),
+      new gameTypes[type](emitter, {
+        ...newGame,
+        teams: teams && teams.map(teamName => new Team(teamName)),
+        steering: Steerings[steering],
+        cursor: Cursors[cursor],
+        map: new Maps[map](),
+      }),
     );
   }
 
@@ -49,6 +47,7 @@ class GamesManager {
         camera: game.camera,
         light: game.light,
         count: game.players.length,
+        teams: game.teams,
       };
     });
   }

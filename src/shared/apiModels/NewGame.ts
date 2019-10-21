@@ -6,5 +6,6 @@ export default interface NewGame {
   light: string;
   steering: string;
   cursor: string;
-  bots: number;
+  botsCount: number;
+  teams?: string[];
 }

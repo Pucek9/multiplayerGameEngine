@@ -3,7 +3,6 @@ import Bullet from '../models/Bullet';
 import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
-import GameMap from '../maps/GameMap';
 import GameModel from './GameModel';
 import Direction from '../../shared/models/Direction';
 import { generateId, randColor, randItem, times } from '../../shared/helpers';
@@ -25,26 +24,17 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
-import Steering from '../services/Steering/Steering';
-import Cursor from '../services/Cursor/Cursor';
 
-export default class Free4all implements GameModel {
+export default class Free4all extends GameModel {
   public type: string = 'Free for all';
   public players: Player[] = [];
   public bullets: Bullet[] = [];
   private interval;
   private customInterval;
 
-  constructor(
-    public steering: Steering,
-    public cursor: Cursor,
-    public emitter: Emitter,
-    public map: GameMap,
-    public roomName: string,
-    public camera: string,
-    public light: string,
-    public botsCount: number,
-  ) {
+  constructor(public emitter: Emitter, params: Partial<Free4all>) {
+    super();
+    Object.assign(this, params);
     this.generateBots(this.botsCount);
     this.interval = setInterval(() => {
       this.updateBots();

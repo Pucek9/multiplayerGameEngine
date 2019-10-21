@@ -1,4 +1,4 @@
-export default interface GameInstance {
+export interface GameConfig {
   roomName: string;
   type: string;
   map: string;
@@ -11,3 +11,11 @@ export default interface GameInstance {
     count: number;
   }>;
 }
+
+export interface GamesListState {
+  list: GameConfig[];
+}
+
+export const initialState: GamesListState = {
+  list: [],
+};

@@ -8,8 +8,8 @@ import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
-import ScreenModel from './types/ScreenModel';
-import { gamesService, userService } from './store/store';
+import ScreenModel from './interfaces/ScreenModel';
+import { createGamesService, gamesListService, userService } from './store/store';
 import { randColor } from '../shared/helpers';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
@@ -33,8 +33,8 @@ class Main {
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      gamesService.clearGamesList();
-      gamesList.forEach(game => gamesService.addGame(game));
+      gamesListService.clearGamesList();
+      gamesList.forEach(game => gamesListService.addGame(game));
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1].roomName;
         userService.chooseGame(game);
@@ -58,7 +58,7 @@ class Main {
         randColor(),
         userState.chosenGame,
       );
-      const gameConfig = gamesService
+      const gameConfig = gamesListService
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);

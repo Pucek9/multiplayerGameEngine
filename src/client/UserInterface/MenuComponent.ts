@@ -1,6 +1,12 @@
 import { Unsubscribe } from 'redux';
 import GameInstance from '../../shared/apiModels/GameInstance';
-import { gamesService, optionsService, store, userService } from '../store/store';
+import {
+  createGamesService,
+  gamesListService,
+  optionsService,
+  store,
+  userService,
+} from '../store/store';
 import { times } from '../../shared/helpers';
 
 declare var gameNameInput: HTMLInputElement;
@@ -34,7 +40,8 @@ export default class MenuComponent {
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', () => {
-      main.onAddNewGame(gamesService.getState());
+      main.onAddNewGame(createGamesService.getNormalizedState());
+      createGamesService.clearRoomName();
       gameNameInput.value = '';
     });
 
@@ -44,47 +51,47 @@ export default class MenuComponent {
     });
 
     gameNameInput.addEventListener('keyup', () => {
-      gamesService.setGameName(gameNameInput.value);
+      createGamesService.setGameName(gameNameInput.value);
     });
 
     gameTypeInput.addEventListener('change', () => {
-      gamesService.setGameType(gameTypeInput.value);
+      createGamesService.setGameType(gameTypeInput.value);
       if (gameTypeInput.value === 'Free4all') {
         this.hideTeamsSection();
         this.clearTeamsInputsList();
-        gamesService.disableTeams();
+        createGamesService.disableTeams();
       } else {
-        gamesService.enableTeams();
+        createGamesService.enableTeams();
         this.showTeamsSection();
         this.prepareTeamSection();
       }
     });
 
     gameLightInput.addEventListener('change', () => {
-      gamesService.setLight(gameLightInput.value);
+      createGamesService.setLight(gameLightInput.value);
     });
 
     cameraInput.addEventListener('change', () => {
-      gamesService.setCamera(cameraInput.value);
+      createGamesService.setCamera(cameraInput.value);
     });
 
     steeringInput.addEventListener('change', () => {
-      gamesService.setSteering(steeringInput.value);
+      createGamesService.setSteering(steeringInput.value);
     });
 
     cursorInput.addEventListener('change', () => {
-      gamesService.setCursor(cursorInput.value);
+      createGamesService.setCursor(cursorInput.value);
     });
 
     gameMapInput.addEventListener('change', () => {
-      gamesService.setGameMap(gameMapInput.value);
+      createGamesService.setGameMap(gameMapInput.value);
     });
 
     botsCountInput.addEventListener('change', () => {
       if (botsCountInput.value == '') {
         botsCountInput.value = '0';
       }
-      gamesService.setBotsCount(parseInt(botsCountInput.value));
+      createGamesService.setBotsCount(parseInt(botsCountInput.value));
     });
 
     teamsCountInput.addEventListener('change', () => {
@@ -108,8 +115,7 @@ export default class MenuComponent {
       teamsCountInput.value = '2';
     }
     const value = parseInt(teamsCountInput.value);
-    // gamesService.clearTeamsList();
-    gamesService.setTeamsCount(value);
+    createGamesService.setTeamsCount(value);
     this.prepareTeamsInputsList(value);
   }
 
@@ -129,7 +135,7 @@ export default class MenuComponent {
       input.setAttribute('data-event', 'text');
       const listeners = this.listeners;
       input.addEventListener('keyup', function inputListener() {
-        gamesService.setTeamName(index, input.value);
+        createGamesService.setTeamName(index, input.value);
         listeners.push(inputListener);
       });
       teamsList.appendChild(input);
@@ -163,15 +169,18 @@ export default class MenuComponent {
   render() {
     gamesListTable.innerHTML = '';
     const user = userService.getState();
-    const games = gamesService.getState();
+    const games = gamesListService.getState();
+    const createGame = createGamesService.getState();
     this.renderTable(user, games);
     const nickEmpty = user.nick === '';
     const chosenGameEmpty = user.chosenGame === null;
     const idEmpty = user.id === null;
-    const roomNameEmpty = games.roomName === '';
-    const roomNameDuplicate = Boolean(games.list.find(game => game.roomName === games.roomName));
-    const typeEmpty = games.type === null;
-    const mapEmpty = games.map === null;
+    const roomNameEmpty = createGame.roomName === '';
+    const roomNameDuplicate = Boolean(
+      games.list.find(game => game.roomName === createGame.roomName),
+    );
+    const typeEmpty = createGame.type === null;
+    const mapEmpty = createGame.map === null;
 
     joinGameButton.disabled = nickEmpty || chosenGameEmpty || idEmpty;
     createButton.disabled = roomNameEmpty || typeEmpty || mapEmpty || roomNameDuplicate;

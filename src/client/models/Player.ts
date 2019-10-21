@@ -1,7 +1,7 @@
 import { BufferGeometry, Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 import PlayerModel from '../../shared/models/PlayerModel';
 import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
+import ScreenModel from '../interfaces/ScreenModel';
 import { Lighting } from './Light/Light';
 
 const head = require('../games/balls/images/head.jpg');

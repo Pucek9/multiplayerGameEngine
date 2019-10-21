@@ -7,14 +7,8 @@ import Free4all from './Free4all';
 import Team from '../models/Team';
 
 export default class TeamBattle extends Free4all {
-  public teams: Team[] = [];
+  public teams: Team[];
   public friendlyFire: boolean = false;
-
-  addTeam(params) {
-    this.teams.push(new Team(params));
-  }
-
-  deleteTeam() {}
 
   bulletsDetectPower() {
     this.bullets

@@ -1,14 +1,13 @@
 import { Store } from 'redux';
 import * as GamesListActions from './actions';
-import { GamesState, GameState } from './state';
+import { CreateGameState } from './state';
 
-export class GamesService {
+export class CreateGamesService {
   constructor(public store: Store) {}
 
-  addGame(payload: GameState) {
+  clearRoomName() {
     this.store.dispatch({
-      type: GamesListActions.ADD_GAME,
-      payload: payload,
+      type: GamesListActions.CLEAR_ROOM_NAME,
     });
   }
 
@@ -67,12 +66,12 @@ export class GamesService {
       payload: count,
     });
   }
-
-  clearGamesList() {
-    this.store.dispatch({
-      type: GamesListActions.CLEAR_GAMES_LIST,
-    });
-  }
+  //
+  // clearGamesList() {
+  //   this.store.dispatch({
+  //     type: GamesListActions.CLEAR_GAMES_LIST,
+  //   });
+  // }
 
   clearTeamsList() {
     this.store.dispatch({
@@ -106,7 +105,13 @@ export class GamesService {
     });
   }
 
-  getState(): GamesState {
-    return this.store.getState().games;
+  getState(): CreateGameState {
+    return this.store.getState().createGame;
+  }
+
+  getNormalizedState() {
+    const { teams, ...props } = this.store.getState().createGame;
+    console.log({ teams: teams && teams.list, ...props });
+    return { teams: teams && teams.list, ...props };
   }
 }

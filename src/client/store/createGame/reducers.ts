@@ -1,16 +1,15 @@
 import * as GamesActions from './actions';
-import { GamesState, initialState } from './state';
+import { CreateGameState, initialState } from './state';
 import { createArrayFilledValue } from '../../../shared/helpers';
 
-export function gamesReducer(
-  state: GamesState = initialState,
+export function createGameReducer(
+  state: CreateGameState = initialState,
   { type, payload }: { type: string; payload: any },
 ) {
   switch (type) {
-    case GamesActions.ADD_GAME:
+    case GamesActions.CLEAR_ROOM_NAME:
       return {
         ...state,
-        list: [...state.list, payload],
         roomName: '',
       };
 
@@ -100,14 +99,14 @@ export function gamesReducer(
     case GamesActions.SET_BOTS_COUNT:
       return {
         ...state,
-        bots: payload,
+        botsCount: payload,
       };
-
-    case GamesActions.CLEAR_GAMES_LIST:
-      return {
-        ...state,
-        list: [],
-      };
+    //
+    // case GamesActions.CLEAR_GAMES_LIST:
+    //   return {
+    //     ...state,
+    //     list: [],
+    //   };
     default:
       return state;
   }

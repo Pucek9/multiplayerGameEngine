@@ -12,7 +12,7 @@ import WeaponsListComponent from './UserInterface/WeaponsList';
 import PowersListComponent from './UserInterface/PowersList';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
-import ScreenModel from './types/ScreenModel';
+import ScreenModel from './interfaces/ScreenModel';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
@@ -23,7 +23,7 @@ import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
-import { GameState } from './store/games/state';
+import { GameConfig } from './store/gamesList/state';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -47,7 +47,7 @@ export default class Game {
   cursor: Cursor;
   text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameState) {
+  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameConfig) {
     this.user = user;
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);

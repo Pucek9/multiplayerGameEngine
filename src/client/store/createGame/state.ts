@@ -1,17 +1,4 @@
-export interface GameState {
-  roomName: string;
-  type: string;
-  map: string;
-  camera: string;
-  light: string;
-  count: number;
-  teams?: Array<{
-    name: string;
-    count: number;
-  }>;
-}
-
-export interface GamesState {
+export interface CreateGameState {
   roomName: string;
   type: string;
   map: string;
@@ -19,15 +6,14 @@ export interface GamesState {
   light: string;
   steering: string;
   cursor: string;
-  bots: number;
-  list: GameState[];
+  botsCount: number;
   teams?: {
     count: number;
     list: string[];
   };
 }
 
-export const initialState: GamesState = {
+export const initialState: CreateGameState = {
   roomName: '',
   type: 'Free4all',
   map: 'Playground',
@@ -35,7 +21,6 @@ export const initialState: GamesState = {
   light: 'FlashLight',
   steering: 'eightDirectionSteering',
   cursor: 'freeCursor',
-  bots: 0,
-  list: [],
+  botsCount: 0,
   teams: null,
 };
