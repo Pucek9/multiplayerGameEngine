@@ -20,6 +20,8 @@ declare var botsCountInput: HTMLInputElement;
 declare var teamsCountInput: HTMLInputElement;
 declare var teams: HTMLDivElement;
 declare var teamsList: HTMLDivElement;
+declare var selectTeamSection: HTMLDivElement;
+declare var selectTeam: HTMLLabelElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
@@ -110,6 +112,31 @@ export default class MenuComponent {
     });
   }
 
+  showSelectTeamSection() {
+    const user = userService.getState();
+    const chosenGame = user.chosenGame;
+    const chosenTeam = user.team;
+    const teams = gamesListService.getGame(chosenGame).teams;
+    if (teams && teams.length > 0) {
+      selectTeamSection.style.display = 'block';
+      selectTeam.innerText = '';
+      const select = document.createElement('select');
+      select.className = 'select join-white';
+      select.id = 'teamsInput';
+      const options = teams.map(team => {
+        const option = document.createElement('option');
+        option.value = team.name;
+        option.innerText = `${team.name} players: ${team.count}`;
+        team.name === chosenTeam && option.setAttribute('selected', 'selected');
+        return option;
+      });
+      select.append(...options);
+      selectTeam.append(select);
+    } else {
+      selectTeamSection.style.display = 'none';
+    }
+  }
+
   prepareTeamSection() {
     if (teamsCountInput.value == '') {
       teamsCountInput.value = '2';
@@ -155,6 +182,7 @@ export default class MenuComponent {
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
         userService.selectGame(game);
+        this.showSelectTeamSection();
       });
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');

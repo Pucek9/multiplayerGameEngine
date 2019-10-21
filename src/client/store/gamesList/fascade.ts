@@ -21,4 +21,8 @@ export class GamesListService {
   getState(): GamesListState {
     return this.store.getState().gamesList;
   }
+
+  getGame(roomName: string) {
+    return this.getState().list.find(game => game.roomName === roomName);
+  }
 }

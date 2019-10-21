@@ -38,6 +38,7 @@ class Main {
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1];
         userService.selectGame(game);
+        mainInstance.menu.showSelectTeamSection();
         mainInstance.menu.render();
       }
     });
@@ -45,7 +46,7 @@ class Main {
 
   onAddNewGame(newGame: NewGame) {
     socket.emit(API.CREATE_GAME, newGame);
-    userService.selectGame(newGame);
+    // userService.selectGame(newGame);
   }
 
   onJoinGame() {
