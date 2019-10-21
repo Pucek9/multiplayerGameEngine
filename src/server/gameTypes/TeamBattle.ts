@@ -5,10 +5,28 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Free4all from './Free4all';
 import Team from '../models/Team';
+import NewUser from '../../shared/apiModels/NewUser';
 
 export default class TeamBattle extends Free4all {
   public teams: Team[];
   public friendlyFire: boolean = false;
+
+  findTeam(name: string) {
+    return this.teams.find(team => name === team.name);
+  }
+
+  connectPlayer(newPlayer: NewUser): Player {
+    const player = super.connectPlayer(newPlayer);
+    const team = this.findTeam(player.team);
+    team && team.joinToTeam();
+    return player;
+  }
+
+  disconnectPlayer(disconnected: Player) {
+    const team = this.findTeam(disconnected.team);
+    super.disconnectPlayer(disconnected);
+    team && team.leaveTeam();
+  }
 
   bulletsDetectPower() {
     this.bullets

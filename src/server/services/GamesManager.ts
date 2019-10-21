@@ -6,6 +6,7 @@ import Steerings from './Steering';
 import Maps from './Maps';
 import Cursors from './Cursor';
 import Team from '../models/Team';
+import { randColor } from '../../shared/helpers';
 
 class GamesManager {
   public games: GameModel[] = [];
@@ -18,7 +19,9 @@ class GamesManager {
     this.games.push(
       new gameTypes[type](emitter, {
         ...newGame,
-        teams: teams && teams.map(teamName => new Team(teamName)),
+        teams:
+          teams && teams.map(({ name, color }) => new Team({ name, color: color || randColor() })),
+        // teams && teams.map(name => new Team({ name, color: randColor() })),
         steering: Steerings[steering],
         cursor: Cursors[cursor],
         map: new Maps[map](),

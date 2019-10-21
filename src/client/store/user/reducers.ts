@@ -26,6 +26,11 @@ export function userReducer(
         ...state,
         team: payload,
       };
+    case UserActions.CHOOSE_COLOR:
+      return {
+        ...state,
+        color: payload,
+      };
     default:
       return state;
   }

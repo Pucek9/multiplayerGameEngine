@@ -7,5 +7,8 @@ export default interface NewGame {
   steering: string;
   cursor: string;
   botsCount: number;
-  teams?: string[];
+  teams?: Array<{
+    name: string;
+    color: string;
+  }>;
 }

@@ -7,6 +7,7 @@ export default interface GameInstance {
   count: number;
   teams?: Array<{
     name: string;
+    color: string;
     points: number;
     count: number;
   }>;

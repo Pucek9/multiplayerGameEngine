@@ -2,6 +2,7 @@ export const SET_NICK = 'SET_NICK';
 export const SET_ID = 'SET_ID';
 export const CHOOSE_GAME = 'CHOOSE_GAME';
 export const CHOOSE_TEAM = 'CHOOSE_TEAM';
+export const CHOOSE_COLOR = 'CHOOSE_COLOR';
 
 export class SetNick {
   readonly type = SET_NICK;

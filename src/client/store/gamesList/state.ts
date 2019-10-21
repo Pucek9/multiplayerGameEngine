@@ -7,6 +7,7 @@ export interface GameConfig {
   count: number;
   teams?: Array<{
     name: string;
+    color: string;
     points: number;
     count: number;
   }>;

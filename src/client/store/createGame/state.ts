@@ -9,7 +9,9 @@ export interface CreateGameState {
   botsCount: number;
   teams?: {
     count: number;
-    list: string[];
+    list: Array<{
+      name: string;
+    }>;
   };
 }
 

@@ -30,7 +30,7 @@ export function createGameReducer(
         ...state,
         teams: {
           count: payload,
-          list: createArrayFilledValue(payload, ''),
+          list: createArrayFilledValue(payload, { name: '' }),
         },
       };
 
@@ -61,7 +61,7 @@ export function createGameReducer(
         teams: {
           ...state.teams,
           list: state.teams.list.map((team, index) =>
-            index === payload.index ? payload.name : team,
+            index === payload.index ? { name: payload.name } : team,
           ),
         },
       };

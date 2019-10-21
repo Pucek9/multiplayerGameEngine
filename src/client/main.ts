@@ -36,8 +36,8 @@ class Main {
       gamesListService.clearGamesList();
       gamesList.forEach(game => gamesListService.addGame(game));
       if (gamesList.length > 0) {
-        const game = gamesList[gamesList.length - 1].roomName;
-        userService.chooseGame(game);
+        const game = gamesList[gamesList.length - 1];
+        userService.selectGame(game);
         mainInstance.menu.render();
       }
     });
@@ -45,7 +45,7 @@ class Main {
 
   onAddNewGame(newGame: NewGame) {
     socket.emit(API.CREATE_GAME, newGame);
-    userService.chooseGame(newGame.roomName);
+    userService.selectGame(newGame);
   }
 
   onJoinGame() {
@@ -55,7 +55,7 @@ class Main {
         userState.id,
         userState.nick,
         userState.team || userState.nick,
-        randColor(),
+        userState.color || randColor(),
         userState.chosenGame,
       );
       const gameConfig = gamesListService

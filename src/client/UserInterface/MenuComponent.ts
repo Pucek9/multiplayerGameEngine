@@ -154,7 +154,7 @@ export default class MenuComponent {
       count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
-        userService.chooseGame(game.roomName);
+        userService.selectGame(game);
       });
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');
