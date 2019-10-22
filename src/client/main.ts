@@ -86,6 +86,8 @@ class Main {
 
     socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
 
+    socket.on(API.GET_TEAMS_LIST, gameState.updateTeamsList.bind(gameState));
+
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
     socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));

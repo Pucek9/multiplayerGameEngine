@@ -43,6 +43,10 @@ export default class Emitter {
     this.socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
   }
 
+  emitTeamsList(gameState: GameModel) {
+    this.socketIo.to(gameState.roomName).emit(API.GET_TEAMS_LIST, gameState.teams);
+  }
+
   disconnectPlayer(roomName: string, disconnected: Player) {
     const id = disconnected.id;
     console.log(`[${id}] Player '${disconnected.name}' left '${roomName}'`);

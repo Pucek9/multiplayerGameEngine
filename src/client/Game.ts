@@ -24,6 +24,8 @@ import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameConfig } from './store/gamesList/state';
+import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
+import { gamesListService } from './store/store';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -34,10 +36,11 @@ export default class Game {
   currentPlayer: Player;
   camera: ICamera;
   light: Lighting;
-  playersListComponent: PlayerListComponent;
+  playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
   players: Player[] = [];
+  teams = [];
   playersListString: string = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
@@ -52,7 +55,10 @@ export default class Game {
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
     this.camera = new Camera[gameConfig.camera]();
-    this.playersListComponent = new PlayerListComponent();
+    this.teams = gameConfig.teams;
+    this.playersListComponent = this.teams
+      ? new TeamPlayerListComponent()
+      : new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
     this.text = new Text();
@@ -138,6 +144,10 @@ export default class Game {
       bullet.init(this.screen);
       this.bullets.push(bullet);
     });
+  }
+
+  updateTeamsList(teams) {
+    this.teams = teams;
   }
 
   updatePlayersState(_players: PlayerModel[]) {
@@ -268,16 +278,17 @@ export default class Game {
   }
 
   updatePlayerList() {
-    const playersList = this.players.map(({ name, kills, deaths, color, hp }) => ({
+    const playersList = this.players.map(({ name, kills, deaths, color, hp, team }) => ({
       name,
       kills,
       deaths,
       color,
       hp,
+      team,
     }));
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {
-      this.playersListComponent.update(playersList);
+      this.playersListComponent.update(playersList, this.teams);
       this.playersListString = _playersListString;
     }
   }
