@@ -1,9 +1,9 @@
-import StaticRectangleObject from '../models/StaticRectangleObject';
+import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
-import StaticCircularObject from '../models/StaticCircularObject';
-import ItemGenerator from '../models/ItemGenerator';
-import Item from '../../shared/models/Item';
-import Grenade from '../models/weapons/Grenade';
+import StaticCircularObject from '../../models/StaticCircularObject';
+import ItemGenerator from '../../models/ItemGenerator';
+import Item from '../../../shared/models/Item';
+import Grenade from '../../models/weapons/Grenade';
 
 export default class Boxes implements GameMap {
   mapName: string = 'Boxes';

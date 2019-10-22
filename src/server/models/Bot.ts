@@ -13,8 +13,8 @@ export default class Bot extends Player {
     this.cursor.y = target.y;
   }
 
-  trackClosestPlayer(gameState) {
-    const players = gameState.getAlivePlayers().filter(player => player !== this);
+  trackClosestPlayer(gameState, condition) {
+    const players = gameState.getAlivePlayers().filter(condition);
     if (players && players.length) {
       return players.reduce((previousPlayer, currentPlayer) => {
         const { distance: previousClosestDistance } = collisionDetector.detectCollision(

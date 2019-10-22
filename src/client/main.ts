@@ -8,8 +8,8 @@ import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
-import ScreenModel from './types/ScreenModel';
-import { gamesService, userService } from './store/store';
+import ScreenModel from './interfaces/ScreenModel';
+import { createGamesService, gamesListService, userService } from './store/store';
 import { randColor } from '../shared/helpers';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
@@ -33,11 +33,12 @@ class Main {
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      gamesService.clearGamesList();
-      gamesList.forEach(game => gamesService.addGame(game));
+      gamesListService.clearGamesList();
+      gamesList.forEach(game => gamesListService.addGame(game));
       if (gamesList.length > 0) {
-        const game = gamesList[gamesList.length - 1].roomName;
-        userService.chooseGame(game);
+        const game = gamesList[gamesList.length - 1];
+        userService.selectGame(game);
+        mainInstance.menu.toggleSelectTeamSection();
         mainInstance.menu.render();
       }
     });
@@ -45,7 +46,7 @@ class Main {
 
   onAddNewGame(newGame: NewGame) {
     socket.emit(API.CREATE_GAME, newGame);
-    userService.chooseGame(newGame.roomName);
+    // userService.selectGame(newGame);
   }
 
   onJoinGame() {
@@ -54,10 +55,11 @@ class Main {
       const newPlayer = new NewUser(
         userState.id,
         userState.nick,
-        randColor(),
+        userState.team || userState.nick,
+        userState.color || randColor(),
         userState.chosenGame,
       );
-      const gameConfig = gamesService
+      const gameConfig = gamesListService
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
@@ -83,6 +85,8 @@ class Main {
     socket.on(API.ADD_NEW_BULLET, gameState.appendNewBullets.bind(gameState));
 
     socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
+
+    socket.on(API.GET_TEAMS_LIST, gameState.updateTeamsList.bind(gameState));
 
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 

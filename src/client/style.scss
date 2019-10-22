@@ -18,7 +18,7 @@ body {
     align-self: flex-end;
   }
 
-  #leftPanel {
+  #playerListPanel, #teamsPlayersListPanel {
     overflow: hidden;
     background: rgba(171, 205, 239, 0.3);
     position: absolute;
@@ -28,7 +28,7 @@ body {
       color: white;
     }
 
-    ul#playersList {
+    ul {
       list-style-type: none;
       margin: 0;
       padding-left: 5px;

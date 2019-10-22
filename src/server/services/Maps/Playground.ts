@@ -1,14 +1,14 @@
-import StaticCircularObject from '../models/StaticCircularObject';
-import StaticRectangleObject from '../models/StaticRectangleObject';
-import Pistol from '../models/weapons/Pistol';
-import ItemGenerator from '../models/ItemGenerator';
+import StaticCircularObject from '../../models/StaticCircularObject';
+import StaticRectangleObject from '../../models/StaticRectangleObject';
+import Pistol from '../../models/weapons/Pistol';
+import ItemGenerator from '../../models/ItemGenerator';
 import GameMap from './GameMap';
-import Item from '../../shared/models/Item';
-import Shotgun from '../models/weapons/Shotgun';
-import Resizer from '../models/weapons/Resizer';
-import Grenade from '../models/weapons/Grenade';
-import AK47 from '../models/weapons/AK47';
-import AidKit from '../models/AidKit';
+import Item from '../../../shared/models/Item';
+import Shotgun from '../../models/weapons/Shotgun';
+import Resizer from '../../models/weapons/Resizer';
+import Grenade from '../../models/weapons/Grenade';
+import AK47 from '../../models/weapons/AK47';
+import AidKit from '../../models/AidKit';
 
 export default class Playground implements GameMap {
   mapName: string = 'Playground';

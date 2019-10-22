@@ -18,6 +18,7 @@ export enum API {
   UPDATE_DIRECTION = 'updateDirection',
   CREATE_GAME = 'createGame',
   GET_GAMES_LIST = 'getGamesList',
+  GET_TEAMS_LIST = 'getTeamsList',
   LEAVE_GAME = 'leaveGame',
   GET_WEAPON_DETAILS = 'getWeaponDetails',
   GET_POWER_DETAILS = 'getPowerDetails',

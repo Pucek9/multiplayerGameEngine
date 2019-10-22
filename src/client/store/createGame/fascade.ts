@@ -1,14 +1,13 @@
 import { Store } from 'redux';
 import * as GamesListActions from './actions';
-import { GamesState, GameState } from './state';
+import { CreateGameState } from './state';
 
-export class GamesService {
+export class CreateGamesService {
   constructor(public store: Store) {}
 
-  addGame(payload: GameState) {
+  clearRoomName() {
     this.store.dispatch({
-      type: GamesListActions.ADD_GAME,
-      payload: payload,
+      type: GamesListActions.CLEAR_ROOM_NAME,
     });
   }
 
@@ -67,14 +66,51 @@ export class GamesService {
       payload: count,
     });
   }
+  //
+  // clearGamesList() {
+  //   this.store.dispatch({
+  //     type: GamesListActions.CLEAR_GAMES_LIST,
+  //   });
+  // }
 
-  clearGamesList() {
+  clearTeamsList() {
     this.store.dispatch({
-      type: GamesListActions.CLEAR_GAMES_LIST,
+      type: GamesListActions.CLEAR_TEAMS,
     });
   }
 
-  getState(): GamesState {
-    return this.store.getState().games;
+  setTeamsCount(count: number) {
+    this.store.dispatch({
+      type: GamesListActions.SET_TEAMS_COUNT,
+      payload: count,
+    });
+  }
+
+  setTeamName(index, name) {
+    this.store.dispatch({
+      type: GamesListActions.SET_TEAM_NAME,
+      payload: { index, name },
+    });
+  }
+
+  enableTeams() {
+    this.store.dispatch({
+      type: GamesListActions.ENABLE_TEAMS,
+    });
+  }
+
+  disableTeams() {
+    this.store.dispatch({
+      type: GamesListActions.DISABLE_TEAMS,
+    });
+  }
+
+  getState(): CreateGameState {
+    return this.store.getState().createGame;
+  }
+
+  getNormalizedState() {
+    const { teams, ...props } = this.store.getState().createGame;
+    return { teams: teams && teams.list, ...props };
   }
 }

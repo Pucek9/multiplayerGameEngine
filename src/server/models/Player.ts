@@ -1,5 +1,4 @@
 import PlayerModel from '../../shared/models/PlayerModel';
-import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import Direction from '../../shared/models/Direction';
 import Bullet from './Bullet';
 import AidKit from './AidKit';
@@ -67,7 +66,7 @@ export default class Player extends PlayerModel {
       bullet.hit(angle);
       if (this.hp <= 0) {
         this.hp = 0;
-        if (bullet.owner) {
+        if (bullet.owner && bullet.owner.team !== this.team) {
           bullet.owner.addKills(1);
         }
         this.die();

@@ -1,5 +1,5 @@
 import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
+import ScreenModel from '../interfaces/ScreenModel';
 import { FontLoader, Mesh, MeshPhongMaterial, TextGeometry } from 'three';
 import * as fontFile from '../games/balls/fonts/gentilis_bold.typeface.json';
 

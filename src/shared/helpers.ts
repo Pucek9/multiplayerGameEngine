@@ -30,6 +30,31 @@ export function times(count, callback) {
   Array.from(Array(count).keys()).forEach(callback);
 }
 
+export function createArrayFilledValue(length, value) {
+  return Array.from({ length }, () => value);
+}
+
 export function hasKeys(set: Set<string>, keys: Array<string>) {
   return keys.some((key: string) => set.has(key));
+}
+
+export function compareBy(
+  obj1,
+  obj2,
+  conditions,
+  signs = createArrayFilledValue(conditions.length, 1),
+  index = 0,
+) {
+  const condition = conditions[index];
+  const sign = signs[index];
+  if (obj1[condition] < obj2[condition]) {
+    return sign;
+  }
+  if (obj1[condition] > obj2[condition]) {
+    return -sign;
+  }
+  if (index === conditions.length - 1) {
+    return 0;
+  }
+  return compareBy(obj1, obj2, conditions, signs, ++index);
 }

@@ -2,61 +2,64 @@ import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import Bullet from '../models/Bullet';
-import GameMap from '../maps/GameMap';
+import GameMap from '../services/Maps/GameMap';
 import Steering from '../services/Steering/Steering';
 import Cursor from '../services/Cursor/Cursor';
 import Emitter from '../services/Emitter';
+import Team from '../models/Team';
 
-export default interface GameModel {
+export default abstract class GameModel {
   steering: Steering;
   cursor: Cursor;
   emitter: Emitter;
+  map: GameMap;
   roomName: string;
   type: string;
   camera: string;
   light: string;
-  map: GameMap;
   botsCount: number;
   players: Player[];
   bullets: Bullet[];
+  teams?: Team[];
+  friendlyFire?: boolean;
 
-  getPlayer(id: string);
+  abstract getPlayer(id: string);
 
-  getAlivePlayers();
+  abstract getAlivePlayers();
 
-  getPlayers();
+  abstract getPlayers();
 
-  isPlayerInThisGame(id: string);
+  abstract isPlayerInThisGame(id: string);
 
-  getBullets();
+  abstract getBullets();
 
-  getMapName();
+  abstract getMapName();
 
-  getStaticObjects();
+  abstract getStaticObjects();
 
-  updateBullets();
+  abstract updateBullets();
 
-  detectBulletsCollision();
+  abstract detectBulletsCollision();
 
-  shoot(id: string);
+  abstract shoot(id: string);
 
-  revivePlayer(id: string);
+  abstract revivePlayer(id: string);
 
-  connectPlayer(newPlayer: NewUser);
+  abstract connectPlayer(newPlayer: NewUser);
 
-  disconnectPlayer(disconnected: Player);
+  abstract disconnectPlayer(disconnected: Player);
 
-  updateKeys(id: string, keys: Array<string>);
+  abstract updateKeys(id: string, keys: Array<string>);
 
-  performKeysOperation(player: Player);
+  abstract performKeysOperation(player: Player);
 
-  performKeysOperationForPlayers();
+  abstract performKeysOperationForPlayers();
 
-  updateCursor(mouseCoordinates: MouseCoordinates);
+  abstract updateCursor(mouseCoordinates: MouseCoordinates);
 
-  mouseClick(id: string);
+  abstract mouseClick(id: string);
 
-  mouseUp(id: string);
+  abstract mouseUp(id: string);
 
-  generateBullets(bullets: Bullet[]);
+  abstract generateBullets(bullets: Bullet[]);
 }

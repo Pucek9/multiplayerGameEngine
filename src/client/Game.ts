@@ -12,7 +12,7 @@ import WeaponsListComponent from './UserInterface/WeaponsList';
 import PowersListComponent from './UserInterface/PowersList';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
-import ScreenModel from './types/ScreenModel';
+import ScreenModel from './interfaces/ScreenModel';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
@@ -23,7 +23,9 @@ import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
 import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
-import { GameState } from './store/games/state';
+import { GameConfig } from './store/gamesList/state';
+import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
+import { gamesListService } from './store/store';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -34,10 +36,11 @@ export default class Game {
   currentPlayer: Player;
   camera: ICamera;
   light: Lighting;
-  playersListComponent: PlayerListComponent;
+  playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
   players: Player[] = [];
+  teams = [];
   playersListString: string = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
@@ -47,12 +50,15 @@ export default class Game {
   cursor: Cursor;
   text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameState) {
+  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameConfig) {
     this.user = user;
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
     this.camera = new Camera[gameConfig.camera]();
-    this.playersListComponent = new PlayerListComponent();
+    this.teams = gameConfig.teams;
+    this.playersListComponent = this.teams
+      ? new TeamPlayerListComponent()
+      : new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
     this.text = new Text();
@@ -70,6 +76,7 @@ export default class Game {
     const player = new Player(
       newPlayer.id,
       newPlayer.name,
+      newPlayer.team,
       newPlayer.color,
       newPlayer.x,
       newPlayer.y,
@@ -102,6 +109,7 @@ export default class Game {
         const player = new Player(
           newPlayer.id,
           newPlayer.name,
+          newPlayer.team,
           newPlayer.color,
           newPlayer.x,
           newPlayer.y,
@@ -136,6 +144,10 @@ export default class Game {
       bullet.init(this.screen);
       this.bullets.push(bullet);
     });
+  }
+
+  updateTeamsList(teams) {
+    this.teams = teams;
   }
 
   updatePlayersState(_players: PlayerModel[]) {
@@ -266,16 +278,17 @@ export default class Game {
   }
 
   updatePlayerList() {
-    const playersList = this.players.map(({ name, kills, deaths, color, hp }) => ({
+    const playersList = this.players.map(({ name, kills, deaths, color, hp, team }) => ({
       name,
       kills,
       deaths,
       color,
       hp,
+      team,
     }));
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {
-      this.playersListComponent.update(playersList);
+      this.playersListComponent.update(playersList, this.teams);
       this.playersListString = _playersListString;
     }
   }

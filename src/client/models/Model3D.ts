@@ -3,7 +3,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
+import ScreenModel from '../interfaces/ScreenModel';
 
 const loader = new FBXLoader();
 const models = {
