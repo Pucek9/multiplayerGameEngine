@@ -73,6 +73,11 @@ export default class TeamBattle extends Free4all {
           );
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            if (object instanceof Player && !object.isAlive()) {
+              const team = this.findTeam(bullet.owner.team);
+              team && team.increasePoints();
+              this.emitter.emitGamesList();
+            }
             this.deleteBulletIfInactive(bullet, i);
           }
         });

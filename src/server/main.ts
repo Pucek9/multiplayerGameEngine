@@ -28,7 +28,7 @@ function connection(socket: Socket) {
   function init() {
     console.log(`[${socket.id}] Connected`);
     setTimeout(() => {
-      socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
+      emitter.emitGamesList();
       socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, socket.id);
     }, TIMEOUT);
     registerGameMenuEvents();
@@ -38,7 +38,7 @@ function connection(socket: Socket) {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
       gamesManager.createGame(emitter, newGame);
-      socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
+      emitter.emitGamesList();
     });
 
     socket.on(API.CREATE_PLAYER, (newPlayer: NewUser) => {
@@ -71,7 +71,7 @@ function connection(socket: Socket) {
     socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
     socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
     socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
-    socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
+    emitter.emitGamesList();
   }
 
   function registerPlayerEvents(gameState) {

@@ -8,6 +8,10 @@ export default class Team {
     this.color = color;
   }
 
+  increasePoints() {
+    this.points += 1;
+  }
+
   joinToTeam() {
     this.count += 1;
   }
