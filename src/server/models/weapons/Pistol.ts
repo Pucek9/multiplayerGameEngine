@@ -13,7 +13,7 @@ export default class Pistol extends Weapon {
   bulletConfig = {
     size: 3,
     power: 20,
-    range: 500,
+    range: 700,
   };
 
   constructor(params?: Partial<Pistol>) {

@@ -13,7 +13,7 @@ export default class Ak47 extends Weapon {
   bulletConfig = {
     size: 3,
     power: 20,
-    range: 700,
+    range: 800,
   };
 
   constructor(params?: Partial<Ak47>) {
