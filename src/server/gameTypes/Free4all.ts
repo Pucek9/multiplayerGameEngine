@@ -55,7 +55,7 @@ export default class Free4all extends GameModel {
     times(count, index => this.createBot(index));
   }
 
-  createBot(index) {
+  createBot(index: number) {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(
       `Bot_${generateId()}`,
@@ -81,12 +81,16 @@ export default class Free4all extends GameModel {
     this.getBots()
       .filter((bot: Bot) => bot.isAlive())
       .forEach((bot: Bot) => {
-        const closestPlayer = bot.trackClosestPlayer(this);
+        const closestPlayer = this.trackClosestPlayer(bot);
         if (closestPlayer) {
           bot.updateCursor(closestPlayer);
           bot.updateDirection();
         }
       });
+  }
+
+  trackClosestPlayer(bot: Bot) {
+    return bot.trackClosestPlayer(this, player => player !== bot);
   }
 
   letBotsDoSomething() {

@@ -6,6 +6,13 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Free4all from './Free4all';
 import Team from '../models/Team';
 import NewUser from '../../shared/apiModels/NewUser';
+import playerService from '../services/PlayerService';
+import Bot from '../models/Bot';
+import { generateId, randItem } from '../../shared/helpers';
+import ReverseBullets from '../models/powers/ReverseBullets';
+import SlowBullets from '../models/powers/SlowBullets';
+import Accelerator from '../models/powers/Accelerator';
+import Pistol from '../models/weapons/Pistol';
 
 export default class TeamBattle extends Free4all {
   public teams: Team[];
@@ -82,5 +89,30 @@ export default class TeamBattle extends Free4all {
           }
         });
     });
+  }
+
+  createBot(index: number) {
+    const teamsCount = this.teams.length;
+    const team = this.teams[index % teamsCount];
+    team.joinToTeam();
+    const { x, y } = playerService.randNonCollisionPosition(30, this);
+    const bot = new Bot(
+      `Bot_${generateId()}`,
+      `Bot_${index}`,
+      team.name,
+      team.color,
+      x,
+      y,
+      this.roomName,
+    );
+    this.players.push(bot);
+    const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
+    bot.addAndSelectPower(new SuperPower());
+    bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
+    return bot;
+  }
+
+  trackClosestPlayer(bot: Bot) {
+    return bot.trackClosestPlayer(this, player => player.team !== bot.team);
   }
 }
