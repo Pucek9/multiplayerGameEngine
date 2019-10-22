@@ -58,7 +58,7 @@ export default class Free4all extends GameModel {
   createBot(index: number) {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(
-      `Bot_${generateId()}`,
+      `Bot_${index}${generateId()}`,
       `Bot_${index}`,
       `Bot_${index}`,
       randColor(),

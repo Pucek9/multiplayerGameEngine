@@ -92,13 +92,12 @@ export default class TeamBattle extends Free4all {
   }
 
   createBot(index: number) {
-    console.log(`Bot_${index}`);
     const teamsCount = this.teams.length;
     const team = this.teams[index % teamsCount];
     team.joinToTeam();
     const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(
-      `Bot_${generateId()}`,
+      `Bot_${index}${generateId()}`,
       `Bot_${index}`,
       team.name,
       team.color,

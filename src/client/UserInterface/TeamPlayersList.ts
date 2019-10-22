@@ -14,7 +14,6 @@ export default class TeamPlayerListComponent {
   }
 
   update(players: any[], teams) {
-    console.log(players);
     teamsPlayersListPanel.innerHTML = '';
     teams &&
       teams

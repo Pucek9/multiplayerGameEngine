@@ -29,7 +29,6 @@ export default class PlayerListComponent {
             `${_player.name}: Kills:${_player.kills} Deaths:${_player.deaths} HP:${_player.hp}`,
           ),
         );
-        // @ts-ignore
         playersList.append(li);
       });
   }
