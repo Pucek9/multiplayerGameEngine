@@ -38,7 +38,7 @@ class Main {
       if (gamesList.length > 0) {
         const game = gamesList[gamesList.length - 1];
         userService.selectGame(game);
-        mainInstance.menu.showSelectTeamSection();
+        mainInstance.menu.toggleSelectTeamSection();
         mainInstance.menu.render();
       }
     });

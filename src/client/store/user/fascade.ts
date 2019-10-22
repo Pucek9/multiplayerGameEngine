@@ -32,10 +32,16 @@ export class UserService {
     this.chooseGame(chosenGame.roomName);
     const teams = chosenGame.teams;
     if (teams) {
-      const chosenTeam = teams.reduce((res, obj) => (obj.points < res.points ? obj : res));
+      const chosenTeam = teams.reduce((res, obj) => (obj.count < res.count ? obj : res));
       this.chooseTeam(chosenTeam.name);
       this.chooseColor(chosenTeam.color);
     }
+  }
+
+  selectTeam(teamName: string, chosenGame) {
+    const chosenTeam = chosenGame.teams.find(team => team.name === teamName);
+    this.chooseTeam(chosenTeam.name);
+    this.chooseColor(chosenTeam.color);
   }
 
   getState(): UserState {

@@ -16,6 +16,7 @@ declare var gameLightInput: HTMLSelectElement;
 declare var cameraInput: HTMLSelectElement;
 declare var steeringInput: HTMLSelectElement;
 declare var cursorInput: HTMLSelectElement;
+declare var teamsSelect: HTMLSelectElement;
 declare var botsCountInput: HTMLInputElement;
 declare var teamsCountInput: HTMLInputElement;
 declare var teams: HTMLDivElement;
@@ -100,6 +101,13 @@ export default class MenuComponent {
       this.prepareTeamSection();
     });
 
+    teamsSelect.addEventListener('change', () => {
+      userService.selectTeam(
+        teamsSelect.value,
+        gamesListService.getGame(userService.getState().chosenGame),
+      );
+    });
+
     nickInput.addEventListener('keyup', () => {
       userService.setNick(nickInput.value);
     });
@@ -112,26 +120,22 @@ export default class MenuComponent {
     });
   }
 
-  showSelectTeamSection() {
+  toggleSelectTeamSection() {
     const user = userService.getState();
     const chosenGame = user.chosenGame;
     const chosenTeam = user.team;
     const teams = gamesListService.getGame(chosenGame).teams;
     if (teams && teams.length > 0) {
       selectTeamSection.style.display = 'block';
-      selectTeam.innerText = '';
-      const select = document.createElement('select');
-      select.className = 'select join-white';
-      select.id = 'teamsInput';
       const options = teams.map(team => {
         const option = document.createElement('option');
         option.value = team.name;
         option.innerText = `${team.name} players: ${team.count}`;
-        team.name === chosenTeam && option.setAttribute('selected', 'selected');
         return option;
       });
-      select.append(...options);
-      selectTeam.append(select);
+      teamsSelect.innerHTML = '';
+      teamsSelect.append(...options);
+      teamsSelect.value = chosenTeam;
     } else {
       selectTeamSection.style.display = 'none';
     }
@@ -182,7 +186,7 @@ export default class MenuComponent {
       const row = document.createElement('tr');
       row.addEventListener('click', () => {
         userService.selectGame(game);
-        this.showSelectTeamSection();
+        this.toggleSelectTeamSection();
       });
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');
