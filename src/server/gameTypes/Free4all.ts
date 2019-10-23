@@ -90,7 +90,21 @@ export default class Free4all extends GameModel {
   }
 
   trackClosestPlayer(bot: Bot) {
-    return bot.trackClosestPlayer(this, player => player !== bot);
+    return this.trackClosestPlayerWithCondition(bot, player => player !== bot);
+  }
+
+  trackClosestPlayerWithCondition(player: Player, condition) {
+    const players = this.getAlivePlayers().filter(condition);
+    if (players && players.length) {
+      return players.reduce((previousPlayer, currentPlayer) => {
+        const { distance: previousClosestDistance } = collisionDetector.detectCollision(
+          player,
+          previousPlayer,
+        );
+        const { distance } = collisionDetector.detectCollision(player, currentPlayer);
+        return distance < previousClosestDistance ? currentPlayer : previousPlayer;
+      });
+    }
   }
 
   letBotsDoSomething() {

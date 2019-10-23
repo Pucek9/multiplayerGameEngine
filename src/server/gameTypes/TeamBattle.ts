@@ -113,6 +113,6 @@ export default class TeamBattle extends Free4all {
   }
 
   trackClosestPlayer(bot: Bot) {
-    return bot.trackClosestPlayer(this, player => player.team !== bot.team);
+    return this.trackClosestPlayerWithCondition(bot, player => player.team !== bot.team);
   }
 }

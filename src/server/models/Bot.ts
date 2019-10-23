@@ -13,20 +13,6 @@ export default class Bot extends Player {
     this.cursor.y = target.y;
   }
 
-  trackClosestPlayer(gameState, condition) {
-    const players = gameState.getAlivePlayers().filter(condition);
-    if (players && players.length) {
-      return players.reduce((previousPlayer, currentPlayer) => {
-        const { distance: previousClosestDistance } = collisionDetector.detectCollision(
-          this,
-          previousPlayer,
-        );
-        const { distance } = collisionDetector.detectCollision(this, currentPlayer);
-        return distance < previousClosestDistance ? currentPlayer : previousPlayer;
-      });
-    }
-  }
-
   performRandKeys() {
     const keys = [['W'], ['A'], ['S'], ['D']];
     this.keys.clear();
