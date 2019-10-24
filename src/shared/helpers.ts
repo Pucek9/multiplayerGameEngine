@@ -31,7 +31,7 @@ export function times(count, callback) {
 }
 
 export function createArrayFilledValue(length, value) {
-  return Array.from({ length }, () => value);
+  return new Array(length).fill(value);
 }
 
 export function hasKeys(set: Set<string>, keys: Array<string>) {
