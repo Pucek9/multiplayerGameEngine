@@ -322,7 +322,7 @@ export default class Free4all extends GameModel {
 
   mouseUp(owner: string) {
     const player = this.getPlayer(owner);
-    if (player && player.isAlive()) {
+    if (player?.isAlive()) {
       player.setMouseUp();
     }
   }

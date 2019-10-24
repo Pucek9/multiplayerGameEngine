@@ -267,7 +267,7 @@ export default class Game {
   }
 
   render() {
-    if (this.camera && this.camera.object) {
+    if (this.camera?.object) {
       this.screen.renderer.render(this.screen.scene, this.camera.object);
     }
   }
