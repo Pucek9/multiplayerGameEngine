@@ -95,7 +95,7 @@ export default class Free4all extends GameModel {
 
   trackClosestPlayerWithCondition(player: Player, condition) {
     const players = this.getAlivePlayers().filter(condition);
-    if (players && players.length) {
+    if (players?.length) {
       return players.reduce((previousPlayer, currentPlayer) => {
         const { distance: previousClosestDistance } = collisionDetector.detectCollision(
           player,

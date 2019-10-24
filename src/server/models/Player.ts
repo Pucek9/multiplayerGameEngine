@@ -66,7 +66,7 @@ export default class Player extends PlayerModel {
       bullet.hit(angle);
       if (this.hp <= 0) {
         this.hp = 0;
-        if (bullet.owner && bullet.owner.team !== this.team) {
+        if (bullet.owner?.team !== this.team) {
           bullet.owner.addKills(1);
         }
         this.die();
@@ -75,8 +75,7 @@ export default class Player extends PlayerModel {
   }
 
   shoot(game) {
-    this.selectedWeapon &&
-      this.selectedWeapon.shoot(
+    this.selectedWeapon?.shoot(
         {
           owner: this,
           fromX: this.x + this.size * Math.cos(this.direction),

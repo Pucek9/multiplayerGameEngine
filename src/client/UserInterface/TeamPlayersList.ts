@@ -15,9 +15,7 @@ export default class TeamPlayerListComponent {
 
   update(players: any[], teams) {
     teamsPlayersListPanel.innerHTML = '';
-    teams &&
-      teams
-        .sort((team1, team2) => compareBy(team1, team2, ['points']))
+    teams?.sort((team1, team2) => compareBy(team1, team2, ['points']))
         .forEach(team => {
           const title = document.createElement('span');
           title.innerText = `${team.name} (${team.count}) Points: ${team.points}`;

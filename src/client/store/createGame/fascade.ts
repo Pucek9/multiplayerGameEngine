@@ -111,6 +111,6 @@ export class CreateGamesService {
 
   getNormalizedState() {
     const { teams, ...props } = this.store.getState().createGame;
-    return { teams: teams && teams.list, ...props };
+    return { teams: teams?.list, ...props };
   }
 }

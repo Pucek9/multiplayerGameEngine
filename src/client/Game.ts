@@ -95,7 +95,7 @@ export default class Game {
   }
 
   handleResize = () => {
-    if (this.camera && this.camera.object && this.screen) {
+    if (this.camera?.object && this.screen) {
       this.camera.object.aspect = window.innerWidth / window.innerHeight;
       this.camera.object.updateProjectionMatrix();
       this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
@@ -153,7 +153,7 @@ export default class Game {
   updatePlayersState(_players: PlayerModel[]) {
     this.players.forEach(player => {
       const foundPlayer = _players.find(_player => player.id === _player.id);
-      if (this.currentPlayer && foundPlayer && foundPlayer.id === this.currentPlayer.id) {
+      if (foundPlayer?.id === this.currentPlayer?.id) {
         // const diff = {
         //   x: player.x - foundPlayer.x,
         //   y: player.y - foundPlayer.y,

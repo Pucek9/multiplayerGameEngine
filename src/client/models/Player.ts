@@ -80,10 +80,10 @@ export default class Player extends PlayerModel implements IUpdatable {
   update() {
     if (this.isOnScene() && !this.isAlive()) {
       this.remove();
-      this.light && this.light.setColor(0xff0000);
+      this.light?.setColor(0xff0000);
     } else if (!this.isOnScene() && this.isAlive()) {
       this.addToScene();
-      this.light && this.light.setColor(0xffffff);
+      this.light?.setColor(0xffffff);
     } else {
       this.updateBody();
     }

@@ -125,7 +125,7 @@ export default class MenuComponent {
     const chosenGame = user.chosenGame;
     const chosenTeam = user.team;
     const teams = gamesListService.getGame(chosenGame).teams;
-    if (teams && teams.length > 0) {
+    if (teams?.length > 0) {
       selectTeamSection.style.display = 'block';
       const options = teams.map(team => {
         const option = document.createElement('option');

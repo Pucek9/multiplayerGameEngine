@@ -51,7 +51,7 @@ export default abstract class Weapon implements Item {
   abstract prepareBullets(bulletData: BulletData): Bullet[];
 
   generateBullets(bullets, game, owner) {
-    if (bullets && bullets.length > 0) {
+    if (bullets?.length > 0) {
       game.generateBullets(bullets);
       game.emitWeaponInfo(owner);
     }

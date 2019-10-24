@@ -25,14 +25,14 @@ export default class TeamBattle extends Free4all {
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
     const team = this.findTeam(player.team);
-    team && team.joinToTeam();
+    team?.joinToTeam();
     return player;
   }
 
   disconnectPlayer(disconnected: Player) {
     const team = this.findTeam(disconnected.team);
     super.disconnectPlayer(disconnected);
-    team && team.leaveTeam();
+    team?.leaveTeam();
   }
 
   bulletsDetectPower() {
@@ -50,8 +50,7 @@ export default class TeamBattle extends Free4all {
               size: player.selectedPower.getSize(),
             }).collision,
         );
-        foundPlayerWithAura &&
-          foundPlayerWithAura.selectedPower.effect({
+        foundPlayerWithAura?.selectedPower.effect({
             bullet,
             owner: foundPlayerWithAura,
           }) &&
@@ -82,7 +81,7 @@ export default class TeamBattle extends Free4all {
             object.hitFromBullet(bullet, angle);
             if (object instanceof Player && !object.isAlive()) {
               const team = this.findTeam(bullet.owner.team);
-              team && team.increasePoints();
+              team?.increasePoints();
               this.emitter.emitTeamsList(this);
             }
             this.deleteBulletIfInactive(bullet, i);

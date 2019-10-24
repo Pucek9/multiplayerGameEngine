@@ -14,8 +14,7 @@ export default class WeaponsListComponent {
 
   render({ selectedWeapon, weapons }) {
     weaponsList.innerHTML = '';
-    weapons &&
-      weapons.forEach((_weapon, index) => {
+    weapons?.forEach((_weapon, index) => {
         const li = document.createElement('li');
         if (_weapon.id === selectedWeapon.id) {
           li.style.fontWeight = 'bold';
