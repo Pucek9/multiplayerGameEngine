@@ -2,6 +2,7 @@ import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
 import { FontLoader, Mesh, MeshPhongMaterial, TextGeometry } from 'three';
 import * as fontFile from '../games/balls/fonts/gentilis_bold.typeface.json';
+import ICamera from './Camera/ICamera';
 
 const loader = new FontLoader();
 const font = loader.parse(fontFile);
@@ -16,6 +17,7 @@ export default class Text implements IUpdatable {
   public color = 0x4444fff;
   public text: string;
   private screen: ScreenModel;
+  private camera: ICamera;
   private geometry: TextGeometry;
   private material: MeshPhongMaterial;
 
@@ -51,14 +53,18 @@ export default class Text implements IUpdatable {
     this.material = new MeshPhongMaterial({ color: this.color, flatShading: true });
   }
 
-  init(screen: ScreenModel) {
+  init(screen: ScreenModel, camera: ICamera) {
     this.screen = screen;
+    this.camera = camera;
     this.setText('');
   }
 
   update() {
     this.object.position.x = this.x;
     this.object.position.y = this.y;
+    this.object.rotation.x = this.camera.object.rotation.x;
+    this.object.rotation.y = this.camera.object.rotation.y;
+    this.object.rotation.z = this.camera.object.rotation.z;
   }
 
   hide() {

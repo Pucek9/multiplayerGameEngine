@@ -42,6 +42,7 @@ export default class Player extends PlayerModel implements IUpdatable {
       this.setMaterial();
       this.object = new Mesh(this.geometry, this.material);
       this.object.name = this.id;
+      this.object.position.z = this.size;
       this.object.receiveShadow = true;
       this.initiated = true;
     }

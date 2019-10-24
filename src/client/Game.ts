@@ -65,7 +65,7 @@ export default class Game {
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
     this.map.init(this.screen);
-    this.text.init(this.screen);
+    this.text.init(this.screen, this.camera);
     this.cursor.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
@@ -163,8 +163,8 @@ export default class Game {
         this.cursor.x = foundPlayer.cursor.x;
         this.cursor.y = foundPlayer.cursor.y;
 
-        this.text.x = this.cursor.x + this.text.offsetX;
-        this.text.y = this.cursor.y + this.text.offsetY;
+        this.text.x = this.cursor.x;
+        this.text.y = this.cursor.y;
       }
       if (foundPlayer) {
         const size = player.size;
@@ -226,7 +226,7 @@ export default class Game {
   updateTimeToRevive(time: number) {
     if (time > 0) {
       this.text.show();
-      this.text.setText(time.toString());
+      this.text.setText(' ' + time);
     } else {
       this.text.hide();
     }
