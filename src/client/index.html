@@ -9,12 +9,12 @@
     <div id="menu">
       <div class="grid">
         <div class="box options create-fill">
-          <div class="type-row" style="height: 50%; width: 100%;">
+          <div class="control-row row" style="height: 50%; width: 100%;">
             <a href="#popupControl">
               <button class="full create-fill">Control</button>
             </a>
           </div>
-          <div class="type-row" style="height: 50%; width: 100%;">
+          <div class="options-row row" style="height: 50%; width: 100%;">
             <a href="#popupOptions">
               <button class="full create-fill">Options</button>
             </a>
@@ -31,9 +31,9 @@
 
         <div class="box form create-fill">
           <form>
-            <div class="type-row">
+            <div class="type-row row">
               <label
-                >Type:
+                ><span>Type:</span>
                 <select class="select create-white" id="gameTypeInput">
                   <option value="Free4all">Free for all</option>
                   <option value="TeamBattle">Team Battle</option>
@@ -41,9 +41,9 @@
                 </select>
               </label>
             </div>
-            <div class="type-row" id="teams" style="display: none">
+            <div class="teams-row row" id="teams" style="display: none">
               <label
-                >Teams:
+              ><span>Teams:</span>
                 <input
                   class="input create-white"
                   id="teamsCountInput"
@@ -53,29 +53,29 @@
                   value="2"
                 />
               </label>
-              <div class="type-row" id="teamsList"></div>
+              <div id="teamsList"></div>
             </div>
-            <div class="type-row">
+            <div class="map-row row">
               <label
-                >Map:
+              ><span>Map:</span>
                 <select class="select create-white" id="gameMapInput">
                   <option value="Playground">Playground</option>
                   <option value="Boxes">Boxes</option>
                 </select>
               </label>
             </div>
-            <div class="type-row">
+            <div class="camera-row row">
               <label
-                >Camera:
+              ><span>Camera:</span>
                 <select class="select create-white" id="cameraInput">
                   <option value="StaticCamera">Static</option>
                   <option value="DynamicCamera">Dynamic</option>
                 </select>
               </label>
             </div>
-            <div class="type-row">
+            <div class="light-row row">
               <label
-                >Light:
+              ><span>Light:</span>
                 <select class="select create-white" id="gameLightInput">
                   <option value="FlashLight">FlashLight</option>
                   <option value="AmbientLight">Ambient</option>
@@ -83,9 +83,9 @@
                 </select>
               </label>
             </div>
-            <div class="type-row">
+            <div class="steering-row row">
               <label
-                >Steering:
+              ><span>Steering:</span>
                 <select class="select create-white" id="steeringInput">
                   <option value="eightDirectionSteering">Eight direction</option>
                   <option value="rotateSteering">Rotate</option>
@@ -94,9 +94,9 @@
                 </select>
               </label>
             </div>
-            <div class="type-row">
+            <div class="cursor-row row">
               <label
-                >Cursor:
+              ><span>Cursor:</span>
                 <select class="select create-white" id="cursorInput">
                   <option value="freeCursor">Free</option>
                   <option value="circleCursor">Circle</option>
@@ -104,9 +104,9 @@
                 </select>
               </label>
             </div>
-            <div class="type-row">
+            <div class="bots-row row">
               <label
-                >Bots:&nbsp;
+              ><span>Bots:</span>
                 <input
                   class="input create-white"
                   id="botsCountInput"
@@ -158,7 +158,7 @@
               <tbody class="join-white" id="gamesListTable"></tbody>
             </table>
           </div>
-          <div class="type-row" id="selectTeamSection" style="display: none">
+          <div class="type-row row" id="selectTeamSection" style="display: none">
             <label
               >Team:
               <select class="select join-white" id="teamsSelect"> </select>
