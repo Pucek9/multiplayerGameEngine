@@ -6,9 +6,9 @@ import GrenadeExplosion from './GrenadeExplosion';
 
 export default class Grenade extends Weapon {
   type = 'LandMine';
-  magazines = 1;
-  maxBulletsInMagazine = 5;
-  bulletsInMagazine = 5;
+  magazines = 2;
+  maxBulletsInMagazine = 1;
+  bulletsInMagazine = 1;
   minTimeBetweenBullets = 500;
   reloadTime = 1000;
   shootBulletsCount = 1;
