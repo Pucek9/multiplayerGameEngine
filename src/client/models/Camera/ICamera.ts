@@ -1,9 +1,9 @@
-import { PerspectiveCamera } from 'three';
+import { Camera } from 'three';
 import PlayerModel from '../../../shared/models/PlayerModel';
 import Cursor from '../Cursor';
 
 export default interface ICamera {
-  object: PerspectiveCamera;
+  object: Camera ;
 
   init(params: { activePlayer: PlayerModel; cursor?: Cursor }): void;
 
