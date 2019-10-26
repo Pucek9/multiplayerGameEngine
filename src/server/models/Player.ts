@@ -47,12 +47,12 @@ export default class Player extends PlayerModel {
 
   usePower(game, click: boolean) {
     if (this.isAlive()) {
-      this.selectedPower.use({ owner: this, game, click });
+      this.selectedPower?.use({ owner: this, game, click });
     }
   }
 
   releasePower(game) {
-    this.selectedPower.release({ owner: this, game });
+    this.selectedPower?.release({ owner: this, game });
   }
 
   addKills(score: number) {

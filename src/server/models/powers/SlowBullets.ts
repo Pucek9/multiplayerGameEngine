@@ -33,7 +33,7 @@ export default class SlowBullets extends Aura {
     const cost = this.cost * bullet.power;
     if (owner.tryUseEnergy(cost)) {
       bullet.customFlag = false;
-      bullet.decreaseSpeedToMin();
+      bullet.decreaseSpeedToMin(bullet.speed > 0.1 ? bullet.speed / 4 : 0.1);
       return true;
     } else {
       bullet.customFlag = true;
