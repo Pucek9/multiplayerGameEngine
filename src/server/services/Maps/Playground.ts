@@ -9,6 +9,7 @@ import Resizer from '../../models/weapons/Resizer';
 import Grenade from '../../models/weapons/Grenade';
 import AK47 from '../../models/weapons/AK47';
 import AidKit from '../../models/AidKit';
+import LandMine from '../../models/weapons/LandMine';
 
 export default class Playground implements GameMap {
   mapName: string = 'Playground';
@@ -233,6 +234,15 @@ export default class Playground implements GameMap {
         time: 10000,
         item: Grenade,
         type: 'Grenade',
+      }),
+      new ItemGenerator({
+        x: 1350,
+        y: 900,
+        size: 8,
+        color: 'black',
+        time: 10000,
+        item: LandMine,
+        type: 'LandMine',
       }),
       new ItemGenerator({
         x: -1000,

@@ -1,9 +1,9 @@
 import BulletModel from '../../shared/models/BulletModel';
 
 export default class Bullet extends BulletModel {
-  defaultSpeed = 5;
+  defaultSpeed = 10;
   minSpeed = 1;
-  speed = 5;
+  speed = 10;
   distance = 0;
   power = 10;
   range = 500;
@@ -36,7 +36,7 @@ export default class Bullet extends BulletModel {
     Object.seal(this);
   }
 
-  decreaseSpeedToMin(value: number = 1) {
+  decreaseSpeedToMin(value: number = 2) {
     if (!this.isMinSpeed()) {
       if (this.speed > value) {
         this.speed -= value;

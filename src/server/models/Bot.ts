@@ -1,6 +1,7 @@
 import Player from './Player';
 import collisionDetector from '../services/CollisionDetector';
 import { randItem } from '../../shared/helpers';
+import Weapon from './weapons/Weapon';
 
 export default class Bot extends Player {
   die() {
@@ -17,10 +18,21 @@ export default class Bot extends Player {
     const keys = [['W'], ['A'], ['S'], ['D']];
     this.keys.clear();
     if (this.isAlive()) {
-      const keysCombinations = [...keys, ['W', 'A'], ['A', 'S'], ['S', 'D'], ['D', 'W'], ['1']];
+      const keysCombinations = [...keys, ['W', 'A'], ['A', 'S'], ['S', 'D'], ['D', 'W']];
       const newKeys = randItem(keysCombinations);
+      newKeys.push(randItem([...this.getAvailableWeapons(), '']));
       newKeys.push(randItem(['Shift', '']));
       newKeys.forEach(key => this.keys.add(key));
     }
+  }
+
+  getAvailableWeapons() {
+    return this.weapons
+      .map((weapon: Weapon, index) => ({
+        [index]:
+          (weapon.magazines !== Infinity && weapon.magazines > 0) || weapon.bulletsInMagazine > 0,
+      }))
+      .filter((position, index) => position[index])
+      .map((position, index) => (index + 1).toString());
   }
 }
