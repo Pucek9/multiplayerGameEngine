@@ -4,11 +4,11 @@ import gamesManager from '../../services/GamesManager';
 import BulletData from '../../../shared/models/BulletData';
 import GrenadeExplosion from './GrenadeExplosion';
 
-export default class Grenade extends Weapon {
+export default class LandMine extends Weapon {
   type = 'LandMine';
-  magazines = 2;
-  maxBulletsInMagazine = 1;
-  bulletsInMagazine = 1;
+  magazines = 1;
+  maxBulletsInMagazine = 3;
+  bulletsInMagazine = 3;
   minTimeBetweenBullets = 500;
   reloadTime = 1000;
   shootBulletsCount = 1;
@@ -44,7 +44,7 @@ export default class Grenade extends Weapon {
     },
   };
 
-  constructor(params?: Partial<Grenade>) {
+  constructor(params?: Partial<LandMine>) {
     super();
     Object.assign(this, params);
   }
