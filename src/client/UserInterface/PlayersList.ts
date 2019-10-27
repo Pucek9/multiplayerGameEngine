@@ -17,7 +17,6 @@ export default class PlayerListComponent {
   update(players: any[]) {
     playersList.innerHTML = '';
     players
-      .sort((player1, player2) => (player1.kills < player2.kills ? 1 : -1))
       .sort((player1, player2) =>
         compareBy(player1, player2, ['kills', 'deaths', 'hp'], [1, -1, 1]),
       )
