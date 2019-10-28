@@ -1,5 +1,5 @@
 import { compareBy } from '../../shared/helpers';
-
+import PlayerListModel from '../interfaces/PlayerListModel';
 declare var playerListPanel: HTMLDivElement;
 declare var playersList: HTMLUListElement;
 
@@ -14,11 +14,11 @@ export default class PlayerListComponent {
     playerListPanel.style.display = 'none';
   }
 
-  update(players: any[]) {
+  update(players: Array<PlayerListModel>) {
     playersList.innerHTML = '';
     players
       .sort((player1, player2) =>
-        compareBy(player1, player2, ['kills', 'deaths', 'hp'], [1, -1, 1]),
+        compareBy<PlayerListModel>(player1, player2, ['kills', 'deaths', 'hp'], [1, -1, 1]),
       )
       .forEach(_player => {
         const li = document.createElement('li');

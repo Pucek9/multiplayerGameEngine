@@ -1,5 +1,4 @@
 import Player from './Player';
-import collisionDetector from '../services/CollisionDetector';
 import { randItem } from '../../shared/helpers';
 import Weapon from './weapons/Weapon';
 
@@ -19,9 +18,9 @@ export default class Bot extends Player {
     this.keys.clear();
     if (this.isAlive()) {
       const keysCombinations = [...keys, ['W', 'A'], ['A', 'S'], ['S', 'D'], ['D', 'W']];
-      const newKeys = randItem(keysCombinations);
-      newKeys.push(randItem([...this.getAvailableWeapons(), '']));
-      newKeys.push(randItem(['Shift', '']));
+      const newKeys = randItem<Array<string>>(keysCombinations);
+      newKeys.push(randItem<string>([...this.getAvailableWeapons(), '']));
+      newKeys.push(randItem<string>(['Shift', '']));
       newKeys.forEach(key => this.keys.add(key));
     }
   }

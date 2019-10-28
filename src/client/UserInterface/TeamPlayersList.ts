@@ -1,4 +1,6 @@
 import { compareBy } from '../../shared/helpers';
+import PlayerListModel from '../interfaces/PlayerListModel';
+import Team from '../../server/models/Team';
 
 declare var teamsPlayersListPanel: HTMLUListElement;
 
@@ -13,9 +15,11 @@ export default class TeamPlayerListComponent {
     teamsPlayersListPanel.style.display = 'none';
   }
 
-  update(players: any[], teams) {
+  update(players: Array<PlayerListModel>, teams: Array<Team>) {
     teamsPlayersListPanel.innerHTML = '';
-    teams?.sort((team1, team2) => compareBy(team1, team2, ['points']))
+    teams &&
+      teams
+        .sort((team1, team2) => compareBy<Team>(team1, team2, ['points']))
         .forEach(team => {
           const title = document.createElement('span');
           title.innerText = `${team.name} (${team.count}) Points: ${team.points}`;
@@ -23,7 +27,7 @@ export default class TeamPlayerListComponent {
           players
             .filter(_player => _player.team == team.name)
             .sort((player1, player2) =>
-              compareBy(player1, player2, ['kills', 'deaths', 'hp'], [1, -1, 1]),
+              compareBy<PlayerListModel>(player1, player2, ['kills', 'deaths', 'hp'], [1, -1, 1]),
             )
             .forEach(_player => {
               const li = document.createElement('li');

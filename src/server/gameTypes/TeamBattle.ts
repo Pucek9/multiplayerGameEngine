@@ -1,14 +1,6 @@
-import collisionDetector from '../services/CollisionDetector';
 import Player from '../models/Player';
-import Aura from '../models/powers/Aura';
-import StaticRectangleObject from '../models/StaticRectangleObject';
-import StaticCircularObject from '../models/StaticCircularObject';
-import Free4all from './Free4all';
-import Team from '../models/Team';
 import NewUser from '../../shared/apiModels/NewUser';
-import playerService from '../services/PlayerService';
-import Bot from '../models/Bot';
-import { generateId, randItem } from '../../shared/helpers';
+import { randItem } from '../../shared/helpers';
 import ReverseBullets from '../models/powers/ReverseBullets';
 import SlowBullets from '../models/powers/SlowBullets';
 import Accelerator from '../models/powers/Accelerator';
@@ -16,6 +8,8 @@ import Pistol from '../models/weapons/Pistol';
 import BaseTeamGame from './BaseTeamGame';
 import Teleport from '../models/powers/Teleport';
 import Knife from '../models/weapons/Knife';
+import Bot from '../models/Bot';
+import Power from '../../shared/models/Power';
 
 export default class TeamBattle extends BaseTeamGame {
   connectPlayer(newPlayer: NewUser): Player {
@@ -30,7 +24,7 @@ export default class TeamBattle extends BaseTeamGame {
     return player;
   }
 
-  createBot(index: number) {
+  createBot(index: number): Bot {
     const bot = super.createBot(index);
     const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
     bot.addAndSelectPower(new SuperPower());

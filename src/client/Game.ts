@@ -26,6 +26,7 @@ import Text from './models/Text';
 import { GameConfig } from './store/gamesList/state';
 import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
 import { gamesListService } from './store/store';
+import PlayerListModel from './interfaces/PlayerListModel';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -277,8 +278,8 @@ export default class Game {
     this.updateObjects();
   }
 
-  updatePlayerList() {
-    const playersList = this.players.map(({ name, kills, deaths, color, hp, team }) => ({
+  normalizedPlayerList(): Array<PlayerListModel> {
+    return this.players.map(({ name, kills, deaths, color, hp, team }) => ({
       name,
       kills,
       deaths,
@@ -286,6 +287,10 @@ export default class Game {
       hp,
       team,
     }));
+  }
+
+  updatePlayerList() {
+    const playersList = this.normalizedPlayerList();
     const _playersListString = JSON.stringify(playersList);
     if (_playersListString !== this.playersListString) {
       this.playersListComponent.update(playersList, this.teams);
