@@ -69,7 +69,7 @@ function connection(socket: Socket) {
     const player = gameState.connectPlayer(newPlayer);
     socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
     socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
-    socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getBullets());
+    socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getNormalizedBullets());
     socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
     socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
     emitter.emitGamesList();

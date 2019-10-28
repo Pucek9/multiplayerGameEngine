@@ -18,6 +18,7 @@ import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
+import BulletApiModel from '../../shared/apiModels/BulletApiModel';
 
 export default class BaseGame extends GameModel {
   public type: string = 'Free for all';
@@ -49,7 +50,7 @@ export default class BaseGame extends GameModel {
     times(count, index => this.createBot(index));
   }
 
-  createBot(index: number) {
+  createBot(index: number): Bot {
     const { x, y } = playerService.randNonCollisionPosition(30, this);
     const bot = new Bot(
       `Bot_${index}${generateId()}`,
@@ -64,8 +65,8 @@ export default class BaseGame extends GameModel {
     return bot;
   }
 
-  getBots(): Player[] {
-    return this.players.filter(player => player instanceof Bot);
+  getBots(): Array<Bot> {
+    return <Array<Bot>>this.players.filter(player => player instanceof Bot);
   }
 
   updateBots() {
@@ -80,11 +81,11 @@ export default class BaseGame extends GameModel {
       });
   }
 
-  trackClosestPlayer(bot: Bot) {
+  trackClosestPlayer(bot: Bot): Player {
     return this.trackClosestPlayerWithCondition(bot, player => player !== bot);
   }
 
-  trackClosestPlayerWithCondition(player: Player, condition) {
+  trackClosestPlayerWithCondition(player: Player, condition): Player {
     const players = this.getAlivePlayers().filter(condition);
     if (players?.length) {
       return players.reduce((previousPlayer, currentPlayer) => {
@@ -105,36 +106,29 @@ export default class BaseGame extends GameModel {
     });
   }
 
-  getPlayer(id: string) {
+  getPlayer(id: string): Player {
     return this.players.find(player => player.id === id);
   }
 
-  getAlivePlayers() {
+  getAlivePlayers(): Array<Player> {
     return this.players.filter(player => player.alive === true);
   }
 
-  getPlayers() {
+  getPlayers(): Array<Player> {
     return this.players;
   }
 
-  isPlayerInThisGame(id: string) {
-    return this.players.find(player => player.id === id);
-  }
-
-  getBullets() {
-    return this.bullets.map(bullet => ({
-      id: bullet.id,
-      x: bullet.x,
-      y: bullet.y,
-      size: bullet.size,
+  getNormalizedBullets(): Array<BulletApiModel> {
+    return this.bullets.map(({id, x, y, size}) => ({
+      id, x, y, size
     }));
   }
 
-  getMapName() {
+  getMapName(): string {
     return this.map.getMapName();
   }
 
-  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
+  getStaticObjects(): Array<StaticRectangleObject | StaticCircularObject> {
     return this.map.getStaticObjects();
   }
 

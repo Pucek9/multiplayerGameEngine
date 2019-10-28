@@ -29,9 +29,7 @@ export default abstract class GameModel {
 
   abstract getPlayers();
 
-  abstract isPlayerInThisGame(id: string);
-
-  abstract getBullets();
+  abstract getNormalizedBullets();
 
   abstract getMapName();
 

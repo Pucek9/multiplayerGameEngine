@@ -29,12 +29,12 @@ class GamesManager {
     );
   }
 
-  getGame(roomName: string) {
+  getGame(roomName: string): GameModel {
     return this.games.find(game => game.roomName === roomName);
   }
 
-  getGameByPlayer(id: string) {
-    return this.games.find(game => game.isPlayerInThisGame(id));
+  getGameByPlayer(id: string): GameModel {
+    return this.games.find(game => game.getPlayer(id));
   }
 
   // getGamesList(): GameInstance[] {

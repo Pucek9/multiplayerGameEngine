@@ -13,7 +13,7 @@ export default class Emitter {
 
   emitGameState(gameState: GameModel) {
     this.socketIo.to(gameState.roomName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
-    this.socketIo.to(gameState.roomName).emit(API.GET_BULLETS, gameState.getBullets());
+    this.socketIo.to(gameState.roomName).emit(API.GET_BULLETS, gameState.getNormalizedBullets());
   }
 
   sendNewBullets(roomName: string, bullets: BulletModel[]) {

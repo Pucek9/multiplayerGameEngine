@@ -14,7 +14,7 @@ export default class BaseTeamGame extends BaseGame {
   public teams: Team[];
   public friendlyFire: boolean = false;
 
-  findTeam(name: string) {
+  findTeam(name: string): Team {
     return this.teams.find(team => name === team.name);
   }
 
@@ -86,7 +86,7 @@ export default class BaseTeamGame extends BaseGame {
     });
   }
 
-  createBot(index: number) {
+  createBot(index: number): Bot {
     const teamsCount = this.teams.length;
     const team = this.teams[index % teamsCount];
     team.joinToTeam();
@@ -104,7 +104,7 @@ export default class BaseTeamGame extends BaseGame {
     return bot;
   }
 
-  trackClosestPlayer(bot: Bot) {
+  trackClosestPlayer(bot: Bot): Player {
     return this.trackClosestPlayerWithCondition(bot, player => player.team !== bot.team);
   }
 }
