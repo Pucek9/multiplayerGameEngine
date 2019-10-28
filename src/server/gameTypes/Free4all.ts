@@ -9,15 +9,21 @@ import Accelerator from '../models/powers/Accelerator';
 import Pistol from '../models/weapons/Pistol';
 import Knife from '../models/weapons/Knife';
 import BaseGame from './BaseGame';
+import Power from '../../shared/models/Power';
+import Bot from '../models/Bot';
 
 export default class Free4all extends BaseGame {
   constructor(public emitter: Emitter, params: Partial<Free4all>) {
     super(emitter, params);
   }
 
-  createBot(index: number) {
+  createBot(index: number): Bot {
     const bot = super.createBot(index);
-    const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
+    const SuperPower = randItem<{ new (...args: any[]): Power }>([
+      ReverseBullets,
+      SlowBullets,
+      Accelerator,
+    ]);
     bot.addAndSelectPower(new SuperPower());
     bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
     return bot;

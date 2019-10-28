@@ -26,7 +26,11 @@ export default class TeamBattle extends BaseTeamGame {
 
   createBot(index: number): Bot {
     const bot = super.createBot(index);
-    const SuperPower = randItem([ReverseBullets, SlowBullets, Accelerator]);
+    const SuperPower = randItem<{ new (...args: any[]): Power }>([
+      ReverseBullets,
+      SlowBullets,
+      Accelerator,
+    ]);
     bot.addAndSelectPower(new SuperPower());
     bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
     return bot;
