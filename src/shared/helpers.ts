@@ -44,20 +44,19 @@ export function hasKeys(set: Set<string>, keys: Array<string>): boolean {
 export function compareBy<T>(
   obj1: T,
   obj2: T,
-  conditions: Array<keyof T>,
-  signs: Array<1 | -1> = createArrayFilledValue(conditions.length, 1),
+  conditions: { [P in keyof T]?: 1 | -1 },
   index: number = 0,
 ): number {
-  const condition = conditions[index];
-  const sign = signs[index];
+  const condition = Object.keys(conditions)[index];
+  const sign = conditions[condition];
   if (obj1[condition] < obj2[condition]) {
     return sign;
   }
   if (obj1[condition] > obj2[condition]) {
     return -sign;
   }
-  if (index === conditions.length - 1) {
+  if (index === Object.keys(conditions).length - 1) {
     return 0;
   }
-  return compareBy(obj1, obj2, conditions, signs, ++index);
+  return compareBy(obj1, obj2, conditions, ++index);
 }
