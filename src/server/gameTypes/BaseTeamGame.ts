@@ -3,7 +3,7 @@ import Player from '../models/Player';
 import Aura from '../models/powers/Aura';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
-import Team from '../models/Team';
+import Team from '../../shared/models/Team';
 import NewUser from '../../shared/apiModels/NewUser';
 import playerService from '../services/PlayerService';
 import Bot from '../models/Bot';

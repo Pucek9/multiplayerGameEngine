@@ -1,4 +1,6 @@
 import BulletModel from '../../shared/models/BulletModel';
+import { Angle } from '../services/CollisionDetector';
+import Player from './Player';
 
 export default class Bullet extends BulletModel {
   defaultSpeed = 10;
@@ -86,9 +88,9 @@ export default class Bullet extends BulletModel {
     }
   }
 
-  effectOnPlayer(player) {}
+  effectOnPlayer(player: Player) {}
 
-  hit(angle) {
+  hit(angle: Angle) {
     this.deactivate();
   }
 
@@ -100,7 +102,7 @@ export default class Bullet extends BulletModel {
     return this.active;
   }
 
-  getAngle() {
+  getAngle(): number {
     return Math.atan2(this.dy, this.dx);
   }
 }

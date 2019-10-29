@@ -25,8 +25,10 @@ import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameConfig } from './store/gamesList/state';
 import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
-import { gamesListService } from './store/store';
 import PlayerListModel from './interfaces/PlayerListModel';
+import Team from '../shared/models/Team';
+import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
+import PowersApiModel from '../shared/apiModels/PowersApiModel';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -41,8 +43,8 @@ export default class Game {
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
   players: Player[] = [];
-  teams = [];
-  playersListString: string = '';
+  teams: Team[] = [];
+  playersListString = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
   staticObjects: any[] = [];
@@ -56,7 +58,7 @@ export default class Game {
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
     this.camera = new Camera[gameConfig.camera]();
-    this.teams = gameConfig.teams;
+    this.teams = <Team[]>gameConfig.teams;
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
       : new PlayerListComponent();
@@ -147,7 +149,7 @@ export default class Game {
     });
   }
 
-  updateTeamsList(teams) {
+  updateTeamsList(teams: Team[]) {
     this.teams = teams;
   }
 
@@ -216,7 +218,7 @@ export default class Game {
 
   updateItemGenerator(updatedItemGenerator: ItemGeneratorAPI) {
     const itemGenerator = this.itemGenerators.find(
-      itemGenerator => itemGenerator.id === updatedItemGenerator.id,
+      itemGen => itemGen.id === updatedItemGenerator.id,
     );
     if (itemGenerator) {
       itemGenerator.ready = updatedItemGenerator.ready;
@@ -298,11 +300,11 @@ export default class Game {
     }
   }
 
-  updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
+  updateWeaponInfo(info: WeaponsApiModel) {
     this.weaponsListComponent.render(info);
   }
 
-  updatePowersInfo(info: { selectedPower; powers; energy }) {
+  updatePowersInfo(info: PowersApiModel) {
     this.powersListComponent.render(info);
   }
 }

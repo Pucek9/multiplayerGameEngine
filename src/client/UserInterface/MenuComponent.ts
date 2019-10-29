@@ -8,6 +8,8 @@ import {
   userService,
 } from '../store/store';
 import { times } from '../../shared/helpers';
+import { UserState } from '../store/user/state';
+import { GamesListState } from '../store/gamesList/state';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -19,7 +21,7 @@ declare var cursorInput: HTMLSelectElement;
 declare var teamsSelect: HTMLSelectElement;
 declare var botsCountInput: HTMLInputElement;
 declare var teamsCountInput: HTMLInputElement;
-declare var teams: HTMLDivElement;
+declare var teamsRow: HTMLDivElement;
 declare var teamsList: HTMLDivElement;
 declare var selectTeamSection: HTMLDivElement;
 declare var selectTeam: HTMLLabelElement;
@@ -37,7 +39,7 @@ declare var validateSelectedGame: HTMLLabelElement;
 
 export default class MenuComponent {
   unsubscribeRender: Unsubscribe;
-  listeners = [];
+  listeners: any[] = [];
 
   constructor(main) {
     this.unsubscribeRender = store.subscribe(() => this.render());
@@ -91,10 +93,10 @@ export default class MenuComponent {
     });
 
     botsCountInput.addEventListener('change', () => {
-      if (botsCountInput.value == '') {
+      if (botsCountInput.value === '') {
         botsCountInput.value = '0';
       }
-      createGamesService.setBotsCount(parseInt(botsCountInput.value));
+      createGamesService.setBotsCount(parseInt(botsCountInput.value, 0));
     });
 
     teamsCountInput.addEventListener('change', () => {
@@ -142,10 +144,10 @@ export default class MenuComponent {
   }
 
   prepareTeamSection() {
-    if (teamsCountInput.value == '') {
+    if (teamsCountInput.value === '') {
       teamsCountInput.value = '2';
     }
-    const value = parseInt(teamsCountInput.value);
+    const value = parseInt(teamsCountInput.value, 0);
     createGamesService.setTeamsCount(value);
     this.prepareTeamsInputsList(value);
   }
@@ -173,7 +175,7 @@ export default class MenuComponent {
     });
   }
 
-  renderTable(user, games) {
+  renderTable(user: UserState, games: GamesListState) {
     games.list.forEach((game: GameInstance) => {
       const roomName = document.createElement('td');
       roomName.appendChild(document.createTextNode(game.roomName));
@@ -240,11 +242,11 @@ export default class MenuComponent {
   }
 
   showTeamsSection() {
-    teams.style.display = 'block';
+    teamsRow.style.display = 'block';
   }
 
   hideTeamsSection() {
-    teams.style.display = 'none';
+    teamsRow.style.display = 'none';
   }
 
   show() {

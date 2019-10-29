@@ -20,7 +20,7 @@ export default class ItemGenerator<T> extends StaticCircularObjectModel {
     Object.seal(this);
   }
 
-  isReady() {
+  isReady(): boolean {
     return this.ready;
   }
 

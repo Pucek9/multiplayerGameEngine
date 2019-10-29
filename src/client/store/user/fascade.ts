@@ -38,7 +38,7 @@ export class UserService {
     }
   }
 
-  selectTeam(teamName: string, chosenGame) {
+  selectTeam(teamName: string, chosenGame: GameConfig) {
     const chosenTeam = chosenGame.teams.find(team => team.name === teamName);
     this.chooseTeam(chosenTeam.name);
     this.chooseColor(chosenTeam.color);

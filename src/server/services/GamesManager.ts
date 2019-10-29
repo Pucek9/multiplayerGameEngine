@@ -5,7 +5,7 @@ import NewGame from '../../shared/apiModels/NewGame';
 import Steerings from './Steering';
 import Maps from './Maps';
 import Cursors from './Cursor';
-import Team from '../models/Team';
+import Team from '../../shared/models/Team';
 import { randColor } from '../../shared/helpers';
 
 class GamesManager {

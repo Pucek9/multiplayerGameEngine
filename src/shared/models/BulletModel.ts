@@ -12,7 +12,7 @@ export default class BulletModel implements ICircle {
   targetX: number;
   targetY: number;
 
-  constructor(params) {
+  constructor(params: Partial<BulletModel>) {
     this.id = params.id || generateId();
     Object.assign(this, params);
   }

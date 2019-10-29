@@ -1,3 +1,5 @@
+import { Action } from 'redux';
+
 export const CLEAR_ROOM_NAME = 'CLEAR_ROOM_NAME';
 export const SET_GAME_NAME = 'SET_GAME_NAME';
 export const SET_GAME_TYPE = 'SET_GAME_TYPE';
@@ -13,81 +15,77 @@ export const SET_TEAM_NAME = 'SET_TEAM_NAME';
 export const ENABLE_TEAMS = 'ENABLE_TEAMS';
 export const DISABLE_TEAMS = 'DISABLE_TEAMS';
 
-export class ClearRoomName {
+export class ClearRoomName implements Action {
   readonly type = CLEAR_ROOM_NAME;
 }
 
-export class SetGameName {
+export class SetGameName implements Action {
   readonly type = SET_GAME_NAME;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetGameType {
+export class SetGameType implements Action {
   readonly type = SET_GAME_TYPE;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetGameMap {
+export class SetGameMap implements Action {
   readonly type = SET_GAME_MAP;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetCamera {
+export class SetCamera implements Action {
   readonly type = SET_CAMERA;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetLight {
+export class SetLight implements Action {
   readonly type = SET_LIGHT;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetSteering {
+export class SetSteering implements Action {
   readonly type = SET_STEERING;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetCursor {
+export class SetCursor implements Action {
   readonly type = SET_CURSOR;
 
-  constructor(public payload) {}
+  constructor(public payload: string) {}
 }
 
-export class SetBotsCount {
+export class SetBotsCount implements Action {
   readonly type = SET_BOTS_COUNT;
 
   constructor(public payload: number) {}
 }
 
-export class ClearTeams {
+export class ClearTeams implements Action {
   readonly type = CLEAR_TEAMS;
 }
 
-export class EnableTeams {
+export class EnableTeams implements Action {
   readonly type = ENABLE_TEAMS;
-
-  constructor() {}
 }
 
-export class DisableTeams {
+export class DisableTeams implements Action {
   readonly type = DISABLE_TEAMS;
-
-  constructor() {}
 }
 
-export class SetTeamsCount {
+export class SetTeamsCount implements Action {
   readonly type = SET_TEAMS_COUNT;
 
   constructor(public payload: number) {}
 }
 
-export class SetTeamName {
+export class SetTeamName implements Action {
   readonly type = SET_TEAM_NAME;
 
   constructor(public payload: { index: number; name: string }) {}

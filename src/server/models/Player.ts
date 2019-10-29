@@ -2,6 +2,7 @@ import PlayerModel from '../../shared/models/PlayerModel';
 import Direction from '../../shared/models/Direction';
 import Bullet from './Bullet';
 import AidKit from './AidKit';
+import { Angle } from '../services/CollisionDetector';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
@@ -59,7 +60,7 @@ export default class Player extends PlayerModel {
     this.kills += score;
   }
 
-  hitFromBullet(bullet: Bullet, angle?) {
+  hitFromBullet(bullet: Bullet, angle?: Angle) {
     if (this.isAlive()) {
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);

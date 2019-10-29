@@ -86,7 +86,7 @@ export class CreateGamesService {
     });
   }
 
-  setTeamName(index, name) {
+  setTeamName(index: number, name: string) {
     this.store.dispatch({
       type: GamesListActions.SET_TEAM_NAME,
       payload: { index, name },

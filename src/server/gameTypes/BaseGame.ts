@@ -24,8 +24,8 @@ export default class BaseGame extends GameModel {
   public type: string = 'Free for all';
   public players: Player[] = [];
   public bullets: Bullet[] = [];
-  private interval;
-  private customInterval;
+  private interval:  NodeJS.Timeout | number;
+  private customInterval: NodeJS.Timeout | number;
 
   constructor(public emitter: Emitter, params: Partial<BaseGame>) {
     super();
@@ -85,7 +85,7 @@ export default class BaseGame extends GameModel {
     return this.trackClosestPlayerWithCondition(bot, player => player !== bot);
   }
 
-  trackClosestPlayerWithCondition(player: Player, condition): Player {
+  trackClosestPlayerWithCondition(player: Player, condition: any): Player {
     const players = this.getAlivePlayers().filter(condition);
     if (players?.length) {
       return players.reduce((previousPlayer, currentPlayer) => {
@@ -136,13 +136,13 @@ export default class BaseGame extends GameModel {
     return this.map.getItemGenerators();
   }
 
-  getItemGeneratorsAPI() {
+  getItemGeneratorsAPI(): Array<ItemGeneratorAPI> {
     return this.getItemGenerators().map(itemGenerator => new ItemGeneratorAPI(itemGenerator));
   }
 
-  deleteBulletIfInactive(bullet: Bullet, i) {
+  deleteBulletIfInactive(bullet: Bullet, index: number) {
     if (!bullet.isActive()) {
-      this.bullets.splice(i, 1);
+      this.bullets.splice(index, 1);
     }
   }
 
@@ -167,8 +167,7 @@ export default class BaseGame extends GameModel {
               size: player.selectedPower.getSize(),
             }).collision,
         );
-        foundPlayerWithAura &&
-        foundPlayerWithAura.selectedPower.effect({
+        foundPlayerWithAura?.selectedPower.effect({
           bullet,
           owner: foundPlayerWithAura,
         }) &&
@@ -304,7 +303,7 @@ export default class BaseGame extends GameModel {
     }
   }
 
-  emitWeaponInfo(player) {
+  emitWeaponInfo(player: Player) {
     this.emitter.updateWeaponInfo(player.id, {
       selectedWeapon: player.selectedWeapon,
       weapons: player.weapons.map((weapon: Weapon) => ({
@@ -314,7 +313,7 @@ export default class BaseGame extends GameModel {
     });
   }
 
-  emitPowerInfo(player) {
+  emitPowerInfo(player: Player) {
     this.emitter.updatePowerInfo(player.id, {
       selectedPower: player.selectedPower,
       powers: player.powers.map((power: Power) => ({
@@ -325,8 +324,8 @@ export default class BaseGame extends GameModel {
     });
   }
 
-  addWeapon(player, newWeapon) {
-    const weapon = player.weapons.find(weapon => weapon.type === newWeapon.type);
+  addWeapon(player: Player, newWeapon: Weapon) {
+    const weapon = player.weapons.find(_weapon => _weapon.type === newWeapon.type);
     if (weapon) {
       const sumBullets = weapon.bulletsInMagazine + newWeapon.bulletsInMagazine;
       weapon.magazines +=

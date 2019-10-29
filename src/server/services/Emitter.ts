@@ -7,6 +7,8 @@ import Player from '../models/Player';
 import gamesManager from './GamesManager';
 import Power from '../../shared/models/Power';
 import BulletModel from '../../shared/models/BulletModel';
+import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
+import PowersApiModel from '../../shared/apiModels/PowersApiModel';
 
 export default class Emitter {
   constructor(private socketIo: SocketIO.Server) {}
@@ -20,14 +22,11 @@ export default class Emitter {
     this.socketIo.to(roomName).emit(API.ADD_NEW_BULLET, bullets);
   }
 
-  updateWeaponInfo(id: string, weaponInfo: { selectedWeapon: Weapon; weapons: Item[] }) {
+  updateWeaponInfo(id: string, weaponInfo: WeaponsApiModel) {
     this.socketIo.to(id).emit(API.GET_WEAPON_DETAILS, weaponInfo);
   }
 
-  updatePowerInfo(
-    id: string,
-    powerInfo: { selectedPower: Power; powers: Power[]; energy: number },
-  ) {
+  updatePowerInfo(id: string, powerInfo: PowersApiModel) {
     this.socketIo.to(id).emit(API.GET_POWER_DETAILS, powerInfo);
   }
 

@@ -1,3 +1,5 @@
+import PowersApiModel from '../../shared/apiModels/PowersApiModel';
+
 declare var powersList: HTMLUListElement;
 declare var rightDownPanel: HTMLDivElement;
 declare var powersHeader: HTMLSpanElement;
@@ -13,7 +15,7 @@ export default class PowersListComponent {
     rightDownPanel.style.display = 'none';
   }
 
-  render({ selectedPower, powers, energy }) {
+  render({ selectedPower, powers, energy }: PowersApiModel) {
     powersList.innerHTML = '';
     powersHeader.innerHTML = `Power (${Math.floor(energy)})`;
     powers.forEach((_power, index) => {

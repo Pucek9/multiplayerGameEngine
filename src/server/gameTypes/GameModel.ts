@@ -6,7 +6,7 @@ import GameMap from '../services/Maps/GameMap';
 import Steering from '../services/Steering/Steering';
 import Cursor from '../services/Cursor/Cursor';
 import Emitter from '../services/Emitter';
-import Team from '../models/Team';
+import Team from '../../shared/models/Team';
 
 export default abstract class GameModel {
   steering: Steering;

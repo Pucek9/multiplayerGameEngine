@@ -8,10 +8,10 @@ const head = require('../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements IUpdatable {
-  public object;
-  private light;
-  private initiated = false;
-  private screen;
+  public object: Mesh;
+  private light: Lighting;
+  private initiated: boolean = false;
+  private screen: ScreenModel;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
 

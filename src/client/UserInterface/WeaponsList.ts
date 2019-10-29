@@ -1,3 +1,6 @@
+import Weapon from '../../server/models/weapons/Weapon';
+import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
+
 declare var weaponsList: HTMLUListElement;
 declare var leftDownPanel: HTMLDivElement;
 
@@ -12,15 +15,15 @@ export default class WeaponsListComponent {
     leftDownPanel.style.display = 'none';
   }
 
-  render({ selectedWeapon, weapons }) {
+  render({ selectedWeapon, weapons }: WeaponsApiModel) {
     weaponsList.innerHTML = '';
-    weapons?.forEach((_weapon, index) => {
+    weapons?.forEach((weapon, index) => {
         const li = document.createElement('li');
-        if (_weapon.id === selectedWeapon.id) {
+        if (weapon.id === selectedWeapon.id) {
           li.style.fontWeight = 'bold';
           li.appendChild(
             document.createTextNode(
-              `${index + 1} ${_weapon.type}${
+              `${index + 1} ${selectedWeapon.type}${
                 selectedWeapon.magazines !== null
                   ? `: ${selectedWeapon.bulletsInMagazine}/${selectedWeapon.maxBulletsInMagazine} | ${selectedWeapon.magazines}`
                   : ``
@@ -29,7 +32,7 @@ export default class WeaponsListComponent {
           );
         } else {
           li.style.fontWeight = 'normal';
-          li.appendChild(document.createTextNode(`${index + 1} ${_weapon.type}`));
+          li.appendChild(document.createTextNode(`${index + 1} ${weapon.type}`));
         }
         // @ts-ignore
         weaponsList.append(li);

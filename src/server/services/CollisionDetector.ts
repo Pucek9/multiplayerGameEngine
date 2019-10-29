@@ -4,13 +4,18 @@ import { degToRad } from '../../shared/helpers';
 import Direction from '../../shared/models/Direction';
 import Bullet from '../models/Bullet';
 
-interface CollisionInfo {
+export interface Angle {
+  x: number;
+  y: number;
+}
+
+export interface CollisionInfo {
   collision: boolean;
-  angle?: { x: number; y: number };
+  angle?: Angle;
   distance?: number;
 }
 
-class CollisionDetector {
+export class CollisionDetector {
   getDistance(x1: number, y1: number, x2: number, y2: number) {
     const deltaX = Math.abs(x2 - x1);
     const deltaY = Math.abs(y2 - y1);

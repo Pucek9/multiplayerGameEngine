@@ -1,7 +1,6 @@
 import Steering from './Steering';
 import { hasKeys } from '../../../shared/helpers';
 import Direction from '../../../shared/models/Direction';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 
 export class CarIndependentSteering extends Steering {
   private lastDir;

@@ -22,7 +22,7 @@ export class GamesListService {
     return this.store.getState().gamesList;
   }
 
-  getGame(roomName: string) {
+  getGame(roomName: string): GameConfig {
     return this.getState().list.find(game => game.roomName === roomName);
   }
 }

@@ -5,11 +5,11 @@ import { OptionsState } from './state';
 export class OptionsService {
   constructor(public store: Store) {}
 
-  setBlinking(value) {
+  setBlinking(value: boolean) {
     this.store.dispatch({ type: OptionsActions.SET_BLINKING, payload: value });
   }
 
-  setBulletShadow(value) {
+  setBulletShadow(value: boolean) {
     this.store.dispatch({ type: OptionsActions.SET_BULLET_SHADOW, payload: value });
   }
 
