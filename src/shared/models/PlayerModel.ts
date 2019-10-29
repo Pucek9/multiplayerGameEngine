@@ -1,8 +1,7 @@
 import ICircle from '../interfaces/ICircle';
 
 export default class PlayerModel implements ICircle {
-  shape: string = 'circle';
-
+  shape = 'circle';
   alive = false;
   direction = 0;
   weapons = [];

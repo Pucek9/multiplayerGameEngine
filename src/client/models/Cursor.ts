@@ -5,10 +5,8 @@ import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 export default class Cursor implements IUpdatable {
   public x: number;
   public y: number;
-  public z: number = 50;
-  // public img: HTMLImageElement;
-  // private img;
   public object: Mesh;
+  public z = 50;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
 

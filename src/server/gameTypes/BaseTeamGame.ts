@@ -12,7 +12,7 @@ import BaseGame from './BaseGame';
 
 export default class BaseTeamGame extends BaseGame {
   public teams: Team[];
-  public friendlyFire: boolean = false;
+  public friendlyFire = false;
 
   findTeam(name: string): Team {
     return this.teams.find(team => name === team.name);

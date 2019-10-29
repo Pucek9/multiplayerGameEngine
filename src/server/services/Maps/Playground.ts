@@ -12,7 +12,7 @@ import AidKit from '../../models/AidKit';
 import LandMine from '../../models/weapons/LandMine';
 
 export default class Playground implements GameMap {
-  mapName: string = 'Playground';
+  mapName = 'Playground';
   width = 2920;
   height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];

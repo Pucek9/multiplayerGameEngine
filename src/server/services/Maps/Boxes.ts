@@ -6,7 +6,7 @@ import Item from '../../../shared/models/Item';
 import Grenade from '../../models/weapons/Grenade';
 
 export default class Boxes implements GameMap {
-  mapName: string = 'Boxes';
+  mapName = 'Boxes';
   width = 2920;
   height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];

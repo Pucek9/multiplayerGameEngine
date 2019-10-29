@@ -21,7 +21,7 @@ import playerService from '../services/PlayerService';
 import BulletApiModel from '../../shared/apiModels/BulletApiModel';
 
 export default class BaseGame extends GameModel {
-  public type: string = 'Free for all';
+  public type = 'Free for all';
   public players: Player[] = [];
   public bullets: Bullet[] = [];
   private interval:  NodeJS.Timeout | number;

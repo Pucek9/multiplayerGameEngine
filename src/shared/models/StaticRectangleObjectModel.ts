@@ -1,7 +1,7 @@
 import IRectangle from '../interfaces/IRectangle';
 
 export default class StaticRectangleObjectModel implements IRectangle {
-  shape: string = 'rectangle';
+  shape = 'rectangle';
   x: number;
   y: number;
   z: number;
@@ -9,7 +9,7 @@ export default class StaticRectangleObjectModel implements IRectangle {
   height: number;
   depth: number;
   color: string;
-  deg: number = 0;
+  deg = 0;
 
   constructor(params: Partial<StaticRectangleObjectModel>) {
     Object.assign(this, params);

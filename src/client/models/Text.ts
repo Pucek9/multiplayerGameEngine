@@ -10,12 +10,12 @@ const font = loader.parse(fontFile);
 export default class Text implements IUpdatable {
   public x: number;
   public y: number;
-  public z: number = 50;
   public object: Mesh;
-  public offsetX: number = -20;
-  public offsetY: number = 30;
-  public color: number = 0x4444fff;
   public text: string;
+  public offsetX = -20;
+  public offsetY = 30;
+  public color = 0x4444fff;
+  public z = 50;
   private screen: ScreenModel;
   private camera: ICamera;
   private geometry: TextGeometry;
