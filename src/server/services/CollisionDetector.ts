@@ -43,9 +43,9 @@ export class CollisionDetector {
   }
 
   detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): CollisionInfo {
-    const dx = o1.x - o2.x + direction.dx;
-    const dy = o1.y - o2.y + direction.dy;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distance = Math.sqrt(
+      (o1.x - o2.x + direction.dx) ** 2 + (o1.y - o2.y + direction.dy) ** 2,
+    );
     let [x, y] = [-1, -1];
     if (o1 instanceof Bullet) {
       const theta = o1.getAngle();
