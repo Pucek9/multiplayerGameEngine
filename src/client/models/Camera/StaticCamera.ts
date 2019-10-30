@@ -7,12 +7,13 @@ export default class StaticCamera implements IUpdatable, ICamera {
   public object: PerspectiveCamera;
   private activePlayer: PlayerModel;
 
-  constructor() {}
+  constructor() {
+    this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
+    this.object.position.z = 400;
+  }
 
   init({ activePlayer }: { activePlayer: PlayerModel }) {
     this.activePlayer = activePlayer;
-    this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    this.object.position.z = 400;
   }
 
   wheel(e: WheelEvent) {

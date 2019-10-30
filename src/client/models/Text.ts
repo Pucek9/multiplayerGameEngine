@@ -17,7 +17,6 @@ export default class Text implements IUpdatable {
   public color = 0x4444fff;
   public z = 50;
   private screen: ScreenModel;
-  private camera: ICamera;
   private geometry: TextGeometry;
   private material: MeshPhongMaterial;
 
@@ -53,18 +52,18 @@ export default class Text implements IUpdatable {
     this.material = new MeshPhongMaterial({ color: this.color, flatShading: true });
   }
 
-  init(screen: ScreenModel, camera: ICamera) {
+  init(screen: ScreenModel) {
     this.screen = screen;
-    this.camera = camera;
     this.setText('');
   }
 
   update() {
+    const camera = this.screen.camera.object;
     this.object.position.x = this.x;
     this.object.position.y = this.y;
-    this.object.rotation.x = this.camera.object.rotation.x;
-    this.object.rotation.y = this.camera.object.rotation.y;
-    this.object.rotation.z = this.camera.object.rotation.z;
+    this.object.rotation.x = camera.rotation.x;
+    this.object.rotation.y = camera.rotation.y;
+    this.object.rotation.z = camera.rotation.z;
   }
 
   hide() {

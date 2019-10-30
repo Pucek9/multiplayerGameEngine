@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderer } from 'three';
+import { LinearFilter, Scene, WebGLRenderer, WebGLRenderTarget } from 'three';
 import { connect } from 'socket.io-client';
 
 import MenuComponent from './UserInterface/MenuComponent';
@@ -11,6 +11,17 @@ import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './interfaces/ScreenModel';
 import { createGamesService, gamesListService, userService } from './store/store';
 import { randColor } from '../shared/helpers';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import Camera from './models/Camera';
+import { GameConfig } from './store/gamesList/state';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
+import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
+import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader';
+import { BlendShader } from 'three/examples/jsm/shaders/BlendShader';
+import { CopyShader } from 'three/examples/jsm/shaders/CopyShader';
+import { SavePass } from 'three/examples/jsm/postprocessing/SavePass';
+import shaderService from './ShaderService';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
@@ -63,7 +74,7 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      const screen = this.prepareScreen();
+      const screen = this.prepareScreen(gameConfig);
       this.gameState = new Game(newPlayer, screen, gameConfig);
       this.registerEvents(this.gameState);
       this.menu.hide();
@@ -162,17 +173,30 @@ class Main {
     window.addEventListener('resize', mainInstance.gameState.handleResize, false);
   }
 
-  prepareScreen(): ScreenModel {
+  prepareScreen(gameConfig: GameConfig): ScreenModel {
     const scene = new Scene();
     const renderer = new WebGLRenderer({ antialias: true });
+    const camera = new Camera[gameConfig.camera]();
+
     renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     renderer.autoClear = true;
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
+    const composer = new EffectComposer(renderer);
+
+    const renderPass = new RenderPass(scene, camera.object);
+
+    composer.addPass(renderPass);
+    composer.addPass(shaderService.blendPass);
+    composer.addPass(shaderService.savePass);
+    composer.addPass(shaderService.outputPass);
+
     return {
       scene,
       renderer,
+      camera,
+      composer,
     };
   }
 

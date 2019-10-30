@@ -9,14 +9,15 @@ export default class DynamicCamera implements IUpdatable, ICamera {
   private activePlayer: PlayerModel;
   private cursor: Cursor;
 
-  constructor() {}
+  constructor() {
+    this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+    this.object.up = new Vector3(0, 0, 1);
+    this.object.position.z = 300;
+  }
 
   init({ activePlayer, cursor }: { activePlayer: PlayerModel; cursor: Cursor }) {
     this.activePlayer = activePlayer;
     this.cursor = cursor;
-    this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
-    this.object.up = new Vector3(0, 0, 1);
-    this.object.position.z = 300;
   }
 
   wheel(e: WheelEvent) {

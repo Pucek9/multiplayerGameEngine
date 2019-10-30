@@ -29,6 +29,7 @@ import PlayerListModel from './interfaces/PlayerListModel';
 import Team from '../shared/models/Team';
 import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../shared/apiModels/PowersApiModel';
+import shaderService from './ShaderService';
 
 const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
@@ -37,7 +38,7 @@ export default class Game {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  camera: ICamera;
+  // camera: ICamera;
   light: Lighting;
   playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
@@ -57,7 +58,6 @@ export default class Game {
     this.user = user;
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
-    this.camera = new Camera[gameConfig.camera]();
     this.teams = <Team[]>gameConfig.teams;
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
@@ -68,7 +68,7 @@ export default class Game {
     this.map = new Map(mapJPG);
     this.cursor = new Cursor(cursorPNG);
     this.map.init(this.screen);
-    this.text.init(this.screen, this.camera);
+    this.text.init(this.screen);
     this.cursor.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
@@ -91,16 +91,16 @@ export default class Game {
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
-      this.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
+      this.screen.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
       this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       this.currentPlayer.setLight(this.light);
     }
   }
 
   handleResize = () => {
-    if (this.camera?.object && this.screen) {
-      this.camera.object.aspect = window.innerWidth / window.innerHeight;
-      this.camera.object.updateProjectionMatrix();
+    if (this.screen?.camera?.object) {
+      this.screen.camera.object.aspect = window.innerWidth / window.innerHeight;
+      this.screen.camera.object.updateProjectionMatrix();
       this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     }
   };
@@ -138,7 +138,7 @@ export default class Game {
   }
 
   wheel(e: WheelEvent) {
-    this.camera.wheel(e);
+    this.screen.camera.wheel(e);
   }
 
   appendNewBullets(newBullets: BulletModel[]) {
@@ -157,12 +157,16 @@ export default class Game {
     this.players.forEach(player => {
       const foundPlayer = _players.find(_player => player.id === _player.id);
       if (foundPlayer?.id === this.currentPlayer?.id) {
-        // const diff = {
-        //   x: player.x - foundPlayer.x,
-        //   y: player.y - foundPlayer.y,
-        // };
-        // this.cursor.x -= diff.x;
-        // this.cursor.y -= diff.y;
+        const diff = {
+          x: player.x - foundPlayer.x,
+          y: player.y - foundPlayer.y,
+        };
+        if(foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
+          shaderService.turnOnShaders();
+        } else {
+          shaderService.turnOffShaders();
+        }
+
         this.cursor.x = foundPlayer.cursor.x;
         this.cursor.y = foundPlayer.cursor.y;
 
@@ -263,16 +267,17 @@ export default class Game {
 
   updateObjects() {
     if (this.currentPlayer) {
-      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light, this.text].forEach(
+      [this.screen.camera, ...this.bullets, ...this.players, this.cursor, this.light, this.text].forEach(
         object => object.update(),
       );
     }
   }
 
   render() {
-    if (this.camera?.object) {
-      this.screen.renderer.render(this.screen.scene, this.camera.object);
-    }
+    // if (this.screen.camera?.object) {
+      // this.screen.renderer.render(this.screen.scene, this.screen.camera.object);
+      this.screen.composer.render()
+    // }
   }
 
   update() {
