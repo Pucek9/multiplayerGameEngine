@@ -41,10 +41,17 @@ export function hasKeys(set: Set<string>, keys: Array<string>): boolean {
   return keys.some((key: string) => set.has(key));
 }
 
+type SubType<Base, Condition> = Pick<
+  Base,
+  {
+    [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
+  }[keyof Base]
+>;
+
 export function compareBy<T>(
   obj1: T,
   obj2: T,
-  conditions: { [P in keyof T]?: 1 | -1 },
+  conditions: { [P in keyof SubType<T, number>]?: 1 | -1 },
   index: number = 0,
 ): number {
   const condition = Object.keys(conditions)[index];
