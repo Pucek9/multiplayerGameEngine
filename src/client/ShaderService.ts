@@ -16,7 +16,6 @@ export class ShaderService {
       stencilBuffer: false,
     };
     this.savePass = new SavePass(
-      // new WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetParameters),
       new WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetParameters),
     );
     // blend pass
@@ -30,17 +29,16 @@ export class ShaderService {
   }
 
   turnOnShaders() {
-      this.savePass.enabled = true;
-      this.blendPass.enabled = true;
-      this.outputPass.enabled = true;
+    this.savePass.enabled = true;
+    this.blendPass.enabled = true;
+    this.outputPass.enabled = true;
   }
 
   turnOffShaders() {
-      this.savePass.enabled = false;
-      this.blendPass.enabled = false;
-      this.outputPass.enabled = false;
+    this.savePass.enabled = false;
+    this.blendPass.enabled = false;
+    this.outputPass.enabled = false;
   }
-
 }
 
 const shaderService = new ShaderService();
