@@ -8,7 +8,6 @@ export class ShaderService {
   savePass: SavePass;
   blendPass: ShaderPass;
   outputPass: ShaderPass;
-  on = true;
 
   constructor() {
     const renderTargetParameters = {
@@ -31,22 +30,17 @@ export class ShaderService {
   }
 
   turnOnShaders() {
-    if (!this.on) {
       this.savePass.enabled = true;
       this.blendPass.enabled = true;
       this.outputPass.enabled = true;
-      this.on = true;
-    }
   }
 
   turnOffShaders() {
-    if (this.on) {
       this.savePass.enabled = false;
       this.blendPass.enabled = false;
       this.outputPass.enabled = false;
-      this.on = false;
-    }
   }
+
 }
 
 const shaderService = new ShaderService();
