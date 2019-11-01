@@ -5,7 +5,7 @@ import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameModel from './GameModel';
 import Direction from '../../shared/models/Direction';
-import { generateId, randColor, times } from '../../shared/helpers';
+import { compareBy, generateId, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
@@ -157,7 +157,9 @@ export default class BaseGame extends GameModel {
     this.bullets
       .filter(bullet => bullet.allowForManipulate)
       .forEach(bullet => {
-        const foundPlayerWithAura = this.getAlivePlayers().find(
+        const foundPlayerWithAura = this.getAlivePlayers()
+            .sort((player1, player2) => compareBy(player1,player2, {energy: 1}))
+            .find(
           player =>
             bullet.owner !== player &&
             player.selectedPower instanceof Aura &&
@@ -167,11 +169,14 @@ export default class BaseGame extends GameModel {
               size: player.selectedPower.getSize(),
             }).collision,
         );
-        foundPlayerWithAura?.selectedPower.effect({
+        if(foundPlayerWithAura?.selectedPower.effect({
           bullet,
           owner: foundPlayerWithAura,
-        }) &&
-        this.emitPowerInfo(foundPlayerWithAura);
+        })) {
+          this.emitPowerInfo(foundPlayerWithAura);
+        } else {
+          bullet.customFlag = true
+        }
       });
   }
 

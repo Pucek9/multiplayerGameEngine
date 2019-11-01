@@ -36,7 +36,6 @@ export default class SlowBullets extends Aura {
       bullet.decreaseSpeedToMin(bullet.speed > 0.1 ? bullet.speed / 4 : 0.1);
       return true;
     } else {
-      bullet.customFlag = true;
       return false;
     }
   }

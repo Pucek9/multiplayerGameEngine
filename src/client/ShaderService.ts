@@ -21,7 +21,7 @@ export class ShaderService {
     // blend pass
     this.blendPass = new ShaderPass(BlendShader, 'tDiffuse1');
     this.blendPass.uniforms['tDiffuse2'].value = this.savePass.renderTarget.texture;
-    this.blendPass.uniforms['mixRatio'].value = 0.65;
+    this.blendPass.uniforms['mixRatio'].value = 0.7;
     // output pass
     this.outputPass = new ShaderPass(CopyShader);
     this.outputPass.renderToScreen = true;

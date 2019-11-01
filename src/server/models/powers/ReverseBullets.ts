@@ -25,7 +25,6 @@ export default class ReverseBullets extends SlowBullets implements Aura {
       }
       return true;
     } else {
-      bullet.customFlag = true;
       return false;
     }
   }
