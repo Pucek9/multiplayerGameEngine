@@ -1,18 +1,16 @@
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
-import StaticCircularObject from '../../models/StaticCircularObject';
 import ItemGenerator from '../../models/ItemGenerator';
-import Item from '../../../shared/models/Item';
 import Grenade from '../../models/weapons/Grenade';
 
-export default class Boxes implements GameMap {
+export default class Boxes extends GameMap {
   mapName = 'Boxes';
   width = 2920;
   height = 2004;
-  staticObjects: (StaticRectangleObject | StaticCircularObject)[];
-  itemGenerators: ItemGenerator<Item>[];
+
 
   constructor() {
+    super();
     this.staticObjects = [
       new StaticRectangleObject({
         x: 1200,
@@ -136,15 +134,4 @@ export default class Boxes implements GameMap {
     ];
   }
 
-  getMapName(): string {
-    return this.mapName;
-  }
-
-  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
-    return this.staticObjects;
-  }
-
-  getItemGenerators(): ItemGenerator<Item>[] {
-    return this.itemGenerators;
-  }
 }

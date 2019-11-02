@@ -11,7 +11,7 @@ import AK47 from '../../models/weapons/AK47';
 import AidKit from '../../models/AidKit';
 import LandMine from '../../models/weapons/LandMine';
 
-export default class Playground implements GameMap {
+export default class Playground extends GameMap {
   mapName = 'Playground';
   width = 2920;
   height = 2004;
@@ -19,6 +19,7 @@ export default class Playground implements GameMap {
   itemGenerators: ItemGenerator<Item>[];
 
   constructor() {
+    super();
     this.staticObjects = [
       new StaticCircularObject({ x: 100, y: 250, size: 100, color: 'red' }),
       new StaticCircularObject({ x: 1000, y: 250, size: 90, color: 'blue' }),
@@ -276,15 +277,4 @@ export default class Playground implements GameMap {
     ];
   }
 
-  getMapName(): string {
-    return this.mapName;
-  }
-
-  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
-    return this.staticObjects;
-  }
-
-  getItemGenerators(): ItemGenerator<Item>[] {
-    return this.itemGenerators;
-  }
 }

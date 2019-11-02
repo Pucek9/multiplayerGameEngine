@@ -19,6 +19,8 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
 import BulletApiModel from '../../shared/apiModels/BulletApiModel';
+import ItemGenerator from "../models/ItemGenerator";
+import Item from "../../shared/models/Item";
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
@@ -138,6 +140,10 @@ export default class BaseGame extends GameModel {
 
   getItemGeneratorsAPI(): Array<ItemGeneratorAPI> {
     return this.getItemGenerators().map(itemGenerator => new ItemGeneratorAPI(itemGenerator));
+  }
+
+  deleteItemGenerator(itemGenerator: ItemGenerator<Item>) {
+    this.map.deleteItemGenerator(itemGenerator)
   }
 
   deleteBulletIfInactive(bullet: Bullet, index: number) {
@@ -350,20 +356,7 @@ export default class BaseGame extends GameModel {
         collisionDetector.detectCollision(player, generator, direction).collision &&
         generator.isReady()
       ) {
-        generator.deactivate();
-        setTimeout(() => {
-          generator.activate();
-          this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
-        }, generator.time);
-        const item = generator.generateItem();
-        if (item instanceof Weapon) {
-          this.addWeapon(player, item);
-          this.emitWeaponInfo(player);
-        } else if (item instanceof AidKit) {
-          player.takeAidKit(item);
-          this.emitPowerInfo(player);
-        }
-        this.emitter.updateItemGenerator(this.roomName, new ItemGeneratorAPI(generator));
+        generator.pickup(this, player);
       }
     });
   }

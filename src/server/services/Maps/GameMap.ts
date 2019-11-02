@@ -3,14 +3,29 @@ import Item from '../../../shared/models/Item';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 
-export default interface GameMap {
+export default abstract class GameMap {
   mapName: string;
   width: number;
   height: number;
+  staticObjects: (StaticRectangleObject | StaticCircularObject)[];
+  itemGenerators: ItemGenerator<Item>[];
 
-  getMapName(): string;
+  getMapName(): string {
+    return this.mapName;
+  }
 
-  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[];
+  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
+    return this.staticObjects;
+  }
 
-  getItemGenerators(): ItemGenerator<Item>[];
+  getItemGenerators(): ItemGenerator<Item>[] {
+    return this.itemGenerators;
+  }
+
+  deleteItemGenerator(itemGenerator: ItemGenerator<Item>) {
+    const index = this.getItemGenerators().findIndex(itemGen => itemGen.id === itemGenerator.id);
+    if (index !== -1) {
+      this.itemGenerators.splice(index, 1);
+    }
+  }
 }
