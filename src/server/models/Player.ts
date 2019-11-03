@@ -13,9 +13,11 @@ export default class Player extends PlayerModel {
     return this.alive;
   }
 
-  die() {
+  die(withDieCounter = true) {
+    if(withDieCounter) {
+      this.deaths += 1;
+    }
     this.timeToRevive = this.baseTimeToRevive;
-    this.deaths += 1;
     this.alive = false;
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
@@ -196,5 +198,10 @@ export default class Player extends PlayerModel {
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;
     this.direction = Math.atan2(dy, dx);
+  }
+
+  setPosition(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 }

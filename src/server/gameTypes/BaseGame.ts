@@ -9,7 +9,6 @@ import { compareBy, generateId, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
-import AidKit from '../models/AidKit';
 import Power from '../../shared/models/Power';
 import BulletModel from '../../shared/models/BulletModel';
 import Aura from '../models/powers/Aura';
@@ -53,7 +52,7 @@ export default class BaseGame extends GameModel {
   }
 
   createBot(index: number): Bot {
-    const { x, y } = playerService.randNonCollisionPosition(30, this);
+    const { x, y } = playerService.randNonCollisionPositionForMap(30, this);
     const bot = new Bot(
       `Bot_${index}${generateId()}`,
       `Bot_${index}`,
@@ -250,7 +249,7 @@ export default class BaseGame extends GameModel {
   }
 
   connectPlayer(newPlayer: NewUser): Player {
-    const { x, y } = playerService.randNonCollisionPosition(30, this);
+    const { x, y } = playerService.randNonCollisionPositionForMap(30, this);
     const player = new Player(
       newPlayer.id,
       newPlayer.name,

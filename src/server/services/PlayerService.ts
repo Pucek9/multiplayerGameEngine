@@ -1,21 +1,29 @@
 import collisionDetector from './CollisionDetector';
 import { rand } from '../../shared/helpers';
+import Zone from '../models/Zone';
 
 export class PlayerService {
-  randNonCollisionPosition(size: number, gameState): { x: number; y: number } {
+  randNonCollisionPosition(size: number, gameState, zoneX, zoneWidth, zoneY, zoneHeight): { x: number; y: number } {
     const allObjects = [...gameState.getStaticObjects(), ...gameState.getAlivePlayers()];
-    const [width, height] = [gameState.map.width / 2, gameState.map.height / 2];
-    let x,
-      y,
-      collision = true;
+    let x, y, collision = true;
     do {
-      [x, y] = [rand(width, -width), rand(height, -height)];
+      [x, y] = [rand(zoneWidth, zoneX), rand(zoneHeight, zoneY)];
       collision = collisionDetector.detectObjectCollisionWithOtherObjects(
         { x, y, size, shape: 'circle' },
         allObjects,
       );
     } while (collision !== false);
     return { x, y };
+  }
+
+  randNonCollisionPositionForMap(size: number, gameState): { x: number; y: number } {
+    const [width, height] = [gameState.map.width / 2, gameState.map.height / 2];
+    return this.randNonCollisionPosition(size, gameState, -width, width, -height, height);
+
+  }
+
+  randNonCollisionPositionForZone(size: number, gameState, zone: Zone): { x: number; y: number } {
+    return this.randNonCollisionPosition(size, gameState, zone.x, zone.width, zone.y, zone.height);
   }
 }
 

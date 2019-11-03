@@ -90,7 +90,7 @@ export default class BaseTeamGame extends BaseGame {
     const teamsCount = this.teams.length;
     const team = this.teams[index % teamsCount];
     team.joinToTeam();
-    const { x, y } = playerService.randNonCollisionPosition(30, this);
+    const { x, y } = playerService.randNonCollisionPositionForMap(30, this);
     const bot = new Bot(
       `Bot_${index}${generateId()}`,
       `Bot_${index}`,

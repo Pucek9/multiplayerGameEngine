@@ -1,13 +1,11 @@
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
-import ItemGenerator from '../../models/ItemGenerator';
-import Grenade from '../../models/weapons/Grenade';
+import Zone from '../../models/Zone';
 
 export default class Boxes extends GameMap {
   mapName = 'Boxes';
   width = 2920;
   height = 2004;
-
 
   constructor() {
     super();
@@ -75,63 +73,57 @@ export default class Boxes extends GameMap {
         depth: 10,
         color: 'yellow',
       }),
+      new StaticRectangleObject({
+        x: 1450,
+        y: -1000,
+        z: 0,
+        width: 100,
+        height: 2000,
+        depth: 100,
+        color: 'red',
+      }),
+      new StaticRectangleObject({
+        x: -1550,
+        y: -1000,
+        z: 0,
+        width: 100,
+        height: 2000,
+        depth: 100,
+        color: 'red',
+      }),
+      new StaticRectangleObject({
+        x: -1550,
+        y: 1000,
+        z: 0,
+        width: 3100,
+        height: 100,
+        depth: 100,
+        color: 'red',
+      }),
+      new StaticRectangleObject({
+        x: -1550,
+        y: -1050,
+        z: 0,
+        width: 3100,
+        height: 100,
+        depth: 100,
+        color: 'red',
+      }),
     ];
-    this.itemGenerators = [
-      new ItemGenerator({
-        x: 1100,
-        y: 100,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
+    this.itemGenerators = [];
+    this.zones = [
+      new Zone({
+        x: -1450,
+        y: -1000,
+        width: 100,
+        height: 2000,
       }),
-      new ItemGenerator({
-        x: 1100,
-        y: 600,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
-      }),
-      new ItemGenerator({
-        x: -1100,
-        y: 600,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
-      }),
-      new ItemGenerator({
-        x: -1100,
-        y: 100,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
-      }),
-      new ItemGenerator({
-        x: 250,
-        y: 600,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
-      }),
-      new ItemGenerator({
-        x: 250,
-        y: 100,
-        size: 8,
-        color: 'black',
-        time: 8000,
-        item: Grenade,
-        type: 'Grenade',
+      new Zone({
+        x: -1350,
+        y: -1000,
+        width: 100,
+        height: 2000,
       }),
     ];
   }
-
 }
