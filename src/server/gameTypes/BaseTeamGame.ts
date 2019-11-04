@@ -7,7 +7,7 @@ import Team from '../../shared/models/Team';
 import NewUser from '../../shared/apiModels/NewUser';
 import playerService from '../services/PlayerService';
 import Bot from '../models/Bot';
-import { generateId} from '../../shared/helpers';
+import { compareBy, generateId } from '../../shared/helpers';
 import BaseGame from './BaseGame';
 
 export default class BaseTeamGame extends BaseGame {
@@ -35,7 +35,9 @@ export default class BaseTeamGame extends BaseGame {
     this.bullets
       .filter(bullet => bullet.allowForManipulate)
       .forEach(bullet => {
-        const foundPlayerWithAura = this.getAlivePlayers().find(
+        const foundPlayerWithAura = this.getAlivePlayers()
+            .sort((player1, player2) => compareBy(player1,player2, {energy: 1}))
+            .find(
           player =>
             bullet.owner !== player &&
             bullet.owner.team !== player.team &&
@@ -46,11 +48,14 @@ export default class BaseTeamGame extends BaseGame {
               size: player.selectedPower.getSize(),
             }).collision,
         );
-        foundPlayerWithAura?.selectedPower.effect({
+        if(foundPlayerWithAura?.selectedPower.effect({
           bullet,
           owner: foundPlayerWithAura,
-        }) &&
-        this.emitPowerInfo(foundPlayerWithAura);
+        })) {
+          this.emitPowerInfo(foundPlayerWithAura);
+        } else {
+          bullet.customFlag = true
+        }
       });
   }
 

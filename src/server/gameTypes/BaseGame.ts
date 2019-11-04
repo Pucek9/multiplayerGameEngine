@@ -373,12 +373,13 @@ export default class BaseGame extends GameModel {
     return this.detectPlayerCollisionWithObjects(player, direction);
   }
 
-  updateTimeForDeadPlayers() {
-    this.players
-      .filter(player => !player.isAlive() && player.timeToRevive !== 0)
-      .forEach(player => {
+  updateTimeForDeadPlayers(): number {
+    const playersForRevive = this.players
+        .filter(player => !player.isAlive() && player.timeToRevive !== 0);
+    playersForRevive?.forEach(player => {
         player.decreaseTimeToRevive();
         this.emitter.updateTimeToRevive(player);
       });
+    return playersForRevive.length;
   }
 }

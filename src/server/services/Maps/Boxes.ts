@@ -1,6 +1,8 @@
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
+import ItemGenerator from "../../models/ItemGenerator";
+import AK47 from "../../models/weapons/AK47";
 
 export default class Boxes extends GameMap {
   mapName = 'Boxes';
@@ -110,7 +112,26 @@ export default class Boxes extends GameMap {
         color: 'red',
       }),
     ];
-    this.itemGenerators = [];
+    this.itemGenerators = [
+      new ItemGenerator({
+        x: -1000,
+        y: 800,
+        size: 4,
+        color: 'white',
+        time: 5000,
+        item: AK47,
+        type: 'AK47',
+      }),
+      new ItemGenerator({
+        x: 1000,
+        y: 800,
+        size: 4,
+        color: 'white',
+        time: 5000,
+        item: AK47,
+        type: 'AK47',
+      }),
+    ];
     this.zones = [
       new Zone({
         x: -1450,
