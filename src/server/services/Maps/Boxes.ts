@@ -3,6 +3,8 @@ import GameMap from './GameMap';
 import Zone from '../../models/Zone';
 import ItemGenerator from "../../models/ItemGenerator";
 import AK47 from "../../models/weapons/AK47";
+import Pistol from "../../models/weapons/Pistol";
+import Shotgun from "../../models/weapons/Shotgun";
 
 export default class Boxes extends GameMap {
   mapName = 'Boxes';
@@ -123,6 +125,24 @@ export default class Boxes extends GameMap {
         type: 'AK47',
       }),
       new ItemGenerator({
+        x: -1000,
+        y: 0,
+        size: 4,
+        color: 'brown',
+        time: 10000,
+        item: Pistol,
+        type: 'Pistol',
+      }),
+      new ItemGenerator({
+        x: -1000,
+        y: -800,
+        size: 4,
+        color: 'red',
+        time: 20000,
+        item: Shotgun,
+        type: 'Shotgun',
+      }),
+      new ItemGenerator({
         x: 1000,
         y: 800,
         size: 4,
@@ -131,17 +151,35 @@ export default class Boxes extends GameMap {
         item: AK47,
         type: 'AK47',
       }),
+      new ItemGenerator({
+        x: 1000,
+        y: 0,
+        size: 4,
+        color: 'brown',
+        time: 10000,
+        item: Pistol,
+        type: 'Pistol',
+      }),
+      new ItemGenerator({
+        x: 1000,
+        y: -800,
+        size: 4,
+        color: 'red',
+        time: 20000,
+        item: Shotgun,
+        type: 'Shotgun',
+      }),
     ];
     this.zones = [
       new Zone({
-        x: -1450,
-        y: -1000,
+        x: -1000,
+        y: 800,
         width: 100,
         height: 2000,
       }),
       new Zone({
-        x: -1350,
-        y: -1000,
+        x: -1000,
+        y: 800,
         width: 100,
         height: 2000,
       }),

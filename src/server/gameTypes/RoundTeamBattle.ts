@@ -14,7 +14,7 @@ export default class RoundTeamBattle extends TeamBattle {
 
   constructor(emitter, params) {
     super(emitter, params);
-    this.teams.forEach((team, index) =>
+    this.teams?.forEach((team, index) =>
       team.setZone(this.map.zones[index % this.map.zones.length]),
     );
     this.startRound();

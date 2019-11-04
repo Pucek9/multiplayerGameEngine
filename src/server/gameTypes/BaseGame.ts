@@ -380,6 +380,6 @@ export default class BaseGame extends GameModel {
         player.decreaseTimeToRevive();
         this.emitter.updateTimeToRevive(player);
       });
-    return playersForRevive.length;
+    return playersForRevive?.length;
   }
 }
