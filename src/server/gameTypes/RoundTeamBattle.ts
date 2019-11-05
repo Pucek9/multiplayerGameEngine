@@ -5,6 +5,7 @@ import playerService from '../services/PlayerService';
 import StaticCircularObject from "../models/StaticCircularObject";
 import StaticRectangleObject from "../models/StaticRectangleObject";
 import collisionDetector from "../services/CollisionDetector";
+import Zone from "../models/Zone";
 
 export default class RoundTeamBattle extends TeamBattle {
   maxTime: number;
@@ -14,36 +15,33 @@ export default class RoundTeamBattle extends TeamBattle {
 
   constructor(emitter, params) {
     super(emitter, params);
-    this.teams?.forEach((team, index) =>
-      team.setZone(this.map.zones[index % this.map.zones.length]),
+    this.teams?.forEach((team, index) => {
+          const zone = this.map.zones?.[index % this.map.zones?.length] || Zone.fromMap(this.map);
+          team.setZone(zone);
+    }
+
     );
     this.startRound();
+  }
+
+  setPlayerPosition(player: Player) {
+    const team = this.findTeam(player.team);
+    const { x, y } = playerService.randNonCollisionPositionForZone(30, this, team.zone);
+    player.setPosition(x,y);
   }
 
   startRound() {
     this.timeCounterActive = true;
     this.round += 1;
     this.players.forEach(player => {
-      const team = this.findTeam(player.team);
-      const { x, y } = playerService.randNonCollisionPositionForZone(30, this, team.zone);
-      player.setPosition(x,y);
-      player.die(false);
-    })
+      this.setPlayerPosition(player);
+      player.die(false)
+    });
   }
 
   connectPlayer(newPlayer: NewUser): Player {
-    const team = this.findTeam(newPlayer.team);
-    const { x, y } = playerService.randNonCollisionPositionForZone(30, this, team.zone);
-    const player = new Player(
-      newPlayer.id,
-      newPlayer.name,
-      newPlayer.team,
-      newPlayer.color,
-      x,
-      y,
-      this.roomName,
-    );
-    this.players.push(player);
+    const player = super.connectPlayer(newPlayer);
+    this.setPlayerPosition(player);
     return player;
   }
 

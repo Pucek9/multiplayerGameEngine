@@ -12,4 +12,9 @@ export default class Zone {
     Object.assign(this, params);
     Object.seal(this);
   }
+
+  static fromMap(map) {
+    const [x, y] = [-map.width / 2, -map.height / 2];
+    return new Zone({ x, width: map.width, y, height: map.height });
+  }
 }

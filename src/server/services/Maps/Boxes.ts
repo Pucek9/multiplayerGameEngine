@@ -173,15 +173,15 @@ export default class Boxes extends GameMap {
     this.zones = [
       new Zone({
         x: -1000,
-        y: 800,
+        y: 0,
         width: 100,
-        height: 2000,
+        height: 1000,
       }),
       new Zone({
-        x: -1000,
-        y: 800,
+        x: 1000,
+        y: 0,
         width: 100,
-        height: 2000,
+        height: 1000,
       }),
     ];
   }
