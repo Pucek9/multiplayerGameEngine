@@ -1,10 +1,10 @@
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
-import ItemGenerator from "../../models/ItemGenerator";
-import AK47 from "../../models/weapons/AK47";
-import Pistol from "../../models/weapons/Pistol";
-import Shotgun from "../../models/weapons/Shotgun";
+import ItemGenerator from '../../models/ItemGenerator';
+import AK47 from '../../models/weapons/AK47';
+import Pistol from '../../models/weapons/Pistol';
+import Shotgun from '../../models/weapons/Shotgun';
 
 export default class Boxes extends GameMap {
   mapName = 'Boxes';
@@ -13,6 +13,12 @@ export default class Boxes extends GameMap {
 
   constructor() {
     super();
+    this.setStaticObjects();
+    this.setItemsGenerators();
+    this.setZones();
+  }
+
+  setStaticObjects() {
     this.staticObjects = [
       new StaticRectangleObject({
         x: 1200,
@@ -114,6 +120,9 @@ export default class Boxes extends GameMap {
         color: 'red',
       }),
     ];
+  }
+
+  setItemsGenerators() {
     this.itemGenerators = [
       new ItemGenerator({
         x: -1000,
@@ -170,6 +179,9 @@ export default class Boxes extends GameMap {
         type: 'Shotgun',
       }),
     ];
+  }
+
+  setZones() {
     this.zones = [
       new Zone({
         x: -1000,

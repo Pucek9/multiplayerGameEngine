@@ -12,6 +12,10 @@ export default abstract class GameMap {
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 
+  abstract setStaticObjects()
+  abstract setItemsGenerators()
+  abstract setZones()
+
   getMapName(): string {
     return this.mapName;
   }

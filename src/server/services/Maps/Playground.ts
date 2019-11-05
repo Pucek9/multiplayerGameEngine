@@ -20,6 +20,11 @@ export default class Playground extends GameMap {
 
   constructor() {
     super();
+    this.setStaticObjects();
+    this.setItemsGenerators();
+  }
+
+  setStaticObjects() {
     this.staticObjects = [
       new StaticCircularObject({ x: 100, y: 250, size: 100, color: 'red' }),
       new StaticCircularObject({ x: 1000, y: 250, size: 90, color: 'blue' }),
@@ -181,6 +186,9 @@ export default class Playground extends GameMap {
         color: 'blue',
       }),
     ];
+  }
+
+  setItemsGenerators() {
     this.itemGenerators = [
       new ItemGenerator({
         x: 1350,
@@ -277,4 +285,5 @@ export default class Playground extends GameMap {
     ];
   }
 
+  setZones() {}
 }
