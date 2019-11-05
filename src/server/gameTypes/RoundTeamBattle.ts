@@ -1,13 +1,13 @@
-import TeamBattle from './TeamBattle';
 import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import playerService from '../services/PlayerService';
 import StaticCircularObject from "../models/StaticCircularObject";
 import StaticRectangleObject from "../models/StaticRectangleObject";
 import collisionDetector from "../services/CollisionDetector";
-import Zone from "../models/Zone";
+import Bot from "../models/Bot";
+import BaseTeamGame from "./BaseTeamGame";
 
-export default class RoundTeamBattle extends TeamBattle {
+export default class RoundTeamBattle extends BaseTeamGame {
   maxTime: number;
   round = 0;
   maxRound = 5;
@@ -15,12 +15,6 @@ export default class RoundTeamBattle extends TeamBattle {
 
   constructor(emitter, params) {
     super(emitter, params);
-    this.teams?.forEach((team, index) => {
-          const zone = this.map.zones?.[index % this.map.zones?.length] || Zone.fromMap(this.map);
-          team.setZone(zone);
-    }
-
-    );
     this.startRound();
   }
 
@@ -45,6 +39,12 @@ export default class RoundTeamBattle extends TeamBattle {
     return player;
   }
 
+  createBot(index: number): Bot {
+    const bot = super.createBot(index);
+    console.log(bot)
+    // this.setPlayerPosition(bot);
+    return bot;
+  }
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {

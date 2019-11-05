@@ -20,6 +20,7 @@ import playerService from '../services/PlayerService';
 import BulletApiModel from '../../shared/apiModels/BulletApiModel';
 import ItemGenerator from "../models/ItemGenerator";
 import Item from "../../shared/models/Item";
+import Zone from "../models/Zone";
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
@@ -31,6 +32,10 @@ export default class BaseGame extends GameModel {
   constructor(public emitter: Emitter, params: Partial<BaseGame>) {
     super();
     Object.assign(this, params);
+    this.teams?.forEach((team, index) => {
+      const zone = this.map.zones?.[index % this.map.zones?.length] || Zone.fromMap(this.map);
+      team.setZone(zone);
+    });
     this.generateBots(this.botsCount);
     this.interval = setInterval(() => {
       this.updateBots();

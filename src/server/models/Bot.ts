@@ -4,8 +4,8 @@ import Weapon from './weapons/Weapon';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 
 export default class Bot extends Player {
-  die() {
-    super.die();
+  die(withDieCounter?) {
+    super.die(withDieCounter);
     this.keys.clear();
   }
 
