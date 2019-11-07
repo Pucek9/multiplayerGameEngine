@@ -1,4 +1,4 @@
-import Zone from "../../server/models/Zone";
+import Zone from '../../server/models/Zone';
 
 export default class Team {
   public points = 0;

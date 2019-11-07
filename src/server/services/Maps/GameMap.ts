@@ -2,7 +2,7 @@ import ItemGenerator from '../../models/ItemGenerator';
 import Item from '../../../shared/models/Item';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
-import Zone from "../../models/Zone";
+import Zone from '../../models/Zone';
 
 export default abstract class GameMap {
   zones: Zone[];
@@ -12,9 +12,9 @@ export default abstract class GameMap {
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
   itemGenerators: ItemGenerator<Item>[];
 
-  abstract setStaticObjects()
-  abstract setItemsGenerators()
-  abstract setZones()
+  abstract setStaticObjects();
+  abstract setItemsGenerators();
+  abstract setZones();
 
   getMapName(): string {
     return this.mapName;
