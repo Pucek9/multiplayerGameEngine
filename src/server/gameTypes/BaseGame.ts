@@ -86,8 +86,8 @@ export default class BaseGame extends GameModel {
       });
   }
 
-  trackClosestPlayer(bot: Bot): Player {
-    return this.trackClosestPlayerWithCondition(bot, player => player !== bot);
+  trackClosestPlayer(player: Player): Player {
+    return this.trackClosestPlayerWithCondition(player, _player => player !== _player);
   }
 
   trackClosestPlayerWithCondition(player: Player, condition: any): Player {

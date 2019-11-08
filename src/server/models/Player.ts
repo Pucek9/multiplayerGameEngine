@@ -200,6 +200,12 @@ export default class Player extends PlayerModel {
     return this.timeToRevive === 0;
   }
 
+
+  updateCursor(target: { x: number; y: number }) {
+    this.cursor.x = target.x;
+    this.cursor.y = target.y;
+  }
+
   updateDirection() {
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;

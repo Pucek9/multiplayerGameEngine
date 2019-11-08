@@ -109,7 +109,7 @@ export default class BaseTeamGame extends BaseGame {
     return bot;
   }
 
-  trackClosestPlayer(bot: Bot): Player {
-    return this.trackClosestPlayerWithCondition(bot, player => player.team !== bot.team);
+  trackClosestPlayer(player: Player): Player {
+    return this.trackClosestPlayerWithCondition(player, _player => _player.team !== player.team);
   }
 }

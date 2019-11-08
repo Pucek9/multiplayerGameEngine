@@ -9,11 +9,6 @@ export default class Bot extends Player {
     this.keys.clear();
   }
 
-  updateCursor(target: { x: number; y: number }) {
-    this.cursor.x = target.x;
-    this.cursor.y = target.y;
-  }
-
   performRandKeys() {
     const keys = [['W'], ['A'], ['S'], ['D']];
     this.keys.clear();

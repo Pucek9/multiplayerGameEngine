@@ -100,7 +100,22 @@ export default abstract class Steering {
       player.selectPower(3);
     }
     if (shift && power5) {
+      player.selectPower(4);
+    }
+    if (shift && power6) {
       player.selectPower(5);
+    }
+    if (shift && power7) {
+      player.selectPower(6);
+    }
+    if (shift && power8) {
+      player.selectPower(7);
+    }
+    if (shift && power9) {
+      player.selectPower(8);
+    }
+    if (shift && power10) {
+      player.selectPower(9);
     }
     if (shift && !powerPressed) {
       player.usePower(game);
