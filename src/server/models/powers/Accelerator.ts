@@ -3,13 +3,13 @@ import Player from '../Player';
 
 export default class Accelerator extends Power {
   type = 'Accelerator';
-  cost = 0.5;
+  cost = 0.3;
   speed = 10;
 
   constructor(params?: Partial<Accelerator>) {
     super();
     Object.assign(this, params);
-    Object.seal(this);
+    // Object.seal(this);
   }
 
   isActive(): boolean {

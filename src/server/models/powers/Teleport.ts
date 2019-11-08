@@ -1,9 +1,10 @@
 import Player from '../Player';
+import Accelerator from './Accelerator';
 import ClickPower from './ClickPower';
 
-export default class Teleport extends ClickPower {
+export default class Teleport extends Accelerator implements ClickPower {
   type = 'Teleport';
-  cost = 25;
+  costOfTeleport = 20;
 
   constructor(params?: Partial<Teleport>) {
     super();
@@ -11,16 +12,16 @@ export default class Teleport extends ClickPower {
     Object.seal(this);
   }
 
-  use({ owner, game, click }: { owner: Player; game; click: boolean }) {
+  useClickPower({ owner, game }: { owner: Player; game }): boolean {
     if (
-      click &&
+      owner.speed > this.speed / 2 &&
       !game.detectPlayerCollisionWithObjects(({
         x: owner.cursor.x,
         y: owner.cursor.y,
         size: owner.size,
         shape: 'circle',
       } as unknown) as Player) &&
-      owner.tryUseEnergy(this.cost)
+      owner.tryUseEnergy(this.costOfTeleport)
     ) {
       const diff = {
         x: owner.x - owner.cursor.x,
@@ -34,6 +35,8 @@ export default class Teleport extends ClickPower {
       // owner.cursor.x += diff.x;
       // owner.cursor.y += diff.y;
       game.detectPlayerCollisionWithGenerator(owner);
+      return true;
     }
+    return false;
   }
 }

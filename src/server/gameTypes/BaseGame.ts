@@ -12,7 +12,6 @@ import Emitter from '../services/Emitter';
 import Power from '../../shared/models/Power';
 import BulletModel from '../../shared/models/BulletModel';
 import Aura from '../models/powers/Aura';
-import ClickPower from '../models/powers/ClickPower';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
@@ -300,8 +299,8 @@ export default class BaseGame extends GameModel {
     const player = this.getPlayer(owner);
     if (player.isAlive()) {
       player.setMouseDown();
-      if (player.selectedPower instanceof ClickPower && player.keys.has('Shift')) {
-        player.usePower(this, true);
+      if (player.selectedPower?.useClickPower && player.keys.has('Shift')) {
+        player.useClickPower(this);
         this.emitPowerInfo(player);
       } else {
         this.shoot(owner);
