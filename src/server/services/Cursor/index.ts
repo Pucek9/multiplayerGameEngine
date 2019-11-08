@@ -1,9 +1,9 @@
-import circleCursor from './CircleCursor';
+import aroundCursor from './AroundCursor';
 import freeCursor from './FreeCursor';
 import noCursor from './NoCursor';
 
 export default {
-  circleCursor,
+  aroundCursor,
   freeCursor,
   noCursor,
 };

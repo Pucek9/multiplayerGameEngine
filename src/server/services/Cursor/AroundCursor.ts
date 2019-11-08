@@ -1,7 +1,7 @@
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
 import Cursor from './Cursor';
 
-export class CircleCursor extends Cursor {
+export class AroundCursor extends Cursor {
   constructor(public range = 200, public sensitivity = 100) {
     super();
   }
@@ -15,5 +15,5 @@ export class CircleCursor extends Cursor {
       this.range * Math.sin(owner.direction - mouseCoordinates.movementX / this.sensitivity);
   }
 }
-const circleCursor = new CircleCursor();
-export default circleCursor;
+const aroundCursor = new AroundCursor();
+export default aroundCursor;

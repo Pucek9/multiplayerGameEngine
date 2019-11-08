@@ -10,11 +10,13 @@ import Teleport from '../models/powers/Teleport';
 import Knife from '../models/weapons/Knife';
 import Bot from '../models/Bot';
 import Power from '../../shared/models/Power';
+import AIM from '../models/powers/AIM';
 
 export default class TeamBattle extends BaseTeamGame {
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
-    player.addAndSelectPower(new Accelerator());
+    player.addAndSelectPower(new AIM());
+    player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
     player.addPower(new ReverseBullets());
