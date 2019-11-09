@@ -1,12 +1,13 @@
 import Steering from './Steering';
 import { hasKeys } from '../../../shared/helpers';
 import Direction from '../../../shared/models/Direction';
+import Player from '../../models/Player';
 
 export class CarSteering extends Steering {
   constructor(public allowForStaticRotate = true, public sensitivity = 0.05, public range = 200) {
     super();
   }
-  performSteering(game, player) {
+  performSteering(game, player: Player) {
     const up = hasKeys(player.keys, ['W', 'ArrowUp']);
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);

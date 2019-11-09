@@ -1,14 +1,14 @@
 import Steering from './Steering';
 import { hasKeys } from '../../../shared/helpers';
 import Direction from '../../../shared/models/Direction';
+import Player from '../../models/Player';
 
 export class CarIndependentSteering extends Steering {
-  private lastDir;
   constructor(public allowForStaticRotate = true, public sensitivity = 0.05, public range = 200) {
     super();
   }
-  performSteering(game, player) {
-    const lastDir = Math.atan2(player.lastDir.dy, player.lastDir.dx);
+  performSteering(game, player: Player) {
+    const lastDir = Math.atan2(player.legsDirection.dy, player.legsDirection.dx);
     const up = hasKeys(player.keys, ['W', 'ArrowUp']);
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);

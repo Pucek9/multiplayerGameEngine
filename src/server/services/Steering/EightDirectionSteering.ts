@@ -1,9 +1,10 @@
 import Steering from './Steering';
 import Direction from '../../../shared/models/Direction';
 import { hasKeys } from '../../../shared/helpers';
+import Player from '../../models/Player';
 
 export class EightDirectionSteering extends Steering {
-  performSteering(game, player) {
+  performSteering(game, player: Player) {
     const up = hasKeys(player.keys, ['W', 'ArrowUp']);
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);

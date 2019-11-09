@@ -7,7 +7,6 @@ import { Angle } from '../services/CollisionDetector';
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
-  private lastDir: Direction = { dx: 0, dy: 0 };
 
   isAlive() {
     return this.alive;
@@ -91,7 +90,7 @@ export default class Player extends PlayerModel {
         fromY: this.y + this.size * Math.sin(this.direction),
         targetX: this.cursor.x,
         targetY: this.cursor.y,
-        dir: this.lastDir,
+        dir: this.legsDirection,
         size: this.size,
       },
       game,
@@ -183,11 +182,11 @@ export default class Player extends PlayerModel {
     this.y += dir.dy;
     this.cursor.x += dir.dx;
     this.cursor.y += dir.dy;
-    this.lastDir = rememberDir;
+    this.legsDirection = rememberDir;
   }
 
   isMoving() {
-    return this.lastDir.dx !== 0 || this.lastDir.dy !== 0;
+    return this.legsDirection.dx !== 0 || this.legsDirection.dy !== 0;
   }
 
   decreaseTimeToRevive(time: number = 1) {
@@ -200,9 +199,9 @@ export default class Player extends PlayerModel {
     return this.timeToRevive === 0;
   }
 
-  updateCursor(target: { x: number; y: number }) {
-    this.cursor.x = target.x;
-    this.cursor.y = target.y;
+  updateCursor({ x, y }: { x: number; y: number }) {
+    this.cursor.x = x;
+    this.cursor.y = y;
   }
 
   updateDirection() {

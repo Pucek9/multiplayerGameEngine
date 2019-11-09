@@ -1,5 +1,7 @@
+import Player from '../../models/Player';
+
 export default abstract class Steering {
-  performKeysOperation(game, player) {
+  performKeysOperation(game, player: Player) {
     this.performSteering(game, player);
     this.performWeaponChange(game, player);
     this.performPowerChange(game, player);
