@@ -19,8 +19,7 @@ class GamesManager {
     this.games.push(
       new gameTypes[type](emitter, {
         ...newGame,
-        teams:
-          teams?.map(({ name, color }) => new Team({ name, color: color || randColor() })),
+        teams: teams?.map(({ name, color }) => new Team({ name, color: color || randColor() })),
         // teams && teams.map(name => new Team({ name, color: randColor() })),
         steering: Steerings[steering],
         cursor: Cursors[cursor],

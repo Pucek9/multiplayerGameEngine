@@ -14,7 +14,7 @@ export default class Player extends PlayerModel {
   }
 
   die(withDieCounter = true) {
-    if(withDieCounter) {
+    if (withDieCounter) {
       this.deaths += 1;
     }
     this.timeToRevive = this.baseTimeToRevive;
@@ -56,7 +56,7 @@ export default class Player extends PlayerModel {
 
   useClickPower(game) {
     if (this.isAlive()) {
-      this.selectedPower?.useClickPower({ owner: this, game});
+      this.selectedPower?.useClickPower({ owner: this, game });
     }
   }
 
@@ -85,17 +85,17 @@ export default class Player extends PlayerModel {
 
   shoot(game) {
     this.selectedWeapon?.shoot(
-        {
-          owner: this,
-          fromX: this.x + this.size * Math.cos(this.direction),
-          fromY: this.y + this.size * Math.sin(this.direction),
-          targetX: this.cursor.x,
-          targetY: this.cursor.y,
-          dir: this.lastDir,
-          size: this.size,
-        },
-        game,
-      );
+      {
+        owner: this,
+        fromX: this.x + this.size * Math.cos(this.direction),
+        fromY: this.y + this.size * Math.sin(this.direction),
+        targetX: this.cursor.x,
+        targetY: this.cursor.y,
+        dir: this.lastDir,
+        size: this.size,
+      },
+      game,
+    );
   }
 
   addWeapon(weapon) {
@@ -199,7 +199,6 @@ export default class Player extends PlayerModel {
   canRevive() {
     return this.timeToRevive === 0;
   }
-
 
   updateCursor(target: { x: number; y: number }) {
     this.cursor.x = target.x;

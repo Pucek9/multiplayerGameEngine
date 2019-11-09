@@ -36,25 +36,27 @@ export default class BaseTeamGame extends BaseGame {
       .filter(bullet => bullet.allowForManipulate)
       .forEach(bullet => {
         const foundPlayerWithAura = this.getAlivePlayers()
-            .sort((player1, player2) => compareBy(player1,player2, {energy: 1}))
-            .find(
-          player =>
-            bullet.owner !== player &&
-            bullet.owner.team !== player.team &&
-            player.selectedPower instanceof Aura &&
-            player.selectedPower.isActive() &&
-            collisionDetector.detectCollision(bullet, {
-              ...player,
-              size: player.selectedPower.getSize(),
-            }).collision,
-        );
-        if(foundPlayerWithAura?.selectedPower.effect({
-          bullet,
-          owner: foundPlayerWithAura,
-        })) {
+          .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
+          .find(
+            player =>
+              bullet.owner !== player &&
+              bullet.owner.team !== player.team &&
+              player.selectedPower instanceof Aura &&
+              player.selectedPower.isActive() &&
+              collisionDetector.detectCollision(bullet, {
+                ...player,
+                size: player.selectedPower.getSize(),
+              }).collision,
+          );
+        if (
+          foundPlayerWithAura?.selectedPower.effect({
+            bullet,
+            owner: foundPlayerWithAura,
+          })
+        ) {
           this.emitPowerInfo(foundPlayerWithAura);
         } else {
-          bullet.customFlag = true
+          bullet.customFlag = true;
         }
       });
   }

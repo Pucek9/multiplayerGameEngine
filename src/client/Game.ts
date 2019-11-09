@@ -161,7 +161,7 @@ export default class Game {
           x: player.x - foundPlayer.x,
           y: player.y - foundPlayer.y,
         };
-        if(foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
+        if (foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
           shaderService.turnOnShaders();
         } else {
           shaderService.turnOffShaders();
@@ -267,16 +267,21 @@ export default class Game {
 
   updateObjects() {
     if (this.currentPlayer) {
-      [this.screen.camera, ...this.bullets, ...this.players, this.cursor, this.light, this.text].forEach(
-        object => object.update(),
-      );
+      [
+        this.screen.camera,
+        ...this.bullets,
+        ...this.players,
+        this.cursor,
+        this.light,
+        this.text,
+      ].forEach(object => object.update());
     }
   }
 
   render() {
     // if (this.screen.camera?.object) {
-      // this.screen.renderer.render(this.screen.scene, this.screen.camera.object);
-      this.screen.composer.render()
+    // this.screen.renderer.render(this.screen.scene, this.screen.camera.object);
+    this.screen.composer.render();
     // }
   }
 

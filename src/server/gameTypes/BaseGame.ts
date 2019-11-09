@@ -17,15 +17,15 @@ import StaticCircularObject from '../models/StaticCircularObject';
 import Bot from '../models/Bot';
 import playerService from '../services/PlayerService';
 import BulletApiModel from '../../shared/apiModels/BulletApiModel';
-import ItemGenerator from "../models/ItemGenerator";
-import Item from "../../shared/models/Item";
-import Zone from "../models/Zone";
+import ItemGenerator from '../models/ItemGenerator';
+import Item from '../../shared/models/Item';
+import Zone from '../models/Zone';
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
   public players: Player[] = [];
   public bullets: Bullet[] = [];
-  private interval:  NodeJS.Timeout | number;
+  private interval: NodeJS.Timeout | number;
   private customInterval: NodeJS.Timeout | number;
 
   constructor(public emitter: Emitter, params: Partial<BaseGame>) {
@@ -124,8 +124,11 @@ export default class BaseGame extends GameModel {
   }
 
   getNormalizedBullets(): Array<BulletApiModel> {
-    return this.bullets.map(({id, x, y, size}) => ({
-      id, x, y, size
+    return this.bullets.map(({ id, x, y, size }) => ({
+      id,
+      x,
+      y,
+      size,
     }));
   }
 
@@ -146,7 +149,7 @@ export default class BaseGame extends GameModel {
   }
 
   deleteItemGenerator(itemGenerator: ItemGenerator<Item>) {
-    this.map.deleteItemGenerator(itemGenerator)
+    this.map.deleteItemGenerator(itemGenerator);
   }
 
   deleteBulletIfInactive(bullet: Bullet, index: number) {
@@ -167,24 +170,26 @@ export default class BaseGame extends GameModel {
       .filter(bullet => bullet.allowForManipulate)
       .forEach(bullet => {
         const foundPlayerWithAura = this.getAlivePlayers()
-            .sort((player1, player2) => compareBy(player1,player2, {energy: 1}))
-            .find(
-          player =>
-            bullet.owner !== player &&
-            player.selectedPower instanceof Aura &&
-            player.selectedPower.isActive() &&
-            collisionDetector.detectCollision(bullet, {
-              ...player,
-              size: player.selectedPower.getSize(),
-            }).collision,
-        );
-        if(foundPlayerWithAura?.selectedPower.effect({
-          bullet,
-          owner: foundPlayerWithAura,
-        })) {
+          .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
+          .find(
+            player =>
+              bullet.owner !== player &&
+              player.selectedPower instanceof Aura &&
+              player.selectedPower.isActive() &&
+              collisionDetector.detectCollision(bullet, {
+                ...player,
+                size: player.selectedPower.getSize(),
+              }).collision,
+          );
+        if (
+          foundPlayerWithAura?.selectedPower.effect({
+            bullet,
+            owner: foundPlayerWithAura,
+          })
+        ) {
           this.emitPowerInfo(foundPlayerWithAura);
         } else {
-          bullet.customFlag = true
+          bullet.customFlag = true;
         }
       });
   }
@@ -378,12 +383,13 @@ export default class BaseGame extends GameModel {
   }
 
   updateTimeForDeadPlayers(): number {
-    const playersForRevive = this.players
-        .filter(player => !player.isAlive() && player.timeToRevive !== 0);
+    const playersForRevive = this.players.filter(
+      player => !player.isAlive() && player.timeToRevive !== 0,
+    );
     playersForRevive?.forEach(player => {
-        player.decreaseTimeToRevive();
-        this.emitter.updateTimeToRevive(player);
-      });
+      player.decreaseTimeToRevive();
+      this.emitter.updateTimeToRevive(player);
+    });
     return playersForRevive?.length;
   }
 }

@@ -15,8 +15,12 @@ export default class Bot extends Player {
     if (this.isAlive()) {
       const keysCombinations = [...keys, ['W', 'A'], ['A', 'S'], ['S', 'D'], ['D', 'W']];
       const newKeys = randItem<Array<string>>(keysCombinations);
-      newKeys.push(randItem<string>([...this.getAvailableWeaponsIndex(), '']));
-      newKeys.push(randItem<string>(['Shift', '']));
+      newKeys.push(
+        randItem<string>([...this.getAvailableWeaponsIndex(), '']),
+      );
+      newKeys.push(
+        randItem<string>(['Shift', '']),
+      );
       newKeys.forEach(key => this.keys.add(key));
     }
   }
