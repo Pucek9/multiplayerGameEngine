@@ -58,8 +58,11 @@ export class CarSteering extends Steering {
     ) {
       player.go(dir);
       this.updateCursor(player, direction);
-    } else if (this.allowForStaticRotate) {
-      this.updateCursor(player, direction);
+    } else {
+      player.go({ dx: 0, dy: 0 });
+      if (this.allowForStaticRotate) {
+        this.updateCursor(player, direction);
+      }
     }
   }
 

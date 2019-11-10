@@ -11,11 +11,13 @@ import Knife from '../models/weapons/Knife';
 import Bot from '../models/Bot';
 import Power from '../../shared/models/Power';
 import AIM from '../models/powers/AIM';
+import SuperAIM from '../models/powers/SuperAIM';
 
 export default class TeamBattle extends BaseTeamGame {
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
-    player.addAndSelectPower(new AIM());
+    player.addAndSelectPower(new SuperAIM());
+    player.addPower(new AIM());
     player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
@@ -29,6 +31,7 @@ export default class TeamBattle extends BaseTeamGame {
   createBot(index: number): Bot {
     const bot = super.createBot(index);
     const SuperPower = randItem<new (...args: any[]) => Power>([
+      SuperAIM,
       ReverseBullets,
       SlowBullets,
       Accelerator,

@@ -72,6 +72,8 @@ export class RotateSteering extends Steering {
 
     if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
       player.go(dir);
+    } else {
+      player.go({ dx: 0, dy: 0 });
     }
   }
 }

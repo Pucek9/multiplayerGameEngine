@@ -86,6 +86,20 @@ export default class BaseGame extends GameModel {
       });
   }
 
+  trackClosestPlayerFuturePosition(player: Player): { x: number; y: number } {
+    const closestPlayer = this.trackClosestPlayer(player);
+    if (closestPlayer) {
+      const distance = collisionDetector.detectCollision(closestPlayer, player).distance;
+      const bulletSpeed = player.selectedWeapon?.bulletConfig?.speed ?? 10;
+      const enemyDirection = closestPlayer.legsDirection;
+      const [x, y] = [
+        closestPlayer.x + (enemyDirection.dx * distance) / bulletSpeed,
+        closestPlayer.y + (enemyDirection.dy * distance) / bulletSpeed,
+      ];
+      return { x, y };
+    }
+  }
+
   trackClosestPlayer(player: Player): Player {
     return this.trackClosestPlayerWithCondition(player, _player => player !== _player);
   }
