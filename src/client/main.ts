@@ -1,4 +1,4 @@
-import { LinearFilter, Scene, WebGLRenderer, WebGLRenderTarget } from 'three';
+import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
 import MenuComponent from './UserInterface/MenuComponent';
@@ -9,18 +9,12 @@ import NewGame from '../shared/apiModels/NewGame';
 import { API } from '../shared/constants';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './interfaces/ScreenModel';
-import { createGamesService, gamesListService, userService } from './store/store';
+import { gamesListService, userService } from './store/store';
 import { randColor } from '../shared/helpers';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import Camera from './models/Camera';
 import { GameConfig } from './store/gamesList/state';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
-import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
-import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader';
-import { BlendShader } from 'three/examples/jsm/shaders/BlendShader';
-import { CopyShader } from 'three/examples/jsm/shaders/CopyShader';
-import { SavePass } from 'three/examples/jsm/postprocessing/SavePass';
 import shaderService from './ShaderService';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';

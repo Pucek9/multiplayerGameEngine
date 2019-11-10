@@ -44,7 +44,7 @@ export default class Player extends PlayerModel {
   }
 
   regenerate(value?: number) {
-    this.takeAidKit({ energy: value || this.regeneration });
+    this.takeAidKit({ energy: value ?? this.regeneration });
   }
 
   usePower(game) {
