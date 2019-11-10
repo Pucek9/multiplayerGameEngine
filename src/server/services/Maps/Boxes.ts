@@ -8,6 +8,7 @@ import Shotgun from '../../models/weapons/Shotgun';
 
 export default class Boxes extends GameMap {
   mapName = 'Boxes';
+  floor = 'grass';
   width = 2920;
   height = 2004;
 

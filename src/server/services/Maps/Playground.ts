@@ -13,6 +13,7 @@ import LandMine from '../../models/weapons/LandMine';
 
 export default class Playground extends GameMap {
   mapName = 'Playground';
+  floor = 'grass';
   width = 2920;
   height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];

@@ -182,7 +182,7 @@ export default class MenuComponent {
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');
-      map.appendChild(document.createTextNode(game.map));
+      map.appendChild(document.createTextNode(game.map.mapName));
       const count = document.createElement('td');
       count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
@@ -193,9 +193,7 @@ export default class MenuComponent {
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');
       }
-      // @ts-ignore
       row.append(roomName, type, map, count);
-      // @ts-ignore
       gamesListTable.append(row);
     });
   }

@@ -3,10 +3,12 @@ import Item from '../../../shared/models/Item';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import Zone from '../../models/Zone';
+import MapModel from '../../../shared/models/MapModel';
 
-export default abstract class GameMap {
+export default abstract class GameMap implements MapModel {
   zones: Zone[];
   mapName: string;
+  floor: string;
   width: number;
   height: number;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];

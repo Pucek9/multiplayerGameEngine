@@ -31,7 +31,6 @@ import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../shared/apiModels/PowersApiModel';
 import shaderService from './ShaderService';
 
-const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
 export default class Game {
@@ -65,7 +64,7 @@ export default class Game {
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
     this.text = new Text();
-    this.map = new Map(mapJPG);
+    this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
     this.map.init(this.screen);
     this.text.init(this.screen);

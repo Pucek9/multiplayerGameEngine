@@ -34,7 +34,6 @@ export default class WeaponsListComponent {
         li.style.fontWeight = 'normal';
         li.appendChild(document.createTextNode(`${index + 1} ${weapon.type}`));
       }
-      // @ts-ignore
       weaponsList.append(li);
     });
   }

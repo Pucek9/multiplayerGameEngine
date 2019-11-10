@@ -42,10 +42,11 @@ class GamesManager {
 
   getGamesList(): GameInstance[] {
     return this.games.map(game => {
+      const { mapName, width, height, floor } = game.map;
       return {
         roomName: game.roomName,
         type: game.type,
-        map: game.map.mapName,
+        map: { mapName, width, height, floor },
         camera: game.camera,
         light: game.light,
         count: game.players.length,
