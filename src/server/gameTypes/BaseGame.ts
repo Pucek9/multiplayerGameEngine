@@ -261,7 +261,9 @@ export default class BaseGame extends GameModel {
 
   revivePlayer(id: string) {
     const player = this.getPlayer(id);
-    player && !this.detectPlayerCollision(player) && player.revive();
+    if (player && !this.detectPlayerCollision(player)) {
+      player.revive();
+    }
   }
 
   regeneratePlayers(value?: number) {
@@ -293,7 +295,9 @@ export default class BaseGame extends GameModel {
 
   updateKeys(id: string, keys: Array<string>) {
     const player = this.getPlayer(id);
-    player && (player.keys = new Set(keys));
+    if (player) {
+      player.keys = new Set(keys);
+    }
   }
 
   performKeysOperationForPlayers() {
