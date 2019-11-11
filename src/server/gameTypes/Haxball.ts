@@ -2,14 +2,31 @@ import Accelerator from '../models/powers/Accelerator';
 import Legs from '../models/weapons/Legs';
 import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
-import BaseTeamGame from './BaseTeamGame';
 import Bot from '../models/Bot';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import collisionDetector from '../services/CollisionDetector';
 import Bullet from '../models/Bullet';
+import RoundTeamBattle from './RoundTeamBattle';
+import Goal from '../models/Goal';
+import Team from '../../shared/models/Team';
 
-export default class Haxball extends BaseTeamGame {
+export default class Haxball extends RoundTeamBattle {
+  constructor(emitter, params) {
+    super(emitter, params);
+    this.setupGoals();
+  }
+
+  setupGoals() {
+    const goals = <Array<Goal>>this.getStaticObjects().filter(object => object instanceof Goal);
+    if (goals.length === this.teams.length) {
+      this.teams.forEach((team: Team, index: number) => {
+        goals[index].team = team.name;
+        goals[index].color = team.color;
+      });
+    }
+  }
+
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
     player.addAndSelectPower(new Accelerator());
@@ -29,11 +46,8 @@ export default class Haxball extends BaseTeamGame {
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
-        .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player | Bullet) =>
-            bullet !== object && bullet.owner !== object,
-        )
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+        .filter(object => bullet !== object && bullet.owner !== object)
+        .forEach((object: StaticCircularObject | StaticRectangleObject | Player | Bullet) => {
           const bulletDirection = {
             dx: bullet.dx,
             dy: bullet.dy,
@@ -45,6 +59,18 @@ export default class Haxball extends BaseTeamGame {
           );
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            if (object instanceof Goal) {
+              console.log(object.team, bullet.owner.team);
+              if (object.team !== bullet.owner.team) {
+                const team = this.findTeam(bullet.owner.team);
+                team?.increasePoints();
+              } else {
+                const team = this.findTeam(object.team);
+                team?.decreasePoints();
+              }
+              this.startRound();
+              this.emitter.emitTeamsList(this);
+            }
             this.deleteBulletIfInactive(bullet, i);
           }
         });

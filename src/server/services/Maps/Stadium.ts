@@ -1,10 +1,7 @@
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
-import ItemGenerator from '../../models/ItemGenerator';
-import AK47 from '../../models/weapons/AK47';
-import Pistol from '../../models/weapons/Pistol';
-import Shotgun from '../../models/weapons/Shotgun';
+import Goal from '../../models/Goal';
 
 export default class Stadium extends GameMap {
   mapName = 'Stadium';
@@ -21,38 +18,62 @@ export default class Stadium extends GameMap {
 
   setStaticObjects() {
     this.staticObjects = [
+      new Goal({
+        x: 512,
+        y: -57,
+        width: 20,
+        height: 112,
+        z: 0,
+        depth: 50,
+        color: 'white',
+        team: '',
+      }),
+      new Goal({
+        x: -532,
+        y: -57,
+        width: 20,
+        height: 112,
+        z: 0,
+        depth: 50,
+        color: 'white',
+        team: '',
+      }),
+      //right
       new StaticRectangleObject({
-        x: 1450,
-        y: -1000,
+        x: 600,
+        y: -400,
         z: 0,
         width: 100,
-        height: 2000,
+        height: 900,
         depth: 100,
         color: 'red',
       }),
+      //left
       new StaticRectangleObject({
-        x: -1550,
-        y: -1000,
+        x: -700,
+        y: -400,
         z: 0,
         width: 100,
-        height: 2000,
+        height: 900,
         depth: 100,
         color: 'red',
       }),
+      //up
       new StaticRectangleObject({
-        x: -1550,
-        y: 1000,
+        x: -600,
+        y: 390,
         z: 0,
-        width: 3100,
+        width: 1400,
         height: 100,
         depth: 100,
         color: 'red',
       }),
+      //down
       new StaticRectangleObject({
-        x: -1550,
-        y: -1050,
+        x: -700,
+        y: -490,
         z: 0,
-        width: 3100,
+        width: 1400,
         height: 100,
         depth: 100,
         color: 'red',
@@ -67,16 +88,16 @@ export default class Stadium extends GameMap {
   setZones() {
     this.zones = [
       new Zone({
-        x: -1000,
-        y: 0,
-        width: 100,
-        height: 1000,
+        x: -600,
+        y: -500,
+        width: 600,
+        height: 800,
       }),
       new Zone({
-        x: 1000,
-        y: 0,
-        width: 100,
-        height: 1000,
+        x: 0,
+        y: -500,
+        width: 600,
+        height: 800,
       }),
     ];
   }

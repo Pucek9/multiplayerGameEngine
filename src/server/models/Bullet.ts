@@ -105,4 +105,6 @@ export default class Bullet extends BulletModel {
   getAngle(): number {
     return Math.atan2(this.dy, this.dx);
   }
+
+  hitFromBullet(bullet, angle) {}
 }
