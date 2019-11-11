@@ -1,6 +1,3 @@
-import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import BulletData from '../../../shared/models/BulletData';
 import Knife from './Knife';
 
 export default class Legs extends Knife {
@@ -17,5 +14,6 @@ export default class Legs extends Knife {
     power: 0,
     range: 40,
     allowForManipulate: false,
+    speed: 3,
   };
 }

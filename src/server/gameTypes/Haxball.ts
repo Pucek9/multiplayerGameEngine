@@ -32,15 +32,22 @@ export default class Haxball extends RoundTeamBattle {
         range: 100,
         speed: 0,
         minSpeed: 0,
-        defaultSpeed: 0,
+        defaultSpeed: 7,
         allowForManipulate: false,
         hit(angle?: { x: number; y: number }) {
-          console.log(angle);
           if (angle) {
             this.reverseX *= angle.x;
             this.reverseY *= angle.y;
           }
           this.decreaseSpeedToMin(1);
+        },
+        hitFromBullet(bullet, angle) {
+          console.log(angle);
+          this.owner = bullet.owner;
+          this.reverseX = angle.x;
+          this.reverseY = angle.y;
+          this.distance = 0;
+          this.speed = this.defaultSpeed;
         },
         additionalAction() {
           this.decreaseSpeedToMin(0.05);
@@ -80,7 +87,7 @@ export default class Haxball extends RoundTeamBattle {
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
-        .filter(object => bullet !== object && bullet.owner !== object)
+        .filter(object => bullet !== object)
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player | Bullet) => {
           const bulletDirection = {
             dx: bullet.dx,
@@ -94,7 +101,6 @@ export default class Haxball extends RoundTeamBattle {
           if (collision) {
             object.hitFromBullet(bullet, angle);
             if (object instanceof Goal) {
-              console.log(object.team, bullet.owner.team);
               if (object.team !== bullet.owner.team) {
                 const team = this.findTeam(bullet.owner.team);
                 team?.increasePoints();
