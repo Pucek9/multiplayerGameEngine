@@ -17,6 +17,40 @@ export default class Haxball extends RoundTeamBattle {
     this.setupGoals();
   }
 
+  startRound() {
+    super.startRound();
+    this.bullets = [
+      new Bullet({
+        owner: null,
+        fromX: 0,
+        fromY: 0,
+        targetX: 1,
+        targetY: 1,
+        color: 'white',
+        size: 8,
+        power: 0,
+        range: 100,
+        speed: 0,
+        minSpeed: 0,
+        defaultSpeed: 0,
+        allowForManipulate: false,
+        hit(angle?: { x: number; y: number }) {
+          console.log(angle);
+          if (angle) {
+            this.reverseX *= angle.x;
+            this.reverseY *= angle.y;
+          }
+          this.decreaseSpeedToMin(1);
+        },
+        additionalAction() {
+          this.decreaseSpeedToMin(0.05);
+        },
+        deactivate() {},
+      }),
+    ];
+    this.emitter.sendNewBullets(this.roomName, this.bullets.map(this.toBulletModel));
+  }
+
   setupGoals() {
     const goals = <Array<Goal>>this.getStaticObjects().filter(object => object instanceof Goal);
     if (goals.length === this.teams.length) {
