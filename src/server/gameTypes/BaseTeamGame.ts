@@ -68,7 +68,8 @@ export default class BaseTeamGame extends BaseGame {
           (object: StaticCircularObject | StaticRectangleObject | Player) =>
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
-            (this.friendlyFire && bullet.owner !== object),
+            (this.friendlyFire && bullet.owner !== object) ||
+            bullet.power === 0,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const bulletDirection = {

@@ -41,7 +41,7 @@ export default class RoundTeamBattle extends BaseTeamGame {
 
   createBot(index: number): Bot {
     const bot = super.createBot(index);
-    console.log(bot);
+    // console.log(bot);
     // this.setPlayerPosition(bot);
     return bot;
   }

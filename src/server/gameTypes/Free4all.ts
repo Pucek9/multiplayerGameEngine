@@ -13,6 +13,8 @@ import Power from '../../shared/models/Power';
 import Bot from '../models/Bot';
 import SuperAIM from '../models/powers/SuperAIM';
 import AIM from '../models/powers/AIM';
+import Increaser from '../models/powers/Increaser';
+import Heal from '../models/powers/Heal';
 
 export default class Free4all extends BaseGame {
   constructor(public emitter: Emitter, params: Partial<Free4all>) {
@@ -34,12 +36,14 @@ export default class Free4all extends BaseGame {
 
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
-    player.addAndSelectPower(new SuperAIM());
+    player.addPower(new Increaser());
+    player.addPower(new SuperAIM());
     player.addPower(new AIM());
     player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
     player.addPower(new ReverseBullets());
+    player.addAndSelectPower(new Heal());
     player.addAndSelectWeapon(new Knife());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);

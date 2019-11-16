@@ -14,6 +14,7 @@ export default abstract class Weapon implements Item {
   reloadTime: number;
   shootBulletsCount: number;
   id: number;
+  bulletConfig: Partial<Bullet>;
 
   protected constructor() {
     this.id = generateId();
@@ -48,7 +49,18 @@ export default abstract class Weapon implements Item {
     }
   }
 
-  abstract prepareBullets(bulletData: BulletData): Bullet[];
+  prepareBullets(bulletData: BulletData) {
+    return [
+      new Bullet({
+        owner: bulletData.owner,
+        fromX: bulletData.fromX,
+        fromY: bulletData.fromY,
+        targetX: bulletData.targetX,
+        targetY: bulletData.targetY,
+        ...this.bulletConfig,
+      }),
+    ];
+  }
 
   generateBullets(bullets, game, owner) {
     if (bullets?.length > 0) {

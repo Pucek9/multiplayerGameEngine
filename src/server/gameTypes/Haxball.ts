@@ -42,7 +42,7 @@ export default class Haxball extends RoundTeamBattle {
           this.decreaseSpeedToMin(1);
         },
         hitFromBullet(bullet, angle) {
-          console.log(angle);
+          // console.log(angle);
           this.owner = bullet.owner;
           this.reverseX = angle.x;
           this.reverseY = angle.y;

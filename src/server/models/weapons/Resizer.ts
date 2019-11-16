@@ -33,17 +33,4 @@ export default class Resizer extends Weapon {
     super();
     Object.assign(this, params);
   }
-
-  prepareBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
-  }
 }

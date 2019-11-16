@@ -69,7 +69,7 @@ export default class Player extends PlayerModel {
 
   hitFromBullet(bullet: Bullet, angle?: Angle) {
     if (this.isAlive()) {
-      console.log(bullet);
+      // console.log(bullet);
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
       bullet.hit(angle);
@@ -144,6 +144,8 @@ export default class Player extends PlayerModel {
         this.energy += aidKit.energy;
       }
     }
+    this.size = this.baseSize;
+    this.speed = this.baseSpeed;
   }
 
   hasEnoughEnergy(cost: number) {
