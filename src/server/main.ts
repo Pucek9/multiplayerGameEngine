@@ -82,6 +82,9 @@ function connection(socket: Socket) {
     socket.on(API.MOUSE_CLICK, (owner: string) => {
       gameState.mouseClick(owner);
     });
+    socket.on(API.MOUSE_RIGHT_CLICK, (owner: string) => {
+      gameState.mouseRightClick(owner);
+    });
     socket.on(API.MOUSE_UP, (owner: string) => {
       gameState.mouseUp(owner);
     });

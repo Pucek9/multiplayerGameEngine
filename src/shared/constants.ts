@@ -7,6 +7,7 @@ export enum API {
   ADD_PLAYERS = 'addPlayers',
   ADD_NEW_BULLET = 'addBullet',
   MOUSE_CLICK = 'mouseClick',
+  MOUSE_RIGHT_CLICK = 'mouseRightClick',
   MOUSE_UP = 'mouseUp',
   GET_PLAYERS_STATE = 'getPlayers',
   GET_BULLETS = 'getBullets',

@@ -322,14 +322,17 @@ export default class BaseGame extends GameModel {
     const player = this.getPlayer(owner);
     if (player.isAlive()) {
       player.setMouseDown();
-      if (player.selectedPower?.useClickPower && player.keys.has('Shift')) {
-        player.useClickPower(this);
-        this.emitPowerInfo(player);
-      } else {
-        this.shoot(owner);
-      }
+      this.shoot(owner);
     } else {
       this.revivePlayer(owner);
+    }
+  }
+
+  mouseRightClick(owner: string) {
+    const player = this.getPlayer(owner);
+    if (player.isAlive() && player.selectedPower?.useClickPower) {
+      player.useClickPower(this);
+      this.emitPowerInfo(player);
     }
   }
 
