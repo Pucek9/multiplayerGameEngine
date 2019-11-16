@@ -14,7 +14,8 @@ export default class Grenade extends Weapon {
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
     flash: false,
-    color: 'white',
+    type: 'Grenade',
+    color: 'green',
     size: 5,
     power: 0,
     range: 400,

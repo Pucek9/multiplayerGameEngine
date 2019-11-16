@@ -3,6 +3,7 @@ import { generateId } from '../helpers';
 
 export default class BulletModel implements ICircle {
   readonly shape = 'circle';
+  type: string;
   color = 'black';
   size = 1;
   flash = true;

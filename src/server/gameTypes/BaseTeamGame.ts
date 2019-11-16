@@ -40,7 +40,7 @@ export default class BaseTeamGame extends BaseGame {
           .find(
             player =>
               bullet.owner !== player &&
-              bullet.owner.team !== player.team &&
+              (bullet.owner.team !== player.team || bullet.type === 'Heal') &&
               player.selectedPower instanceof Aura &&
               player.selectedPower.isActive() &&
               collisionDetector.detectCollision(bullet, {
@@ -69,7 +69,7 @@ export default class BaseTeamGame extends BaseGame {
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
             (this.friendlyFire && bullet.owner !== object) ||
-            bullet.power === 0,
+            bullet.type === 'Heal',
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const bulletDirection = {

@@ -248,6 +248,7 @@ export default class BaseGame extends GameModel {
   toBulletModel(bullet: Bullet): BulletModel {
     return {
       shape: bullet.shape,
+      type: bullet.type,
       x: bullet.x,
       y: bullet.y,
       id: bullet.id,

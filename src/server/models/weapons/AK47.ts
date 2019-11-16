@@ -11,6 +11,7 @@ export default class Ak47 extends Weapon {
   reloadTime = 2000;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Ak47',
     size: 3,
     power: 20,
     range: 800,

@@ -8,6 +8,7 @@ const DISPERSION = 70;
 export default class GrenadeExplosion extends Weapon {
   type = 'GrenadeExplosion';
   bulletConfig = {
+    type: 'GrenadeExplosion',
     size: 4,
     power: 50,
     range: 200,

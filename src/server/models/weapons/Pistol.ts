@@ -9,6 +9,7 @@ export default class Pistol extends Weapon {
   reloadTime = 1500;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Pistol',
     size: 3,
     power: 20,
     range: 700,

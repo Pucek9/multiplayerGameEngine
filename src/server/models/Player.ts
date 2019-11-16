@@ -144,8 +144,12 @@ export default class Player extends PlayerModel {
         this.energy += aidKit.energy;
       }
     }
-    this.size = this.baseSize;
-    this.speed = this.baseSpeed;
+    if (aidKit.size) {
+      this.size = this.baseSize;
+    }
+    if (aidKit.speed) {
+      this.speed = this.baseSpeed;
+    }
   }
 
   hasEnoughEnergy(cost: number) {

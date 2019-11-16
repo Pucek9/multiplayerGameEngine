@@ -11,6 +11,7 @@ export default class Resizer extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Resizer',
     color: 'white',
     size: 5,
     power: 1,
