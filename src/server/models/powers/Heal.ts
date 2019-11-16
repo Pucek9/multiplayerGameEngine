@@ -8,7 +8,8 @@ export default class Heal extends ShootPower {
     type: 'Heal',
     color: 'red',
     size: 10,
-    range: 700,
+    speed: 20,
+    range: 300,
     power: 0,
     effectOnPlayer(player) {
       player.takeAidKit({ hp: 10, speed: true, size: true });
