@@ -46,11 +46,11 @@ export default abstract class ShootPower extends Power implements ClickPower {
         {
           targetX: owner.cursor.x,
           targetY: owner.cursor.y,
-          fromX: owner.x + owner.size * Math.cos(owner.direction),
-          fromY: owner.y + owner.size * Math.sin(owner.direction),
+          fromX: owner.x + owner.size * Math.cos(owner.bodyDirection),
+          fromY: owner.y + owner.size * Math.sin(owner.bodyDirection),
           size: owner.size,
           owner: owner,
-          dir: owner.legsDirection,
+          dir: owner.direction,
         },
         game,
       );

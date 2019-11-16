@@ -91,7 +91,7 @@ export default class BaseGame extends GameModel {
     if (closestPlayer) {
       const distance = collisionDetector.detectCollision(closestPlayer, player).distance;
       const bulletSpeed = player.selectedWeapon?.bulletConfig?.speed ?? 10;
-      const enemyDirection = closestPlayer.legsDirection;
+      const enemyDirection = closestPlayer.direction;
       const [x, y] = [
         closestPlayer.x + (enemyDirection.dx * distance) / bulletSpeed,
         closestPlayer.y + (enemyDirection.dy * distance) / bulletSpeed,
@@ -216,14 +216,10 @@ export default class BaseGame extends GameModel {
             bullet.owner !== object,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
-          const bulletDirection = {
-            dx: bullet.dx,
-            dy: bullet.dy,
-          };
           const { collision, angle } = collisionDetector.detectCollision(
             bullet,
             object,
-            bulletDirection,
+            bullet.direction,
           );
           if (collision) {
             object.hitFromBullet(bullet, angle);

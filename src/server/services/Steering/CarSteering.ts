@@ -16,14 +16,14 @@ export class CarSteering extends Steering {
       dx: 0,
       dy: 0,
     };
-    let direction = player.direction;
+    let direction = player.bodyDirection;
     if (up && !down && !left && !right) {
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      dir.dx = player.speed * Math.cos(player.bodyDirection);
+      dir.dy = player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && down && !left && !right) {
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      dir.dx = -player.speed * Math.cos(player.bodyDirection);
+      dir.dy = -player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && !down && left && !right) {
       direction += this.sensitivity;
@@ -33,23 +33,23 @@ export class CarSteering extends Steering {
     }
     if (up && !down && left && !right) {
       direction += this.sensitivity;
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      dir.dx = player.speed * Math.cos(player.bodyDirection);
+      dir.dy = player.speed * Math.sin(player.bodyDirection);
     }
     if (up && !down && !left && right) {
       direction -= this.sensitivity;
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      dir.dx = player.speed * Math.cos(player.bodyDirection);
+      dir.dy = player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && down && left && !right) {
       direction += this.sensitivity;
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      dir.dx = -player.speed * Math.cos(player.bodyDirection);
+      dir.dy = -player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && down && !left && right) {
       direction -= this.sensitivity;
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      dir.dx = -player.speed * Math.cos(player.bodyDirection);
+      dir.dy = -player.speed * Math.sin(player.bodyDirection);
     }
 
     if (

@@ -8,7 +8,7 @@ export class CarIndependentSteering extends Steering {
     super();
   }
   performSteering(game, player: Player) {
-    const lastDir = Math.atan2(player.legsDirection.dy, player.legsDirection.dx);
+    const lastDir = Math.atan2(player.direction.dy, player.direction.dx);
     const up = hasKeys(player.keys, ['W', 'ArrowUp']);
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);

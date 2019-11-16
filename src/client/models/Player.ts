@@ -86,12 +86,12 @@ export default class Player extends PlayerModel implements IUpdatable {
   }
 
   updateBody() {
-    this.object.rotation.z = this.direction;
+    this.object.rotation.z = this.bodyDirection;
     this.object.position.x = this.x;
     this.object.position.y = this.y;
     // this.objectLegs.position.x = this.x;
     // this.objectLegs.position.y = this.y;
-    // this.objectLegs.rotation.z = Math.atan2(this.legsDirection.dy, this.legsDirection.dx);
+    // this.objectLegs.rotation.z = Math.atan2(this.direction.dy, this.direction.dx);
   }
 
   update() {

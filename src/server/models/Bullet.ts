@@ -18,10 +18,12 @@ export default class Bullet extends BulletModel {
   reverseX = 1;
   reverseY = 1;
   vectorFT: number;
-  dx: number;
-  dy: number;
   customFlag = true;
   allowForManipulate = true;
+  direction = {
+    dx: 0,
+    dy: 0,
+  };
 
   // gameName?: string;
 
@@ -33,8 +35,6 @@ export default class Bullet extends BulletModel {
     this.vectorFT = Math.sqrt(
       Math.pow(this.targetX - this.fromX, 2) + Math.pow(this.targetY - this.fromY, 2),
     );
-    this.dx = 0;
-    this.dy = 0;
     Object.seal(this);
   }
 
@@ -73,10 +73,12 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    this.dx = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
-    this.dy = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
-    this.x += this.dx;
-    this.y += this.dy;
+    this.direction.dx =
+      -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
+    this.direction.dy =
+      -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.x += this.direction.dx;
+    this.y += this.direction.dy;
     if (!this.isStillInAir()) {
       this.deactivate();
     }
@@ -103,7 +105,7 @@ export default class Bullet extends BulletModel {
   }
 
   getAngle(): number {
-    return Math.atan2(this.dy, this.dx);
+    return Math.atan2(this.direction.dy, this.direction.dx);
   }
 
   hitFromBullet(bullet, angle) {}

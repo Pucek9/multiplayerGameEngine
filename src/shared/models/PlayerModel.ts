@@ -4,8 +4,8 @@ import Direction from './Direction';
 export default class PlayerModel implements ICircle {
   shape = 'circle';
   alive = false;
-  direction = 0;
-  legsDirection: Direction = { dx: 0, dy: 0 };
+  bodyDirection = 0;
+  direction: Direction = { dx: 0, dy: 0 };
   weapons = [];
   selectedWeapon;
   powers = [];

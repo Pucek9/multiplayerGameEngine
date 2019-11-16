@@ -56,14 +56,10 @@ export default class RoundTeamBattle extends BaseTeamGame {
             (this.friendlyFire && bullet.owner !== object),
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
-          const bulletDirection = {
-            dx: bullet.dx,
-            dy: bullet.dy,
-          };
           const { collision, angle } = collisionDetector.detectCollision(
             bullet,
             object,
-            bulletDirection,
+            bullet.direction,
           );
           if (collision) {
             object.hitFromBullet(bullet, angle);

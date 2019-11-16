@@ -89,14 +89,10 @@ export default class Haxball extends RoundTeamBattle {
       [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
         .filter(object => bullet !== object)
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player | Bullet) => {
-          const bulletDirection = {
-            dx: bullet.dx,
-            dy: bullet.dy,
-          };
           const { collision, angle } = collisionDetector.detectCollision(
             bullet,
             object,
-            bulletDirection,
+            bullet.direction,
           );
           if (collision) {
             object.hitFromBullet(bullet, angle);
