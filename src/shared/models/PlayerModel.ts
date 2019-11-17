@@ -6,6 +6,7 @@ export default class PlayerModel implements ICircle {
   alive = false;
   bodyDirection = 0;
   direction: Direction = { dx: 0, dy: 0 };
+  moving = true;
   weapons = [];
   selectedWeapon;
   powers = [];

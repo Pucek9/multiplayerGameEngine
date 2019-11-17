@@ -87,7 +87,7 @@ export default class BaseGame extends GameModel {
 
   trackClosestPlayerFuturePosition(player: Player): { x: number; y: number } {
     const closestPlayer = this.trackClosestPlayer(player);
-    if (closestPlayer) {
+    if (closestPlayer?.moving) {
       const distance = collisionDetector.detectCollision(closestPlayer, player).distance;
       const bulletSpeed = player.selectedWeapon?.bulletConfig?.speed ?? 10;
       const enemyDirection = closestPlayer.direction;
@@ -97,6 +97,7 @@ export default class BaseGame extends GameModel {
       ];
       return { x, y };
     }
+    return closestPlayer;
   }
 
   trackClosestPlayer(player: Player): Player {

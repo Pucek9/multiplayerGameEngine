@@ -61,9 +61,10 @@ export class CarIndependentSteering extends Steering {
     ) {
       player.go({ ...rememberDir });
     } else if (this.allowForStaticRotate && (rememberDir.dx !== 0 || rememberDir.dy !== 0)) {
-      player.direction = { dx: 0, dy: 0 };
-      player.go({ ...rememberDir });
+      player.moving = false;
+      player.direction = { ...rememberDir };
     } else {
+      player.moving = false;
       player.direction = { ...lastDirection };
     }
   }

@@ -51,6 +51,7 @@ export class CarSteering extends Steering {
       direction.dx = -player.speed * Math.cos(player.bodyDirection);
       direction.dy = -player.speed * Math.sin(player.bodyDirection);
     }
+    const lastDirection = { ...player.direction };
     player.direction = direction;
     if (
       !player.isAlive() ||
@@ -59,11 +60,11 @@ export class CarSteering extends Steering {
       player.go(direction);
       this.updateCursor(player, bodyDirection);
     } else {
-      player.direction = { dx: 0, dy: 0 };
-      player.go();
+      player.moving = false;
       if (this.allowForStaticRotate) {
         this.updateCursor(player, bodyDirection);
       }
+      player.direction = { ...lastDirection };
     }
   }
 

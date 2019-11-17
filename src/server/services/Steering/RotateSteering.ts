@@ -69,12 +69,16 @@ export class RotateSteering extends Steering {
         (Math.sqrt(2) / 2) *
         (Math.sin(player.bodyDirection) + Math.cos(player.bodyDirection));
     }
+    const lastDirection = { ...player.direction };
     player.direction = direction;
-    if (!player.isAlive() || !game.detectPlayerCollision(player)) {
+    if (
+      (!player.isAlive() || !game.detectPlayerCollision(player)) &&
+      (direction.dx !== 0 || direction.dy !== 0)
+    ) {
       player.go(direction);
     } else {
-      player.direction = { dx: 0, dy: 0 };
-      player.go();
+      player.moving = false;
+      player.direction = { ...lastDirection };
     }
   }
 }

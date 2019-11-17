@@ -47,12 +47,16 @@ export class EightDirectionSteering extends Steering {
       direction.dx = (Math.sqrt(2) / 2) * player.speed;
       direction.dy = (-Math.sqrt(2) / 2) * player.speed;
     }
+    const lastDirection = { ...player.direction };
     player.direction = direction;
-    if (!player.isAlive() || !game.detectPlayerCollision(player)) {
-      player.go(direction);
-    } else {
-      player.direction = { dx: 0, dy: 0 };
+    if (
+      (!player.isAlive() || !game.detectPlayerCollision(player)) &&
+      (direction.dx !== 0 || direction.dy !== 0)
+    ) {
       player.go();
+    } else {
+      player.moving = false;
+      player.direction = { ...lastDirection };
     }
   }
 }

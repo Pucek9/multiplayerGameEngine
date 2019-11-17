@@ -7,6 +7,7 @@ export default class Bot extends Player {
   die(withDieCounter?) {
     super.die(withDieCounter);
     this.keys.clear();
+    this.direction = { dx: 0, dy: 0 };
   }
 
   performRandKeys() {
