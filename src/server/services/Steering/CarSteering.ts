@@ -66,10 +66,10 @@ export class CarSteering extends Steering {
     }
   }
 
-  private updateCursor(owner, direction) {
-    owner.direction = direction;
-    owner.cursor.x = owner.x + this.range * Math.cos(owner.direction);
-    owner.cursor.y = owner.y + this.range * Math.sin(owner.direction);
+  private updateCursor(owner: Player, direction: number) {
+    owner.bodyDirection = direction;
+    owner.cursor.x = owner.x + this.range * Math.cos(owner.bodyDirection);
+    owner.cursor.y = owner.y + this.range * Math.sin(owner.bodyDirection);
   }
 }
 
