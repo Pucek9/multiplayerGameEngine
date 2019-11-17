@@ -9,71 +9,72 @@ export class RotateSteering extends Steering {
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
     const right = hasKeys(player.keys, ['D', 'ArrowRight']);
-    const dir: Direction = {
+    const direction: Direction = {
       dx: 0,
       dy: 0,
     };
     if (up && !down && !left && !right) {
-      dir.dx = player.speed * Math.cos(player.bodyDirection);
-      dir.dy = player.speed * Math.sin(player.bodyDirection);
+      direction.dx = player.speed * Math.cos(player.bodyDirection);
+      direction.dy = player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && down && !left && !right) {
-      dir.dx = -player.speed * Math.cos(player.bodyDirection);
-      dir.dy = -player.speed * Math.sin(player.bodyDirection);
+      direction.dx = -player.speed * Math.cos(player.bodyDirection);
+      direction.dy = -player.speed * Math.sin(player.bodyDirection);
     }
     if (!up && !down && left && !right) {
-      dir.dx = -player.speed * Math.sin(player.bodyDirection);
-      dir.dy = player.speed * Math.cos(player.bodyDirection);
+      direction.dx = -player.speed * Math.sin(player.bodyDirection);
+      direction.dy = player.speed * Math.cos(player.bodyDirection);
     }
     if (!up && !down && !left && right) {
-      dir.dx = player.speed * Math.sin(player.bodyDirection);
-      dir.dy = -player.speed * Math.cos(player.bodyDirection);
+      direction.dx = player.speed * Math.sin(player.bodyDirection);
+      direction.dy = -player.speed * Math.cos(player.bodyDirection);
     }
     if (up && !down && left && !right) {
-      dir.dx =
+      direction.dx =
         player.speed *
         (Math.sqrt(2) / 2) *
         (Math.cos(player.bodyDirection) - Math.sin(player.bodyDirection));
-      dir.dy =
+      direction.dy =
         player.speed *
         (Math.sqrt(2) / 2) *
         (Math.sin(player.bodyDirection) + Math.cos(player.bodyDirection));
     }
     if (up && !down && !left && right) {
-      dir.dx =
+      direction.dx =
         player.speed *
         (Math.sqrt(2) / 2) *
         (Math.cos(player.bodyDirection) + Math.sin(player.bodyDirection));
-      dir.dy =
+      direction.dy =
         player.speed *
         (Math.sqrt(2) / 2) *
         (Math.sin(player.bodyDirection) - Math.cos(player.bodyDirection));
     }
     if (!up && down && left && !right) {
-      dir.dx =
+      direction.dx =
         -player.speed *
         (Math.sqrt(2) / 2) *
         (Math.cos(player.bodyDirection) + Math.sin(player.bodyDirection));
-      dir.dy =
+      direction.dy =
         -player.speed *
         (Math.sqrt(2) / 2) *
         (Math.sin(player.bodyDirection) - Math.cos(player.bodyDirection));
     }
     if (!up && down && !left && right) {
-      dir.dx =
+      direction.dx =
         -player.speed *
         (Math.sqrt(2) / 2) *
         (Math.cos(player.bodyDirection) - Math.sin(player.bodyDirection));
-      dir.dy =
+      direction.dy =
         -player.speed *
         (Math.sqrt(2) / 2) *
         (Math.sin(player.bodyDirection) + Math.cos(player.bodyDirection));
     }
-
-    if (!player.isAlive() || !game.detectPlayerCollision(player, dir)) {
-      player.go(dir);
+    player.direction = direction;
+    if (!player.isAlive() || !game.detectPlayerCollision(player)) {
+      player.go(direction);
     } else {
-      player.go({ dx: 0, dy: 0 });
+      player.direction = { dx: 0, dy: 0 };
+      player.go();
     }
   }
 }

@@ -13,7 +13,7 @@ export class CarIndependentSteering extends Steering {
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
     const right = hasKeys(player.keys, ['D', 'ArrowRight']);
-    const dir: Direction = {
+    const direction: Direction = {
       dx: 0,
       dy: 0,
     };
@@ -22,12 +22,12 @@ export class CarIndependentSteering extends Steering {
       dy: 0,
     };
     if (up && !down && !left && !right) {
-      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir);
-      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir);
+      rememberDir.dx = direction.dx = player.speed * Math.cos(lastDir);
+      rememberDir.dy = direction.dy = player.speed * Math.sin(lastDir);
     }
     if (!up && down && !left && !right) {
-      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir));
-      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir));
+      rememberDir.dx = -(direction.dx = -player.speed * Math.cos(lastDir));
+      rememberDir.dy = -(direction.dy = -player.speed * Math.sin(lastDir));
     }
     if (!up && !down && left && !right && this.allowForStaticRotate) {
       rememberDir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
@@ -38,29 +38,33 @@ export class CarIndependentSteering extends Steering {
       rememberDir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
     }
     if (up && !down && left && !right) {
-      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir + this.sensitivity);
-      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir + this.sensitivity);
+      rememberDir.dx = direction.dx = player.speed * Math.cos(lastDir + this.sensitivity);
+      rememberDir.dy = direction.dy = player.speed * Math.sin(lastDir + this.sensitivity);
     }
     if (up && !down && !left && right) {
-      rememberDir.dx = dir.dx = player.speed * Math.cos(lastDir - this.sensitivity);
-      rememberDir.dy = dir.dy = player.speed * Math.sin(lastDir - this.sensitivity);
+      rememberDir.dx = direction.dx = player.speed * Math.cos(lastDir - this.sensitivity);
+      rememberDir.dy = direction.dy = player.speed * Math.sin(lastDir - this.sensitivity);
     }
     if (!up && down && left && !right) {
-      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir + this.sensitivity));
-      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir + this.sensitivity));
+      rememberDir.dx = -(direction.dx = -player.speed * Math.cos(lastDir + this.sensitivity));
+      rememberDir.dy = -(direction.dy = -player.speed * Math.sin(lastDir + this.sensitivity));
     }
     if (!up && down && !left && right) {
-      rememberDir.dx = -(dir.dx = -player.speed * Math.cos(lastDir - this.sensitivity));
-      rememberDir.dy = -(dir.dy = -player.speed * Math.sin(lastDir - this.sensitivity));
+      rememberDir.dx = -(direction.dx = -player.speed * Math.cos(lastDir - this.sensitivity));
+      rememberDir.dy = -(direction.dy = -player.speed * Math.sin(lastDir - this.sensitivity));
     }
-
+    const lastDirection = { ...player.direction };
+    player.direction = { ...direction };
     if (
       !player.isAlive() ||
-      (!game.detectPlayerCollision(player, dir) && (rememberDir.dx !== 0 || rememberDir.dy !== 0))
+      (!game.detectPlayerCollision(player) && (rememberDir.dx !== 0 || rememberDir.dy !== 0))
     ) {
-      player.go(dir, rememberDir);
+      player.go({ ...rememberDir });
     } else if (this.allowForStaticRotate && (rememberDir.dx !== 0 || rememberDir.dy !== 0)) {
-      player.go({ dx: 0, dy: 0 }, rememberDir);
+      player.direction = { dx: 0, dy: 0 };
+      player.go({ ...rememberDir });
+    } else {
+      player.direction = { ...lastDirection };
     }
   }
 }

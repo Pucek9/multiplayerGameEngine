@@ -10,6 +10,10 @@ export default class StaticRectangleObjectModel implements IRectangle {
   depth: number;
   color: string;
   deg = 0;
+  direction: {
+    dx: 0;
+    dy: 0;
+  };
 
   constructor(params: Partial<StaticRectangleObjectModel>) {
     Object.assign(this, params);

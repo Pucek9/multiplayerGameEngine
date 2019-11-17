@@ -38,13 +38,13 @@ export default class Free4all extends BaseGame {
 
   connectPlayer(newPlayer: NewUser): Player {
     const player = super.connectPlayer(newPlayer);
-    // player.addPower(new Increaser());
-    // player.addPower(new SuperAIM());
-    // player.addPower(new AIM());
-    // player.addPower(new Accelerator());
-    // player.addPower(new Teleport());
-    // player.addPower(new SlowBullets());
-    // player.addPower(new ReverseBullets());
+    player.addPower(new Increaser());
+    player.addPower(new SuperAIM());
+    player.addPower(new AIM());
+    player.addPower(new Accelerator());
+    player.addPower(new Teleport());
+    player.addPower(new SlowBullets());
+    player.addPower(new ReverseBullets());
     player.addPower(new Push());
     player.addPower(new Pull());
     player.addAndSelectPower(new Heal());

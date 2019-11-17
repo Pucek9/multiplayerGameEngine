@@ -184,11 +184,11 @@ export default class Player extends PlayerModel {
     }
   }
 
-  go(dir: Direction, rememberDir: Direction = dir) {
-    this.x += dir.dx;
-    this.y += dir.dy;
-    this.cursor.x += dir.dx;
-    this.cursor.y += dir.dy;
+  go(rememberDir: Direction = this.direction) {
+    this.x += this.direction.dx;
+    this.y += this.direction.dy;
+    this.cursor.x += this.direction.dx;
+    this.cursor.y += this.direction.dy;
     this.direction = rememberDir;
   }
 

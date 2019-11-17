@@ -4,7 +4,6 @@ import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameModel from './GameModel';
-import Direction from '../../shared/models/Direction';
 import { compareBy, generateId, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
@@ -216,11 +215,7 @@ export default class BaseGame extends GameModel {
             bullet.owner !== object,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
-          const { collision, angle } = collisionDetector.detectCollision(
-            bullet,
-            object,
-            bullet.direction,
-          );
+          const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
             this.deleteBulletIfInactive(bullet, i);
@@ -253,6 +248,7 @@ export default class BaseGame extends GameModel {
       targetX: bullet.targetX,
       targetY: bullet.targetY,
       flash: bullet.flash,
+      direction: bullet.direction,
     };
   }
 
@@ -376,28 +372,25 @@ export default class BaseGame extends GameModel {
     }
   }
 
-  detectPlayerCollisionWithGenerator(player: Player, direction?: Direction) {
+  detectPlayerCollisionWithGenerator(player: Player) {
     this.getItemGenerators().forEach(generator => {
-      if (
-        collisionDetector.detectCollision(player, generator, direction).collision &&
-        generator.isReady()
-      ) {
+      if (collisionDetector.detectCollision(player, generator).collision && generator.isReady()) {
         generator.pickup(this, player);
       }
     });
   }
 
-  detectPlayerCollisionWithObjects(player: Player, direction?: Direction): boolean {
+  detectPlayerCollisionWithObjects(player: Player): boolean {
     const allObjects = [
       ...this.getStaticObjects(),
       ...this.getAlivePlayers().filter(object => player !== object),
     ];
-    return collisionDetector.detectObjectCollisionWithOtherObjects(player, allObjects, direction);
+    return collisionDetector.detectObjectCollisionWithOtherObjects(player, allObjects);
   }
 
-  detectPlayerCollision(player: Player, direction?: Direction): boolean {
-    this.detectPlayerCollisionWithGenerator(player, direction);
-    return this.detectPlayerCollisionWithObjects(player, direction);
+  detectPlayerCollision(player: Player): boolean {
+    this.detectPlayerCollisionWithGenerator(player);
+    return this.detectPlayerCollisionWithObjects(player);
   }
 
   updateTimeForDeadPlayers(): number {

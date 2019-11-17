@@ -23,28 +23,24 @@ export class CollisionDetector {
     return { deltaX, deltaY, distance };
   }
 
-  detectCollision(
-    object1: ICircle | IRectangle,
-    object2: ICircle | IRectangle,
-    direction1?: Direction,
-  ): CollisionInfo;
+  detectCollision(object1: ICircle | IRectangle, object2: ICircle | IRectangle): CollisionInfo;
 
-  detectCollision(object1, object2, direction1: Direction = { dx: 0, dy: 0 }) {
+  detectCollision(object1, object2) {
     switch ([object1.shape, object2.shape].join()) {
       case 'circle,circle':
-        return this.detectCircularCollision(object1, object2, direction1);
+        return this.detectCircularCollision(object1, object2);
       case 'rectangle,rectangle':
-        return this.detectRectangleCollision(object1, object2, direction1);
+        return this.detectRectangleCollision(object1, object2);
       case 'circle,rectangle':
-        return this.detectRectangleAndCircleCollision(object1, object2, direction1);
+        return this.detectRectangleAndCircleCollision(object1, object2);
       case 'rectangle,circle':
-        return this.detectRectangleAndCircleCollision(object2, object1, direction1);
+        return this.detectRectangleAndCircleCollision(object2, object1);
     }
   }
 
-  detectCircularCollision(o1: ICircle, o2: ICircle, direction: Direction): CollisionInfo {
+  detectCircularCollision(o1: ICircle, o2: ICircle): CollisionInfo {
     const distance = Math.sqrt(
-      (o1.x - o2.x + direction.dx) ** 2 + (o1.y - o2.y + direction.dy) ** 2,
+      (o1.x - o2.x + o1.direction.dx) ** 2 + (o1.y - o2.y + o1.direction.dy) ** 2,
     );
     let [x, y] = [-1, -1];
     if (o1 instanceof Bullet) {
@@ -58,44 +54,36 @@ export class CollisionDetector {
         ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
           Math.sin(phi) +
         o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
-      x = dx / direction.dx || dx;
-      y = dy / direction.dy || dy;
+      x = dx / o1.direction.dx || dx;
+      y = dy / o1.direction.dy || dy;
     }
     return { collision: distance < o1.size + o2.size, angle: { x, y }, distance };
   }
 
-  detectRectangleCollision(o1: IRectangle, o2: IRectangle, direction: Direction): CollisionInfo {
+  detectRectangleCollision(o1: IRectangle, o2: IRectangle): CollisionInfo {
     return {
       collision:
         o2.x + o2.width > o1.x &&
         o2.y + o2.height > o1.y &&
-        o1.x + o1.width + direction.dx > o2.x &&
-        o1.y + o1.height + direction.dy > o2.y,
+        o1.x + o1.width + o1.direction.dx > o2.x &&
+        o1.y + o1.height + o1.direction.dy > o2.y,
     };
   }
 
-  detectRectangleAndCircleCollision(
-    circle: ICircle,
-    rect: IRectangle,
-    direction: Direction,
-  ): CollisionInfo {
+  detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
     if (rect.deg === 0) {
-      return this.detectUnRotatedRectangleAndCircleCollision(circle, rect, direction);
+      return this.detectUnRotatedRectangleAndCircleCollision(circle, rect);
     } else {
-      return this.detectRotatedRectangleAndCircleCollision(circle, rect, direction);
+      return this.detectRotatedRectangleAndCircleCollision(circle, rect);
     }
   }
 
-  detectUnRotatedRectangleAndCircleCollision(
-    circle: ICircle,
-    rect: IRectangle,
-    direction: Direction,
-  ): CollisionInfo {
+  detectUnRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
     const { deltaX, deltaY, distance } = this.getDistance(
-      circle.x + direction.dx,
-      circle.y + direction.dy,
-      Math.max(rect.x, Math.min(circle.x + direction.dx, rect.x + rect.width)),
-      Math.max(rect.y, Math.min(circle.y + direction.dy, rect.y + rect.height)),
+      circle.x + circle.direction.dx,
+      circle.y + circle.direction.dy,
+      Math.max(rect.x, Math.min(circle.x + circle.direction.dx, rect.x + rect.width)),
+      Math.max(rect.y, Math.min(circle.y + circle.direction.dy, rect.y + rect.height)),
     );
 
     return {
@@ -108,23 +96,19 @@ export class CollisionDetector {
     };
   }
 
-  detectRotatedRectangleAndCircleCollision(
-    circle: ICircle,
-    rect: IRectangle,
-    direction: Direction,
-  ): CollisionInfo {
+  detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
     let cx, cy;
     const angleOfRad = degToRad(-rect.deg);
     const rectCenterX = rect.x + rect.width / 2;
     const rectCenterY = rect.y + rect.height / 2;
 
     const rotateCircleX =
-      Math.cos(angleOfRad) * (circle.x + direction.dx - rectCenterX) -
-      Math.sin(angleOfRad) * (circle.y + direction.dy - rectCenterY) +
+      Math.cos(angleOfRad) * (circle.x + circle.direction.dx - rectCenterX) -
+      Math.sin(angleOfRad) * (circle.y + circle.direction.dy - rectCenterY) +
       rectCenterX;
     const rotateCircleY =
-      Math.sin(angleOfRad) * (circle.x + direction.dx - rectCenterX) +
-      Math.cos(angleOfRad) * (circle.y + direction.dy - rectCenterY) +
+      Math.sin(angleOfRad) * (circle.x + circle.direction.dx - rectCenterX) +
+      Math.cos(angleOfRad) * (circle.y + circle.direction.dy - rectCenterY) +
       rectCenterY;
 
     if (rotateCircleX < rect.x) {
@@ -168,9 +152,8 @@ export class CollisionDetector {
   detectObjectCollisionWithOtherObjects(
     target: ICircle | IRectangle,
     objects: (ICircle | IRectangle)[],
-    direction?: Direction,
   ): boolean {
-    return objects.some(object => this.detectCollision(target, object, direction).collision);
+    return objects.some(object => this.detectCollision(target, object).collision);
   }
 }
 
