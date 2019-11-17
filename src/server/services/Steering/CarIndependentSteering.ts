@@ -13,14 +13,9 @@ export class CarIndependentSteering extends Steering {
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
     const right = hasKeys(player.keys, ['D', 'ArrowRight']);
-    const direction: Direction = {
-      dx: 0,
-      dy: 0,
-    };
-    const rememberDir: Direction = {
-      dx: 0,
-      dy: 0,
-    };
+    const direction: Direction = { dx: 0, dy: 0 };
+    const rememberDir: Direction = { dx: 0, dy: 0 };
+
     if (up && !down && !left && !right) {
       rememberDir.dx = direction.dx = player.speed * Math.cos(lastDir);
       rememberDir.dy = direction.dy = player.speed * Math.sin(lastDir);
