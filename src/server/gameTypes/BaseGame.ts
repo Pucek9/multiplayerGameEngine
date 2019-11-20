@@ -4,7 +4,7 @@ import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import GameModel from './GameModel';
-import { compareBy, generateId, randColor, times } from '../../shared/helpers';
+import { compareBy, generateId, rand, randColor, times } from '../../shared/helpers';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import Weapon from '../models/weapons/Weapon';
 import Emitter from '../services/Emitter';
@@ -122,6 +122,9 @@ export default class BaseGame extends GameModel {
     this.getBots().forEach((bot: Bot) => {
       bot.performRandKeys();
       this.mouseClick(bot.id);
+      if (rand(3) === 0) {
+        this.mouseRightClick(bot.id);
+      }
     });
   }
 

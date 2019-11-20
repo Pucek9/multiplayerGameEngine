@@ -31,6 +31,8 @@ export default class Free4all extends BaseGame {
       ReverseBullets,
       SlowBullets,
       Accelerator,
+      Push,
+      Pull,
     ]);
     bot.addAndSelectPower(new SuperPower());
     bot.addAndSelectWeapon(new Pistol({ magazines: 500 }));
