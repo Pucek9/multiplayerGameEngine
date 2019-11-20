@@ -75,6 +75,7 @@ export default class BaseTeamGame extends BaseGame {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            bullet.hit(angle, object);
             if (object instanceof Player && !object.isAlive()) {
               const team = this.findTeam(bullet.owner.team);
               team?.increasePoints();

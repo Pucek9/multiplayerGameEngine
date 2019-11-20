@@ -6,10 +6,8 @@ export default abstract class StaticCircularObjectModel implements ICircle {
   y: number;
   size: number;
   color: string;
-  direction: {
-    dx: 0;
-    dy: 0;
-  };
+  speed = 0;
+  direction = { dx: 0, dy: 0 };
 
   constructor(params: Partial<StaticCircularObjectModel>) {
     Object.assign(this, params);

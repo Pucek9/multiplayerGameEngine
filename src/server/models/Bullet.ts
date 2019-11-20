@@ -92,7 +92,7 @@ export default class Bullet extends BulletModel {
 
   effectOnPlayer(player: Player) {}
 
-  hit(angle: Angle) {
+  hit(angle: Angle, object?: any) {
     this.deactivate();
   }
 
@@ -102,10 +102,6 @@ export default class Bullet extends BulletModel {
 
   isActive() {
     return this.active;
-  }
-
-  getAngle(): number {
-    return Math.atan2(this.direction.dy, this.direction.dx);
   }
 
   hitFromBullet(bullet, angle) {}

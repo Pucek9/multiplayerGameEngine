@@ -5,4 +5,5 @@ export default interface IObject {
   x: number;
   y: number;
   direction: Direction;
+  speed: number;
 }

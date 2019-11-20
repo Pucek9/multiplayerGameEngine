@@ -11,10 +11,14 @@ export default class Legs extends Knife {
   bulletConfig = {
     type: 'Legs',
     flash: false,
-    size: 8,
+    size: 20,
     power: 0,
-    range: 40,
+    range: 30,
+    speed: 1,
     allowForManipulate: false,
-    speed: 3,
+    hit(angle?: { x: number; y: number }, object?) {
+      // this.deactivate();
+      // console.log('hit', this.type, angle, object?.type || object?.shape);
+    },
   };
 }

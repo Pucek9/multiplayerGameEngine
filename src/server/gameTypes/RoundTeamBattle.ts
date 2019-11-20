@@ -20,8 +20,10 @@ export default class RoundTeamBattle extends BaseTeamGame {
 
   setPlayerPosition(player: Player) {
     const team = this.findTeam(player.team);
-    const { x, y } = playerService.randNonCollisionPositionForZone(30, this, team.zone);
-    player.setPosition(x, y);
+    if (team) {
+      const { x, y } = playerService.randNonCollisionPositionForZone(30, this, team.zone);
+      player.setPosition(x, y);
+    }
   }
 
   startRound() {
@@ -59,6 +61,7 @@ export default class RoundTeamBattle extends BaseTeamGame {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            bullet.hit(angle, object);
             if (object instanceof Player && !object.isAlive()) {
               const team = this.findTeam(bullet.owner.team);
               const enemyPlayersAlive = this.getAlivePlayers().filter(

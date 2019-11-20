@@ -219,6 +219,7 @@ export default class BaseGame extends GameModel {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            bullet.hit(angle, object);
             this.deleteBulletIfInactive(bullet, i);
           }
         });
@@ -250,6 +251,7 @@ export default class BaseGame extends GameModel {
       targetY: bullet.targetY,
       flash: bullet.flash,
       direction: bullet.direction,
+      speed: bullet.speed,
     };
   }
 

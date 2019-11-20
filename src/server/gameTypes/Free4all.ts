@@ -17,6 +17,7 @@ import Increaser from '../models/powers/Increaser';
 import Heal from '../models/powers/Heal';
 import Push from '../models/powers/Push';
 import Pull from '../models/powers/Pull';
+import Grenade from '../models/weapons/Grenade';
 
 export default class Free4all extends BaseGame {
   constructor(public emitter: Emitter, params: Partial<Free4all>) {
@@ -48,6 +49,7 @@ export default class Free4all extends BaseGame {
     player.addPower(new Push());
     player.addPower(new Pull());
     player.addAndSelectPower(new Heal());
+    player.addWeapon(new Grenade());
     player.addAndSelectWeapon(new Knife());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);

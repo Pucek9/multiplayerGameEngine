@@ -42,21 +42,68 @@ export class CollisionDetector {
     const distance = Math.sqrt(
       (o1.x - o2.x + o1.direction.dx) ** 2 + (o1.y - o2.y + o1.direction.dy) ** 2,
     );
+
+    const distanceNextFrame =
+      Math.sqrt(
+        (o1.x + o1.direction.dx - o2.x - o2.direction.dx) ** 2 +
+          (o1.y + o1.direction.dy - o2.y - o2.direction.dy) ** 2,
+      ) -
+      o1.size / 2 -
+      o2.size / 2;
     let [x, y] = [-1, -1];
-    if (o1 instanceof Bullet) {
-      const theta = o1.getAngle();
-      const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
-      const dx =
-        ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
-          Math.cos(phi) +
-        o1.speed * Math.sin(theta - phi) * Math.cos(phi + Math.PI / 2);
-      const dy =
-        ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
-          Math.sin(phi) +
-        o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
-      x = dx / o1.direction.dx || dx;
-      y = dy / o1.direction.dy || dy;
+
+    const theta1 = Math.atan2(o1.direction.dy, o1.direction.dx);
+    const theta2 = Math.atan2(o2.direction.dy, o2.direction.dx);
+    const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
+    const m1 = o1.size;
+    const m2 = o2.size;
+    const v1 = o1.speed ?? 0;
+    const v2 = o2.speed ?? 0;
+
+    const dx1F =
+      ((v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) /
+        (m1 + m2)) *
+        Math.cos(phi) +
+      v1 * Math.sin(theta1 - phi) * Math.cos(phi + Math.PI / 2);
+    const dy1F =
+      ((v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) /
+        (m1 + m2)) *
+        Math.sin(phi) +
+      v1 * Math.sin(theta1 - phi) * Math.sin(phi + Math.PI / 2);
+    const dx2F =
+      ((v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) /
+        (m1 + m2)) *
+        Math.cos(phi) +
+      v2 * Math.sin(theta2 - phi) * Math.cos(phi + Math.PI / 2);
+    const dy2F =
+      ((v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) /
+        (m1 + m2)) *
+        Math.sin(phi) +
+      v2 * Math.sin(theta2 - phi) * Math.sin(phi + Math.PI / 2);
+
+    // if (distance < o1.size + o2.size) {
+    if (distance < o1.size + o2.size) {
+      // o1.direction.dx = dx1F;
+      // o1.direction.dy = dy1F;
+      o2.direction.dx = dx2F;
+      o2.direction.dy = dy2F;
+
+      // if (o1 instanceof Bullet) {
+      //   const theta = o1.getAngle();
+      //   const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
+      //   const dx =
+      //     ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
+      //       Math.cos(phi) +
+      //     o1.speed * Math.sin(theta - phi) * Math.cos(phi + Math.PI / 2);
+      //   const dy =
+      //     ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
+      //       Math.sin(phi) +
+      //     o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
+      x = dx1F / (o1.direction.dx || dx1F);
+      y = dy1F / (o1.direction.dy || dy1F);
+      // console.log(dx1F, dy1F, dx2F, dy2F, o1.direction.dx, o1.direction.dy, x, y);
     }
+    // console.log(distance, o1.size + o2.size, distanceNextFrame);
     return { collision: distance < o1.size + o2.size, angle: { x, y }, distance };
   }
 

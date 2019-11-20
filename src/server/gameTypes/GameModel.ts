@@ -62,4 +62,5 @@ export default abstract class GameModel {
   abstract mouseUp(id: string);
 
   abstract generateBullets(bullets: Bullet[]);
+  abstract detectPlayerCollisionWithObjects(player: Player);
 }
