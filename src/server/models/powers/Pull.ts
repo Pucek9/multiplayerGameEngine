@@ -15,12 +15,14 @@ export default class Pull extends ShootPower {
     size: 50,
     range: 400,
     power: 0,
+    speed: 10,
     hit(angle: Angle) {},
     effectOnPlayer(player: Player) {
       const game = gamesManager.getGame(player.roomName);
       if (game) {
         player.direction.dx = this.direction.dx;
         player.direction.dy = this.direction.dy;
+        // player.speed = this.speed;
         if (!game.detectPlayerCollisionWithObjects(player)) {
           player.go();
         }

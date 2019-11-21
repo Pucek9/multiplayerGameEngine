@@ -38,7 +38,7 @@ export default class Haxball extends RoundTeamBattle {
         defaultSpeed: 7,
         allowForManipulate: false,
         hit(angle?: { x: number; y: number }, object?) {
-          console.log('hit', this.type, angle, object?.type || object?.shape);
+          // console.log('hit', this.type, angle, object?.type || object?.shape);
           if (angle) {
             this.reverseX *= angle.x;
             this.reverseY *= angle.y;
@@ -46,9 +46,14 @@ export default class Haxball extends RoundTeamBattle {
           this.decreaseSpeedToMin(1);
         },
         hitFromBullet(bullet, angle) {
-          console.log('hitFromBullet', this.type, angle, bullet.type);
           this.owner = bullet.owner;
           this.distance = 0;
+          this.fromX = this.x;
+          this.fromY = this.y;
+          this.targetX = this.x + this.direction.dx;
+          this.targetY = this.y + this.direction.dy;
+          // ball.reverseX *= angle2.x;
+          // ball.reverseY *= angle2.y;
           this.speed = this.defaultSpeed;
         },
         additionalAction() {
@@ -74,7 +79,6 @@ export default class Haxball extends RoundTeamBattle {
     const player = super.connectPlayer(newPlayer);
     player.addAndSelectPower(new Accelerator());
     player.addPower(new Push());
-    player.addPower(new Pull());
     player.addAndSelectWeapon(new Legs());
     this.emitPowerInfo(player);
     this.emitWeaponInfo(player);
@@ -93,12 +97,12 @@ export default class Haxball extends RoundTeamBattle {
       [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
         .filter(object => bullet !== object && !(bullet.owner === object && bullet.type === 'Legs'))
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player | Bullet) => {
-          const { collision, angle } = collisionDetector.detectCollision(bullet, object);
+          const { collision, angle, angle2 } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             bullet.hit(angle, object);
-            object.hitFromBullet(bullet, angle);
+            object.hitFromBullet(bullet, angle2);
             if (object instanceof Goal) {
-              if (object.team !== bullet.owner.team) {
+              if (object.team !== bullet.owner?.team) {
                 const team = this.findTeam(bullet.owner.team);
                 team?.increasePoints();
               } else {
@@ -119,15 +123,29 @@ export default class Haxball extends RoundTeamBattle {
       ...this.getStaticObjects(),
       ...this.getAlivePlayers().filter(object => player !== object),
     ];
+    this.detectBallCollision(player, allObjects);
+    return collisionDetector.detectObjectCollisionWithOtherObjects(player, allObjects);
+  }
+
+  protected detectBallCollision(player: Player, allObjects) {
     const ball = this.bullets.find(bullet => bullet.type === 'Ball');
-    if (ball && collisionDetector.detectCollision(player, ball).collision) {
-      ball.direction.dx = player.direction.dx;
-      ball.direction.dy = player.direction.dy;
-      if (!collisionDetector.detectObjectCollisionWithOtherObjects(ball, allObjects)) {
-        ball.x += player.direction.dx;
-        ball.y += player.direction.dy;
+    if (ball) {
+      const { collision } = collisionDetector.detectCollision(player, ball);
+      if (collision) {
+        ball.owner = player;
+        ball.distance = 0;
+        ball.fromX = ball.x;
+        ball.fromY = ball.y;
+        ball.targetX = ball.x + ball.direction.dx;
+        ball.targetY = ball.y + ball.direction.dy;
+        // ball.reverseX *= angle2.x;
+        // ball.reverseY *= angle2.y;
+        ball.speed = player.speed;
+        if (!collisionDetector.detectObjectCollisionWithOtherObjects(ball, allObjects)) {
+          ball.x += ball.direction.dx;
+          ball.y += ball.direction.dy;
+        }
       }
     }
-    return collisionDetector.detectObjectCollisionWithOtherObjects(player, allObjects);
   }
 }

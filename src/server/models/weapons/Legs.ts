@@ -17,7 +17,7 @@ export default class Legs extends Knife {
     speed: 1,
     allowForManipulate: false,
     hit(angle?: { x: number; y: number }, object?) {
-      // this.deactivate();
+      this.deactivate();
       // console.log('hit', this.type, angle, object?.type || object?.shape);
     },
   };

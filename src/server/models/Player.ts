@@ -72,7 +72,6 @@ export default class Player extends PlayerModel {
       // console.log(bullet);
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
-      bullet.hit(angle);
       if (this.hp <= 0) {
         this.hp = 0;
         if (bullet.owner?.team !== this.team) {
@@ -91,7 +90,7 @@ export default class Player extends PlayerModel {
         fromY: this.y + this.size * Math.sin(this.bodyDirection),
         targetX: this.cursor.x,
         targetY: this.cursor.y,
-        dir: this.direction,
+        dir: this.isMoving() ? this.direction : { dx: 0, dy: 0 },
         size: this.size,
       },
       game,

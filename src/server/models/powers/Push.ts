@@ -12,6 +12,7 @@ export default class Push extends ShootPower {
     color: 'white',
     size: 50,
     range: 400,
+    speed: 10,
     power: 0,
     hit(angle: Angle) {},
     effectOnPlayer(player: Player) {
@@ -19,6 +20,7 @@ export default class Push extends ShootPower {
       if (game) {
         player.direction.dx = this.direction.dx;
         player.direction.dy = this.direction.dy;
+        // player.speed = this.speed;
         if (!game.detectPlayerCollisionWithObjects(player)) {
           player.go();
         }

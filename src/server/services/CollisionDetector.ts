@@ -12,6 +12,7 @@ export interface Angle {
 export interface CollisionInfo {
   collision: boolean;
   angle?: Angle;
+  angle2?: Angle;
   distance?: number;
 }
 
@@ -51,6 +52,7 @@ export class CollisionDetector {
       o1.size / 2 -
       o2.size / 2;
     let [x, y] = [-1, -1];
+    let [x2, y2] = [-1, -1];
 
     const theta1 = Math.atan2(o1.direction.dy, o1.direction.dx);
     const theta2 = Math.atan2(o2.direction.dy, o2.direction.dx);
@@ -101,10 +103,18 @@ export class CollisionDetector {
       //     o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
       x = dx1F / (o1.direction.dx || dx1F);
       y = dy1F / (o1.direction.dy || dy1F);
+
+      x2 = dx2F / (o2.direction.dx || dx2F);
+      y2 = dx2F / (o2.direction.dy || dy2F);
       // console.log(dx1F, dy1F, dx2F, dy2F, o1.direction.dx, o1.direction.dy, x, y);
     }
     // console.log(distance, o1.size + o2.size, distanceNextFrame);
-    return { collision: distance < o1.size + o2.size, angle: { x, y }, distance };
+    return {
+      collision: distance < o1.size + o2.size,
+      angle: { x, y },
+      angle2: { x: x2, y: y2 },
+      distance,
+    };
   }
 
   detectRectangleCollision(o1: IRectangle, o2: IRectangle): CollisionInfo {
