@@ -8,6 +8,7 @@ export default class Push extends ShootPower {
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
+    type: 'Push',
     color: 'white',
     size: 50,
     range: 400,

@@ -10,6 +10,7 @@ export default class Pull extends ShootPower {
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
+    type: 'Pull',
     color: 'white',
     size: 50,
     range: 400,
