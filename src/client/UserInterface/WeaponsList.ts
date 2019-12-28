@@ -1,4 +1,3 @@
-import Weapon from '../../server/models/weapons/Weapon';
 import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
 
 declare var weaponsList: HTMLUListElement;

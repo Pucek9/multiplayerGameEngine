@@ -1,5 +1,4 @@
 import Player from '../Player';
-import Accelerator from './Accelerator';
 import ClickPower from './ClickPower';
 import Power from '../../../shared/models/Power';
 import BulletData from '../../../shared/models/BulletData';

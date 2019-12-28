@@ -1,8 +1,6 @@
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
 import { degToRad } from '../../shared/helpers';
-import Direction from '../../shared/models/Direction';
-import Bullet from '../models/Bullet';
 
 export interface Angle {
   x: number;
@@ -51,8 +49,8 @@ export class CollisionDetector {
       ) -
       o1.size / 2 -
       o2.size / 2;
-    let [x, y] = [-1, -1];
-    let [x2, y2] = [-1, -1];
+    // let [x, y] = [-1, -1];
+    // let [x2, y2] = [-1, -1];
 
     const theta1 = Math.atan2(o1.direction.dy, o1.direction.dx);
     const theta2 = Math.atan2(o2.direction.dy, o2.direction.dx);
@@ -87,9 +85,8 @@ export class CollisionDetector {
     if (distance < o1.size + o2.size) {
       // o1.direction.dx = dx1F;
       // o1.direction.dy = dy1F;
-      o2.direction.dx = dx2F;
-      o2.direction.dy = dy2F;
-
+      // o2.direction.dx = dx2F;
+      // o2.direction.dy = dy2F;
       // if (o1 instanceof Bullet) {
       //   const theta = o1.getAngle();
       //   const phi = Math.atan2(o2.y - o1.y, o2.x - o1.x);
@@ -101,18 +98,18 @@ export class CollisionDetector {
       //     ((o1.speed * Math.cos(theta - phi) * (o1.size - o2.size)) / (o1.size + o2.size)) *
       //       Math.sin(phi) +
       //     o1.speed * Math.sin(theta - phi) * Math.sin(phi + Math.PI / 2);
-      x = dx1F / (o1.direction.dx || dx1F);
-      y = dy1F / (o1.direction.dy || dy1F);
-
-      x2 = dx2F / (o2.direction.dx || dx2F);
-      y2 = dx2F / (o2.direction.dy || dy2F);
+      // x = dx1F / (o1.direction.dx || dx1F);
+      // y = dy1F / (o1.direction.dy || dy1F);
+      //
+      // x2 = dx2F / (o2.direction.dx || dx2F);
+      // y2 = dx2F / (o2.direction.dy || dy2F);
       // console.log(dx1F, dy1F, dx2F, dy2F, o1.direction.dx, o1.direction.dy, x, y);
     }
     // console.log(distance, o1.size + o2.size, distanceNextFrame);
     return {
       collision: distance < o1.size + o2.size,
-      angle: { x, y },
-      angle2: { x: x2, y: y2 },
+      angle: { x: dx1F, y: dy1F },
+      angle2: { x: dx2F, y: dy2F },
       distance,
     };
   }
@@ -147,8 +144,8 @@ export class CollisionDetector {
       collision: distance < circle.size,
       distance: distance,
       angle: {
-        x: deltaX >= deltaY ? -1 : 1,
-        y: deltaX <= deltaY ? -1 : 1,
+        x: deltaX >= deltaY ? -circle.direction.dx : circle.direction.dx,
+        y: deltaX <= deltaY ? -circle.direction.dy : circle.direction.dy,
       },
     };
   }

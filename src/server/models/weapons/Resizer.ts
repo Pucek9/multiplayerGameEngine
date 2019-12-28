@@ -1,6 +1,4 @@
 import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import BulletData from '../../../shared/models/BulletData';
 
 export default class Resizer extends Weapon {
   type = 'Resizer';

@@ -11,7 +11,6 @@ import RoundTeamBattle from './RoundTeamBattle';
 import Goal from '../models/Goal';
 import Team from '../../shared/models/Team';
 import Push from '../models/powers/Push';
-import Pull from '../models/powers/Pull';
 
 export default class Haxball extends RoundTeamBattle {
   constructor(emitter, params) {
@@ -37,21 +36,35 @@ export default class Haxball extends RoundTeamBattle {
         minSpeed: 0,
         defaultSpeed: 7,
         allowForManipulate: false,
+        updatePosition() {
+          this.additionalAction();
+          this.distance += this.speed;
+          this.direction.dx = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT); // * this.reverseX;
+          this.direction.dy = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT); // * this.reverseY;
+          this.x += this.direction.dx;
+          this.y += this.direction.dy;
+          if (!this.isStillInAir()) {
+            this.deactivate();
+          }
+        },
+
         hit(angle?: { x: number; y: number }, object?) {
           // console.log('hit', this.type, angle, object?.type || object?.shape);
           if (angle) {
-            this.reverseX *= angle.x;
-            this.reverseY *= angle.y;
+            this.direction.dx = angle.x;
+            this.direction.dy = angle.y;
           }
           this.decreaseSpeedToMin(1);
         },
         hitFromBullet(bullet, angle) {
           this.owner = bullet.owner;
           this.distance = 0;
-          this.fromX = this.x;
-          this.fromY = this.y;
-          this.targetX = this.x + this.direction.dx;
-          this.targetY = this.y + this.direction.dy;
+          this.direction.dx = angle.x;
+          this.direction.dy = angle.y;
+          // this.fromX = this.x;
+          // this.fromY = this.y;
+          // this.targetX = this.x + this.direction.dx;
+          // this.targetY = this.y + this.direction.dy;
           // ball.reverseX *= angle2.x;
           // ball.reverseY *= angle2.y;
           this.speed = this.defaultSpeed;

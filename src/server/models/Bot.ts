@@ -1,7 +1,6 @@
 import Player from './Player';
 import { randItem } from '../../shared/helpers';
 import Weapon from './weapons/Weapon';
-import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 
 export default class Bot extends Player {
   die(withDieCounter?) {

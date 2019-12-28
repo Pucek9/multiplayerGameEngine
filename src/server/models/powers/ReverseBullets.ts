@@ -20,8 +20,8 @@ export default class ReverseBullets extends SlowBullets implements Aura {
         bullet.customFlag = true;
         bullet.owner = owner;
         bullet.distance = 0;
-        bullet.reverseX *= -1;
-        bullet.reverseY *= -1;
+        bullet.direction.dx = -bullet.direction.dx;
+        bullet.direction.dy = -bullet.direction.dy;
       }
       return true;
     } else {

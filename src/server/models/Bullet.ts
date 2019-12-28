@@ -15,8 +15,8 @@ export default class Bullet extends BulletModel {
   targetX: number;
   targetY: number;
   active = true;
-  reverseX = 1;
-  reverseY = 1;
+  // reverseX = 1;
+  // reverseY = 1;
   vectorFT: number;
   customFlag = true;
   allowForManipulate = true;
@@ -73,10 +73,8 @@ export default class Bullet extends BulletModel {
   updatePosition() {
     this.additionalAction();
     this.distance += this.speed;
-    this.direction.dx =
-      -(((this.fromX - this.targetX) * this.speed) / this.vectorFT) * this.reverseX;
-    this.direction.dy =
-      -(((this.fromY - this.targetY) * this.speed) / this.vectorFT) * this.reverseY;
+    this.direction.dx = -(((this.fromX - this.targetX) * this.speed) / this.vectorFT); // * this.reverseX;
+    this.direction.dy = -(((this.fromY - this.targetY) * this.speed) / this.vectorFT); // * this.reverseY;
     this.x += this.direction.dx;
     this.y += this.direction.dy;
     if (!this.isStillInAir()) {

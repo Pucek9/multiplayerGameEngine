@@ -1,5 +1,4 @@
 import Player from './models/Player';
-import Camera from './models/Camera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -20,7 +19,6 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameConfig } from './store/gamesList/state';

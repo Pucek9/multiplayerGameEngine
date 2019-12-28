@@ -1,7 +1,6 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
-import BulletData from '../../../shared/models/BulletData';
 import GrenadeExplosion from './GrenadeExplosion';
 
 export default class Grenade extends Weapon {
@@ -24,8 +23,8 @@ export default class Grenade extends Weapon {
     allowForManipulate: false,
     hit(angle?: { x: number; y: number }) {
       if (angle) {
-        this.reverseX *= angle.x;
-        this.reverseY *= angle.y;
+        this.direction.dx = angle.x;
+        this.direction.dy = angle.y;
       }
       this.decreaseSpeedToMin(1);
     },
