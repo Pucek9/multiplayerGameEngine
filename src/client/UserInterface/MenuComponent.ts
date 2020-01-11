@@ -153,7 +153,8 @@ export default class MenuComponent {
   }
 
   clearTeamsInputsList() {
-    teamsList.childNodes.forEach((input, index) =>
+    const div = teamsList.childNodes[0];
+    div?.childNodes.forEach((input, index) =>
       input.removeEventListener('keyup', this.listeners[index]),
     );
     this.listeners = [];
@@ -163,15 +164,21 @@ export default class MenuComponent {
   prepareTeamsInputsList(count: number) {
     this.clearTeamsInputsList();
     times(count, index => {
+      const label = document.createElement('label');
+      const div = document.createElement('div');
       const input = document.createElement('input');
+      const listeners = this.listeners;
+      label.innerText = `team${index + 1}`;
       input.setAttribute('type', 'text');
       input.setAttribute('data-event', 'text');
-      const listeners = this.listeners;
+      input.classList.add('input', 'create-white');
       input.addEventListener('keyup', function inputListener() {
         createGamesService.setTeamName(index, input.value);
         listeners.push(inputListener);
       });
-      teamsList.appendChild(input);
+      teamsList.appendChild(label);
+      div.appendChild(input);
+      teamsList.appendChild(div);
     });
   }
 
@@ -244,7 +251,7 @@ export default class MenuComponent {
   }
 
   hideTeamsSection() {
-    teamsRow.style.display = 'flex';
+    teamsRow.style.display = 'none';
   }
 
   show() {

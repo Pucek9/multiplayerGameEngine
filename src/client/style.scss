@@ -82,14 +82,20 @@ form {
     margin-bottom: 5px;
   }
 
-  .type-row select, .type-row input {
-    width: 69%;border: 0;padding: 5px 5px;
-    font-size: 1.2rem;}
+  .type-row div {
+    width: 75%;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 1.2rem;
+
+    input, select {
+      width: 100%
+    }
+  }
 
   label {
     font-size: 1.2rem;
   }
-
 }
 
 .title {
@@ -426,4 +432,3 @@ input[type='button']:disabled,
 button:disabled {
   color: grey !important;
 }
-
