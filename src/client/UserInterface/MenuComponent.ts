@@ -42,6 +42,7 @@ export default class MenuComponent {
   listeners: any[] = [];
 
   constructor(main) {
+    const gameState = createGamesService.getState();
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', () => {
@@ -55,10 +56,12 @@ export default class MenuComponent {
       main.onJoinGame();
     });
 
+    gameNameInput.value = gameState.roomName;
     gameNameInput.addEventListener('keyup', () => {
       createGamesService.setGameName(gameNameInput.value);
     });
 
+    gameTypeInput.value = gameState.type;
     gameTypeInput.addEventListener('change', () => {
       createGamesService.setGameType(gameTypeInput.value);
       if (gameTypeInput.value === 'Free4all') {
@@ -72,26 +75,32 @@ export default class MenuComponent {
       }
     });
 
+    gameLightInput.value = gameState.light;
     gameLightInput.addEventListener('change', () => {
       createGamesService.setLight(gameLightInput.value);
     });
 
+    cameraInput.value = gameState.camera;
     cameraInput.addEventListener('change', () => {
       createGamesService.setCamera(cameraInput.value);
     });
 
+    steeringInput.value = gameState.steering;
     steeringInput.addEventListener('change', () => {
       createGamesService.setSteering(steeringInput.value);
     });
 
+    cursorInput.value = gameState.cursor;
     cursorInput.addEventListener('change', () => {
       createGamesService.setCursor(cursorInput.value);
     });
 
+    gameMapInput.value = gameState.map;
     gameMapInput.addEventListener('change', () => {
       createGamesService.setGameMap(gameMapInput.value);
     });
 
+    botsCountInput.value = gameState.botsCount.toString();
     botsCountInput.addEventListener('change', () => {
       if (botsCountInput.value === '') {
         botsCountInput.value = '0';
@@ -99,6 +108,7 @@ export default class MenuComponent {
       createGamesService.setBotsCount(parseInt(botsCountInput.value, 0));
     });
 
+    teamsCountInput.value = gameState.teams?.count.toString();
     teamsCountInput.addEventListener('change', () => {
       this.prepareTeamSection();
     });
