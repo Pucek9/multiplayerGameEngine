@@ -32,93 +32,78 @@
         <div class="box form create-fill">
           <form>
             <div class="type-row">
-              <label
-                >Type:
-                <select class="select create-white" id="gameTypeInput">
-                  <option value="Free4all">Free for all</option>
-                  <option value="TeamBattle">Team Battle</option>
-                  <option value="RoundTeamBattle">Round Team Battle</option>
-                  <option value="Haxball">Haxball</option>
-                  <!--<option disabled value="CaptureTheFlag">Capture the flag</option>-->
-                </select>
-              </label>
+              <label>Type:</label>
+              <select class="select create-white" id="gameTypeInput">
+                <option value="Free4all">Free for all</option>
+                <option value="TeamBattle">Team Battle</option>
+                <option value="RoundTeamBattle">Round Team Battle</option>
+                <option value="Haxball">Haxball</option>
+                <!--<option disabled value="CaptureTheFlag">Capture the flag</option>-->
+              </select>
             </div>
             <div class="type-row" id="teamsRow" style="display: none">
-              <label
-                >Teams:
-                <input
-                  class="input create-white"
-                  id="teamsCountInput"
-                  max="4"
-                  min="2"
-                  type="number"
-                  value="2"
-                />
-              </label>
+              <label>Teams:</label>
+              <input
+                class="input create-white"
+                id="teamsCountInput"
+                max="4"
+                min="2"
+                type="number"
+                value="2"
+              />
+
               <div class="type-row" id="teamsList"></div>
             </div>
             <div class="type-row">
-              <label
-                >Map:
-                <select class="select create-white" id="gameMapInput">
-                  <option value="Playground">Playground</option>
-                  <option value="Boxes">Boxes</option>
-                  <option value="Stadium">Stadium</option>
-                </select>
-              </label>
+              <label>Map:</label>
+              <select class="select create-white" id="gameMapInput">
+                <option value="Playground">Playground</option>
+                <option value="Boxes">Boxes</option>
+                <option value="Stadium">Stadium</option>
+              </select>
             </div>
             <div class="type-row">
-              <label
-                >Camera:
-                <select class="select create-white" id="cameraInput">
-                  <option value="StaticCamera">Static</option>
-                  <option value="DynamicCamera">Dynamic</option>
-                </select>
-              </label>
+              <label>Camera:</label>
+              <select class="select create-white" id="cameraInput">
+                <option value="StaticCamera">Static</option>
+                <option value="DynamicCamera">Dynamic</option>
+              </select>
             </div>
             <div class="type-row">
-              <label
-                >Light:
-                <select class="select create-white" id="gameLightInput">
-                  <option value="FlashLight">FlashLight</option>
-                  <option value="AmbientLight">Ambient</option>
-                  <option value="CursorLight">Cursor</option>
-                </select>
-              </label>
+              <label>Light:</label>
+              <select class="select create-white" id="gameLightInput">
+                <option value="FlashLight">FlashLight</option>
+                <option value="AmbientLight">Ambient</option>
+                <option value="CursorLight">Cursor</option>
+              </select>
             </div>
             <div class="type-row">
-              <label
-                >Steering:
-                <select class="select create-white" id="steeringInput">
-                  <option value="eightDirectionSteering">Eight direction</option>
-                  <option value="rotateSteering">Rotate</option>
-                  <option value="carSteering">Car</option>
-                  <option value="carIndependentSteering">Car independent</option>
-                </select>
-              </label>
+              <label>Steering:</label>
+              <select class="select create-white" id="steeringInput">
+                <option value="eightDirectionSteering">Eight direction</option>
+                <option value="rotateSteering">Rotate</option>
+                <option value="carSteering">Car</option>
+                <option value="carIndependentSteering">Car independent</option>
+              </select>
             </div>
             <div class="type-row">
-              <label
-                >Cursor:
-                <select class="select create-white" id="cursorInput">
-                  <option value="freeCursor">Free</option>
-                  <option value="aroundCursor">Around</option>
-                  <option value="noCursor">No cursor</option>
-                </select>
-              </label>
+              <label>Cursor:</label>
+              <select class="select create-white" id="cursorInput">
+                <option value="freeCursor">Free</option>
+                <option value="aroundCursor">Around</option>
+                <option value="noCursor">No cursor</option>
+              </select>
             </div>
             <div class="type-row">
-              <label
-                >Bots:&nbsp;
-                <input
-                  class="input create-white"
-                  id="botsCountInput"
-                  max="30"
-                  min="0"
-                  type="number"
-                  value="0"
-                />
-              </label>
+              <label>Bots:&nbsp;</label>
+              <input
+                class="input create-white"
+                id="botsCountInput"
+                max="30"
+                min="0"
+                type="number"
+                value="0"
+              />
             </div>
           </form>
         </div>

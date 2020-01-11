@@ -240,11 +240,11 @@ export default class MenuComponent {
   }
 
   showTeamsSection() {
-    teamsRow.style.display = 'block';
+    teamsRow.style.display = 'flex';
   }
 
   hideTeamsSection() {
-    teamsRow.style.display = 'none';
+    teamsRow.style.display = 'flex';
   }
 
   show() {
