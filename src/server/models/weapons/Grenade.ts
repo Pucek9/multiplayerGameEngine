@@ -23,8 +23,8 @@ export default class Grenade extends Weapon {
     allowForManipulate: false,
     hit(angle?: { x: number; y: number }) {
       if (angle) {
-        this.direction.dx = angle.x;
-        this.direction.dy = angle.y;
+        this.reverseX *= angle.x;
+        this.reverseY *= angle.y;
       }
       this.decreaseSpeedToMin(1);
     },
