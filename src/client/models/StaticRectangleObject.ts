@@ -1,7 +1,8 @@
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
-import { BoxGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import { degToRad } from "../../shared/helpers";
 
 const box = require('../games/balls/images/box.png');
 
@@ -18,7 +19,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel
     });
     this.object = new Mesh(geometry, material);
 
-    this.object.rotation.z = Math.degToRad(this.deg);
+    this.object.rotation.z = degToRad(this.deg);
 
     this.object.position.x = this.x + this.width / 2;
     this.object.position.y = this.y + this.height / 2;

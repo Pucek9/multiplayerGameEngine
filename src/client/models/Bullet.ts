@@ -25,7 +25,6 @@ export default class Bullet extends BulletModel implements IUpdatable {
   }
 
   setMaterial() {
-    console.log(this.type, this.transparency);
     if (this.transparency) {
       this.material = new MeshPhysicalMaterial({
         color: 0xffffff,

@@ -4,7 +4,6 @@ import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 import MapModel from '../../shared/models/MapModel';
 
 export default class Map implements IUpdatable, MapModel {
-  // public img: HTMLImageElement;
   public src: string;
   private object: Mesh;
   mapName: string;
