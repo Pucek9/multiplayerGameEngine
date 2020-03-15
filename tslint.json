@@ -43,6 +43,7 @@
     "unified-signatures": true,
     "variable-name": false,
     "use-host-property-decorator": false,
-    "no-unused-variable": true
+    "no-unused-variable": true,
+    "linebreak-style": [true, "LF"]
   }
 }

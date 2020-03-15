@@ -24,7 +24,6 @@ declare var teamsCountInput: HTMLInputElement;
 declare var teamsRow: HTMLDivElement;
 declare var teamsList: HTMLDivElement;
 declare var selectTeamSection: HTMLDivElement;
-declare var selectTeam: HTMLLabelElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
