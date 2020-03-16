@@ -10,6 +10,7 @@ export class EightDirectionSteering extends Steering {
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
     const right = hasKeys(player.keys, ['D', 'ArrowRight']);
     const direction: Direction = { dx: 0, dy: 0 };
+    const ZERO_SEVEN = Math.sqrt(2) / 2;
 
     if (up && !down && !left && !right) {
       direction.dx = 0;
@@ -28,21 +29,21 @@ export class EightDirectionSteering extends Steering {
       direction.dy = 0;
     }
     if (up && !down && left && !right) {
-      direction.dx = (-Math.sqrt(2) / 2) * player.speed;
-      direction.dy = (Math.sqrt(2) / 2) * player.speed;
+      direction.dx = -ZERO_SEVEN * player.speed;
+      direction.dy = ZERO_SEVEN * player.speed;
     }
     if (up && !down && !left && right) {
-      direction.dx = (Math.sqrt(2) / 2) * player.speed;
-      direction.dy = (Math.sqrt(2) / 2) * player.speed;
+      direction.dx = ZERO_SEVEN * player.speed;
+      direction.dy = ZERO_SEVEN * player.speed;
     }
 
     if (!up && down && left && !right) {
-      direction.dx = (-Math.sqrt(2) / 2) * player.speed;
-      direction.dy = (-Math.sqrt(2) / 2) * player.speed;
+      direction.dx = -ZERO_SEVEN * player.speed;
+      direction.dy = -ZERO_SEVEN * player.speed;
     }
     if (!up && down && !left && right) {
-      direction.dx = (Math.sqrt(2) / 2) * player.speed;
-      direction.dy = (-Math.sqrt(2) / 2) * player.speed;
+      direction.dx = ZERO_SEVEN * player.speed;
+      direction.dy = -ZERO_SEVEN * player.speed;
     }
     const lastDirection = { ...player.direction };
     player.direction = direction;
