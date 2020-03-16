@@ -16,12 +16,7 @@ export default abstract class Steering {
     const weapons = weaponKeys.split('').map(index => player.keys.has(index));
     const weaponPressed = weapons.some(has => has);
     if (!shift && weaponPressed) {
-      for (let index = 0; index < weapons.length; index++) {
-        if (weapons[index]) {
-          player.selectWeapon(index);
-          break;
-        }
-      }
+      player.selectWeapon(weapons.findIndex(Boolean));
       game.emitWeaponInfo(player);
     }
   }
@@ -34,12 +29,7 @@ export default abstract class Steering {
     if (shift) {
       if (powerPressed) {
         player.releasePower(game);
-        for (let index = 0; index < powers.length; index++) {
-          if (powers[index]) {
-            player.selectPower(index);
-            break;
-          }
-        }
+        player.selectPower(powers.findIndex(Boolean));
       } else {
         player.usePower(game);
       }
