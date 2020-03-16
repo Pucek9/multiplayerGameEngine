@@ -1,11 +1,8 @@
 import { API } from '../../shared/constants';
-import Weapon from '../models/weapons/Weapon';
-import Item from '../../shared/models/Item';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
 import gamesManager from './GamesManager';
-import Power from '../../shared/models/Power';
 import BulletModel from '../../shared/models/BulletModel';
 import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../../shared/apiModels/PowersApiModel';
@@ -58,6 +55,7 @@ export default class Emitter {
       socket.removeAllListeners(API.UPDATE_KEYS);
       socket.removeAllListeners(API.MOUSE_CLICK);
       socket.removeAllListeners(API.MOUSE_UP);
+      socket.removeAllListeners(API.MOUSE_RIGHT_CLICK);
       socket.removeAllListeners(API.UPDATE_DIRECTION);
       socket.leave(roomName);
     }

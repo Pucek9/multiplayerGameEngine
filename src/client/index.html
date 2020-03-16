@@ -32,8 +32,8 @@
         <div class="box form create-fill">
           <form>
             <div class="type-row">
-              <label
-                >Type:
+              <label>Type:</label>
+              <div>
                 <select class="select create-white" id="gameTypeInput">
                   <option value="Free4all">Free for all</option>
                   <option value="TeamBattle">Team Battle</option>
@@ -41,11 +41,11 @@
                   <!--<option value="Haxball">Haxball</option>-->
                   <!--<option disabled value="CaptureTheFlag">Capture the flag</option>-->
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row" id="teamsRow" style="display: none">
-              <label
-                >Teams:
+              <label>Teams:</label>
+              <div>
                 <input
                   class="input create-white"
                   id="teamsCountInput"
@@ -54,61 +54,62 @@
                   type="number"
                   value="2"
                 />
-              </label>
-              <div class="type-row" id="teamsList"></div>
+              </div>
             </div>
+            <div class="type-row" id="teamsList"></div>
             <div class="type-row">
-              <label
-                >Map:
+              <label>Map:</label>
+              <div>
                 <select class="select create-white" id="gameMapInput">
                   <option value="Playground">Playground</option>
                   <option value="Boxes">Boxes</option>
+                  <option value="Stadium">Stadium</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row">
-              <label
-                >Camera:
+              <label>Camera:</label>
+              <div>
                 <select class="select create-white" id="cameraInput">
                   <option value="StaticCamera">Static</option>
                   <option value="DynamicCamera">Dynamic</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row">
-              <label
-                >Light:
+              <label>Light:</label>
+              <div>
                 <select class="select create-white" id="gameLightInput">
                   <option value="FlashLight">FlashLight</option>
                   <option value="AmbientLight">Ambient</option>
                   <option value="CursorLight">Cursor</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row">
-              <label
-                >Steering:
+              <label>Steering:</label>
+              <div>
                 <select class="select create-white" id="steeringInput">
                   <option value="eightDirectionSteering">Eight direction</option>
                   <option value="rotateSteering">Rotate</option>
                   <option value="carSteering">Car</option>
                   <option value="carIndependentSteering">Car independent</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row">
-              <label
-                >Cursor:
+              <label>Cursor:</label>
+              <div>
                 <select class="select create-white" id="cursorInput">
                   <option value="freeCursor">Free</option>
                   <option value="aroundCursor">Around</option>
                   <option value="noCursor">No cursor</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="type-row">
-              <label
-                >Bots:&nbsp;
+              <label>Bots:</label>
+              <div>
                 <input
                   class="input create-white"
                   id="botsCountInput"
@@ -117,7 +118,7 @@
                   type="number"
                   value="0"
                 />
-              </label>
+              </div>
             </div>
           </form>
         </div>

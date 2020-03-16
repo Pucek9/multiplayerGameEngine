@@ -1,5 +1,5 @@
 import {
-  // BoxGeometry,
+  BoxGeometry,
   BufferGeometry,
   Mesh,
   MeshPhongMaterial,
@@ -16,11 +16,11 @@ const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements IUpdatable {
   public object: Mesh;
-  // public objectLegs: Mesh;
+  public objectLegs: Mesh;
   private light: Lighting;
   private screen: ScreenModel;
   private geometry: SphereGeometry;
-  // private geometryLegs: BoxGeometry;
+  private geometryLegs: BoxGeometry;
   private material: MeshPhongMaterial;
   private initiated = false;
 
@@ -30,13 +30,13 @@ export default class Player extends PlayerModel implements IUpdatable {
 
   setGeometry() {
     this.geometry = new SphereGeometry(this.size, 10, 10, 1);
-    // this.geometryLegs = new BoxGeometry(this.size, this.size * 2, this.size);
+    this.geometryLegs = new BoxGeometry(this.size, this.size * 2, this.size);
   }
 
   updateObjectGeometry() {
     this.setGeometry();
     this.object.geometry = new BufferGeometry().fromGeometry(this.geometry);
-    // this.objectLegs.geometry = new BufferGeometry().fromGeometry(this.geometryLegs);
+    this.objectLegs.geometry = new BufferGeometry().fromGeometry(this.geometryLegs);
   }
 
   setMaterial() {
@@ -52,7 +52,7 @@ export default class Player extends PlayerModel implements IUpdatable {
       this.setGeometry();
       this.setMaterial();
       this.object = new Mesh(this.geometry, this.material);
-      // this.objectLegs = new Mesh(this.geometryLegs, this.material);
+      this.objectLegs = new Mesh(this.geometryLegs, this.material);
       this.object.name = this.id;
       this.object.position.z = this.size;
       this.object.receiveShadow = true;
@@ -78,7 +78,7 @@ export default class Player extends PlayerModel implements IUpdatable {
 
   addToScene() {
     this.screen.scene.add(this.object);
-    // this.screen.scene.add(this.objectLegs);
+    this.screen.scene.add(this.objectLegs);
   }
 
   setAsEnemy() {
@@ -86,12 +86,12 @@ export default class Player extends PlayerModel implements IUpdatable {
   }
 
   updateBody() {
-    this.object.rotation.z = this.direction;
+    this.object.rotation.z = this.bodyDirection;
     this.object.position.x = this.x;
     this.object.position.y = this.y;
-    // this.objectLegs.position.x = this.x;
-    // this.objectLegs.position.y = this.y;
-    // this.objectLegs.rotation.z = Math.atan2(this.legsDirection.dy, this.legsDirection.dx);
+    this.objectLegs.position.x = this.x;
+    this.objectLegs.position.y = this.y;
+    this.objectLegs.rotation.z = Math.atan2(this.direction.dy, this.direction.dx);
   }
 
   update() {

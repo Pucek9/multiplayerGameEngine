@@ -121,11 +121,23 @@ class Main {
     this.events = {
       mouseDown(e: MouseEvent) {
         e.preventDefault();
-        socket.emit(API.MOUSE_CLICK, gameState.getUserID());
+        switch (e.button) {
+          case 1: // scrollClick
+          case 2: {
+            socket.emit(API.MOUSE_RIGHT_CLICK, gameState.getUserID());
+            break;
+          }
+          case 0:
+          default:
+            socket.emit(API.MOUSE_CLICK, gameState.getUserID());
+        }
       },
       mouseUp(e: MouseEvent) {
         e.preventDefault();
         socket.emit(API.MOUSE_UP, gameState.getUserID());
+      },
+      rightClick(e: MouseEvent) {
+        e.preventDefault();
       },
       mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
@@ -155,6 +167,8 @@ class Main {
     window.addEventListener('mousedown', this.events.mouseDown);
 
     window.addEventListener('mouseup', this.events.mouseUp);
+
+    window.addEventListener('contextmenu', this.events.rightClick);
 
     window.addEventListener('mousemove', this.events.mouseMove, false);
 

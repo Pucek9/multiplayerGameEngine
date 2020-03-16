@@ -1,7 +1,9 @@
+import MapModel from '../models/MapModel';
+
 export default interface GameInstance {
   roomName: string;
   type: string;
-  map: string;
+  map: MapModel;
   camera: string;
   light: string;
   count: number;

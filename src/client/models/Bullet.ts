@@ -1,22 +1,47 @@
 import BulletModel from '../../shared/models/BulletModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
-import { BufferGeometry, Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
+import {
+  BufferGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  SphereGeometry,
+  MeshPhysicalMaterial,
+} from 'three';
 import FlashLight from './Light/FlashLight';
 import Cursor from './Cursor';
 import { optionsService } from '../store/store';
 
+let light;
+
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
   private geometry: SphereGeometry;
-  private material: MeshBasicMaterial;
+  private material: MeshBasicMaterial | MeshPhysicalMaterial;
+  private transparency = this.type === 'Push' || this.type === 'Pull';
 
   setGeometry() {
     this.geometry = new SphereGeometry(this.size, 10, 10, 3);
   }
 
   setMaterial() {
-    this.material = new MeshBasicMaterial({ color: this.color });
+    if (this.transparency) {
+      this.material = new MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0,
+        roughness: 0,
+        // alphaMap: texture,
+        alphaTest: 0.5,
+        // envMap: hdrCubeRenderTarget.texture,
+        envMapIntensity: 1,
+        depthTest: false,
+        // @ts-ignore
+        transparency: 0.8,
+        transparent: true,
+      });
+    } else {
+      this.material = new MeshBasicMaterial({ color: this.color });
+    }
   }
 
   updateObjectGeometry() {
@@ -30,9 +55,10 @@ export default class Bullet extends BulletModel implements IUpdatable {
     this.setMaterial();
     this.object = new Mesh(this.geometry, this.material);
     this.object.position.z = 10;
-
-    if (options.bulletShadow) {
-      this.object.castShadow = true;
+    if (!this.transparency) {
+      if (options.bulletShadow) {
+        this.object.castShadow = true;
+      }
     }
 
     this.update();
@@ -47,7 +73,9 @@ export default class Bullet extends BulletModel implements IUpdatable {
   }
 
   showFlash(screen: ScreenModel) {
-    const light = new FlashLight(screen);
+    if (!light) {
+      light = new FlashLight(screen);
+    }
     light.init({
       source: this.object.position,
       cursor: ({

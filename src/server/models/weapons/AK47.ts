@@ -11,6 +11,7 @@ export default class Ak47 extends Weapon {
   reloadTime = 2000;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Ak47',
     size: 3,
     power: 20,
     range: 800,
@@ -45,8 +46,10 @@ export default class Ak47 extends Weapon {
     return [
       new Bullet({
         owner: bulletData.owner,
-        fromX: bulletData.owner.x + bulletData.owner.size * Math.cos(bulletData.owner.direction),
-        fromY: bulletData.owner.y + bulletData.owner.size * Math.sin(bulletData.owner.direction),
+        fromX:
+          bulletData.owner.x + bulletData.owner.size * Math.cos(bulletData.owner.bodyDirection),
+        fromY:
+          bulletData.owner.y + bulletData.owner.size * Math.sin(bulletData.owner.bodyDirection),
         size: bulletData.owner.size,
         targetX: bulletData.owner.cursor.x,
         targetY: bulletData.owner.cursor.y,

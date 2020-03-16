@@ -14,6 +14,7 @@ export default class Shotgun extends Weapon {
   reloadTime = 2000;
   shootBulletsCount = 5;
   bulletConfig = {
+    type: 'Shotgun',
     size: 2,
     power: 15,
     range: 500,

@@ -15,6 +15,21 @@ export interface CreateGameState {
   };
 }
 
+// export const initialState: CreateGameState = {
+//   roomName: 'room',
+//   type: 'Haxball',
+//   map: 'Stadium',
+//   camera: 'StaticCamera',
+//   light: 'AmbientLight',
+//   steering: 'eightDirectionSteering',
+//   cursor: 'freeCursor',
+//   botsCount: 0,
+//   teams: {
+//     count: 2,
+//     list: [{ name: 'a' }, { name: 'b' }],
+//   },
+// };
+
 export const initialState: CreateGameState = {
   roomName: '',
   type: 'Free4all',

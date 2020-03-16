@@ -1,6 +1,4 @@
 import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import BulletData from '../../../shared/models/BulletData';
 
 export default class Resizer extends Weapon {
   type = 'Resizer';
@@ -11,6 +9,7 @@ export default class Resizer extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Resizer',
     color: 'white',
     size: 5,
     power: 1,
@@ -32,18 +31,5 @@ export default class Resizer extends Weapon {
   constructor(params?: Partial<Resizer>) {
     super();
     Object.assign(this, params);
-  }
-
-  prepareBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
   }
 }

@@ -19,6 +19,10 @@ export default class Team {
     this.points += 1;
   }
 
+  decreasePoints() {
+    this.points -= 1;
+  }
+
   joinToTeam() {
     this.count += 1;
   }

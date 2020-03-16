@@ -1,7 +1,6 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
-import BulletData from '../../../shared/models/BulletData';
 import GrenadeExplosion from './GrenadeExplosion';
 
 export default class Grenade extends Weapon {
@@ -14,7 +13,8 @@ export default class Grenade extends Weapon {
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
     flash: false,
-    color: 'white',
+    type: 'Grenade',
+    color: 'green',
     size: 5,
     power: 0,
     range: 400,
@@ -56,18 +56,5 @@ export default class Grenade extends Weapon {
   constructor(params?: Partial<Grenade>) {
     super();
     Object.assign(this, params);
-  }
-
-  prepareBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
   }
 }

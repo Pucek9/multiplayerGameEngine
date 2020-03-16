@@ -71,7 +71,6 @@ export default class Player extends PlayerModel {
     if (this.isAlive()) {
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
-      bullet.hit(angle);
       if (this.hp <= 0) {
         this.hp = 0;
         if (bullet.owner?.team !== this.team) {
@@ -86,11 +85,11 @@ export default class Player extends PlayerModel {
     this.selectedWeapon?.shoot(
       {
         owner: this,
-        fromX: this.x + this.size * Math.cos(this.direction),
-        fromY: this.y + this.size * Math.sin(this.direction),
+        fromX: this.x + this.size * Math.cos(this.bodyDirection),
+        fromY: this.y + this.size * Math.sin(this.bodyDirection),
         targetX: this.cursor.x,
         targetY: this.cursor.y,
-        dir: this.legsDirection,
+        dir: this.isMoving() ? this.direction : { dx: 0, dy: 0 },
         size: this.size,
       },
       game,
@@ -143,6 +142,12 @@ export default class Player extends PlayerModel {
         this.energy += aidKit.energy;
       }
     }
+    if (aidKit.size) {
+      this.size = this.baseSize;
+    }
+    if (aidKit.speed) {
+      this.speed = this.baseSpeed;
+    }
   }
 
   hasEnoughEnergy(cost: number) {
@@ -177,16 +182,17 @@ export default class Player extends PlayerModel {
     }
   }
 
-  go(dir: Direction, rememberDir: Direction = dir) {
-    this.x += dir.dx;
-    this.y += dir.dy;
-    this.cursor.x += dir.dx;
-    this.cursor.y += dir.dy;
-    this.legsDirection = rememberDir;
+  go(rememberDir: Direction = this.direction) {
+    this.moving = true;
+    this.x += this.direction.dx;
+    this.y += this.direction.dy;
+    this.cursor.x += this.direction.dx;
+    this.cursor.y += this.direction.dy;
+    this.direction = rememberDir;
   }
 
   isMoving() {
-    return this.legsDirection.dx !== 0 || this.legsDirection.dy !== 0;
+    return this.direction.dx !== 0 || this.direction.dy !== 0;
   }
 
   decreaseTimeToRevive(time: number = 1) {
@@ -207,7 +213,7 @@ export default class Player extends PlayerModel {
   updateDirection() {
     const dx = this.cursor.x - this.x;
     const dy = this.cursor.y - this.y;
-    this.direction = Math.atan2(dy, dx);
+    this.bodyDirection = Math.atan2(dy, dx);
   }
 
   setPosition(x: number, y: number) {

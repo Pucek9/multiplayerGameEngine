@@ -1,9 +1,10 @@
-import { Group, Math, Mesh, MeshPhongMaterial } from 'three';
+import { Group, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import { degToRad } from "../../shared/helpers";
 
 const loader = new FBXLoader();
 const models = {
@@ -24,9 +25,9 @@ export default class Model3D extends StaticCircularObjectModel implements IUpdat
     const model = models[this.type];
     loader.load(require(`../games/balls/assets/${this.type}.fbx`), object => {
       this.object = object;
-      this.object.rotation.x = Math.degToRad(model.rotation.x);
-      this.object.rotation.z = Math.degToRad(model.rotation.z);
-      this.object.rotation.y = Math.degToRad(model.rotation.y);
+      this.object.rotation.x = degToRad(model.rotation.x);
+      this.object.rotation.z = degToRad(model.rotation.z);
+      this.object.rotation.y = degToRad(model.rotation.y);
       this.object.scale.set(model.scale, model.scale, model.scale);
       this.object.position.y = this.y;
       this.object.position.x = this.x;

@@ -24,7 +24,6 @@ declare var teamsCountInput: HTMLInputElement;
 declare var teamsRow: HTMLDivElement;
 declare var teamsList: HTMLDivElement;
 declare var selectTeamSection: HTMLDivElement;
-declare var selectTeam: HTMLLabelElement;
 declare var createButton: HTMLButtonElement;
 declare var gamesListTable: HTMLTableDataCellElement;
 declare var nickInput: HTMLInputElement;
@@ -42,6 +41,7 @@ export default class MenuComponent {
   listeners: any[] = [];
 
   constructor(main) {
+    const gameState = createGamesService.getState();
     this.unsubscribeRender = store.subscribe(() => this.render());
 
     createButton.addEventListener('click', () => {
@@ -55,10 +55,12 @@ export default class MenuComponent {
       main.onJoinGame();
     });
 
+    gameNameInput.value = gameState.roomName;
     gameNameInput.addEventListener('keyup', () => {
       createGamesService.setGameName(gameNameInput.value);
     });
 
+    gameTypeInput.value = gameState.type;
     gameTypeInput.addEventListener('change', () => {
       createGamesService.setGameType(gameTypeInput.value);
       if (gameTypeInput.value === 'Free4all') {
@@ -72,26 +74,32 @@ export default class MenuComponent {
       }
     });
 
+    gameLightInput.value = gameState.light;
     gameLightInput.addEventListener('change', () => {
       createGamesService.setLight(gameLightInput.value);
     });
 
+    cameraInput.value = gameState.camera;
     cameraInput.addEventListener('change', () => {
       createGamesService.setCamera(cameraInput.value);
     });
 
+    steeringInput.value = gameState.steering;
     steeringInput.addEventListener('change', () => {
       createGamesService.setSteering(steeringInput.value);
     });
 
+    cursorInput.value = gameState.cursor;
     cursorInput.addEventListener('change', () => {
       createGamesService.setCursor(cursorInput.value);
     });
 
+    gameMapInput.value = gameState.map;
     gameMapInput.addEventListener('change', () => {
       createGamesService.setGameMap(gameMapInput.value);
     });
 
+    botsCountInput.value = gameState.botsCount.toString();
     botsCountInput.addEventListener('change', () => {
       if (botsCountInput.value === '') {
         botsCountInput.value = '0';
@@ -99,6 +107,7 @@ export default class MenuComponent {
       createGamesService.setBotsCount(parseInt(botsCountInput.value, 0));
     });
 
+    teamsCountInput.value = gameState.teams?.count.toString();
     teamsCountInput.addEventListener('change', () => {
       this.prepareTeamSection();
     });
@@ -153,7 +162,8 @@ export default class MenuComponent {
   }
 
   clearTeamsInputsList() {
-    teamsList.childNodes.forEach((input, index) =>
+    const div = teamsList.childNodes[0];
+    div?.childNodes.forEach((input, index) =>
       input.removeEventListener('keyup', this.listeners[index]),
     );
     this.listeners = [];
@@ -163,15 +173,21 @@ export default class MenuComponent {
   prepareTeamsInputsList(count: number) {
     this.clearTeamsInputsList();
     times(count, index => {
+      const label = document.createElement('label');
+      const div = document.createElement('div');
       const input = document.createElement('input');
+      const listeners = this.listeners;
+      label.innerText = `team${index + 1}`;
       input.setAttribute('type', 'text');
       input.setAttribute('data-event', 'text');
-      const listeners = this.listeners;
+      input.classList.add('input', 'create-white');
       input.addEventListener('keyup', function inputListener() {
         createGamesService.setTeamName(index, input.value);
         listeners.push(inputListener);
       });
-      teamsList.appendChild(input);
+      teamsList.appendChild(label);
+      div.appendChild(input);
+      teamsList.appendChild(div);
     });
   }
 
@@ -182,7 +198,7 @@ export default class MenuComponent {
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');
-      map.appendChild(document.createTextNode(game.map));
+      map.appendChild(document.createTextNode(game.map.mapName));
       const count = document.createElement('td');
       count.appendChild(document.createTextNode(game.count.toString()));
       const row = document.createElement('tr');
@@ -193,9 +209,7 @@ export default class MenuComponent {
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');
       }
-      // @ts-ignore
       row.append(roomName, type, map, count);
-      // @ts-ignore
       gamesListTable.append(row);
     });
   }
@@ -242,7 +256,7 @@ export default class MenuComponent {
   }
 
   showTeamsSection() {
-    teamsRow.style.display = 'block';
+    teamsRow.style.display = 'flex';
   }
 
   hideTeamsSection() {

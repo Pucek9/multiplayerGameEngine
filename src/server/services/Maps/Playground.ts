@@ -13,6 +13,7 @@ import LandMine from '../../models/weapons/LandMine';
 
 export default class Playground extends GameMap {
   mapName = 'Playground';
+  floor = 'grass';
   width = 2920;
   height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
@@ -270,7 +271,7 @@ export default class Playground extends GameMap {
         time: 5000,
         item: AidKit,
         type: 'AidKit',
-        itemProps: { hp: 50, energy: 100 },
+        itemProps: { hp: 50, energy: 100, speed: true, size: true },
       }),
       new ItemGenerator({
         x: -1350,
@@ -280,7 +281,7 @@ export default class Playground extends GameMap {
         time: 5000,
         item: AidKit,
         type: 'AidKit',
-        itemProps: { hp: 50, energy: 100 },
+        itemProps: { hp: 50, energy: 100, speed: true, size: true },
       }),
     ];
   }

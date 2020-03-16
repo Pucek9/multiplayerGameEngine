@@ -1,7 +1,6 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
-import BulletData from '../../../shared/models/BulletData';
 import GrenadeExplosion from './GrenadeExplosion';
 
 export default class LandMine extends Weapon {
@@ -13,6 +12,7 @@ export default class LandMine extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
+    type: 'LandMine',
     flash: false,
     color: 'white',
     size: 15,
@@ -47,18 +47,5 @@ export default class LandMine extends Weapon {
   constructor(params?: Partial<LandMine>) {
     super();
     Object.assign(this, params);
-  }
-
-  prepareBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
   }
 }

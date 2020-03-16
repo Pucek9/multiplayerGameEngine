@@ -1,4 +1,3 @@
-import Weapon from '../../server/models/weapons/Weapon';
 import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
 
 declare var weaponsList: HTMLUListElement;
@@ -34,7 +33,6 @@ export default class WeaponsListComponent {
         li.style.fontWeight = 'normal';
         li.appendChild(document.createTextNode(`${index + 1} ${weapon.type}`));
       }
-      // @ts-ignore
       weaponsList.append(li);
     });
   }

@@ -18,7 +18,7 @@ export class PlayerService {
     do {
       [x, y] = [rand(zoneWidth, zoneX), rand(zoneHeight, zoneY)];
       collision = collisionDetector.detectObjectCollisionWithOtherObjects(
-        { x, y, size, shape: 'circle' },
+        { x, y, size, shape: 'circle', direction: { dx: 0, dy: 0 }, speed: 0 },
         allObjects,
       );
     } while (collision !== false);

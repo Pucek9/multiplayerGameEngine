@@ -11,11 +11,14 @@ export default class Knife extends Weapon {
   reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Knife',
     flash: false,
     size: 8,
-    power: 40,
+    speed: 1,
+    power: 15,
     range: 40,
     allowForManipulate: false,
+    hit(angle?: { x: number; y: number }, object?) {},
   };
 
   constructor(params?: Partial<Knife>) {

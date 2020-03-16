@@ -40,7 +40,7 @@ export default class BaseTeamGame extends BaseGame {
           .find(
             player =>
               bullet.owner !== player &&
-              bullet.owner.team !== player.team &&
+              (bullet.owner.team !== player.team || bullet.type === 'Heal') &&
               player.selectedPower instanceof Aura &&
               player.selectedPower.isActive() &&
               collisionDetector.detectCollision(bullet, {
@@ -68,20 +68,14 @@ export default class BaseTeamGame extends BaseGame {
           (object: StaticCircularObject | StaticRectangleObject | Player) =>
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
-            (this.friendlyFire && bullet.owner !== object),
+            (this.friendlyFire && bullet.owner !== object) ||
+            bullet.type === 'Heal',
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
-          const bulletDirection = {
-            dx: bullet.dx,
-            dy: bullet.dy,
-          };
-          const { collision, angle } = collisionDetector.detectCollision(
-            bullet,
-            object,
-            bulletDirection,
-          );
+          const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
+            bullet.hit(angle, object);
             if (object instanceof Player && !object.isAlive()) {
               const team = this.findTeam(bullet.owner.team);
               team?.increasePoints();

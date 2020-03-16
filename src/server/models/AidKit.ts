@@ -6,6 +6,8 @@ export default class AidKit implements Item {
   id: number;
   hp: number;
   energy: number;
+  speed?: boolean;
+  size?: boolean;
 
   constructor(params: Partial<AidKit>) {
     this.id = params.id || generateId();

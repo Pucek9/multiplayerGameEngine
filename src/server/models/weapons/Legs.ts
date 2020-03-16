@@ -1,6 +1,3 @@
-import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import BulletData from '../../../shared/models/BulletData';
 import Knife from './Knife';
 
 export default class Legs extends Knife {
@@ -12,10 +9,15 @@ export default class Legs extends Knife {
   reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: 'Legs',
     flash: false,
-    size: 8,
+    size: 20,
     power: 0,
-    range: 40,
+    range: 30,
+    speed: 1,
     allowForManipulate: false,
+    hit(angle?: { x: number; y: number }, object?) {
+      this.deactivate();
+    },
   };
 }

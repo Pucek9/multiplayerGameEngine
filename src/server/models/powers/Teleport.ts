@@ -19,7 +19,8 @@ export default class Teleport extends Accelerator implements ClickPower {
         x: owner.cursor.x,
         y: owner.cursor.y,
         size: owner.size,
-        shape: 'circle',
+        shape: owner.shape,
+        direction: owner.direction,
       } as unknown) as Player) &&
       owner.tryUseEnergy(this.costOfTeleport)
     ) {

@@ -27,7 +27,6 @@ export default class PowersListComponent {
         li.style.fontWeight = 'normal';
         li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
       }
-      // @ts-ignore
       powersList.append(li);
     });
   }

@@ -1,7 +1,9 @@
+import MapModel from '../../../shared/models/MapModel';
+
 export interface GameConfig {
   roomName: string;
   type: string;
-  map: string;
+  map: MapModel;
   camera: string;
   light: string;
   count: number;

@@ -12,64 +12,66 @@ export class CarSteering extends Steering {
     const down = hasKeys(player.keys, ['S', 'ArrowDown']);
     const left = hasKeys(player.keys, ['A', 'ArrowLeft']);
     const right = hasKeys(player.keys, ['D', 'ArrowRight']);
-    const dir: Direction = {
-      dx: 0,
-      dy: 0,
-    };
-    let direction = player.direction;
+    const direction: Direction = { dx: 0, dy: 0 };
+    let bodyDirection = player.bodyDirection;
+    const bodySin = Math.sin(player.bodyDirection);
+    const bodyCos = Math.cos(player.bodyDirection);
+
     if (up && !down && !left && !right) {
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      direction.dx = player.speed * bodyCos;
+      direction.dy = player.speed * bodySin;
     }
     if (!up && down && !left && !right) {
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      direction.dx = -player.speed * bodyCos;
+      direction.dy = -player.speed * bodySin;
     }
     if (!up && !down && left && !right) {
-      direction += this.sensitivity;
+      bodyDirection += this.sensitivity;
     }
     if (!up && !down && !left && right) {
-      direction -= this.sensitivity;
+      bodyDirection -= this.sensitivity;
     }
     if (up && !down && left && !right) {
-      direction += this.sensitivity;
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      bodyDirection += this.sensitivity;
+      direction.dx = player.speed * bodyCos;
+      direction.dy = player.speed * bodySin;
     }
     if (up && !down && !left && right) {
-      direction -= this.sensitivity;
-      dir.dx = player.speed * Math.cos(player.direction);
-      dir.dy = player.speed * Math.sin(player.direction);
+      bodyDirection -= this.sensitivity;
+      direction.dx = player.speed * bodyCos;
+      direction.dy = player.speed * bodySin;
     }
     if (!up && down && left && !right) {
-      direction += this.sensitivity;
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      bodyDirection += this.sensitivity;
+      direction.dx = -player.speed * bodyCos;
+      direction.dy = -player.speed * bodySin;
     }
     if (!up && down && !left && right) {
-      direction -= this.sensitivity;
-      dir.dx = -player.speed * Math.cos(player.direction);
-      dir.dy = -player.speed * Math.sin(player.direction);
+      bodyDirection -= this.sensitivity;
+      direction.dx = -player.speed * bodyCos;
+      direction.dy = -player.speed * bodySin;
     }
-
+    const lastDirection = { ...player.direction };
+    player.direction = direction;
     if (
       !player.isAlive() ||
-      (!game.detectPlayerCollision(player, dir) && (dir.dx !== 0 || dir.dy !== 0))
+      (!game.detectPlayerCollision(player) && (direction.dx !== 0 || direction.dy !== 0))
     ) {
-      player.go(dir);
-      this.updateCursor(player, direction);
+      player.go(direction);
+      this.updateCursor(player, bodyDirection);
     } else {
-      player.go({ dx: 0, dy: 0 });
+      player.moving = false;
       if (this.allowForStaticRotate) {
-        this.updateCursor(player, direction);
+        this.updateCursor(player, bodyDirection);
       }
+      player.direction = { ...lastDirection };
     }
   }
 
-  private updateCursor(owner, direction) {
-    owner.direction = direction;
-    owner.cursor.x = owner.x + this.range * Math.cos(owner.direction);
-    owner.cursor.y = owner.y + this.range * Math.sin(owner.direction);
+  private updateCursor(owner: Player, direction: number) {
+    owner.bodyDirection = direction;
+    owner.cursor.x = owner.x + this.range * Math.cos(owner.bodyDirection);
+    owner.cursor.y = owner.y + this.range * Math.sin(owner.bodyDirection);
   }
 }
 

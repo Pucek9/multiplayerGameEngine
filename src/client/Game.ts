@@ -1,5 +1,4 @@
 import Player from './models/Player';
-import Camera from './models/Camera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
@@ -20,7 +19,6 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import ICamera from './models/Camera/ICamera';
 import BulletModel from '../shared/models/BulletModel';
 import Text from './models/Text';
 import { GameConfig } from './store/gamesList/state';
@@ -31,7 +29,6 @@ import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../shared/apiModels/PowersApiModel';
 import shaderService from './ShaderService';
 
-const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
 export default class Game {
@@ -65,7 +62,7 @@ export default class Game {
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
     this.text = new Text();
-    this.map = new Map(mapJPG);
+    this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
     this.map.init(this.screen);
     this.text.init(this.screen);

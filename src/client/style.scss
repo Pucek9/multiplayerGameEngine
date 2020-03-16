@@ -73,6 +73,29 @@ body {
 
 form {
   width: 100%;
+
+  .type-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 85px;
+    /* margin: 5px 0; */
+    margin-bottom: 5px;
+  }
+
+  .type-row div {
+    width: 75%;
+    border: 0;
+    padding: 5px 5px;
+    font-size: 1.2rem;
+
+    input, select {
+      width: 100%
+    }
+  }
+
+  label {
+    font-size: 1.2rem;
+  }
 }
 
 .title {
