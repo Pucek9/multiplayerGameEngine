@@ -15,37 +15,13 @@ export default abstract class Steering {
     const weaponKeys = '1234567890';
     const weapons = weaponKeys.split('').map(index => player.keys.has(index));
     const weaponPressed = weapons.some(has => has);
-    if (weapons[0] && !shift) {
-      player.selectWeapon(0);
-    }
-    if (weapons[1] && !shift) {
-      player.selectWeapon(1);
-    }
-    if (weapons[2] && !shift) {
-      player.selectWeapon(2);
-    }
-    if (weapons[3] && !shift) {
-      player.selectWeapon(3);
-    }
-    if (weapons[4] && !shift) {
-      player.selectWeapon(4);
-    }
-    if (weapons[5] && !shift) {
-      player.selectWeapon(5);
-    }
-    if (weapons[6] && !shift) {
-      player.selectWeapon(6);
-    }
-    if (weapons[7] && !shift) {
-      player.selectWeapon(7);
-    }
-    if (weapons[8] && !shift) {
-      player.selectWeapon(8);
-    }
-    if (weapons[9] && !shift) {
-      player.selectWeapon(9);
-    }
-    if (weaponPressed && !shift) {
+    if (!shift && weaponPressed) {
+      for (let index = 0; index < weapons.length; index++) {
+        if (weapons[index]) {
+          player.selectWeapon(index);
+          break;
+        }
+      }
       game.emitWeaponInfo(player);
     }
   }
