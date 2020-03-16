@@ -55,43 +55,18 @@ export default abstract class Steering {
     const powerKeys = '!@#$%^&*()';
     const powers = powerKeys.split('').map(index => player.keys.has(index));
     const powerPressed = powers.some(has => has);
-    if (shift && powerPressed) {
-      player.releasePower(game);
-    }
-    if (shift && powers[0]) {
-      player.selectPower(0);
-    }
-    if (shift && powers[1]) {
-      player.selectPower(1);
-    }
-    if (shift && powers[2]) {
-      player.selectPower(2);
-    }
-    if (shift && powers[3]) {
-      player.selectPower(3);
-    }
-    if (shift && powers[4]) {
-      player.selectPower(4);
-    }
-    if (shift && powers[5]) {
-      player.selectPower(5);
-    }
-    if (shift && powers[6]) {
-      player.selectPower(6);
-    }
-    if (shift && powers[7]) {
-      player.selectPower(7);
-    }
-    if (shift && powers[8]) {
-      player.selectPower(8);
-    }
-    if (shift && powers[9]) {
-      player.selectPower(9);
-    }
-    if (shift && !powerPressed) {
-      player.usePower(game);
-    }
     if (shift) {
+      if (powerPressed) {
+        player.releasePower(game);
+        for (let index = 0; index < powers.length; index++) {
+          if (powers[index]) {
+            player.selectPower(index);
+            break;
+          }
+        }
+      } else {
+        player.usePower(game);
+      }
       game.emitPowerInfo(player);
     } else {
       player.releasePower(game);
