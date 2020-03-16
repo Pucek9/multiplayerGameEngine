@@ -12,18 +12,8 @@ export default abstract class Steering {
 
   performWeaponChange(game, player) {
     const shift = player.keys.has('Shift');
-    const weapons = [
-      player.keys.has('1'),
-      player.keys.has('2'),
-      player.keys.has('3'),
-      player.keys.has('4'),
-      player.keys.has('5'),
-      player.keys.has('6'),
-      player.keys.has('7'),
-      player.keys.has('8'),
-      player.keys.has('9'),
-      player.keys.has('0'),
-    ];
+    const weaponKeys = '1234567890';
+    const weapons = weaponKeys.split('').map(index => player.keys.has(index));
     const weaponPressed = weapons.some(has => has);
     if (weapons[0] && !shift) {
       player.selectWeapon(0);
@@ -62,21 +52,10 @@ export default abstract class Steering {
 
   performPowerChange(game, player) {
     const shift = player.keys.has('Shift');
-    const powers = [
-      player.keys.has('!'),
-      player.keys.has('@'),
-      player.keys.has('#'),
-      player.keys.has('$'),
-      player.keys.has('%'),
-      player.keys.has('^'),
-      player.keys.has('&'),
-      player.keys.has('*'),
-      player.keys.has('('),
-      player.keys.has(')'),
-    ];
+    const powerKeys = '!@#$%^&*()';
+    const powers = powerKeys.split('').map(index => player.keys.has(index));
     const powerPressed = powers.some(has => has);
     if (shift && powerPressed) {
-      console.log('released');
       player.releasePower(game);
     }
     if (shift && powers[0]) {
