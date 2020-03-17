@@ -28,6 +28,7 @@ import Team from '../shared/models/Team';
 import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../shared/apiModels/PowersApiModel';
 import shaderService from './ShaderService';
+import { RECTANGLE } from "../shared/constants/other";
 
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
@@ -199,7 +200,7 @@ export default class Game {
   appendStaticObjects(newObjects: any[]) {
     newObjects.forEach(newObject => {
       let staticObject;
-      if (newObject.shape === 'rectangle') {
+      if (newObject.shape ===  RECTANGLE) {
         staticObject = new StaticRectangleObject(newObject);
       } else {
         staticObject = new StaticCircularObject(newObject);

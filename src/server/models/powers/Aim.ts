@@ -1,11 +1,12 @@
 import Power from '../../../shared/models/Power';
 import Player from '../Player';
+import { AIM } from "../../../shared/constants/powers";
 
-export default class AIM extends Power {
-  type = 'AIM';
+export default class Aim extends Power {
+  type = AIM;
   cost = 0.3;
 
-  constructor(params?: Partial<AIM>) {
+  constructor(params?: Partial<Aim>) {
     super();
     Object.assign(this, params);
     Object.seal(this);

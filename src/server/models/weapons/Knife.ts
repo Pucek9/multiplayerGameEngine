@@ -1,9 +1,10 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
+import { KNIFE } from "../../../shared/constants/weapons";
 
 export default class Knife extends Weapon {
-  type = 'Knife';
+  type = KNIFE;
   magazines = Infinity;
   maxBulletsInMagazine = Infinity;
   bulletsInMagazine = Infinity;
@@ -11,7 +12,7 @@ export default class Knife extends Weapon {
   reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
-    type: 'Knife',
+    type: KNIFE,
     flash: false,
     size: 8,
     speed: 1,

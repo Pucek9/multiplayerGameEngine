@@ -1,7 +1,8 @@
 import Weapon from './Weapon';
+import { PISTOL } from "../../../shared/constants/weapons";
 
 export default class Pistol extends Weapon {
-  type = 'Pistol';
+  type = PISTOL;
   magazines = 5;
   maxBulletsInMagazine = 10;
   bulletsInMagazine = 10;
@@ -9,7 +10,7 @@ export default class Pistol extends Weapon {
   reloadTime = 1500;
   shootBulletsCount = 1;
   bulletConfig = {
-    type: 'Pistol',
+    type: PISTOL,
     size: 3,
     power: 20,
     range: 700,

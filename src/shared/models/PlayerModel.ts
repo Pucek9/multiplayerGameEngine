@@ -1,8 +1,9 @@
 import ICircle from '../interfaces/ICircle';
 import Direction from './Direction';
+import { CIRCLE } from "../constants/other";
 
 export default class PlayerModel implements ICircle {
-  shape = 'circle';
+  shape = CIRCLE;
   alive = false;
   bodyDirection = 0;
   direction: Direction = { dx: 0, dy: 0 };

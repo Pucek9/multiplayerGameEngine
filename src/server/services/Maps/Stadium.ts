@@ -2,9 +2,10 @@ import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
 import Goal from '../../models/Goal';
+import { STADIUM } from "../../../shared/constants/maps";
 
 export default class Stadium extends GameMap {
-  mapName = 'Stadium';
+  mapName = STADIUM;
   floor = 'stadiumGrass';
   width = 1184;
   height = 762;

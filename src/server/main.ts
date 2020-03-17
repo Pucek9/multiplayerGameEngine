@@ -3,7 +3,7 @@ import * as http from 'http';
 import * as cors from 'cors';
 import { listen, Socket } from 'socket.io';
 
-import { API } from '../shared/constants';
+import { API } from '../shared/constants/api';
 import gamesManager from './services/GamesManager';
 import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';

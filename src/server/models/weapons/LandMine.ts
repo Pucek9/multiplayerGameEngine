@@ -2,9 +2,10 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
 import GrenadeExplosion from './GrenadeExplosion';
+import { LAND_MINE } from "../../../shared/constants/weapons";
 
 export default class LandMine extends Weapon {
-  type = 'LandMine';
+  type = LAND_MINE;
   magazines = 1;
   maxBulletsInMagazine = 3;
   bulletsInMagazine = 3;
@@ -12,7 +13,7 @@ export default class LandMine extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
-    type: 'LandMine',
+    type: LAND_MINE,
     flash: false,
     color: 'white',
     size: 15,

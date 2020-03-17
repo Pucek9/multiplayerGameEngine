@@ -2,13 +2,14 @@ import ShootPower from './ShootPower';
 import { Angle } from '../../services/CollisionDetector';
 import Player from '../Player';
 import gamesManager from '../../services/GamesManager';
+import { PUSH } from "../../../shared/constants/powers";
 
 export default class Push extends ShootPower {
-  type = 'Push';
+  type = PUSH;
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
-    type: 'Push',
+    type: PUSH,
     color: 'white',
     size: 50,
     range: 400,

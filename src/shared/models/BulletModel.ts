@@ -1,9 +1,10 @@
 import ICircle from '../interfaces/ICircle';
 import { generateId } from '../helpers';
 import Direction from './Direction';
+import { CIRCLE } from "../constants/other";
 
 export default class BulletModel implements ICircle {
-  readonly shape = 'circle';
+  readonly shape =  CIRCLE;
   type: string;
   color = 'black';
   size = 1;

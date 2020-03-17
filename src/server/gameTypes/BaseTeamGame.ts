@@ -9,6 +9,7 @@ import playerService from '../services/PlayerService';
 import Bot from '../models/Bot';
 import { compareBy, generateId } from '../../shared/helpers';
 import BaseGame from './BaseGame';
+import { HEAL } from "../../shared/constants/powers";
 
 export default class BaseTeamGame extends BaseGame {
   public teams: Team[];
@@ -69,7 +70,7 @@ export default class BaseTeamGame extends BaseGame {
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
             (this.friendlyFire && bullet.owner !== object) ||
-            bullet.type === 'Heal',
+            bullet.type === HEAL,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);

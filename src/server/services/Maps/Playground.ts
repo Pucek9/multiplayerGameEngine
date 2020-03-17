@@ -7,12 +7,15 @@ import Item from '../../../shared/models/Item';
 import Shotgun from '../../models/weapons/Shotgun';
 import Resizer from '../../models/weapons/Resizer';
 import Grenade from '../../models/weapons/Grenade';
-import AK47 from '../../models/weapons/AK47';
+import Ak47 from '../../models/weapons/Ak47';
 import AidKit from '../../models/AidKit';
 import LandMine from '../../models/weapons/LandMine';
+import { PLAYGROUND } from "../../../shared/constants/maps";
+import { AK47, GRENADE, LAND_MINE, PISTOL, RESIZER, SHOTGUN } from "../../../shared/constants/weapons";
+import { AID_KIT } from "../../../shared/constants/other";
 
 export default class Playground extends GameMap {
-  mapName = 'Playground';
+  mapName = PLAYGROUND;
   floor = 'grass';
   width = 2920;
   height = 2004;
@@ -198,7 +201,7 @@ export default class Playground extends GameMap {
         color: 'brown',
         time: 10000,
         item: Pistol,
-        type: 'Pistol',
+        type: PISTOL,
       }),
       new ItemGenerator({
         x: 200,
@@ -207,7 +210,7 @@ export default class Playground extends GameMap {
         color: 'red',
         time: 20000,
         item: Shotgun,
-        type: 'Shotgun',
+        type: SHOTGUN,
       }),
       new ItemGenerator({
         x: -500,
@@ -216,7 +219,7 @@ export default class Playground extends GameMap {
         color: 'yellow',
         time: 30000,
         item: Resizer,
-        type: 'Resizer',
+        type: RESIZER,
       }),
       new ItemGenerator({
         x: -800,
@@ -225,7 +228,7 @@ export default class Playground extends GameMap {
         color: 'brown',
         time: 10000,
         item: Pistol,
-        type: 'Pistol',
+        type: PISTOL,
       }),
       new ItemGenerator({
         x: 1350,
@@ -234,7 +237,7 @@ export default class Playground extends GameMap {
         color: 'red',
         time: 20000,
         item: Shotgun,
-        type: 'Shotgun',
+        type: SHOTGUN,
       }),
       new ItemGenerator({
         x: -1200,
@@ -243,7 +246,7 @@ export default class Playground extends GameMap {
         color: 'black',
         time: 10000,
         item: Grenade,
-        type: 'Grenade',
+        type: GRENADE,
       }),
       new ItemGenerator({
         x: 1350,
@@ -252,7 +255,7 @@ export default class Playground extends GameMap {
         color: 'black',
         time: 10000,
         item: LandMine,
-        type: 'LandMine',
+        type: LAND_MINE,
       }),
       new ItemGenerator({
         x: -1000,
@@ -260,8 +263,8 @@ export default class Playground extends GameMap {
         size: 4,
         color: 'white',
         time: 5000,
-        item: AK47,
-        type: 'AK47',
+        item: Ak47,
+        type: AK47,
       }),
       new ItemGenerator({
         x: 1350,
@@ -270,7 +273,7 @@ export default class Playground extends GameMap {
         color: 'white',
         time: 5000,
         item: AidKit,
-        type: 'AidKit',
+        type: AID_KIT,
         itemProps: { hp: 50, energy: 100, speed: true, size: true },
       }),
       new ItemGenerator({
@@ -280,7 +283,7 @@ export default class Playground extends GameMap {
         color: 'white',
         time: 5000,
         item: AidKit,
-        type: 'AidKit',
+        type: AID_KIT,
         itemProps: { hp: 50, energy: 100, speed: true, size: true },
       }),
     ];

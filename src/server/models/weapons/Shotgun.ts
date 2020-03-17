@@ -2,11 +2,12 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import { rand } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
+import { SHOTGUN } from "../../../shared/constants/weapons";
 
 const DISPERSION = 70;
 
 export default class Shotgun extends Weapon {
-  type = 'Shotgun';
+  type = SHOTGUN;
   magazines = 2;
   maxBulletsInMagazine = 25;
   bulletsInMagazine = 25;
@@ -14,7 +15,7 @@ export default class Shotgun extends Weapon {
   reloadTime = 2000;
   shootBulletsCount = 5;
   bulletConfig = {
-    type: 'Shotgun',
+    type: SHOTGUN,
     size: 2,
     power: 15,
     range: 500,

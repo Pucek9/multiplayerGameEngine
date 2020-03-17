@@ -1,9 +1,10 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
+import { AK47 } from "../../../shared/constants/weapons";
 
 export default class Ak47 extends Weapon {
-  type = 'AK47';
+  type = AK47;
   magazines = 5;
   maxBulletsInMagazine = 30;
   bulletsInMagazine = 30;
@@ -11,7 +12,7 @@ export default class Ak47 extends Weapon {
   reloadTime = 2000;
   shootBulletsCount = 1;
   bulletConfig = {
-    type: 'Ak47',
+    type: AK47,
     size: 3,
     power: 20,
     range: 800,

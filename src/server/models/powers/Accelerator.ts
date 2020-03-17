@@ -1,8 +1,9 @@
 import Power from '../../../shared/models/Power';
 import Player from '../Player';
+import { ACCELELATOR } from "../../../shared/constants/powers";
 
 export default class Accelerator extends Power {
-  type = 'Accelerator';
+  type = ACCELELATOR;
   cost = 0.3;
   speed = 10;
 

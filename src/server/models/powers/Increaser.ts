@@ -1,10 +1,12 @@
 import ShootPower from './ShootPower';
+import { INCREASER } from "../../../shared/constants/powers";
 
 export default class Increaser extends ShootPower {
-  type = 'Increaser';
+  type = INCREASER;
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
+    type: INCREASER,
     color: 'white',
     size: 5,
     range: 700,

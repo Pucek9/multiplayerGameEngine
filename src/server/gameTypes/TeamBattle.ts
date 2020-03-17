@@ -10,7 +10,7 @@ import Teleport from '../models/powers/Teleport';
 import Knife from '../models/weapons/Knife';
 import Bot from '../models/Bot';
 import Power from '../../shared/models/Power';
-import AIM from '../models/powers/AIM';
+import Aim from '../models/powers/Aim';
 import SuperAIM from '../models/powers/SuperAIM';
 import Increaser from '../models/powers/Increaser';
 import Heal from '../models/powers/Heal';
@@ -20,7 +20,7 @@ export default class TeamBattle extends BaseTeamGame {
     const player = super.connectPlayer(newPlayer);
     player.addPower(new Increaser());
     player.addPower(new SuperAIM());
-    player.addPower(new AIM());
+    player.addPower(new Aim());
     player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());

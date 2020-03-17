@@ -1,4 +1,4 @@
-import { API } from '../../shared/constants';
+import { API } from '../../shared/constants/api';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';

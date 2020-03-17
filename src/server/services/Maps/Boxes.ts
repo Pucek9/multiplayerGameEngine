@@ -2,12 +2,14 @@ import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
 import ItemGenerator from '../../models/ItemGenerator';
-import AK47 from '../../models/weapons/AK47';
+import Ak47 from '../../models/weapons/Ak47';
 import Pistol from '../../models/weapons/Pistol';
 import Shotgun from '../../models/weapons/Shotgun';
+import { BOXES } from "../../../shared/constants/maps";
+import { AK47, PISTOL, SHOTGUN } from "../../../shared/constants/weapons";
 
 export default class Boxes extends GameMap {
-  mapName = 'Boxes';
+  mapName = BOXES;
   floor = 'grass';
   width = 2920;
   height = 2004;
@@ -131,8 +133,8 @@ export default class Boxes extends GameMap {
         size: 4,
         color: 'white',
         time: 5000,
-        item: AK47,
-        type: 'AK47',
+        item: Ak47,
+        type: AK47,
       }),
       new ItemGenerator({
         x: -1000,
@@ -141,7 +143,7 @@ export default class Boxes extends GameMap {
         color: 'brown',
         time: 10000,
         item: Pistol,
-        type: 'Pistol',
+        type: PISTOL,
       }),
       new ItemGenerator({
         x: -1000,
@@ -150,7 +152,7 @@ export default class Boxes extends GameMap {
         color: 'red',
         time: 20000,
         item: Shotgun,
-        type: 'Shotgun',
+        type: SHOTGUN,
       }),
       new ItemGenerator({
         x: 1000,
@@ -158,8 +160,8 @@ export default class Boxes extends GameMap {
         size: 4,
         color: 'white',
         time: 5000,
-        item: AK47,
-        type: 'AK47',
+        item: Ak47,
+        type: AK47,
       }),
       new ItemGenerator({
         x: 1000,
@@ -168,7 +170,7 @@ export default class Boxes extends GameMap {
         color: 'brown',
         time: 10000,
         item: Pistol,
-        type: 'Pistol',
+        type: PISTOL,
       }),
       new ItemGenerator({
         x: 1000,
@@ -177,7 +179,7 @@ export default class Boxes extends GameMap {
         color: 'red',
         time: 20000,
         item: Shotgun,
-        type: 'Shotgun',
+        type: SHOTGUN,
       }),
     ];
   }

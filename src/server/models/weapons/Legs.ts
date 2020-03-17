@@ -1,7 +1,8 @@
 import Knife from './Knife';
+import { LEGS } from "../../../shared/constants/weapons";
 
 export default class Legs extends Knife {
-  type = 'Legs';
+  type = LEGS;
   magazines = Infinity;
   maxBulletsInMagazine = Infinity;
   bulletsInMagazine = Infinity;
@@ -9,7 +10,7 @@ export default class Legs extends Knife {
   reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
-    type: 'Legs',
+    type: LEGS,
     flash: false,
     size: 20,
     power: 0,

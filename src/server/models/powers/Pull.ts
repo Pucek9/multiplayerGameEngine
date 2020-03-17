@@ -4,13 +4,14 @@ import Bullet from '../Bullet';
 import { Angle } from '../../services/CollisionDetector';
 import gamesManager from '../../services/GamesManager';
 import Player from '../Player';
+import { PULL } from "../../../shared/constants/powers";
 
 export default class Pull extends ShootPower {
-  type = 'Pull';
+  type = PULL;
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
-    type: 'Pull',
+    type: PULL,
     color: 'white',
     size: 50,
     range: 400,

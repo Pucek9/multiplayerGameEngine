@@ -2,9 +2,10 @@ import Player from '../Player';
 import Bullet from '../Bullet';
 import SlowBullets from './SlowBullets';
 import Aura from './Aura';
+import { REVERSE_BULLETS } from "../../../shared/constants/powers";
 
 export default class ReverseBullets extends SlowBullets implements Aura {
-  type = 'ReverseBullets';
+  type = REVERSE_BULLETS;
   cost = 0.03;
 
   constructor(params?: Partial<SlowBullets>) {

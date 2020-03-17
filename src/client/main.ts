@@ -6,7 +6,7 @@ import Game from './Game';
 import './style.scss';
 import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
-import { API } from '../shared/constants';
+import { API } from '../shared/constants/api';
 import GameInstance from '../shared/apiModels/GameInstance';
 import ScreenModel from './interfaces/ScreenModel';
 import { gamesListService, userService } from './store/store';

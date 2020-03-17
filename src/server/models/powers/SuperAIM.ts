@@ -1,8 +1,9 @@
 import Player from '../Player';
-import AIM from './AIM';
+import Aim from './Aim';
+import { SUPER_AIM } from "../../../shared/constants/powers";
 
-export default class SuperAIM extends AIM {
-  type = 'SuperAIM';
+export default class SuperAIM extends Aim {
+  type = SUPER_AIM;
   cost = 0.4;
 
   constructor(params?: Partial<SuperAIM>) {
