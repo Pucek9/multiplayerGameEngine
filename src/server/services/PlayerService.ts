@@ -1,7 +1,7 @@
 import collisionDetector from './CollisionDetector';
 import { rand } from '../../shared/helpers';
 import Zone from '../models/Zone';
-import { CIRCLE } from "../../shared/constants/other";
+import { CIRCLE } from '../../shared/constants/other';
 
 export class PlayerService {
   randNonCollisionPosition(

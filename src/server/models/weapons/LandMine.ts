@@ -2,7 +2,7 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
 import GrenadeExplosion from './GrenadeExplosion';
-import { LAND_MINE } from "../../../shared/constants/weapons";
+import { LAND_MINE, WHITE } from '../../../shared/constants';
 
 export default class LandMine extends Weapon {
   type = LAND_MINE;
@@ -15,7 +15,7 @@ export default class LandMine extends Weapon {
   bulletConfig: Partial<Bullet> = {
     type: LAND_MINE,
     flash: false,
-    color: 'white',
+    color: WHITE,
     size: 15,
     power: 0,
     range: 100,

@@ -1,5 +1,5 @@
 import Weapon from './Weapon';
-import { PISTOL } from "../../../shared/constants/weapons";
+import { PISTOL } from '../../../shared/constants/weapons';
 
 export default class Pistol extends Weapon {
   type = PISTOL;

@@ -1,6 +1,6 @@
 import Player from '../Player';
 import Aim from './Aim';
-import { SUPER_AIM } from "../../../shared/constants/powers";
+import { SUPER_AIM } from '../../../shared/constants/powers';
 
 export default class SuperAIM extends Aim {
   type = SUPER_AIM;

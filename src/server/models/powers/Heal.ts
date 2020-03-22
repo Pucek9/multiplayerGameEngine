@@ -1,5 +1,5 @@
 import ShootPower from './ShootPower';
-import { HEAL } from "../../../shared/constants/powers";
+import { HEAL, RED } from '../../../shared/constants';
 
 export default class Heal extends ShootPower {
   type = HEAL;
@@ -7,7 +7,7 @@ export default class Heal extends ShootPower {
   cost = 10;
   bulletConfig = {
     type: HEAL,
-    color: 'red',
+    color: RED,
     size: 10,
     speed: 20,
     range: 300,

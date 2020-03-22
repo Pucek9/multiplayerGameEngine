@@ -1,6 +1,6 @@
 import Power from '../../../shared/models/Power';
 import Player from '../Player';
-import { AIM } from "../../../shared/constants/powers";
+import { AIM } from '../../../shared/constants/powers';
 
 export default class Aim extends Power {
   type = AIM;

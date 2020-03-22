@@ -5,12 +5,21 @@ import ItemGenerator from '../../models/ItemGenerator';
 import Ak47 from '../../models/weapons/Ak47';
 import Pistol from '../../models/weapons/Pistol';
 import Shotgun from '../../models/weapons/Shotgun';
-import { BOXES } from "../../../shared/constants/maps";
-import { AK47, PISTOL, SHOTGUN } from "../../../shared/constants/weapons";
+import {
+  BOXES,
+  AK47,
+  PISTOL,
+  SHOTGUN,
+  RED,
+  YELLOW,
+  WHITE,
+  BROWN,
+  GRASS,
+} from '../../../shared/constants';
 
 export default class Boxes extends GameMap {
   mapName = BOXES;
-  floor = 'grass';
+  floor = GRASS;
   width = 2920;
   height = 2004;
 
@@ -30,7 +39,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: 800,
@@ -39,7 +48,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: 400,
@@ -48,7 +57,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: 0,
@@ -57,7 +66,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: -400,
@@ -66,7 +75,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: -800,
@@ -75,7 +84,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: -1200,
@@ -84,7 +93,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 800,
         depth: 10,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: 1450,
@@ -93,7 +102,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 2000,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -102,7 +111,7 @@ export default class Boxes extends GameMap {
         width: 100,
         height: 2000,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -111,7 +120,7 @@ export default class Boxes extends GameMap {
         width: 3100,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -120,7 +129,7 @@ export default class Boxes extends GameMap {
         width: 3100,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
     ];
   }
@@ -131,7 +140,7 @@ export default class Boxes extends GameMap {
         x: -1000,
         y: 800,
         size: 4,
-        color: 'white',
+        color: WHITE,
         time: 5000,
         item: Ak47,
         type: AK47,
@@ -140,7 +149,7 @@ export default class Boxes extends GameMap {
         x: -1000,
         y: 0,
         size: 4,
-        color: 'brown',
+        color: BROWN,
         time: 10000,
         item: Pistol,
         type: PISTOL,
@@ -149,7 +158,7 @@ export default class Boxes extends GameMap {
         x: -1000,
         y: -800,
         size: 4,
-        color: 'red',
+        color: RED,
         time: 20000,
         item: Shotgun,
         type: SHOTGUN,
@@ -158,7 +167,7 @@ export default class Boxes extends GameMap {
         x: 1000,
         y: 800,
         size: 4,
-        color: 'white',
+        color: WHITE,
         time: 5000,
         item: Ak47,
         type: AK47,
@@ -167,7 +176,7 @@ export default class Boxes extends GameMap {
         x: 1000,
         y: 0,
         size: 4,
-        color: 'brown',
+        color: BROWN,
         time: 10000,
         item: Pistol,
         type: PISTOL,
@@ -176,7 +185,7 @@ export default class Boxes extends GameMap {
         x: 1000,
         y: -800,
         size: 4,
-        color: 'red',
+        color: RED,
         time: 20000,
         item: Shotgun,
         type: SHOTGUN,

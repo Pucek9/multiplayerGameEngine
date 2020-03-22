@@ -5,15 +5,24 @@ import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectM
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
 import { degToRad } from '../../shared/helpers';
-import { AK47, GRENADE, LAND_MINE, PISTOL, RESIZER, SHOTGUN } from '../../shared/constants/weapons';
-import { AID_KIT } from '../../shared/constants/other';
+import {
+  AK47,
+  GRENADE,
+  LAND_MINE,
+  PISTOL,
+  RESIZER,
+  SHOTGUN,
+  AID_KIT,
+  BLACK,
+  BROWN,
+} from '../../shared/constants';
 
 const loader = new FBXLoader();
 const models = {
-  [SHOTGUN]: { scale: 0.07, color: 'black', rotation: { x: 90, z: 90, y: 0 } },
-  [AK47]: { scale: 0.07, color: 'black', rotation: { x: 90, z: 90, y: 0 } },
-  [RESIZER]: { scale: 0.06, color: 'brown', rotation: { x: 90, z: 90, y: 0 } },
-  [PISTOL]: { scale: 0.03, color: 'black', rotation: { x: 90, z: 90, y: 0 } },
+  [SHOTGUN]: { scale: 0.07, color: BLACK, rotation: { x: 90, z: 90, y: 0 } },
+  [AK47]: { scale: 0.07, color: BLACK, rotation: { x: 90, z: 90, y: 0 } },
+  [RESIZER]: { scale: 0.06, color: BROWN, rotation: { x: 90, z: 90, y: 0 } },
+  [PISTOL]: { scale: 0.03, color: BLACK, rotation: { x: 90, z: 90, y: 0 } },
   [AID_KIT]: { scale: 0.22, rotation: { x: 90, z: 90, y: 0 } },
   [GRENADE]: { scale: 1.5, rotation: { x: 90, z: 90, y: 0 } },
   [LAND_MINE]: { scale: 80, rotation: { x: 90, z: 0, y: 0 } },

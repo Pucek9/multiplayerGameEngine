@@ -1,6 +1,6 @@
 export const ACCELELATOR = 'Accelerator';
 export const AIM = 'Aim';
-export const HEAL ='Heal';
+export const HEAL = 'Heal';
 export const INCREASER = 'Increaser';
 export const PULL = 'Pull';
 export const PUSH = 'Push';

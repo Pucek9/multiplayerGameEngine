@@ -2,11 +2,12 @@ import StaticRectangleObject from '../../models/StaticRectangleObject';
 import GameMap from './GameMap';
 import Zone from '../../models/Zone';
 import Goal from '../../models/Goal';
-import { STADIUM } from "../../../shared/constants/maps";
+import { INVISIBLE, RED, STADIUM, STADIUM_GRASS } from '../../../shared/constants';
+import StaticCircularObject from '../../models/StaticCircularObject';
 
 export default class Stadium extends GameMap {
   mapName = STADIUM;
-  floor = 'stadiumGrass';
+  floor = STADIUM_GRASS;
   width = 1184;
   height = 762;
 
@@ -26,8 +27,20 @@ export default class Stadium extends GameMap {
         height: 112,
         z: 0,
         depth: 50,
-        color: 'white',
+        color: RED,
         team: '',
+      }),
+      new StaticCircularObject({
+        x: 512,
+        y: 57,
+        size: 5,
+        color: RED,
+      }),
+      new StaticCircularObject({
+        x: 512,
+        y: -57,
+        size: 5,
+        color: RED,
       }),
       new Goal({
         x: -532,
@@ -36,8 +49,20 @@ export default class Stadium extends GameMap {
         height: 112,
         z: 0,
         depth: 50,
-        color: 'white',
+        color: RED,
         team: '',
+      }),
+      new StaticCircularObject({
+        x: -512,
+        y: 57,
+        size: 5,
+        color: RED,
+      }),
+      new StaticCircularObject({
+        x: -512,
+        y: -57,
+        size: 5,
+        color: RED,
       }),
       //right
       new StaticRectangleObject({
@@ -47,7 +72,16 @@ export default class Stadium extends GameMap {
         width: 100,
         height: 900,
         depth: 100,
-        color: 'red',
+        color: RED,
+      }),
+      new StaticRectangleObject({
+        x: 514,
+        y: -400,
+        z: 0,
+        width: 100,
+        height: 900,
+        depth: 10,
+        color: INVISIBLE,
       }),
       //left
       new StaticRectangleObject({
@@ -57,17 +91,35 @@ export default class Stadium extends GameMap {
         width: 100,
         height: 900,
         depth: 100,
-        color: 'red',
+        color: RED,
+      }),
+      new StaticRectangleObject({
+        x: -614,
+        y: -400,
+        z: 0,
+        width: 100,
+        height: 900,
+        depth: 10,
+        color: INVISIBLE,
       }),
       //up
       new StaticRectangleObject({
-        x: -600,
+        x: -700,
         y: 390,
         z: 0,
         width: 1400,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
+      }),
+      new StaticRectangleObject({
+        x: -700,
+        y: 345,
+        z: 0,
+        width: 1400,
+        height: 100,
+        depth: 10,
+        color: INVISIBLE,
       }),
       //down
       new StaticRectangleObject({
@@ -77,7 +129,16 @@ export default class Stadium extends GameMap {
         width: 1400,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
+      }),
+      new StaticRectangleObject({
+        x: -700,
+        y: -450,
+        z: 0,
+        width: 1400,
+        height: 100,
+        depth: 10,
+        color: INVISIBLE,
       }),
     ];
   }

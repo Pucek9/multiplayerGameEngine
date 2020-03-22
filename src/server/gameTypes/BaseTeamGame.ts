@@ -9,7 +9,7 @@ import playerService from '../services/PlayerService';
 import Bot from '../models/Bot';
 import { compareBy, generateId } from '../../shared/helpers';
 import BaseGame from './BaseGame';
-import { HEAL } from "../../shared/constants/powers";
+import { HEAL } from '../../shared/constants/powers';
 
 export default class BaseTeamGame extends BaseGame {
   public teams: Team[];

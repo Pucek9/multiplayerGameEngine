@@ -2,7 +2,7 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import { rand } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
-import { GRENADE_EXPLOSION } from "../../../shared/constants/weapons";
+import { GRENADE_EXPLOSION } from '../../../shared/constants/weapons';
 
 const DISPERSION = 70;
 

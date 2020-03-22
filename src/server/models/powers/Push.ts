@@ -2,7 +2,7 @@ import ShootPower from './ShootPower';
 import { Angle } from '../../services/CollisionDetector';
 import Player from '../Player';
 import gamesManager from '../../services/GamesManager';
-import { PUSH } from "../../../shared/constants/powers";
+import { PUSH, WHITE } from '../../../shared/constants';
 
 export default class Push extends ShootPower {
   type = PUSH;
@@ -10,7 +10,7 @@ export default class Push extends ShootPower {
   cost = 10;
   bulletConfig = {
     type: PUSH,
-    color: 'white',
+    color: WHITE,
     size: 50,
     range: 400,
     speed: 10,

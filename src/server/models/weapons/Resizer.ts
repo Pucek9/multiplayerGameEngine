@@ -1,5 +1,5 @@
 import Weapon from './Weapon';
-import { RESIZER } from "../../../shared/constants/weapons";
+import { RESIZER, WHITE } from '../../../shared/constants';
 
 export default class Resizer extends Weapon {
   type = RESIZER;
@@ -11,7 +11,7 @@ export default class Resizer extends Weapon {
   shootBulletsCount = 1;
   bulletConfig = {
     type: RESIZER,
-    color: 'white',
+    color: WHITE,
     size: 5,
     power: 1,
     range: 700,

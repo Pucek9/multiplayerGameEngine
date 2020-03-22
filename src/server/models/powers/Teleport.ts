@@ -1,7 +1,7 @@
 import Player from '../Player';
 import Accelerator from './Accelerator';
 import ClickPower from './ClickPower';
-import { TELEPORT } from "../../../shared/constants/powers";
+import { TELEPORT } from '../../../shared/constants/powers';
 
 export default class Teleport extends Accelerator implements ClickPower {
   type = TELEPORT;

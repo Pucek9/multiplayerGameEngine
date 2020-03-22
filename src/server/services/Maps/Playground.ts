@@ -10,13 +10,26 @@ import Grenade from '../../models/weapons/Grenade';
 import Ak47 from '../../models/weapons/Ak47';
 import AidKit from '../../models/AidKit';
 import LandMine from '../../models/weapons/LandMine';
-import { PLAYGROUND } from "../../../shared/constants/maps";
-import { AK47, GRENADE, LAND_MINE, PISTOL, RESIZER, SHOTGUN } from "../../../shared/constants/weapons";
-import { AID_KIT } from "../../../shared/constants/other";
+import { PLAYGROUND } from '../../../shared/constants/maps';
+import {
+  AK47,
+  GRENADE,
+  LAND_MINE,
+  PISTOL,
+  RESIZER,
+  SHOTGUN,
+  AID_KIT,
+  BLUE,
+  GREEN,
+  PURPLE,
+  RED,
+  YELLOW,
+  GRASS,
+} from '../../../shared/constants';
 
 export default class Playground extends GameMap {
   mapName = PLAYGROUND;
-  floor = 'grass';
+  floor = GRASS;
   width = 2920;
   height = 2004;
   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
@@ -30,14 +43,14 @@ export default class Playground extends GameMap {
 
   setStaticObjects() {
     this.staticObjects = [
-      new StaticCircularObject({ x: 100, y: 250, size: 100, color: 'red' }),
-      new StaticCircularObject({ x: 1000, y: 250, size: 90, color: 'blue' }),
-      new StaticCircularObject({ x: 500, y: 450, size: 30, color: 'purple' }),
-      new StaticCircularObject({ x: -1050, y: -180, size: 120, color: 'red' }),
-      new StaticCircularObject({ x: -600, y: -600, size: 100, color: 'blue' }),
-      new StaticCircularObject({ x: -200, y: -700, size: 130, color: 'yellow' }),
-      new StaticCircularObject({ x: 500, y: -700, size: 80, color: 'red' }),
-      new StaticCircularObject({ x: -1200, y: 850, size: 90, color: 'green' }),
+      new StaticCircularObject({ x: 100, y: 250, size: 100, color: RED }),
+      new StaticCircularObject({ x: 1000, y: 250, size: 90, color: BLUE }),
+      new StaticCircularObject({ x: 500, y: 450, size: 30, color: PURPLE }),
+      new StaticCircularObject({ x: -1050, y: -180, size: 120, color: RED }),
+      new StaticCircularObject({ x: -600, y: -600, size: 100, color: BLUE }),
+      new StaticCircularObject({ x: -200, y: -700, size: 130, color: YELLOW }),
+      new StaticCircularObject({ x: 500, y: -700, size: 80, color: RED }),
+      new StaticCircularObject({ x: -1200, y: 850, size: 90, color: GREEN }),
       new StaticRectangleObject({
         x: 500,
         y: 350,
@@ -45,7 +58,7 @@ export default class Playground extends GameMap {
         width: 500,
         height: 100,
         depth: 200,
-        color: 'green',
+        color: GREEN,
         deg: 45,
       }),
       new StaticRectangleObject({
@@ -55,7 +68,7 @@ export default class Playground extends GameMap {
         width: 200,
         height: 80,
         depth: 80,
-        color: 'blue',
+        color: BLUE,
         deg: -30,
       }),
       new StaticRectangleObject({
@@ -65,7 +78,7 @@ export default class Playground extends GameMap {
         width: 80,
         height: 300,
         depth: 80,
-        color: 'yellow',
+        color: YELLOW,
         deg: 50,
       }),
       new StaticRectangleObject({
@@ -75,7 +88,7 @@ export default class Playground extends GameMap {
         width: 400,
         height: 150,
         depth: 80,
-        color: 'red',
+        color: RED,
         deg: -130,
       }),
       new StaticRectangleObject({
@@ -85,7 +98,7 @@ export default class Playground extends GameMap {
         width: 200,
         height: 120,
         depth: 120,
-        color: 'blue',
+        color: BLUE,
         deg: 120,
       }),
       new StaticRectangleObject({
@@ -114,7 +127,7 @@ export default class Playground extends GameMap {
         width: 100,
         height: 300,
         depth: 100,
-        color: 'yellow',
+        color: YELLOW,
       }),
       new StaticRectangleObject({
         x: -1200,
@@ -123,7 +136,7 @@ export default class Playground extends GameMap {
         width: 600,
         height: 80,
         depth: 120,
-        color: 'green',
+        color: GREEN,
         deg: 40,
       }),
       new StaticRectangleObject({
@@ -133,7 +146,7 @@ export default class Playground extends GameMap {
         width: 100,
         height: 2000,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -142,7 +155,7 @@ export default class Playground extends GameMap {
         width: 100,
         height: 2000,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -151,7 +164,7 @@ export default class Playground extends GameMap {
         width: 3100,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -160,7 +173,7 @@ export default class Playground extends GameMap {
         width: 3100,
         height: 100,
         depth: 100,
-        color: 'red',
+        color: RED,
       }),
       new StaticRectangleObject({
         x: -1550,
@@ -169,7 +182,7 @@ export default class Playground extends GameMap {
         width: 400,
         height: 100,
         depth: 100,
-        color: 'blue',
+        color: BLUE,
       }),
       new StaticRectangleObject({
         x: -1000,
@@ -178,7 +191,7 @@ export default class Playground extends GameMap {
         width: 2000,
         height: 100,
         depth: 100,
-        color: 'blue',
+        color: BLUE,
       }),
       new StaticRectangleObject({
         x: 1150,
@@ -187,7 +200,7 @@ export default class Playground extends GameMap {
         width: 400,
         height: 100,
         depth: 100,
-        color: 'blue',
+        color: BLUE,
       }),
     ];
   }
@@ -198,7 +211,7 @@ export default class Playground extends GameMap {
         x: 1350,
         y: 150,
         size: 4,
-        color: 'brown',
+        color: BROWN,
         time: 10000,
         item: Pistol,
         type: PISTOL,
@@ -207,7 +220,7 @@ export default class Playground extends GameMap {
         x: 200,
         y: 500,
         size: 4,
-        color: 'red',
+        color: RED,
         time: 20000,
         item: Shotgun,
         type: SHOTGUN,
@@ -216,7 +229,7 @@ export default class Playground extends GameMap {
         x: -500,
         y: 200,
         size: 4,
-        color: 'yellow',
+        color: YELLOW,
         time: 30000,
         item: Resizer,
         type: RESIZER,
@@ -225,7 +238,7 @@ export default class Playground extends GameMap {
         x: -800,
         y: -600,
         size: 4,
-        color: 'brown',
+        color: BROWN,
         time: 10000,
         item: Pistol,
         type: PISTOL,
@@ -234,7 +247,7 @@ export default class Playground extends GameMap {
         x: 1350,
         y: -500,
         size: 4,
-        color: 'red',
+        color: RED,
         time: 20000,
         item: Shotgun,
         type: SHOTGUN,
@@ -243,7 +256,7 @@ export default class Playground extends GameMap {
         x: -1200,
         y: -900,
         size: 8,
-        color: 'black',
+        color: BLACK,
         time: 10000,
         item: Grenade,
         type: GRENADE,
@@ -252,7 +265,7 @@ export default class Playground extends GameMap {
         x: 1350,
         y: 900,
         size: 8,
-        color: 'black',
+        color: BLACK,
         time: 10000,
         item: LandMine,
         type: LAND_MINE,
@@ -261,7 +274,7 @@ export default class Playground extends GameMap {
         x: -1000,
         y: 800,
         size: 4,
-        color: 'white',
+        color: WHITE,
         time: 5000,
         item: Ak47,
         type: AK47,
@@ -270,7 +283,7 @@ export default class Playground extends GameMap {
         x: 1350,
         y: -900,
         size: 4,
-        color: 'white',
+        color: WHITE,
         time: 5000,
         item: AidKit,
         type: AID_KIT,
@@ -280,7 +293,7 @@ export default class Playground extends GameMap {
         x: -1350,
         y: 900,
         size: 4,
-        color: 'white',
+        color: WHITE,
         time: 5000,
         item: AidKit,
         type: AID_KIT,

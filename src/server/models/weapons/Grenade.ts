@@ -2,7 +2,7 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
 import GrenadeExplosion from './GrenadeExplosion';
-import { GRENADE } from "../../../shared/constants/weapons";
+import { GRENADE, GREEN } from '../../../shared/constants';
 
 export default class Grenade extends Weapon {
   type = GRENADE;
@@ -15,7 +15,7 @@ export default class Grenade extends Weapon {
   bulletConfig: Partial<Bullet> = {
     flash: false,
     type: GRENADE,
-    color: 'green',
+    color: GREEN,
     size: 5,
     power: 0,
     range: 400,

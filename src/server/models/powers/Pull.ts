@@ -4,7 +4,7 @@ import Bullet from '../Bullet';
 import { Angle } from '../../services/CollisionDetector';
 import gamesManager from '../../services/GamesManager';
 import Player from '../Player';
-import { PULL } from "../../../shared/constants/powers";
+import { PULL, WHITE } from '../../../shared/constants';
 
 export default class Pull extends ShootPower {
   type = PULL;
@@ -12,7 +12,7 @@ export default class Pull extends ShootPower {
   cost = 10;
   bulletConfig = {
     type: PULL,
-    color: 'white',
+    color: WHITE,
     size: 50,
     range: 400,
     power: 0,
