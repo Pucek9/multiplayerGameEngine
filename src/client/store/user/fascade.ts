@@ -16,6 +16,10 @@ export class UserService {
     this.store.dispatch({ type: JoinGameActions.SET_ID, payload: id });
   }
 
+  setIp(ip: string) {
+    this.store.dispatch({ type: JoinGameActions.SET_IP, payload: ip });
+  }
+
   chooseGame(roomName: string) {
     this.store.dispatch({ type: JoinGameActions.CHOOSE_GAME, payload: roomName });
   }

@@ -26,16 +26,18 @@ app.use(express.static('dist/client'), cors(corsOptions));
 
 function connection(socket: Socket) {
   function init() {
-    console.log(`[${socket.id}] Connected`);
+    const ip = socket.handshake.address;
+    console.log(`[${socket.id}] ${ip} Connected`);
     setTimeout(() => {
       emitter.emitGamesList();
-      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, socket.id);
+      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, ip]);
     }, TIMEOUT);
     registerGameMenuEvents();
   }
 
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
+      newGame.ip = socket.handshake.address;
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
       gamesManager.createGame(emitter, newGame);
       emitter.emitGamesList();

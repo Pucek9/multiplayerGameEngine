@@ -13,4 +13,5 @@ export default interface GameInstance {
     points: number;
     count: number;
   }>;
+  ip: string;
 }

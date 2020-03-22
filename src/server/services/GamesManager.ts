@@ -51,6 +51,7 @@ class GamesManager {
         light: game.light,
         count: game.players.length,
         teams: game.teams,
+        ip: game.ip,
       };
     });
   }

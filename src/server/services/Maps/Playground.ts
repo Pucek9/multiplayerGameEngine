@@ -10,8 +10,8 @@ import Grenade from '../../models/weapons/Grenade';
 import Ak47 from '../../models/weapons/Ak47';
 import AidKit from '../../models/AidKit';
 import LandMine from '../../models/weapons/LandMine';
-import { PLAYGROUND } from '../../../shared/constants/maps';
 import {
+  PLAYGROUND,
   AK47,
   GRENADE,
   LAND_MINE,
@@ -25,6 +25,9 @@ import {
   RED,
   YELLOW,
   GRASS,
+  BROWN,
+  BLACK,
+  WHITE,
 } from '../../../shared/constants';
 
 export default class Playground extends GameMap {

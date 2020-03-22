@@ -11,4 +11,5 @@ export default interface NewGame {
     name: string;
     color: string;
   }>;
+  ip?: string;
 }

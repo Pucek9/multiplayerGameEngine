@@ -20,6 +20,7 @@ export default abstract class GameModel {
   botsCount: number;
   players: Player[];
   bullets: Bullet[];
+  ip: string;
   teams?: Team[];
   friendlyFire?: boolean;
 

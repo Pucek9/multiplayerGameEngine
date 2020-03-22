@@ -16,6 +16,11 @@ export function userReducer(
         ...state,
         id: payload,
       };
+    case UserActions.SET_IP:
+      return {
+        ...state,
+        ip: payload,
+      };
     case UserActions.CHOOSE_GAME:
       return {
         ...state,

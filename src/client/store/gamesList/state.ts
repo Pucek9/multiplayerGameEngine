@@ -13,6 +13,7 @@ export interface GameConfig {
     points: number;
     count: number;
   }>;
+  ip: string;
 }
 
 export interface GamesListState {
