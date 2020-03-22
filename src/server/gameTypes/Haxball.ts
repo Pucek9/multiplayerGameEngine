@@ -10,7 +10,7 @@ import Bullet from '../models/Bullet';
 import RoundTeamBattle from './RoundTeamBattle';
 import Goal from '../models/Goal';
 import Team from '../../shared/models/Team';
-import { BALL, LEGS, WHITE } from '../../shared/constants';
+import { BALL, INVISIBLE, LEGS, WHITE } from '../../shared/constants';
 
 export default class Haxball extends RoundTeamBattle {
   constructor(emitter, params) {
@@ -87,29 +87,12 @@ export default class Haxball extends RoundTeamBattle {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             if (object instanceof Bullet && object.type === LEGS && bullet.type === BALL) {
-              bullet.owner = object.owner;
-              // TODO: Something is going wrong
-              bullet.distance = 0;
-              bullet.vectorFT = object.vectorFT;
-              bullet.direction.dx = object.direction.dx;
-              bullet.direction.dy = object.direction.dy;
-              // bullet.hit({ x: -angle.x, y: -angle.y }, object);
-              bullet.speed = object.speed + 5;
+              this.kickBall(object, bullet);
             } else {
               bullet.hit(angle, object);
             }
             if (object instanceof Goal && bullet.type === BALL) {
-              if (object.team !== bullet.owner?.team) {
-                const team = this.findTeam(bullet.owner.team);
-                team?.decreasePoints();
-              } else {
-                const team = this.findTeam(object.team);
-                team?.increasePoints();
-              }
-              this.startRound();
-              console.log(this.teams);
-
-              this.emitter.emitTeamsList(this);
+              this.shootGoal(object, bullet);
             }
             this.deleteBulletIfInactive(bullet, i);
           }
@@ -117,9 +100,32 @@ export default class Haxball extends RoundTeamBattle {
     });
   }
 
+  kickBall(legs: Bullet, ball: Bullet) {
+    ball.owner = legs.owner;
+    // TODO: Something is going wrong
+    ball.distance = 0;
+    ball.vectorFT = legs.vectorFT;
+    ball.direction.dx = legs.direction.dx;
+    ball.direction.dy = legs.direction.dy;
+    // ball.hit({ x: -angle.x, y: -angle.y }, legs);
+    ball.speed = legs.speed + 5;
+  }
+
+  shootGoal(goal: Goal, ball: Bullet) {
+    if (goal.team !== ball.owner?.team) {
+      const team = this.findTeam(ball.owner.team);
+      team?.decreasePoints();
+    } else {
+      const team = this.findTeam(goal.team);
+      team?.increasePoints();
+    }
+    this.startRound();
+    this.emitter.emitTeamsList(this);
+  }
+
   detectPlayerCollisionWithObjects(player: Player): boolean {
     const allObjects = [
-      ...this.getStaticObjects(),
+      ...this.getStaticObjects().filter(object => object.color !== INVISIBLE),
       ...this.getAlivePlayers().filter(object => player !== object),
     ];
     this.detectBallCollision(player, allObjects);

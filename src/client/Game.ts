@@ -28,7 +28,8 @@ import Team from '../shared/models/Team';
 import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
 import PowersApiModel from '../shared/apiModels/PowersApiModel';
 import shaderService from './ShaderService';
-import { RECTANGLE } from '../shared/constants/other';
+import { CIRCLE, RECTANGLE } from '../shared/constants/other';
+import { INVISIBLE } from '../shared/constants';
 
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
@@ -198,16 +199,20 @@ export default class Game {
   }
 
   appendStaticObjects(newObjects: any[]) {
-    newObjects.forEach(newObject => {
-      let staticObject;
-      if (newObject.shape === RECTANGLE) {
-        staticObject = new StaticRectangleObject(newObject);
-      } else {
-        staticObject = new StaticCircularObject(newObject);
-      }
-      staticObject.init(this.screen);
-      this.staticObjects.push(staticObject);
-    });
+    newObjects
+      .filter(newObject => newObject.color !== INVISIBLE)
+      .forEach(newObject => {
+        let staticObject;
+        if (newObject.shape === RECTANGLE) {
+          staticObject = new StaticRectangleObject(newObject);
+        } else if (newObject.shape === CIRCLE) {
+          staticObject = new StaticCircularObject(newObject);
+        }
+        if (staticObject) {
+          staticObject.init(this.screen);
+          this.staticObjects.push(staticObject);
+        }
+      });
   }
 
   appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
