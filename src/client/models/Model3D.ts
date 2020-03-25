@@ -1,5 +1,6 @@
 import { Group, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+
 import {
   AID_KIT,
   AK47,
