@@ -1,11 +1,10 @@
-import Power from '../../../shared/models/Power';
 import Player from '../Player';
 import Bullet from '../Bullet';
-import collisionDetector from '../../services/CollisionDetector';
-import Direction from '../../../shared/models/Direction';
+import Aura from './Aura';
+import { SLOW_BULLETS } from '../../../shared/constants/powers';
 
-export default class SlowBullets extends Power {
-  type = 'SlowBullets';
+export default class SlowBullets extends Aura {
+  type = SLOW_BULLETS;
   size = 70;
   cost = 0.01;
 
@@ -13,6 +12,10 @@ export default class SlowBullets extends Power {
     super();
     Object.assign(this, params);
     Object.seal(this);
+  }
+
+  getSize(): number {
+    return this.size;
   }
 
   isActive(): boolean {
@@ -27,32 +30,13 @@ export default class SlowBullets extends Power {
     this.active = false;
   }
 
-  effect({
-    bullet,
-    bulletDirection,
-    owner,
-  }: {
-    bullet: Bullet;
-    bulletDirection: Direction;
-    owner: Player;
-  }): boolean {
+  effect({ bullet, owner }: { bullet: Bullet; owner: Player }): boolean {
     const cost = this.cost * bullet.power;
-    if (
-      this.isActive() &&
-      bullet.power > 0 &&
-      owner.hasEnoughEnergy(cost) &&
-      collisionDetector.detectCollision(
-        bullet,
-        { shape: 'circle', size: this.size, x: owner.x, y: owner.y },
-        bulletDirection,
-      ).yes
-    ) {
-      owner.useEnergy(cost);
+    if (owner.tryUseEnergy(cost)) {
       bullet.customFlag = false;
-      bullet.decreaseSpeedToMin();
+      bullet.decreaseSpeedToMin(bullet.speed > 0.1 ? bullet.speed / 4 : 0.1);
       return true;
     } else {
-      bullet.customFlag = true;
       return false;
     }
   }

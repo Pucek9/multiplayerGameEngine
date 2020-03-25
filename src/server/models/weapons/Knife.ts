@@ -1,9 +1,10 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import BulletData from '../../../shared/models/BulletData';
+import { KNIFE } from '../../../shared/constants/weapons';
 
 export default class Knife extends Weapon {
-  type = 'Knife';
+  type = KNIFE;
   magazines = Infinity;
   maxBulletsInMagazine = Infinity;
   bulletsInMagazine = Infinity;
@@ -11,11 +12,14 @@ export default class Knife extends Weapon {
   reloadTime = 0;
   shootBulletsCount = 1;
   bulletConfig = {
+    type: KNIFE,
     flash: false,
-    size: 5,
-    power: 40,
-    range: 50,
-    color: 'gray',
+    size: 8,
+    speed: 1,
+    power: 15,
+    range: 40,
+    allowForManipulate: false,
+    hit(angle?: { x: number; y: number }, object?) {},
   };
 
   constructor(params?: Partial<Knife>) {
@@ -23,14 +27,27 @@ export default class Knife extends Weapon {
     Object.assign(this, params);
   }
 
-  generateBullets(bulletData: BulletData) {
+  prepareBullets(bulletData: BulletData) {
     return [
       new Bullet({
         owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
+        fromX:
+          bulletData.fromX -
+          (bulletData.dir.dx === 0
+            ? 0
+            : bulletData.dir.dx < 0
+            ? bulletData.dir.dx + bulletData.size
+            : bulletData.dir.dx - bulletData.size),
+        fromY:
+          bulletData.fromY -
+          (bulletData.dir.dy === 0
+            ? 0
+            : bulletData.dir.dy < 0
+            ? bulletData.dir.dy + bulletData.size
+            : bulletData.dir.dy - bulletData.size),
         targetX: bulletData.targetX,
         targetY: bulletData.targetY,
+        color: bulletData.owner.color,
         ...this.bulletConfig,
       }),
     ];

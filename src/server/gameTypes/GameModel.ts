@@ -2,51 +2,66 @@ import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import NewUser from '../../shared/apiModels/NewUser';
 import Player from '../models/Player';
 import Bullet from '../models/Bullet';
-import GameMap from '../maps/GameMap';
+import GameMap from '../services/Maps/GameMap';
+import Steering from '../services/Steering/Steering';
+import Cursor from '../services/Cursor/Cursor';
+import Emitter from '../services/Emitter';
+import Team from '../../shared/models/Team';
 
-export default interface GameModel {
-  emitter;
+export default abstract class GameModel {
+  steering: Steering;
+  cursor: Cursor;
+  emitter: Emitter;
+  map: GameMap;
   roomName: string;
   type: string;
-  map: GameMap;
+  camera: string;
+  light: string;
+  botsCount: number;
   players: Player[];
   bullets: Bullet[];
+  ip: string;
+  teams?: Team[];
+  friendlyFire?: boolean;
 
-  getPlayer(id: string);
+  abstract getPlayer(id: string);
 
-  alivePlayers();
+  abstract getAlivePlayers();
 
-  getPlayers();
+  abstract getPlayers();
 
-  isPlayerInThisGame(id: string);
+  abstract getNormalizedBullets();
 
-  getBullets();
+  abstract getMapName();
 
-  getMapName();
+  abstract getStaticObjects();
 
-  getStaticObjects();
+  abstract updateBullets();
 
-  updateBullets();
+  abstract detectBulletsCollision();
 
-  detectBulletsCollision();
+  abstract shoot(id: string);
 
-  shoot(mouseClick: MouseCoordinates);
+  abstract revivePlayer(id: string);
 
-  revivePlayer(id: string);
+  abstract connectPlayer(newPlayer: NewUser);
 
-  connectPlayer(id: string, newPlayer: NewUser);
+  abstract disconnectPlayer(disconnected: Player);
 
-  disconnectPlayer(disconnected: Player);
+  abstract updateKeys(id: string, keys: Array<string>);
 
-  updateKeys(id: string, keys: Array<string>);
+  abstract performKeysOperation(player: Player);
 
-  updatePlayerPosition(player: Player);
+  abstract performKeysOperationForPlayers();
 
-  updatePlayersPosition();
+  abstract updateCursor(mouseCoordinates: MouseCoordinates);
 
-  updatePlayerDirection(mouseCoordinates: MouseCoordinates);
+  abstract mouseClick(id: string);
 
-  mouseClick(mouseClick: MouseCoordinates);
+  abstract mouseRightClick(id: string);
 
-  generateBullets(bullets: Bullet[]);
+  abstract mouseUp(id: string);
+
+  abstract generateBullets(bullets: Bullet[]);
+  abstract detectPlayerCollisionWithObjects(player: Player);
 }

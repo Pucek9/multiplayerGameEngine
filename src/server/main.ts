@@ -3,7 +3,7 @@ import * as http from 'http';
 import * as cors from 'cors';
 import { listen, Socket } from 'socket.io';
 
-import { API } from '../shared/constants';
+import { API } from '../shared/constants/api';
 import gamesManager from './services/GamesManager';
 import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
@@ -12,6 +12,7 @@ import Emitter from './services/Emitter';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
+const url = process.env.URL || 'localhost';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
@@ -25,19 +26,21 @@ app.use(express.static('dist/client'), cors(corsOptions));
 
 function connection(socket: Socket) {
   function init() {
-    console.log(`[${socket.id}] Connected`);
+    const ip = socket.handshake.address;
+    console.log(`[${socket.id}] ${ip} Connected`);
     setTimeout(() => {
-      socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
-      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, socket.id);
+      emitter.emitGamesList();
+      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, ip]);
     }, TIMEOUT);
     registerGameMenuEvents();
   }
 
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
+      newGame.ip = socket.handshake.address;
       console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
-      gamesManager.createGame(emitter, newGame.roomName, newGame.type, newGame.map);
-      socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
+      gamesManager.createGame(emitter, newGame);
+      emitter.emitGamesList();
     });
 
     socket.on(API.CREATE_PLAYER, (newPlayer: NewUser) => {
@@ -65,23 +68,30 @@ function connection(socket: Socket) {
   }
 
   function initNewPlayer(newPlayer, gameState) {
-    const player = gameState.connectPlayer(socket.id, newPlayer);
+    const player = gameState.connectPlayer(newPlayer);
     socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
     socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
+    socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getNormalizedBullets());
     socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
     socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
-    socketIo.emit(API.GET_GAMES_LIST, gamesManager.getGamesList());
+    emitter.emitGamesList();
   }
 
   function registerPlayerEvents(gameState) {
     socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
       gameState.updateKeys(socket.id, keys);
     });
-    socket.on(API.MOUSE_CLICK, (mouseClick: MouseCoordinates) => {
-      gameState.mouseClick(mouseClick);
+    socket.on(API.MOUSE_CLICK, (owner: string) => {
+      gameState.mouseClick(owner);
+    });
+    socket.on(API.MOUSE_RIGHT_CLICK, (owner: string) => {
+      gameState.mouseRightClick(owner);
+    });
+    socket.on(API.MOUSE_UP, (owner: string) => {
+      gameState.mouseUp(owner);
     });
     socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
-      gameState.updatePlayerDirection(mouseCoordinates);
+      gameState.updateCursor(mouseCoordinates);
     });
   }
 
@@ -93,5 +103,5 @@ socketIo.on(API.CONNECTION, (socket: Socket) => {
 });
 
 httpServer.listen(parseInt(port, 0), function() {
-  console.log(`App listening on *:${port}`);
+  console.log(`App listening on ${url}:${port}`);
 });

@@ -1,15 +1,16 @@
 import Power from '../../../shared/models/Power';
 import Player from '../Player';
+import { ACCELELATOR } from '../../../shared/constants/powers';
 
 export default class Accelerator extends Power {
-  type = 'Accelerator';
-  cost = 0.5;
+  type = ACCELELATOR;
+  cost = 0.3;
   speed = 10;
 
   constructor(params?: Partial<Accelerator>) {
     super();
     Object.assign(this, params);
-    Object.seal(this);
+    // Object.seal(this);
   }
 
   isActive(): boolean {
@@ -31,7 +32,7 @@ export default class Accelerator extends Power {
       owner.increaseSpeedTo(this.speed);
       return true;
     } else {
-      owner.decreaseSpeedToDefault();
+      owner.decreaseSpeedToDefault(this.speed);
       return false;
     }
   }

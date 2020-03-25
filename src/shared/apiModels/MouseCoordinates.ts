@@ -1,3 +1,9 @@
-export default class MouseCoordinates {
-  constructor(public targetX: number, public targetY: number, public owner: string) {}
+export default interface MouseCoordinates {
+  clientX: number;
+  clientY: number;
+  movementX?: number;
+  movementY?: number;
+  innerWidth?: number;
+  innerHeight?: number;
+  owner: string;
 }

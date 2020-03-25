@@ -1,9 +1,8 @@
 import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import BulletData from '../../../shared/models/BulletData';
+import { RESIZER, WHITE } from '../../../shared/constants';
 
 export default class Resizer extends Weapon {
-  type = 'Resizer';
+  type = RESIZER;
   magazines = 3;
   maxBulletsInMagazine = 10;
   bulletsInMagazine = 10;
@@ -11,7 +10,8 @@ export default class Resizer extends Weapon {
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig = {
-    color: 'white',
+    type: RESIZER,
+    color: WHITE,
     size: 5,
     power: 1,
     range: 700,
@@ -23,24 +23,14 @@ export default class Resizer extends Weapon {
     },
     additionalAction() {
       this.size += 0.1;
+      if (this.customFlag) {
+        this.increaseSpeedToDefault();
+      }
     },
   };
 
   constructor(params?: Partial<Resizer>) {
     super();
     Object.assign(this, params);
-  }
-
-  generateBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
   }
 }

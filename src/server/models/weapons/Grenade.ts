@@ -1,11 +1,11 @@
 import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import gamesManager from '../../services/GamesManager';
-import BulletData from '../../../shared/models/BulletData';
 import GrenadeExplosion from './GrenadeExplosion';
+import { GRENADE, GREEN } from '../../../shared/constants';
 
 export default class Grenade extends Weapon {
-  type = 'Grenade';
+  type = GRENADE;
   magazines = 1;
   maxBulletsInMagazine = 5;
   bulletsInMagazine = 5;
@@ -14,12 +14,14 @@ export default class Grenade extends Weapon {
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
     flash: false,
-    color: 'white',
+    type: GRENADE,
+    color: GREEN,
     size: 5,
     power: 0,
     range: 400,
     speed: 7,
     minSpeed: 0.1,
+    allowForManipulate: false,
     hit(angle?: { x: number; y: number }) {
       if (angle) {
         this.reverseX *= angle.x;
@@ -38,7 +40,7 @@ export default class Grenade extends Weapon {
       if (game) {
         const grenadeExplosion = new GrenadeExplosion();
         game.generateBullets(
-          grenadeExplosion.generateBullets({
+          grenadeExplosion.prepareBullets({
             targetX: this.x,
             targetY: this.y,
             fromX: this.x,
@@ -55,18 +57,5 @@ export default class Grenade extends Weapon {
   constructor(params?: Partial<Grenade>) {
     super();
     Object.assign(this, params);
-  }
-
-  generateBullets(bulletData: BulletData) {
-    return [
-      new Bullet({
-        owner: bulletData.owner,
-        fromX: bulletData.fromX,
-        fromY: bulletData.fromY,
-        targetX: bulletData.targetX,
-        targetY: bulletData.targetY,
-        ...this.bulletConfig,
-      }),
-    ];
   }
 }

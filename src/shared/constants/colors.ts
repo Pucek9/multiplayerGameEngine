@@ -1,0 +1,9 @@
+export const INVISIBLE = 'invisible';
+export const RED = 'red';
+export const BLUE = 'blue';
+export const GREEN = 'green';
+export const BROWN = 'brown';
+export const WHITE = 'white';
+export const BLACK = 'black';
+export const YELLOW = 'yellow';
+export const PURPLE = 'purple';

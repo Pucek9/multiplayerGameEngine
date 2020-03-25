@@ -14,12 +14,13 @@ export default abstract class Weapon implements Item {
   reloadTime: number;
   shootBulletsCount: number;
   id: number;
+  bulletConfig: Partial<Bullet>;
 
   protected constructor() {
     this.id = generateId();
   }
 
-  shoot(bulletData: BulletData): Bullet[] | undefined {
+  shoot(bulletData: BulletData, game) {
     if (this.ready) {
       if (this.bulletsInMagazine >= this.shootBulletsCount) {
         this.ready = false;
@@ -30,7 +31,7 @@ export default abstract class Weapon implements Item {
         setTimeout(() => {
           this.ready = true;
         }, this.minTimeBetweenBullets);
-        return this.generateBullets(bulletData);
+        this.generateBullets(this.prepareBullets(bulletData), game, bulletData.owner);
       } else {
         this.reload();
       }
@@ -48,7 +49,23 @@ export default abstract class Weapon implements Item {
     }
   }
 
-  generateBullets(bulletData: BulletData): Bullet[] {
-    return [];
+  prepareBullets(bulletData: BulletData) {
+    return [
+      new Bullet({
+        owner: bulletData.owner,
+        fromX: bulletData.fromX,
+        fromY: bulletData.fromY,
+        targetX: bulletData.targetX,
+        targetY: bulletData.targetY,
+        ...this.bulletConfig,
+      }),
+    ];
+  }
+
+  generateBullets(bullets, game, owner) {
+    if (bullets?.length > 0) {
+      game.generateBullets(bullets);
+      game.emitWeaponInfo(owner);
+    }
   }
 }

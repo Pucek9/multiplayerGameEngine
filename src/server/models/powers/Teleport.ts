@@ -1,10 +1,11 @@
-import Power from '../../../shared/models/Power';
 import Player from '../Player';
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
+import Accelerator from './Accelerator';
+import ClickPower from './ClickPower';
+import { TELEPORT } from '../../../shared/constants/powers';
 
-export default class Teleport extends Power {
-  type = 'Teleport';
-  cost = 25;
+export default class Teleport extends Accelerator implements ClickPower {
+  type = TELEPORT;
+  costOfTeleport = 20;
 
   constructor(params?: Partial<Teleport>) {
     super();
@@ -12,20 +13,32 @@ export default class Teleport extends Power {
     Object.seal(this);
   }
 
-  use({ owner, game, mouseClick }: { owner: Player; game; mouseClick: MouseCoordinates }) {
+  useClickPower({ owner, game }: { owner: Player; game }): boolean {
     if (
-      mouseClick &&
+      owner.speed > this.speed / 2 &&
       !game.detectPlayerCollisionWithObjects(({
-        x: mouseClick.targetX,
-        y: mouseClick.targetY,
+        x: owner.cursor.x,
+        y: owner.cursor.y,
         size: owner.size,
-        shape: 'circle',
+        shape: owner.shape,
+        direction: owner.direction,
       } as unknown) as Player) &&
-      owner.tryUseEnergy(this.cost)
+      owner.tryUseEnergy(this.costOfTeleport)
     ) {
-      owner.x = mouseClick.targetX;
-      owner.y = mouseClick.targetY;
+      const diff = {
+        x: owner.x - owner.cursor.x,
+        y: owner.y - owner.cursor.y,
+      };
+      owner.x = owner.cursor.x;
+      owner.y = owner.cursor.y;
+      owner.cursor.x -= diff.x;
+      owner.cursor.y -= diff.y;
+      // exchange?
+      // owner.cursor.x += diff.x;
+      // owner.cursor.y += diff.y;
       game.detectPlayerCollisionWithGenerator(owner);
+      return true;
     }
+    return false;
   }
 }

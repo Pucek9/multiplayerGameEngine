@@ -2,12 +2,14 @@ import Weapon from './Weapon';
 import Bullet from '../Bullet';
 import { rand } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
+import { GRENADE_EXPLOSION } from '../../../shared/constants/weapons';
 
 const DISPERSION = 70;
 
 export default class GrenadeExplosion extends Weapon {
-  type = 'GrenadeExplosion';
+  type = GRENADE_EXPLOSION;
   bulletConfig = {
+    type: GRENADE_EXPLOSION,
     size: 4,
     power: 50,
     range: 200,
@@ -27,7 +29,7 @@ export default class GrenadeExplosion extends Weapon {
     super();
   }
 
-  generateBullets(bulletData: BulletData): Bullet[] {
+  prepareBullets(bulletData: BulletData): Bullet[] {
     const commonBulletInfo = {
       owner: bulletData.owner,
       fromX: bulletData.fromX,

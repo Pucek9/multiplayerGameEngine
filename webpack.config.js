@@ -2,10 +2,14 @@ const webpack = require('webpack');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ip = require('ip');
+
 const environment = process.env.NODE_ENV || 'development';
-const isProd = environment === 'production';
-const url = process.env.URL || 'localhost';
+const url = process.env.URL || ip.address() || 'localhost';
 const port = process.env.PORT || '80';
+const isProd = environment === 'production';
+
+console.log(`${url}:${port}`);
 const config = [
   {
     name: 'client',
@@ -30,6 +34,7 @@ const config = [
       host: url,
       stats: 'errors-only',
       open: true,
+      public: `${url}:${port}`,
       hot: true,
       contentBase: ['./dist/client'],
       watchContentBase: true,

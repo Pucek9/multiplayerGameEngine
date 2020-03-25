@@ -1,10 +1,13 @@
 import ICircle from '../interfaces/ICircle';
+import Direction from './Direction';
+import { CIRCLE } from '../constants/other';
 
 export default class PlayerModel implements ICircle {
-  shape: string = 'circle';
-
+  shape = CIRCLE;
   alive = false;
-  direction = 0;
+  bodyDirection = 0;
+  direction: Direction = { dx: 0, dy: 0 };
+  moving = true;
   weapons = [];
   selectedWeapon;
   powers = [];
@@ -13,10 +16,13 @@ export default class PlayerModel implements ICircle {
   speed: number;
   size: number;
   energy: number;
+  timeToRevive: number;
+  cursor = { x: 0, y: 0, down: false };
 
   constructor(
     public id: string,
     public name: string,
+    public team: string,
     public color: string,
     public x: number,
     public y: number,
@@ -25,6 +31,7 @@ export default class PlayerModel implements ICircle {
     public baseSize: number = 20,
     public baseSpeed: number = 3,
     public baseEnergy: number = 100,
+    public baseTimeToRevive: number = 6,
     public kills: number = 0,
     public deaths: number = 0,
   ) {
@@ -32,5 +39,6 @@ export default class PlayerModel implements ICircle {
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
     this.energy = this.baseEnergy;
+    this.timeToRevive = 0;
   }
 }
