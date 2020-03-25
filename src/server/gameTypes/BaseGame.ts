@@ -24,7 +24,9 @@ export default class BaseGame extends GameModel {
   public type = 'Free for all';
   public players: Player[] = [];
   public bullets: Bullet[] = [];
+  // @ts-ignore-no-unused-variable
   private interval: NodeJS.Timeout | number;
+  // @ts-ignore-no-unused-variable
   private customInterval: NodeJS.Timeout | number;
 
   constructor(public emitter: Emitter, params: Partial<BaseGame>) {
