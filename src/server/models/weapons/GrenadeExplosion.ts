@@ -41,30 +41,27 @@ export default class GrenadeExplosion extends Weapon {
         targetX: bulletData.targetX,
         targetY: bulletData.targetY,
         ...commonBulletInfo,
+        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX + rand(DISPERSION),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
-        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX - rand(DISPERSION),
         targetY: bulletData.targetY + rand(DISPERSION),
         ...commonBulletInfo,
-        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX - rand(DISPERSION),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
-        flash: true,
       }),
       new Bullet({
         targetX: bulletData.targetX + rand(DISPERSION),
         targetY: bulletData.targetY - rand(DISPERSION),
         ...commonBulletInfo,
-        flash: true,
       }),
       //
       new Bullet({

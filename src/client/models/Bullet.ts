@@ -12,8 +12,6 @@ import FlashLight from './Light/FlashLight';
 import Cursor from './Cursor';
 import { optionsService } from '../store/store';
 
-let light;
-
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
   private geometry: SphereGeometry;
@@ -73,9 +71,7 @@ export default class Bullet extends BulletModel implements IUpdatable {
   }
 
   showFlash(screen: ScreenModel) {
-    if (!light) {
-      light = new FlashLight(screen);
-    }
+    const light = new FlashLight(screen);
     light.init({
       source: this.object.position,
       cursor: ({
