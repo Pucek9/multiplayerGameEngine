@@ -1,22 +1,22 @@
-import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
 import { randItem } from '../../shared/helpers';
-import Emitter from '../services/Emitter';
-import SlowBullets from '../models/powers/SlowBullets';
-import Teleport from '../models/powers/Teleport';
-import ReverseBullets from '../models/powers/ReverseBullets';
-import Accelerator from '../models/powers/Accelerator';
-import Pistol from '../models/weapons/Pistol';
-import Knife from '../models/weapons/Knife';
-import BaseGame from './BaseGame';
 import Power from '../../shared/models/Power';
 import Bot from '../models/Bot';
-import SuperAIM from '../models/powers/SuperAIM';
+import Player from '../models/Player';
+import Accelerator from '../models/powers/Accelerator';
 import Aim from '../models/powers/Aim';
-import Increaser from '../models/powers/Increaser';
 import Heal from '../models/powers/Heal';
-import Push from '../models/powers/Push';
+import Increaser from '../models/powers/Increaser';
 import Pull from '../models/powers/Pull';
+import Push from '../models/powers/Push';
+import ReverseBullets from '../models/powers/ReverseBullets';
+import SlowBullets from '../models/powers/SlowBullets';
+import SuperAIM from '../models/powers/SuperAIM';
+import Teleport from '../models/powers/Teleport';
+import Knife from '../models/weapons/Knife';
+import Pistol from '../models/weapons/Pistol';
+import Emitter from '../services/Emitter';
+import BaseGame from './BaseGame';
 
 export default class Free4all extends BaseGame {
   constructor(public emitter: Emitter, params: Partial<Free4all>) {

@@ -1,5 +1,8 @@
 import { Unsubscribe } from 'redux';
+
 import GameInstance from '../../shared/apiModels/GameInstance';
+import { times } from '../../shared/helpers';
+import { GamesListState } from '../store/gamesList/state';
 import {
   createGamesService,
   gamesListService,
@@ -7,9 +10,7 @@ import {
   store,
   userService,
 } from '../store/store';
-import { times } from '../../shared/helpers';
 import { UserState } from '../store/user/state';
-import { GamesListState } from '../store/gamesList/state';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;

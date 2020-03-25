@@ -1,7 +1,7 @@
-import Weapon from './Weapon';
-import Bullet from '../Bullet';
+import { AK47 } from '../../../shared/constants';
 import BulletData from '../../../shared/models/BulletData';
-import { AK47 } from '../../../shared/constants/weapons';
+import Bullet from '../Bullet';
+import Weapon from './Weapon';
 
 export default class Ak47 extends Weapon {
   type = AK47;

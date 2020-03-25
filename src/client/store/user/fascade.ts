@@ -1,9 +1,10 @@
 import { Store } from 'redux';
+
+import GameInstance from '../../../shared/apiModels/GameInstance';
+import NewGame from '../../../shared/apiModels/NewGame';
+import { GameConfig } from '../gamesList/state';
 import * as JoinGameActions from './actions';
 import { UserState } from './state';
-import { GameConfig } from '../gamesList/state';
-import NewGame from '../../../shared/apiModels/NewGame';
-import GameInstance from '../../../shared/apiModels/GameInstance';
 
 export class UserService {
   constructor(public store: Store) {}

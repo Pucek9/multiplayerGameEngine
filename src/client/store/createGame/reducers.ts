@@ -1,6 +1,6 @@
+import { createArrayFilledValue } from '../../../shared/helpers';
 import * as GamesActions from './actions';
 import { CreateGameState, initialState } from './state';
-import { createArrayFilledValue } from '../../../shared/helpers';
 
 export function createGameReducer(
   state: CreateGameState = initialState,

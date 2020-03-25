@@ -1,5 +1,6 @@
-import Cursor from '../Cursor';
 import { PointLight } from 'three';
+
+import Cursor from '../Cursor';
 import { Lighting } from './Light';
 
 export default class CursorLight extends Lighting {

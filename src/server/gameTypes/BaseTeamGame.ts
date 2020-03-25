@@ -1,15 +1,15 @@
-import collisionDetector from '../services/CollisionDetector';
+import NewUser from '../../shared/apiModels/NewUser';
+import { HEAL } from '../../shared/constants/powers';
+import { compareBy, generateId } from '../../shared/helpers';
+import Team from '../../shared/models/Team';
+import Bot from '../models/Bot';
 import Player from '../models/Player';
 import Aura from '../models/powers/Aura';
-import StaticRectangleObject from '../models/StaticRectangleObject';
 import StaticCircularObject from '../models/StaticCircularObject';
-import Team from '../../shared/models/Team';
-import NewUser from '../../shared/apiModels/NewUser';
+import StaticRectangleObject from '../models/StaticRectangleObject';
+import collisionDetector from '../services/CollisionDetector';
 import playerService from '../services/PlayerService';
-import Bot from '../models/Bot';
-import { compareBy, generateId } from '../../shared/helpers';
 import BaseGame from './BaseGame';
-import { HEAL } from '../../shared/constants/powers';
 
 export default class BaseTeamGame extends BaseGame {
   public teams: Team[];

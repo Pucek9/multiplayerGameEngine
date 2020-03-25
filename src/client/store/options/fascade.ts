@@ -1,4 +1,5 @@
 import { Store } from 'redux';
+
 import * as OptionsActions from './actions';
 import { OptionsState } from './state';
 

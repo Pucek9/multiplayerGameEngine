@@ -1,8 +1,8 @@
+import BulletData from '../../../shared/models/BulletData';
+import Power from '../../../shared/models/Power';
+import Bullet from '../Bullet';
 import Player from '../Player';
 import ClickPower from './ClickPower';
-import Power from '../../../shared/models/Power';
-import BulletData from '../../../shared/models/BulletData';
-import Bullet from '../Bullet';
 
 export default abstract class ShootPower extends Power implements ClickPower {
   ready = true;

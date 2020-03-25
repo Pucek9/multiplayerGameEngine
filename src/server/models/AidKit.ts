@@ -1,6 +1,6 @@
-import Item from '../../shared/models/Item';
 import { AID_KIT } from '../../shared/constants/other';
 import { generateId } from '../../shared/helpers';
+import Item from '../../shared/models/Item';
 
 export default class AidKit implements Item {
   type = AID_KIT;

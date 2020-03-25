@@ -1,16 +1,17 @@
-import BulletModel from '../../shared/models/BulletModel';
-import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../interfaces/ScreenModel';
 import {
   BufferGeometry,
   Mesh,
   MeshBasicMaterial,
-  SphereGeometry,
   MeshPhysicalMaterial,
+  SphereGeometry,
 } from 'three';
-import FlashLight from './Light/FlashLight';
-import Cursor from './Cursor';
+
+import BulletModel from '../../shared/models/BulletModel';
+import IUpdatable from '../interfaces/IUpdatable';
+import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';
+import Cursor from './Cursor';
+import FlashLight from './Light/FlashLight';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;

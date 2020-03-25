@@ -1,16 +1,16 @@
-import Accelerator from '../models/powers/Accelerator';
-import Legs from '../models/weapons/Legs';
 import NewUser from '../../shared/apiModels/NewUser';
-import Player from '../models/Player';
+import { BALL, INVISIBLE, LEGS, WHITE } from '../../shared/constants';
+import Team from '../../shared/models/Team';
 import Bot from '../models/Bot';
+import Bullet from '../models/Bullet';
+import Goal from '../models/Goal';
+import Player from '../models/Player';
+import Accelerator from '../models/powers/Accelerator';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
+import Legs from '../models/weapons/Legs';
 import collisionDetector from '../services/CollisionDetector';
-import Bullet from '../models/Bullet';
 import RoundTeamBattle from './RoundTeamBattle';
-import Goal from '../models/Goal';
-import Team from '../../shared/models/Team';
-import { BALL, INVISIBLE, LEGS, WHITE } from '../../shared/constants';
 
 export default class Haxball extends RoundTeamBattle {
   constructor(emitter, params) {

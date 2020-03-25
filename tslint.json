@@ -44,6 +44,24 @@
     "variable-name": false,
     "use-host-property-decorator": false,
     "no-unused-variable": true,
-    "linebreak-style": [true, "LF"]
+    "linebreak-style": [true, "LF"],
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "groups": [
+          {
+            "name": "dependencies",
+            "match": "^(?!\\.).*",
+            "order": 10
+          },
+          {
+            "name": "internal",
+            "match": "^\\.",
+            "order": 20
+          }
+        ]
+      }
+    ]
   }
 }

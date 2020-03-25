@@ -1,5 +1,5 @@
-import IRectangle from '../interfaces/IRectangle';
 import { RECTANGLE } from '../constants/other';
+import IRectangle from '../interfaces/IRectangle';
 
 export default class StaticRectangleObjectModel implements IRectangle {
   shape = RECTANGLE;

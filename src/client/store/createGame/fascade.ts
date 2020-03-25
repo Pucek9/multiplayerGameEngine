@@ -1,4 +1,5 @@
 import { Store } from 'redux';
+
 import * as GamesListActions from './actions';
 import { CreateGameState } from './state';
 

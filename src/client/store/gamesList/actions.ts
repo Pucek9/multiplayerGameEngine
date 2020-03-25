@@ -1,4 +1,5 @@
 import { Action } from 'redux';
+
 import { GameConfig } from './state';
 
 export const ADD_GAME = 'ADD_GAME';

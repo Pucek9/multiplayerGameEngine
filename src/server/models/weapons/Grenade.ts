@@ -1,8 +1,8 @@
-import Weapon from './Weapon';
-import Bullet from '../Bullet';
+import { GREEN, GRENADE } from '../../../shared/constants';
 import gamesManager from '../../services/GamesManager';
+import Bullet from '../Bullet';
 import GrenadeExplosion from './GrenadeExplosion';
-import { GRENADE, GREEN } from '../../../shared/constants';
+import Weapon from './Weapon';
 
 export default class Grenade extends Weapon {
   type = GRENADE;

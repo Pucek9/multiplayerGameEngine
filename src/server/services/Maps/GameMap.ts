@@ -1,9 +1,9 @@
-import ItemGenerator from '../../models/ItemGenerator';
 import Item from '../../../shared/models/Item';
+import MapModel from '../../../shared/models/MapModel';
+import ItemGenerator from '../../models/ItemGenerator';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import Zone from '../../models/Zone';
-import MapModel from '../../../shared/models/MapModel';
 
 export default abstract class GameMap implements MapModel {
   zones: Zone[];

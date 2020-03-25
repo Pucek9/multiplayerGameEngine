@@ -1,7 +1,7 @@
-import Player from '../Player';
-import Bullet from '../Bullet';
-import Aura from './Aura';
 import { SLOW_BULLETS } from '../../../shared/constants/powers';
+import Bullet from '../Bullet';
+import Player from '../Player';
+import Aura from './Aura';
 
 export default class SlowBullets extends Aura {
   type = SLOW_BULLETS;

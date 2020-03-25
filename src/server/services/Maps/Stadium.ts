@@ -1,9 +1,9 @@
-import StaticRectangleObject from '../../models/StaticRectangleObject';
-import GameMap from './GameMap';
-import Zone from '../../models/Zone';
-import Goal from '../../models/Goal';
 import { INVISIBLE, RED, STADIUM, STADIUM_GRASS } from '../../../shared/constants';
+import Goal from '../../models/Goal';
 import StaticCircularObject from '../../models/StaticCircularObject';
+import StaticRectangleObject from '../../models/StaticRectangleObject';
+import Zone from '../../models/Zone';
+import GameMap from './GameMap';
 
 export default class Stadium extends GameMap {
   mapName = STADIUM;

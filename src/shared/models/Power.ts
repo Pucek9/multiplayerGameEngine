@@ -1,5 +1,5 @@
-import Item from './Item';
 import { generateId } from '../helpers';
+import Item from './Item';
 
 export default abstract class Power implements Item {
   id: number;

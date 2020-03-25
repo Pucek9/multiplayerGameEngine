@@ -1,8 +1,9 @@
+import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+
+import { degToRad } from '../../shared/helpers';
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
-import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
-import { degToRad } from '../../shared/helpers';
 
 const cumin = require('../games/balls/images/cumin.jpg');
 

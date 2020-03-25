@@ -1,19 +1,19 @@
-import Player from '../models/Player';
 import NewUser from '../../shared/apiModels/NewUser';
 import { randItem } from '../../shared/helpers';
+import Power from '../../shared/models/Power';
+import Bot from '../models/Bot';
+import Player from '../models/Player';
+import Accelerator from '../models/powers/Accelerator';
+import Aim from '../models/powers/Aim';
+import Heal from '../models/powers/Heal';
+import Increaser from '../models/powers/Increaser';
 import ReverseBullets from '../models/powers/ReverseBullets';
 import SlowBullets from '../models/powers/SlowBullets';
-import Accelerator from '../models/powers/Accelerator';
-import Pistol from '../models/weapons/Pistol';
-import BaseTeamGame from './BaseTeamGame';
+import SuperAIM from '../models/powers/SuperAIM';
 import Teleport from '../models/powers/Teleport';
 import Knife from '../models/weapons/Knife';
-import Bot from '../models/Bot';
-import Power from '../../shared/models/Power';
-import Aim from '../models/powers/Aim';
-import SuperAIM from '../models/powers/SuperAIM';
-import Increaser from '../models/powers/Increaser';
-import Heal from '../models/powers/Heal';
+import Pistol from '../models/weapons/Pistol';
+import BaseTeamGame from './BaseTeamGame';
 
 export default class TeamBattle extends BaseTeamGame {
   connectPlayer(newPlayer: NewUser): Player {

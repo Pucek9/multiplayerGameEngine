@@ -1,8 +1,8 @@
-import PlayerModel from '../../shared/models/PlayerModel';
 import Direction from '../../shared/models/Direction';
-import Bullet from './Bullet';
-import AidKit from './AidKit';
+import PlayerModel from '../../shared/models/PlayerModel';
 import { Angle } from '../services/CollisionDetector';
+import AidKit from './AidKit';
+import Bullet from './Bullet';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();

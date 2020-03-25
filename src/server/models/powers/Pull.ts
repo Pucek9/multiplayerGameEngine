@@ -1,10 +1,10 @@
-import ShootPower from './ShootPower';
+import { PULL, WHITE } from '../../../shared/constants';
 import BulletData from '../../../shared/models/BulletData';
-import Bullet from '../Bullet';
 import { Angle } from '../../services/CollisionDetector';
 import gamesManager from '../../services/GamesManager';
+import Bullet from '../Bullet';
 import Player from '../Player';
-import { PULL, WHITE } from '../../../shared/constants';
+import ShootPower from './ShootPower';
 
 export default class Pull extends ShootPower {
   type = PULL;

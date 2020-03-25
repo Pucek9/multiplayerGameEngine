@@ -1,14 +1,13 @@
 import { combineReducers, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
-import { createGameReducer } from './createGame/reducers';
-import { gamesListReducer } from './gamesList/reducers';
-import { userReducer } from './user/reducers';
-import { optionsReducer } from './options/reducers';
 import { CreateGamesService } from './createGame/fascade';
+import { createGameReducer } from './createGame/reducers';
 import { GamesListService } from './gamesList/fascade';
-import { UserService } from './user/fascade';
+import { gamesListReducer } from './gamesList/reducers';
 import { OptionsService } from './options/fascade';
+import { optionsReducer } from './options/reducers';
+import { UserService } from './user/fascade';
+import { userReducer } from './user/reducers';
 
 const rootReducer = combineReducers({
   createGame: createGameReducer,

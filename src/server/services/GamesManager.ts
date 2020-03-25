@@ -1,12 +1,12 @@
-import gameTypes from '../gameTypes';
 import GameInstance from '../../shared/apiModels/GameInstance';
-import GameModel from '../gameTypes/GameModel';
 import NewGame from '../../shared/apiModels/NewGame';
-import Steerings from './Steering';
-import Maps from './Maps';
-import Cursors from './Cursor';
-import Team from '../../shared/models/Team';
 import { randColor } from '../../shared/helpers';
+import Team from '../../shared/models/Team';
+import gameTypes from '../gameTypes';
+import GameModel from '../gameTypes/GameModel';
+import Cursors from './Cursor';
+import Maps from './Maps';
+import Steerings from './Steering';
 
 class GamesManager {
   public games: GameModel[] = [];

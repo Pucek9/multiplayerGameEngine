@@ -1,6 +1,7 @@
 import { Store } from 'redux';
+
 import * as GamesListActions from './actions';
-import { GamesListState, GameConfig } from './state';
+import { GameConfig, GamesListState } from './state';
 
 export class GamesListService {
   constructor(public store: Store) {}

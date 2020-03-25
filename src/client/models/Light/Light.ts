@@ -1,7 +1,8 @@
-import Cursor from '../Cursor';
-import IUpdatable from '../../interfaces/IUpdatable';
 import { Color, Light } from 'three';
+
+import IUpdatable from '../../interfaces/IUpdatable';
 import ScreenModel from '../../interfaces/ScreenModel';
+import Cursor from '../Cursor';
 
 export interface Source {
   x: number;

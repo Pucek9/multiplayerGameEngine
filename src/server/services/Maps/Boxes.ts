@@ -1,21 +1,21 @@
-import StaticRectangleObject from '../../models/StaticRectangleObject';
-import GameMap from './GameMap';
-import Zone from '../../models/Zone';
+import {
+  AK47,
+  BOXES,
+  BROWN,
+  GRASS,
+  PISTOL,
+  RED,
+  SHOTGUN,
+  WHITE,
+  YELLOW,
+} from '../../../shared/constants';
 import ItemGenerator from '../../models/ItemGenerator';
+import StaticRectangleObject from '../../models/StaticRectangleObject';
 import Ak47 from '../../models/weapons/Ak47';
 import Pistol from '../../models/weapons/Pistol';
 import Shotgun from '../../models/weapons/Shotgun';
-import {
-  BOXES,
-  AK47,
-  PISTOL,
-  SHOTGUN,
-  RED,
-  YELLOW,
-  WHITE,
-  BROWN,
-  GRASS,
-} from '../../../shared/constants';
+import Zone from '../../models/Zone';
+import GameMap from './GameMap';
 
 export default class Boxes extends GameMap {
   mapName = BOXES;

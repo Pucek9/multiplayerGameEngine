@@ -1,5 +1,5 @@
-import Direction from './Direction';
 import Player from '../../server/models/Player';
+import Direction from './Direction';
 
 export default interface BulletData {
   targetX: number;

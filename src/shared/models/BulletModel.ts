@@ -1,7 +1,7 @@
-import ICircle from '../interfaces/ICircle';
+import { BLACK, CIRCLE } from '../constants';
 import { generateId } from '../helpers';
+import ICircle from '../interfaces/ICircle';
 import Direction from './Direction';
-import { CIRCLE, BLACK } from '../constants';
 
 export default class BulletModel implements ICircle {
   readonly shape = CIRCLE;

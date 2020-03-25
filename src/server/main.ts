@@ -1,14 +1,14 @@
+import * as cors from 'cors';
 import * as express from 'express';
 import * as http from 'http';
-import * as cors from 'cors';
 import { listen, Socket } from 'socket.io';
 
-import { API } from '../shared/constants/api';
-import gamesManager from './services/GamesManager';
-import NewUser from '../shared/apiModels/NewUser';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
+import NewUser from '../shared/apiModels/NewUser';
+import { API } from '../shared/constants';
 import Emitter from './services/Emitter';
+import gamesManager from './services/GamesManager';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';

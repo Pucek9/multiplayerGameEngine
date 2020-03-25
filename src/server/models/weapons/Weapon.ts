@@ -1,7 +1,7 @@
-import Bullet from '../Bullet';
-import Item from '../../../shared/models/Item';
 import { generateId } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
+import Item from '../../../shared/models/Item';
+import Bullet from '../Bullet';
 
 export default abstract class Weapon implements Item {
   type: string;

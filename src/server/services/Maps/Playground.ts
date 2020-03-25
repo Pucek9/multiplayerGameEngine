@@ -1,34 +1,34 @@
-import StaticCircularObject from '../../models/StaticCircularObject';
-import StaticRectangleObject from '../../models/StaticRectangleObject';
-import Pistol from '../../models/weapons/Pistol';
-import ItemGenerator from '../../models/ItemGenerator';
-import GameMap from './GameMap';
-import Item from '../../../shared/models/Item';
-import Shotgun from '../../models/weapons/Shotgun';
-import Resizer from '../../models/weapons/Resizer';
-import Grenade from '../../models/weapons/Grenade';
-import Ak47 from '../../models/weapons/Ak47';
-import AidKit from '../../models/AidKit';
-import LandMine from '../../models/weapons/LandMine';
 import {
-  PLAYGROUND,
+  AID_KIT,
   AK47,
+  BLACK,
+  BLUE,
+  BROWN,
+  GRASS,
+  GREEN,
   GRENADE,
   LAND_MINE,
   PISTOL,
-  RESIZER,
-  SHOTGUN,
-  AID_KIT,
-  BLUE,
-  GREEN,
+  PLAYGROUND,
   PURPLE,
   RED,
-  YELLOW,
-  GRASS,
-  BROWN,
-  BLACK,
+  RESIZER,
+  SHOTGUN,
   WHITE,
+  YELLOW,
 } from '../../../shared/constants';
+import Item from '../../../shared/models/Item';
+import AidKit from '../../models/AidKit';
+import ItemGenerator from '../../models/ItemGenerator';
+import StaticCircularObject from '../../models/StaticCircularObject';
+import StaticRectangleObject from '../../models/StaticRectangleObject';
+import Ak47 from '../../models/weapons/Ak47';
+import Grenade from '../../models/weapons/Grenade';
+import LandMine from '../../models/weapons/LandMine';
+import Pistol from '../../models/weapons/Pistol';
+import Resizer from '../../models/weapons/Resizer';
+import Shotgun from '../../models/weapons/Shotgun';
+import GameMap from './GameMap';
 
 export default class Playground extends GameMap {
   mapName = PLAYGROUND;

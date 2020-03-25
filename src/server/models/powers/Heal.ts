@@ -1,5 +1,5 @@
-import ShootPower from './ShootPower';
 import { HEAL, RED } from '../../../shared/constants';
+import ShootPower from './ShootPower';
 
 export default class Heal extends ShootPower {
   type = HEAL;

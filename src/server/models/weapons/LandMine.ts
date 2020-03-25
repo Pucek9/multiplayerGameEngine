@@ -1,8 +1,8 @@
-import Weapon from './Weapon';
-import Bullet from '../Bullet';
-import gamesManager from '../../services/GamesManager';
-import GrenadeExplosion from './GrenadeExplosion';
 import { LAND_MINE, WHITE } from '../../../shared/constants';
+import gamesManager from '../../services/GamesManager';
+import Bullet from '../Bullet';
+import GrenadeExplosion from './GrenadeExplosion';
+import Weapon from './Weapon';
 
 export default class LandMine extends Weapon {
   type = LAND_MINE;

@@ -1,5 +1,5 @@
-import Player from './Player';
 import { randItem } from '../../shared/helpers';
+import Player from './Player';
 import Weapon from './weapons/Weapon';
 
 export default class Bot extends Player {

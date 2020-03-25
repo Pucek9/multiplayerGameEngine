@@ -1,8 +1,8 @@
-import ShootPower from './ShootPower';
-import { Angle } from '../../services/CollisionDetector';
-import Player from '../Player';
-import gamesManager from '../../services/GamesManager';
 import { PUSH, WHITE } from '../../../shared/constants';
+import { Angle } from '../../services/CollisionDetector';
+import gamesManager from '../../services/GamesManager';
+import Player from '../Player';
+import ShootPower from './ShootPower';
 
 export default class Push extends ShootPower {
   type = PUSH;

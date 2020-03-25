@@ -1,6 +1,6 @@
+import { degToRad } from '../../shared/helpers';
 import ICircle from '../../shared/interfaces/ICircle';
 import IRectangle from '../../shared/interfaces/IRectangle';
-import { degToRad } from '../../shared/helpers';
 import Bullet from '../models/Bullet';
 
 export interface Angle {

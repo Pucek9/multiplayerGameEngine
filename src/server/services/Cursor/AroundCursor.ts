@@ -1,6 +1,6 @@
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
-import Cursor from './Cursor';
 import Player from '../../models/Player';
+import Cursor from './Cursor';
 
 export class AroundCursor extends Cursor {
   constructor(public range = 200, public sensitivity = 100) {

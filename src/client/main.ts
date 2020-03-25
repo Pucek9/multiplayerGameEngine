@@ -1,21 +1,21 @@
-import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
-
-import MenuComponent from './UserInterface/MenuComponent';
-import Game from './Game';
-import './style.scss';
-import NewUser from '../shared/apiModels/NewUser';
-import NewGame from '../shared/apiModels/NewGame';
-import { API } from '../shared/constants/api';
-import GameInstance from '../shared/apiModels/GameInstance';
-import ScreenModel from './interfaces/ScreenModel';
-import { gamesListService, userService } from './store/store';
-import { randColor } from '../shared/helpers';
+import { Scene, WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+
+import GameInstance from '../shared/apiModels/GameInstance';
+import NewGame from '../shared/apiModels/NewGame';
+import NewUser from '../shared/apiModels/NewUser';
+import { API } from '../shared/constants';
+import { randColor } from '../shared/helpers';
+import Game from './Game';
+import ScreenModel from './interfaces/ScreenModel';
 import Camera from './models/Camera';
-import { GameConfig } from './store/gamesList/state';
 import shaderService from './ShaderService';
+import { GameConfig } from './store/gamesList/state';
+import { gamesListService, userService } from './store/store';
+import './style.scss';
+import MenuComponent from './UserInterface/MenuComponent';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;

@@ -1,12 +1,12 @@
 import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
 import NewUser from '../../shared/apiModels/NewUser';
-import Player from '../models/Player';
+import Team from '../../shared/models/Team';
 import Bullet from '../models/Bullet';
-import GameMap from '../services/Maps/GameMap';
-import Steering from '../services/Steering/Steering';
+import Player from '../models/Player';
 import Cursor from '../services/Cursor/Cursor';
 import Emitter from '../services/Emitter';
-import Team from '../../shared/models/Team';
+import GameMap from '../services/Maps/GameMap';
+import Steering from '../services/Steering/Steering';
 
 export default abstract class GameModel {
   steering: Steering;

@@ -1,10 +1,10 @@
 import NewUser from '../../shared/apiModels/NewUser';
+import Bot from '../models/Bot';
 import Player from '../models/Player';
-import playerService from '../services/PlayerService';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import collisionDetector from '../services/CollisionDetector';
-import Bot from '../models/Bot';
+import playerService from '../services/PlayerService';
 import BaseTeamGame from './BaseTeamGame';
 
 export default class RoundTeamBattle extends BaseTeamGame {

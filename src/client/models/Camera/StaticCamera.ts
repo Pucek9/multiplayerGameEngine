@@ -1,7 +1,8 @@
 import { PerspectiveCamera } from 'three';
+
 import PlayerModel from '../../../shared/models/PlayerModel';
-import ICamera from './ICamera';
 import IUpdatable from '../../interfaces/IUpdatable';
+import ICamera from './ICamera';
 
 export default class StaticCamera implements IUpdatable, ICamera {
   public object: PerspectiveCamera;

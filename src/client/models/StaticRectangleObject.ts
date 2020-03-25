@@ -1,8 +1,9 @@
+import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+
+import { degToRad } from '../../shared/helpers';
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
-import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
-import { degToRad } from '../../shared/helpers';
 
 const box = require('../games/balls/images/box.png');
 

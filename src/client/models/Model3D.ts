@@ -1,21 +1,20 @@
 import { Group, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-
-import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
-import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../interfaces/ScreenModel';
-import { degToRad } from '../../shared/helpers';
 import {
+  AID_KIT,
   AK47,
+  BLACK,
+  BROWN,
   GRENADE,
   LAND_MINE,
   PISTOL,
   RESIZER,
   SHOTGUN,
-  AID_KIT,
-  BLACK,
-  BROWN,
 } from '../../shared/constants';
+import { degToRad } from '../../shared/helpers';
+import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import IUpdatable from '../interfaces/IUpdatable';
+import ScreenModel from '../interfaces/ScreenModel';
 
 const loader = new FBXLoader();
 const models = {

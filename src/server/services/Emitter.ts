@@ -1,11 +1,11 @@
-import { API } from '../../shared/constants/api';
 import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
+import PowersApiModel from '../../shared/apiModels/PowersApiModel';
+import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
+import { API } from '../../shared/constants/api';
+import BulletModel from '../../shared/models/BulletModel';
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
 import gamesManager from './GamesManager';
-import BulletModel from '../../shared/models/BulletModel';
-import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
-import PowersApiModel from '../../shared/apiModels/PowersApiModel';
 
 export default class Emitter {
   constructor(private socketIo: SocketIO.Server) {}

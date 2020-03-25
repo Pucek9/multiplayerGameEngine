@@ -1,10 +1,10 @@
-import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import { generateId } from '../../shared/helpers';
 import Item from '../../shared/models/Item';
-import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
-import Weapon from './weapons/Weapon';
+import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import AidKit from './AidKit';
 import Player from './Player';
+import Weapon from './weapons/Weapon';
 
 type ParameterlessConstructor<T> = new (Item?) => T;
 
