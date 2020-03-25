@@ -15,11 +15,15 @@ export interface CollisionInfo {
 }
 
 export class CollisionDetector {
-  getDistance(x1: number, y1: number, x2: number, y2: number) {
+  getManhattanDistance(x1: number, y1: number, x2: number, y2: number) {
     const deltaX = Math.abs(x2 - x1);
     const deltaY = Math.abs(y2 - y1);
     const distance = deltaX + deltaY;
     return { deltaX, deltaY, distance };
+  }
+
+  getCartesianDistance(o1, o2) {
+    return Math.sqrt((o1.x - o2.x + o1.direction.dx) ** 2 + (o1.y - o2.y + o1.direction.dy) ** 2);
   }
 
   detectCollision(object1: ICircle | IRectangle, object2: ICircle | IRectangle): CollisionInfo;
@@ -38,9 +42,7 @@ export class CollisionDetector {
   }
 
   detectCircularCollision(o1: ICircle, o2: ICircle): CollisionInfo {
-    const distance = Math.sqrt(
-      (o1.x - o2.x + o1.direction.dx) ** 2 + (o1.y - o2.y + o1.direction.dy) ** 2,
-    );
+    const distance = this.getCartesianDistance(o1, o2);
     let [x, y] = [-1, -1];
     if (o1 instanceof Bullet) {
       const theta = Math.atan2(o1.direction.dy, o1.direction.dx);
@@ -78,7 +80,7 @@ export class CollisionDetector {
   }
 
   detectUnRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
-    const { deltaX, deltaY, distance } = this.getDistance(
+    const { deltaX, deltaY, distance } = this.getManhattanDistance(
       circle.x + circle.direction.dx,
       circle.y + circle.direction.dy,
       Math.max(rect.x, Math.min(circle.x + circle.direction.dx, rect.x + rect.width)),
@@ -125,7 +127,7 @@ export class CollisionDetector {
     } else {
       cy = rotateCircleY;
     }
-    const { distance } = this.getDistance(rotateCircleX, rotateCircleY, cx, cy);
+    const { distance } = this.getManhattanDistance(rotateCircleX, rotateCircleY, cx, cy);
     return {
       collision: distance < circle.size,
       distance,
