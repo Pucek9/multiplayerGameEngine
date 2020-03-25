@@ -1,4 +1,5 @@
 import { LEGS } from '../../../shared/constants/weapons';
+
 import Knife from './Knife';
 
 export default class Legs extends Knife {

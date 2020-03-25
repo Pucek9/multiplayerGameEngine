@@ -2,6 +2,7 @@ import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
 import { generateId } from '../../shared/helpers';
 import Item from '../../shared/models/Item';
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+
 import AidKit from './AidKit';
 import Player from './Player';
 import Weapon from './weapons/Weapon';

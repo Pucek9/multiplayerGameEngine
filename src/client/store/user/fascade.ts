@@ -2,6 +2,7 @@ import { Store } from 'redux';
 
 import GameInstance from '../../../shared/apiModels/GameInstance';
 import NewGame from '../../../shared/apiModels/NewGame';
+
 import { GameConfig } from '../gamesList/state';
 import * as JoinGameActions from './actions';
 import { UserState } from './state';

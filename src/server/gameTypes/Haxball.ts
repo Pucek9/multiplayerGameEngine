@@ -1,6 +1,7 @@
 import NewUser from '../../shared/apiModels/NewUser';
 import { BALL, INVISIBLE, LEGS, WHITE } from '../../shared/constants';
 import Team from '../../shared/models/Team';
+
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
 import Goal from '../models/Goal';

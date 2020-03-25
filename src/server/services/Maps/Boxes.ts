@@ -9,6 +9,7 @@ import {
   WHITE,
   YELLOW,
 } from '../../../shared/constants';
+
 import ItemGenerator from '../../models/ItemGenerator';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import Ak47 from '../../models/weapons/Ak47';

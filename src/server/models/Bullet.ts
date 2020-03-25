@@ -1,4 +1,5 @@
 import BulletModel from '../../shared/models/BulletModel';
+
 import { Angle } from '../services/CollisionDetector';
 import Player from './Player';
 

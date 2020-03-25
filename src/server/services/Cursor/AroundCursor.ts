@@ -1,4 +1,5 @@
 import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
+
 import Player from '../../models/Player';
 import Cursor from './Cursor';
 

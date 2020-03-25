@@ -1,5 +1,6 @@
 import { ACCELELATOR } from '../../../shared/constants/powers';
 import Power from '../../../shared/models/Power';
+
 import Player from '../Player';
 
 export default class Accelerator extends Power {

@@ -7,6 +7,7 @@ import {
 } from 'three';
 
 import BulletModel from '../../shared/models/BulletModel';
+
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';

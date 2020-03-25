@@ -1,4 +1,5 @@
 import { LAND_MINE, WHITE } from '../../../shared/constants';
+
 import gamesManager from '../../services/GamesManager';
 import Bullet from '../Bullet';
 import GrenadeExplosion from './GrenadeExplosion';

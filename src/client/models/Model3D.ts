@@ -14,6 +14,7 @@ import {
 } from '../../shared/constants';
 import { degToRad } from '../../shared/helpers';
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
 

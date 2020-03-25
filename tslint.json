@@ -56,9 +56,14 @@
             "order": 10
           },
           {
+            "name": "project",
+            "match": "(shared|client|server)",
+            "order": 20
+          },
+          {
             "name": "internal",
             "match": "^\\.",
-            "order": 20
+            "order": 30
           }
         ]
       }

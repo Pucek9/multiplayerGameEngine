@@ -3,6 +3,7 @@ import PowersApiModel from '../../shared/apiModels/PowersApiModel';
 import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
 import { API } from '../../shared/constants/api';
 import BulletModel from '../../shared/models/BulletModel';
+
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';
 import gamesManager from './GamesManager';

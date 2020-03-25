@@ -10,6 +10,7 @@ import { normalizeKey } from '../shared/helpers';
 import BulletModel from '../shared/models/BulletModel';
 import PlayerModel from '../shared/models/PlayerModel';
 import Team from '../shared/models/Team';
+
 import PlayerListModel from './interfaces/PlayerListModel';
 import ScreenModel from './interfaces/ScreenModel';
 import Bullet from './models/Bullet';

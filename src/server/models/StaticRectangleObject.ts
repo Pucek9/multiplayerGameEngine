@@ -1,4 +1,5 @@
 import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
+
 import { Angle } from '../services/CollisionDetector';
 import Bullet from './Bullet';
 

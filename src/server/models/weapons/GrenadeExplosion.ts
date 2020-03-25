@@ -1,6 +1,7 @@
 import { GRENADE_EXPLOSION } from '../../../shared/constants/weapons';
 import { rand } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
+
 import Bullet from '../Bullet';
 import Weapon from './Weapon';
 

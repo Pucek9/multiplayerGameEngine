@@ -1,4 +1,5 @@
 import { PUSH, WHITE } from '../../../shared/constants';
+
 import { Angle } from '../../services/CollisionDetector';
 import gamesManager from '../../services/GamesManager';
 import Player from '../Player';

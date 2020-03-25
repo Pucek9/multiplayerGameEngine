@@ -1,5 +1,6 @@
 import { KNIFE } from '../../../shared/constants/weapons';
 import BulletData from '../../../shared/models/BulletData';
+
 import Bullet from '../Bullet';
 import Weapon from './Weapon';
 

@@ -1,5 +1,6 @@
 import { CIRCLE } from '../../shared/constants/other';
 import { rand } from '../../shared/helpers';
+
 import Zone from '../models/Zone';
 import collisionDetector from './CollisionDetector';
 

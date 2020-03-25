@@ -8,6 +8,7 @@ import NewGame from '../shared/apiModels/NewGame';
 import NewUser from '../shared/apiModels/NewUser';
 import { API } from '../shared/constants';
 import { randColor } from '../shared/helpers';
+
 import Game from './Game';
 import ScreenModel from './interfaces/ScreenModel';
 import Camera from './models/Camera';

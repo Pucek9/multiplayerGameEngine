@@ -1,4 +1,5 @@
 import { INVISIBLE, RED, STADIUM, STADIUM_GRASS } from '../../../shared/constants';
+
 import Goal from '../../models/Goal';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';

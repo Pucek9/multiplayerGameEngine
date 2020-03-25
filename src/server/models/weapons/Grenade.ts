@@ -1,4 +1,5 @@
 import { GREEN, GRENADE } from '../../../shared/constants';
+
 import gamesManager from '../../services/GamesManager';
 import Bullet from '../Bullet';
 import GrenadeExplosion from './GrenadeExplosion';

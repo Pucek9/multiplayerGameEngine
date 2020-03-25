@@ -2,6 +2,7 @@ import GameInstance from '../../shared/apiModels/GameInstance';
 import NewGame from '../../shared/apiModels/NewGame';
 import { randColor } from '../../shared/helpers';
 import Team from '../../shared/models/Team';
+
 import gameTypes from '../gameTypes';
 import GameModel from '../gameTypes/GameModel';
 import Cursors from './Cursor';

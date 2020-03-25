@@ -1,6 +1,7 @@
 import { PerspectiveCamera } from 'three';
 
 import PlayerModel from '../../../shared/models/PlayerModel';
+
 import IUpdatable from '../../interfaces/IUpdatable';
 import ICamera from './ICamera';
 

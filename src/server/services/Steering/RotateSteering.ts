@@ -1,5 +1,6 @@
 import { hasKeys } from '../../../shared/helpers';
 import Direction from '../../../shared/models/Direction';
+
 import Player from '../../models/Player';
 import Steering from './Steering';
 

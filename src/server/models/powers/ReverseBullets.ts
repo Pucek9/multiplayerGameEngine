@@ -1,4 +1,5 @@
 import { REVERSE_BULLETS } from '../../../shared/constants/powers';
+
 import Bullet from '../Bullet';
 import Player from '../Player';
 import Aura from './Aura';

@@ -1,4 +1,5 @@
 import { TELEPORT } from '../../../shared/constants/powers';
+
 import Player from '../Player';
 import Accelerator from './Accelerator';
 import ClickPower from './ClickPower';

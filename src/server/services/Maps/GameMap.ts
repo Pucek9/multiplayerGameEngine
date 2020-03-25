@@ -1,5 +1,6 @@
 import Item from '../../../shared/models/Item';
 import MapModel from '../../../shared/models/MapModel';
+
 import ItemGenerator from '../../models/ItemGenerator';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';

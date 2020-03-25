@@ -1,4 +1,5 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+
 import { Angle } from '../services/CollisionDetector';
 import Bullet from './Bullet';
 

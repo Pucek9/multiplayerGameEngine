@@ -7,6 +7,7 @@ import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewGame from '../shared/apiModels/NewGame';
 import NewUser from '../shared/apiModels/NewUser';
 import { API } from '../shared/constants';
+
 import Emitter from './services/Emitter';
 import gamesManager from './services/GamesManager';
 

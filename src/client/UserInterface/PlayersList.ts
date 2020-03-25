@@ -1,4 +1,5 @@
 import { compareBy } from '../../shared/helpers';
+
 import PlayerListModel from '../interfaces/PlayerListModel';
 declare var playerListPanel: HTMLDivElement;
 declare var playersList: HTMLUListElement;

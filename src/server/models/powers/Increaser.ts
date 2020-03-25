@@ -1,4 +1,5 @@
 import { INCREASER, WHITE } from '../../../shared/constants';
+
 import ShootPower from './ShootPower';
 
 export default class Increaser extends ShootPower {

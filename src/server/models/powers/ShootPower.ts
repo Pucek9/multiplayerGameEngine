@@ -1,5 +1,6 @@
 import BulletData from '../../../shared/models/BulletData';
 import Power from '../../../shared/models/Power';
+
 import Bullet from '../Bullet';
 import Player from '../Player';
 import ClickPower from './ClickPower';

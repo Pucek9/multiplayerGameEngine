@@ -1,4 +1,5 @@
 import { RESIZER, WHITE } from '../../../shared/constants';
+
 import Weapon from './Weapon';
 
 export default class Resizer extends Weapon {

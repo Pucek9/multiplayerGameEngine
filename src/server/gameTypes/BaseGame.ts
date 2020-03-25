@@ -6,6 +6,7 @@ import { compareBy, generateId, rand, randColor, times } from '../../shared/help
 import BulletModel from '../../shared/models/BulletModel';
 import Item from '../../shared/models/Item';
 import Power from '../../shared/models/Power';
+
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
 import ItemGenerator from '../models/ItemGenerator';
