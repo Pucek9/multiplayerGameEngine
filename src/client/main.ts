@@ -1,83 +1,89 @@
-import { combineReducers, createStore } from 'redux';
-import devToolsEnhancer from 'remote-redux-devtools';
 import { Scene, WebGLRenderer } from 'three';
 import { connect } from 'socket.io-client';
 
-import { addGame, chooseGame, clearGamesList, setId } from './store/actions';
-import { joinGameReducer, newGameReducer } from './store/reducers';
 import MenuComponent from './UserInterface/MenuComponent';
-import GameState from './GameState';
+import Game from './Game';
 import './style.scss';
 import NewUser from '../shared/apiModels/NewUser';
 import NewGame from '../shared/apiModels/NewGame';
-import { API } from '../shared/constants';
+import { API } from '../shared/constants/api';
 import GameInstance from '../shared/apiModels/GameInstance';
-import ScreenModel from './types/ScreenModel';
+import ScreenModel from './interfaces/ScreenModel';
+import { gamesListService, userService } from './store/store';
+import { randColor } from '../shared/helpers';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import Camera from './models/Camera';
+import { GameConfig } from './store/gamesList/state';
+import shaderService from './ShaderService';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
 const socket = connect(url);
-
-function randRGB() {
-  return Math.floor(Math.random() * 255);
-}
-
-function randColor() {
-  return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
-}
-
-const app = combineReducers({
-  newGame: newGameReducer,
-  joinGame: joinGameReducer,
-});
-const store = createStore(app, devToolsEnhancer());
 
 let mainInstance: Main;
 let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  private gameState: GameState;
+  private gameState: Game;
   private events: any;
 
   constructor() {
-    this.menu = new MenuComponent(this, store);
+    this.menu = new MenuComponent(this);
     mainInstance = this;
 
-    socket.on(API.WELCOME_NEW_PLAYER, function(id: string) {
-      store.dispatch(setId(id));
+    socket.on(API.WELCOME_NEW_PLAYER, function([id, ip]: [string, string]) {
+      userService.setId(id);
+      userService.setIp(ip);
     });
 
     socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
-      store.dispatch(clearGamesList());
-      gamesList.forEach(game =>
-        store.dispatch(addGame(game.roomName, game.type, game.map, game.count)),
-      );
+      gamesListService.clearGamesList();
+      gamesList.forEach(game => gamesListService.addGame(game));
       if (gamesList.length > 0) {
-        const game = gamesList[gamesList.length - 1].roomName;
-        store.dispatch(chooseGame(game));
+        const game = gamesList[gamesList.length - 1];
+        userService.selectGame(game);
+        mainInstance.menu.toggleSelectTeamSection();
         mainInstance.menu.render();
       }
     });
   }
 
-  onAddNewGame({ roomName, type, map }: NewGame) {
-    const newGame = new NewGame(roomName, type, map);
+  onAddNewGame(newGame: NewGame) {
     socket.emit(API.CREATE_GAME, newGame);
-    store.dispatch(chooseGame(roomName));
+    // userService.selectGame(newGame);
   }
 
   onJoinGame() {
-    const userState = store.getState().joinGame;
-    const newPlayer = new NewUser(userState.id, userState.nick, randColor(), userState.chosenGame);
-    socket.emit(API.CREATE_PLAYER, newPlayer);
-    const screen = this.prepareScreen();
-    this.gameState = new GameState(newPlayer, screen);
-    this.registerEvents(this.gameState);
-    this.run();
+    document.body.requestFullscreen().then(() => {
+      const userState = userService.getState();
+      const newPlayer = new NewUser(
+        userState.id,
+        userState.nick,
+        userState.team || userState.nick,
+        userState.color || randColor(),
+        userState.chosenGame,
+      );
+      const gameConfig = gamesListService
+        .getState()
+        .list.find(game => game.roomName === userState.chosenGame);
+      socket.emit(API.CREATE_PLAYER, newPlayer);
+      const screen = this.prepareScreen(gameConfig);
+      this.gameState = new Game(newPlayer, screen, gameConfig);
+      this.registerEvents(this.gameState);
+      this.menu.hide();
+      this.run();
+    });
   }
 
-  registerEvents(gameState: GameState) {
+  checkFunctionalButton(e: KeyboardEvent) {
+    this.menu.togglePopup(e, 'F7', '#popupControl');
+    this.menu.togglePopup(e, 'F8', '#popupOptions');
+    this.menu.requestFullscreen(e, 'F11');
+  }
+
+  registerEvents(gameState: Game) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));
@@ -86,6 +92,8 @@ class Main {
 
     socket.on(API.GET_PLAYERS_STATE, gameState.updatePlayersState.bind(gameState));
 
+    socket.on(API.GET_TEAMS_LIST, gameState.updateTeamsList.bind(gameState));
+
     socket.on(API.GET_BULLETS, gameState.updateBulletsState.bind(gameState));
 
     socket.on(API.GET_STATIC_OBJECTS, gameState.appendStaticObjects.bind(gameState));
@@ -93,6 +101,8 @@ class Main {
     socket.on(API.GET_ITEM_GENERATORS, gameState.appendItemGenerators.bind(gameState));
 
     socket.on(API.UPDATE_ITEM_GENERATOR, gameState.updateItemGenerator.bind(gameState));
+
+    socket.on(API.UPDATE_TIME_TO_REVIVE, gameState.updateTimeToRevive.bind(gameState));
 
     socket.on(API.DISCONNECT_PLAYER, gameState.removePlayer.bind(gameState));
 
@@ -112,8 +122,23 @@ class Main {
     this.events = {
       mouseDown(e: MouseEvent) {
         e.preventDefault();
-        const mouseClick = gameState.getMouseCoordinates();
-        socket.emit(API.MOUSE_CLICK, mouseClick);
+        switch (e.button) {
+          case 1: // scrollClick
+          case 2: {
+            socket.emit(API.MOUSE_RIGHT_CLICK, gameState.getUserID());
+            break;
+          }
+          case 0:
+          default:
+            socket.emit(API.MOUSE_CLICK, gameState.getUserID());
+        }
+      },
+      mouseUp(e: MouseEvent) {
+        e.preventDefault();
+        socket.emit(API.MOUSE_UP, gameState.getUserID());
+      },
+      rightClick(e: MouseEvent) {
+        e.preventDefault();
       },
       mouseMove(e: MouseEvent) {
         const mouseCoordinates = gameState.getUpdatedMouseCoordinates(e);
@@ -124,6 +149,7 @@ class Main {
       keyDown(e: KeyboardEvent) {
         e.preventDefault();
         if (!e.repeat) {
+          mainInstance.checkFunctionalButton(e);
           gameState.addKey(e);
           socket.emit(API.UPDATE_KEYS, gameState.getKeys());
         }
@@ -141,6 +167,10 @@ class Main {
 
     window.addEventListener('mousedown', this.events.mouseDown);
 
+    window.addEventListener('mouseup', this.events.mouseUp);
+
+    window.addEventListener('contextmenu', this.events.rightClick);
+
     window.addEventListener('mousemove', this.events.mouseMove, false);
 
     window.addEventListener('keydown', this.events.keyDown);
@@ -148,19 +178,34 @@ class Main {
     window.addEventListener('keyup', this.events.keyUp);
 
     window.addEventListener('wheel', this.events.wheel);
+
+    window.addEventListener('resize', mainInstance.gameState.handleResize, false);
   }
 
-  prepareScreen(): ScreenModel {
+  prepareScreen(gameConfig: GameConfig): ScreenModel {
     const scene = new Scene();
     const renderer = new WebGLRenderer({ antialias: true });
+    const camera = new Camera[gameConfig.camera]();
+
     renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     renderer.autoClear = true;
     renderer.toneMappingExposure = Math.pow(0.68, 5.0); // to allow for very bright scenes.
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
+    const composer = new EffectComposer(renderer);
+
+    const renderPass = new RenderPass(scene, camera.object);
+
+    composer.addPass(renderPass);
+    composer.addPass(shaderService.blendPass);
+    composer.addPass(shaderService.savePass);
+    composer.addPass(shaderService.outputPass);
+
     return {
       scene,
       renderer,
+      camera,
+      composer,
     };
   }
 
@@ -171,28 +216,8 @@ class Main {
   }
 
   leaveGame() {
+    this.menu.closePopup();
     location.reload();
-    // cancelAnimationFrame(requestId);
-    // window.removeEventListener('mousedown', this.events.mouseDown);
-    // window.removeEventListener('mousemove', this.events.mouseMove);
-    // window.removeEventListener('keydown', this.events.keyDown);
-    // window.removeEventListener('keyup', this.events.keyUp);
-    // window.removeEventListener('wheel', this.events.wheel);
-    // socket.removeAllListeners(API.ADD_NEW_PLAYER);
-    // socket.removeAllListeners(API.ADD_PLAYERS);
-    // socket.removeAllListeners(API.GET_PLAYERS_STATE);
-    // socket.removeAllListeners(API.GET_BULLETS);
-    // socket.removeAllListeners(API.GET_STATIC_OBJECTS);
-    // socket.removeAllListeners(API.GET_ITEM_GENERATORS);
-    // socket.removeAllListeners(API.UPDATE_ITEM_GENERATOR);
-    // socket.removeAllListeners(API.DISCONNECT_PLAYER);
-    // socket.removeAllListeners(API.GET_WEAPON_DETAILS);
-    // socket.removeAllListeners(API.GET_POWER_DETAILS);
-    // socket.removeAllListeners(API.LEAVE_GAME);
-    // socket.removeAllListeners(API.DISCONNECT);
-    // this.gameState.dispose();
-    // this.gameState = null;
-    // this.menu.show();
   }
 }
 

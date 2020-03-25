@@ -1,15 +1,17 @@
 import Player from './models/Player';
-import StaticCamera from './models/StaticCamera';
 import Bullet from './models/Bullet';
 import StaticRectangleObject from './models/StaticRectangleObject';
 import StaticCircularObject from './models/StaticCircularObject';
-import Light from './models/Light';
+
+import { Lighting } from './models/Light/Light';
+import Lights from './models/Light/index';
+
 import PlayerListComponent from './UserInterface/PlayersList';
 import WeaponsListComponent from './UserInterface/WeaponsList';
 import PowersListComponent from './UserInterface/PowersList';
 import Map from './models/Map';
 import Cursor from './models/Cursor';
-import ScreenModel from './types/ScreenModel';
+import ScreenModel from './interfaces/ScreenModel';
 import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
 import NewUser from '../shared/apiModels/NewUser';
 import NewPlayer from '../shared/apiModels/NewPlayer';
@@ -17,43 +19,55 @@ import PlayerModel from '../shared/models/PlayerModel';
 import { normalizeKey } from '../shared/helpers';
 import Item from './models/Item';
 import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import DynamicCamera from './models/DynamicCamera';
-import ICamera from './interfaces/ICamera';
-import Power from '../shared/models/Power';
 import BulletModel from '../shared/models/BulletModel';
+import Text from './models/Text';
+import { GameConfig } from './store/gamesList/state';
+import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
+import PlayerListModel from './interfaces/PlayerListModel';
+import Team from '../shared/models/Team';
+import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
+import PowersApiModel from '../shared/apiModels/PowersApiModel';
+import shaderService from './ShaderService';
+import { CIRCLE, RECTANGLE } from '../shared/constants/other';
+import { INVISIBLE } from '../shared/constants';
 
-const mapJPG = require('./games/balls/images/test.jpg');
 const cursorPNG = require('./games/balls/images/pointer.jpg');
 
-export default class GameState {
+export default class Game {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  camera: ICamera;
-  light: Light;
-  playersListComponent: PlayerListComponent;
+  // camera: ICamera;
+  light: Lighting;
+  playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
   players: Player[] = [];
-  playersListString: string = '';
+  teams: Team[] = [];
+  playersListString = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
   staticObjects: any[] = [];
   itemGenerators: Item[] = [];
   map: Map;
   cursor: Cursor;
+  text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel) {
+  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameConfig) {
     this.user = user;
     this.screen = screen;
-    this.light = new Light(screen);
-    this.playersListComponent = new PlayerListComponent();
+    this.light = new Lights[gameConfig.light](this.screen);
+    this.teams = <Team[]>gameConfig.teams;
+    this.playersListComponent = this.teams
+      ? new TeamPlayerListComponent()
+      : new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
-    this.map = new Map(mapJPG);
+    this.text = new Text();
+    this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
-
     this.map.init(this.screen);
+    this.text.init(this.screen);
     this.cursor.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
@@ -64,6 +78,7 @@ export default class GameState {
     const player = new Player(
       newPlayer.id,
       newPlayer.name,
+      newPlayer.team,
       newPlayer.color,
       newPlayer.x,
       newPlayer.y,
@@ -75,12 +90,19 @@ export default class GameState {
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
-
-      this.camera = new StaticCamera(this.currentPlayer);
-      // this.camera = new DynamicCamera(this.currentPlayer, this.cursor);
-      this.light.init(this.currentPlayer, this.cursor);
+      this.screen.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
+      this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
+      this.currentPlayer.setLight(this.light);
     }
   }
+
+  handleResize = () => {
+    if (this.screen?.camera?.object) {
+      this.screen.camera.object.aspect = window.innerWidth / window.innerHeight;
+      this.screen.camera.object.updateProjectionMatrix();
+      this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+    }
+  };
 
   appendPlayers(newPlayers: NewPlayer[]) {
     newPlayers.forEach(newPlayer => {
@@ -89,6 +111,7 @@ export default class GameState {
         const player = new Player(
           newPlayer.id,
           newPlayer.name,
+          newPlayer.team,
           newPlayer.color,
           newPlayer.x,
           newPlayer.y,
@@ -114,7 +137,7 @@ export default class GameState {
   }
 
   wheel(e: WheelEvent) {
-    this.camera.wheel(e);
+    this.screen.camera.wheel(e);
   }
 
   appendNewBullets(newBullets: BulletModel[]) {
@@ -125,16 +148,29 @@ export default class GameState {
     });
   }
 
+  updateTeamsList(teams: Team[]) {
+    this.teams = teams;
+  }
+
   updatePlayersState(_players: PlayerModel[]) {
     this.players.forEach(player => {
       const foundPlayer = _players.find(_player => player.id === _player.id);
-      if (this.currentPlayer && foundPlayer && foundPlayer.id === this.currentPlayer.id) {
+      if (foundPlayer?.id === this.currentPlayer?.id) {
         const diff = {
           x: player.x - foundPlayer.x,
           y: player.y - foundPlayer.y,
         };
-        this.cursor.x -= diff.x;
-        this.cursor.y -= diff.y;
+        if (foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
+          shaderService.turnOnShaders();
+        } else {
+          shaderService.turnOffShaders();
+        }
+
+        this.cursor.x = foundPlayer.cursor.x;
+        this.cursor.y = foundPlayer.cursor.y;
+
+        this.text.x = this.cursor.x;
+        this.text.y = this.cursor.y;
       }
       if (foundPlayer) {
         const size = player.size;
@@ -163,16 +199,20 @@ export default class GameState {
   }
 
   appendStaticObjects(newObjects: any[]) {
-    newObjects.forEach(newObject => {
-      let staticObject;
-      if (newObject.shape === 'rectangle') {
-        staticObject = new StaticRectangleObject(newObject);
-      } else {
-        staticObject = new StaticCircularObject(newObject);
-      }
-      staticObject.init(this.screen);
-      this.staticObjects.push(staticObject);
-    });
+    newObjects
+      .filter(newObject => newObject.color !== INVISIBLE)
+      .forEach(newObject => {
+        let staticObject;
+        if (newObject.shape === RECTANGLE) {
+          staticObject = new StaticRectangleObject(newObject);
+        } else if (newObject.shape === CIRCLE) {
+          staticObject = new StaticCircularObject(newObject);
+        }
+        if (staticObject) {
+          staticObject.init(this.screen);
+          this.staticObjects.push(staticObject);
+        }
+      });
   }
 
   appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
@@ -185,11 +225,20 @@ export default class GameState {
 
   updateItemGenerator(updatedItemGenerator: ItemGeneratorAPI) {
     const itemGenerator = this.itemGenerators.find(
-      itemGenerator => itemGenerator.id === updatedItemGenerator.id,
+      itemGen => itemGen.id === updatedItemGenerator.id,
     );
     if (itemGenerator) {
       itemGenerator.ready = updatedItemGenerator.ready;
       itemGenerator.update();
+    }
+  }
+
+  updateTimeToRevive(time: number) {
+    if (time > 0) {
+      this.text.show();
+      this.text.setText(' ' + time);
+    } else {
+      this.text.hide();
     }
   }
 
@@ -203,27 +252,40 @@ export default class GameState {
 
   getUpdatedMouseCoordinates(e: MouseEvent): MouseCoordinates {
     if (this.currentPlayer) {
-      this.cursor.x = e.clientX + this.currentPlayer.x - window.innerWidth / 2;
-      this.cursor.y = -e.clientY + this.currentPlayer.y + window.innerHeight / 2;
-      return this.getMouseCoordinates();
+      return {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        movementX: e.movementX,
+        movementY: e.movementY,
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        owner: this.currentPlayer.id,
+      };
     }
   }
 
-  getMouseCoordinates(): MouseCoordinates {
-    return new MouseCoordinates(this.cursor.x, this.cursor.y, this.user.id);
+  getUserID(): string {
+    return this.user.id;
   }
 
   updateObjects() {
     if (this.currentPlayer) {
-      [this.camera, ...this.bullets, ...this.players, this.cursor, this.light].forEach(object =>
-        object.update(),
-      );
+      [
+        this.screen.camera,
+        ...this.bullets,
+        ...this.players,
+        this.cursor,
+        this.light,
+        this.text,
+      ].forEach(object => object.update());
     }
   }
+
   render() {
-    if (this.camera) {
-      this.screen.renderer.render(this.screen.scene, this.camera.object);
-    }
+    // if (this.screen.camera?.object) {
+    // this.screen.renderer.render(this.screen.scene, this.screen.camera.object);
+    this.screen.composer.render();
+    // }
   }
 
   update() {
@@ -231,52 +293,31 @@ export default class GameState {
     this.updateObjects();
   }
 
-  updatePlayerList() {
-    const playersList = this.players.map(({ name, kills, deaths, color, hp }) => ({
+  normalizedPlayerList(): Array<PlayerListModel> {
+    return this.players.map(({ name, kills, deaths, color, hp, team }) => ({
       name,
       kills,
       deaths,
       color,
       hp,
+      team,
     }));
-    const _playersListString = JSON.stringify(playersList);
+  }
+
+  updatePlayerList() {
+    const playersList = this.normalizedPlayerList();
+    const _playersListString = JSON.stringify(playersList) + JSON.stringify(this.teams);
     if (_playersListString !== this.playersListString) {
-      this.playersListComponent.update(playersList);
+      this.playersListComponent.update(playersList, this.teams);
       this.playersListString = _playersListString;
     }
   }
 
-  updateWeaponInfo(info: { selectedWeapon: Item; weapons: string[] }) {
+  updateWeaponInfo(info: WeaponsApiModel) {
     this.weaponsListComponent.render(info);
   }
 
-  updatePowersInfo(info: { selectedPower; powers; energy }) {
+  updatePowersInfo(info: PowersApiModel) {
     this.powersListComponent.render(info);
-  }
-
-  dispose() {
-    this.user = null;
-    this.currentPlayer = null;
-    this.light = null;
-    this.camera.remove();
-    this.camera = null;
-    this.playersListComponent.hide();
-    this.weaponsListComponent.hide();
-    this.playersListComponent = null;
-    this.weaponsListComponent = null;
-    this.players = null;
-    this.playersListString = null;
-    this.staticObjects = null;
-    this.itemGenerators = null;
-    this.map = null;
-    this.cursor = null;
-    while (this.screen.scene.children.length > 0) {
-      this.screen.scene.remove(this.screen.scene.children[0]);
-    }
-    this.screen.renderer.dispose();
-    this.screen.renderer.forceContextLoss();
-    this.screen.renderer.context = null;
-    this.screen.renderer.domElement.remove();
-    this.screen.renderer.domElement = null;
   }
 }

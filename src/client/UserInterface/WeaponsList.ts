@@ -1,3 +1,5 @@
+import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
+
 declare var weaponsList: HTMLUListElement;
 declare var leftDownPanel: HTMLDivElement;
 
@@ -12,26 +14,26 @@ export default class WeaponsListComponent {
     leftDownPanel.style.display = 'none';
   }
 
-  render({ selectedWeapon, weapons }) {
+  render({ selectedWeapon, weapons }: WeaponsApiModel) {
     weaponsList.innerHTML = '';
-    weapons &&
-      weapons.forEach((_weapon, index) => {
-        const li = document.createElement('li');
-        if (_weapon.id === selectedWeapon.id) {
-          li.style.fontWeight = 'bold';
-          li.appendChild(
-            document.createTextNode(
-              `${index + 1} ${_weapon.type}: ${selectedWeapon.bulletsInMagazine}/${
-                selectedWeapon.maxBulletsInMagazine
-              } | ${selectedWeapon.magazines}`,
-            ),
-          );
-        } else {
-          li.style.fontWeight = 'normal';
-          li.appendChild(document.createTextNode(`${index + 1} ${_weapon.type}`));
-        }
-        // @ts-ignore
-        weaponsList.append(li);
-      });
+    weapons?.forEach((weapon, index) => {
+      const li = document.createElement('li');
+      if (weapon.id === selectedWeapon.id) {
+        li.style.fontWeight = 'bold';
+        li.appendChild(
+          document.createTextNode(
+            `${index + 1} ${selectedWeapon.type}${
+              selectedWeapon.magazines !== null
+                ? `: ${selectedWeapon.bulletsInMagazine}/${selectedWeapon.maxBulletsInMagazine} | ${selectedWeapon.magazines}`
+                : ``
+            }`,
+          ),
+        );
+      } else {
+        li.style.fontWeight = 'normal';
+        li.appendChild(document.createTextNode(`${index + 1} ${weapon.type}`));
+      }
+      weaponsList.append(li);
+    });
   }
 }

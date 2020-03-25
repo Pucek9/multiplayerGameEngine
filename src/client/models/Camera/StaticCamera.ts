@@ -1,15 +1,19 @@
 import { PerspectiveCamera } from 'three';
-import IUpdatable from '../interfaces/IUpdatable';
-import ICamera from '../interfaces/ICamera';
-import PlayerModel from '../../shared/models/PlayerModel';
-import Cursor from './Cursor';
+import PlayerModel from '../../../shared/models/PlayerModel';
+import ICamera from './ICamera';
+import IUpdatable from '../../interfaces/IUpdatable';
 
-export default class DynamicCamera implements IUpdatable, ICamera {
+export default class StaticCamera implements IUpdatable, ICamera {
   public object: PerspectiveCamera;
+  private activePlayer: PlayerModel;
 
-  constructor(private activePlayer: PlayerModel, private cursor: Cursor) {
+  constructor() {
     this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    this.object.position.z = 300;
+    this.object.position.z = 400;
+  }
+
+  init({ activePlayer }: { activePlayer: PlayerModel }) {
+    this.activePlayer = activePlayer;
   }
 
   wheel(e: WheelEvent) {
@@ -23,7 +27,6 @@ export default class DynamicCamera implements IUpdatable, ICamera {
   update() {
     this.object.position.x = this.activePlayer.x;
     this.object.position.y = this.activePlayer.y;
-    this.object.lookAt(this.cursor.x, this.cursor.y, this.cursor.z);
   }
 
   remove() {

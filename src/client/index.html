@@ -2,12 +2,25 @@
 <html>
   <head>
     <title>Robo-Game-Engine</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta content="width=device-width,initial-scale=1.0" name="viewport" />
   </head>
 
   <body>
     <div id="menu">
       <div class="grid">
+        <div class="box options create-fill">
+          <div class="type-row" style="height: 50%; width: 100%;">
+            <a href="#popupControl">
+              <button class="full create-fill">Control</button>
+            </a>
+          </div>
+          <div class="type-row" style="height: 50%; width: 100%;">
+            <a href="#popupOptions">
+              <button class="full create-fill">Options</button>
+            </a>
+          </div>
+        </div>
+
         <div class="box header">
           <span class="title">Robo game engine</span>
         </div>
@@ -19,31 +32,101 @@
         <div class="box form create-fill">
           <form>
             <div class="type-row">
-              <label
-                >Type:
-                <select id="gameTypeInput" class="select create-white">
+              <label>Type:</label>
+              <div>
+                <select class="select create-white" id="gameTypeInput">
                   <option value="Free4all">Free for all</option>
-                  <option disabled value="TeamFight">Team fight</option>
-                  <option disabled value="CaptureTheFlag">Capture the flag</option>
+                  <option value="TeamBattle">Team Battle</option>
+                  <option value="RoundTeamBattle">Round Team Battle</option>
+                  <option value="Haxball">Haxball</option>
+                  <!--<option disabled value="CaptureTheFlag">Capture the flag</option>-->
                 </select>
-              </label>
+              </div>
             </div>
+            <div class="type-row" id="teamsRow" style="display: none">
+              <label>Teams:</label>
+              <div>
+                <input
+                  class="input create-white"
+                  id="teamsCountInput"
+                  max="4"
+                  min="2"
+                  type="number"
+                  value="2"
+                />
+              </div>
+            </div>
+            <div class="type-row" id="teamsList"></div>
             <div class="type-row">
-              <label
-                >Map:
-                <select id="gameMapInput" class="select create-white">
+              <label>Map:</label>
+              <div>
+                <select class="select create-white" id="gameMapInput">
                   <option value="Playground">Playground</option>
                   <option value="Boxes">Boxes</option>
+                  <option value="Stadium">Stadium</option>
                 </select>
-              </label>
+              </div>
+            </div>
+            <div class="type-row">
+              <label>Camera:</label>
+              <div>
+                <select class="select create-white" id="cameraInput">
+                  <option value="StaticCamera">Static</option>
+                  <option value="DynamicCamera">Dynamic</option>
+                </select>
+              </div>
+            </div>
+            <div class="type-row">
+              <label>Light:</label>
+              <div>
+                <select class="select create-white" id="gameLightInput">
+                  <option value="FlashLight">FlashLight</option>
+                  <option value="AmbientLight">Ambient</option>
+                  <option value="CursorLight">Cursor</option>
+                </select>
+              </div>
+            </div>
+            <div class="type-row">
+              <label>Steering:</label>
+              <div>
+                <select class="select create-white" id="steeringInput">
+                  <option value="eightDirectionSteering">Eight direction</option>
+                  <option value="rotateSteering">Rotate</option>
+                  <option value="carSteering">Car</option>
+                  <option value="carIndependentSteering">Car independent</option>
+                </select>
+              </div>
+            </div>
+            <div class="type-row">
+              <label>Cursor:</label>
+              <div>
+                <select class="select create-white" id="cursorInput">
+                  <option value="freeCursor">Free</option>
+                  <option value="aroundCursor">Around</option>
+                  <option value="noCursor">No cursor</option>
+                </select>
+              </div>
+            </div>
+            <div class="type-row">
+              <label>Bots:</label>
+              <div>
+                <input
+                  class="input create-white"
+                  id="botsCountInput"
+                  max="30"
+                  min="0"
+                  type="number"
+                  value="0"
+                />
+              </div>
             </div>
           </form>
         </div>
 
         <div class="box name">
           <input
-            id="gameNameInput"
             class="fill create-white"
+            id="gameNameInput"
             placeholder="NAME"
             title="NAME"
             type="text"
@@ -57,7 +140,7 @@
         </div>
 
         <div class="box add">
-          <input id="createButton" class="full create-fill" type="button" value="CREATE" />
+          <input class="full create-fill" id="createButton" type="button" value="CREATE" />
         </div>
 
         <div class="box join-header join-fill">
@@ -75,10 +158,15 @@
                   <th>Players</th>
                 </tr>
               </thead>
-              <tbody id="gamesListTable" class="join-white"></tbody>
+              <tbody class="join-white" id="gamesListTable"></tbody>
             </table>
           </div>
-
+          <div class="type-row" id="selectTeamSection" style="display: none">
+            <label
+              >Team:
+              <select class="select join-white" id="teamsSelect"> </select>
+            </label>
+          </div>
           <div class="validate">
             <label id="validateSelectedGame">Please select game.</label>
           </div>
@@ -86,8 +174,8 @@
 
         <div class="box nick">
           <input
-            id="nickInput"
             class="fill join-white"
+            id="nickInput"
             placeholder="NICK"
             title="NICK"
             type="text"
@@ -98,7 +186,7 @@
         </div>
 
         <div class="box join">
-          <input id="joinGameButton" class="full join-fill" type="button" value="JOIN" />
+          <input class="full join-fill" id="joinGameButton" type="button" value="JOIN" />
         </div>
 
         <div class="box footer">
@@ -110,10 +198,11 @@
       </div>
     </div>
 
-    <div id="leftPanel" style="display: none">
+    <div id="playerListPanel" style="display: none">
       <span>Active players:</span>
       <ul id="playersList"></ul>
     </div>
+    <div id="teamsPlayersListPanel" style="display: none"></div>
     <div id="leftDownPanel" style="display: none">
       <span>Weapons:</span>
       <ul id="weaponsList"></ul>
@@ -121,6 +210,49 @@
     <div id="rightDownPanel" style="display: none">
       <span id="powersHeader">Power:</span>
       <ul id="powersList"></ul>
+    </div>
+
+    <div class="overlay" id="popupControl">
+      <a class="cancel" href="#"></a>
+      <div class="popup">
+        <h2>Control (F7)</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+          <p>W or ↑ - Up</p>
+          <p>S or ↓ - Down</p>
+          <p>A or ← - Left</p>
+          <p>D or → - Right</p>
+
+          <p>1,2,3... - Weapons</p>
+          <p>Mouse Click - Shoot</p>
+
+          <p>Shift + 1,2,3... - Powers</p>
+          <p>Shift (+ Mouse Click) - Use power</p>
+
+          <p>F7 - Control</p>
+          <p>F8 - Options</p>
+          <p>F11 - Fullscreen</p>
+          <p>Escape - Go to main menu</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="popupOptions">
+      <a class="cancel" href="#"></a>
+      <div class="popup">
+        <h2>Options (F8)</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+          <p>
+            <label
+              >Blink while shooting (experimental): <input id="blinkingCheckbox" type="checkbox"
+            /></label>
+          </p>
+          <p>
+            <label>Bullet shadow: <input checked id="bulletShadowCheckbox" type="checkbox"/></label>
+          </p>
+        </div>
+      </div>
     </div>
   </body>
 </html>

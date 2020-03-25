@@ -1,16 +1,24 @@
 import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
+import ScreenModel from '../interfaces/ScreenModel';
 import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
+import MapModel from '../../shared/models/MapModel';
 
-export default class Map implements IUpdatable {
-  public img: HTMLImageElement;
+export default class Map implements IUpdatable, MapModel {
+  public src: string;
   private object: Mesh;
+  mapName: string;
+  width: number;
+  height: number;
+  floor: string;
 
-  constructor(public src: string) {}
+  constructor(props: MapModel) {
+    Object.assign(this, props);
+    this.src = require(`../games/balls/images/${this.floor}.jpg`);
+  }
 
   init(screen: ScreenModel) {
     this.object = new Mesh(
-      new PlaneGeometry(2920, 2004, 0),
+      new PlaneGeometry(this.width, this.height, 0),
       new MeshPhongMaterial({
         map: new TextureLoader().load(this.src),
       }),

@@ -1,4 +1,4 @@
-import PlayerModel from '../../shared/models/PlayerModel';
+import PowersApiModel from '../../shared/apiModels/PowersApiModel';
 
 declare var powersList: HTMLUListElement;
 declare var rightDownPanel: HTMLDivElement;
@@ -15,7 +15,7 @@ export default class PowersListComponent {
     rightDownPanel.style.display = 'none';
   }
 
-  render({ selectedPower, powers, energy }) {
+  render({ selectedPower, powers, energy }: PowersApiModel) {
     powersList.innerHTML = '';
     powersHeader.innerHTML = `Power (${Math.floor(energy)})`;
     powers.forEach((_power, index) => {
@@ -27,7 +27,6 @@ export default class PowersListComponent {
         li.style.fontWeight = 'normal';
         li.appendChild(document.createTextNode(`${index + 1} ${_power.type}`));
       }
-      // @ts-ignore
       powersList.append(li);
     });
   }

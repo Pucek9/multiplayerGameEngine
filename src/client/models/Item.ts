@@ -7,6 +7,8 @@ export default class Item extends Model3D implements IUpdatable {
   id: number;
 
   update() {
-    this.object.visible = this.ready;
+    if (this.object) {
+      this.object.visible = this.ready;
+    }
   }
 }

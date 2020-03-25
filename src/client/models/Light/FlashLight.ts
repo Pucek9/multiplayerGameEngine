@@ -1,24 +1,24 @@
-import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
-import Cursor from './Cursor';
 import { SpotLight } from 'three';
+import Cursor from '../Cursor';
+import { Lighting, Source } from './Light';
 
-interface Source {
-  x: number;
-  y: number;
-}
+export default class FlashLight extends Lighting {
+  light: SpotLight;
 
-export default class Light implements IUpdatable {
-  private light: SpotLight;
-  private source: Source;
-  private dest: Cursor;
-
-  constructor(public screen: ScreenModel) {}
-
-  init(source: Source, cursor: Cursor, intensity = 20) {
+  init({
+    source,
+    cursor,
+    intensity = 20,
+    color = 0xffffff,
+  }: {
+    source: Source;
+    cursor: Cursor;
+    intensity?: number;
+    color?: number;
+  }) {
     this.source = source;
     this.dest = cursor;
-    this.light = new SpotLight(0xffffff, intensity, 700);
+    this.light = new SpotLight(color, intensity, 700);
     this.update();
     this.light.castShadow = true;
 

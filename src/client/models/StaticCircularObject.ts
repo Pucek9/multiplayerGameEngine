@@ -1,7 +1,8 @@
 import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
 import IUpdatable from '../interfaces/IUpdatable';
-import ScreenModel from '../types/ScreenModel';
-import { CylinderGeometry, Math, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import ScreenModel from '../interfaces/ScreenModel';
+import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import { degToRad } from '../../shared/helpers';
 
 const cumin = require('../games/balls/images/cumin.jpg');
 
@@ -16,7 +17,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
       color: this.color,
     });
     this.object = new Mesh(geometry, material);
-    this.object.rotation.x = Math.degToRad(90);
+    this.object.rotation.x = degToRad(90);
     this.object.position.x = this.x;
     this.object.position.y = this.y;
     this.object.castShadow = true;
