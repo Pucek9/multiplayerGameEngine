@@ -1,5 +1,4 @@
-import Direction from '../../shared/models/Direction';
-import PlayerModel from '../../shared/models/PlayerModel';
+import { Direction, PlayerModel } from '../../shared/models';
 
 import { Angle } from '../services/CollisionDetector';
 import AidKit from './AidKit';

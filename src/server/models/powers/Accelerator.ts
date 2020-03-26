@@ -1,5 +1,5 @@
 import { ACCELELATOR } from '../../../shared/constants';
-import Power from '../../../shared/models/Power';
+import { Power } from '../../../shared/models';
 
 import Player from '../Player';
 

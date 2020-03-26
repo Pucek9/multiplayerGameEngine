@@ -1,8 +1,6 @@
-import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
-import PowersApiModel from '../../shared/apiModels/PowersApiModel';
-import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
-import { API } from '../../shared/constants/api';
-import BulletModel from '../../shared/models/BulletModel';
+import { ItemGeneratorAPI, PowersApiModel, WeaponsApiModel } from '../../shared/apiModels';
+import { API } from '../../shared/constants';
+import { BulletModel } from '../../shared/models';
 
 import GameModel from '../gameTypes/GameModel';
 import Player from '../models/Player';

@@ -17,7 +17,7 @@ import {
   WHITE,
   YELLOW,
 } from '../../../shared/constants';
-import Item from '../../../shared/models/Item';
+import { Item } from '../../../shared/models';
 
 import AidKit from '../../models/AidKit';
 import ItemGenerator from '../../models/ItemGenerator';

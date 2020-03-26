@@ -1,6 +1,5 @@
 import { generateId } from '../../../shared/helpers';
-import BulletData from '../../../shared/models/BulletData';
-import Item from '../../../shared/models/Item';
+import { BulletData, Item } from '../../../shared/models';
 
 import Bullet from '../Bullet';
 

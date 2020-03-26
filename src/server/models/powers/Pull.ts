@@ -1,5 +1,5 @@
 import { PULL, WHITE } from '../../../shared/constants';
-import BulletData from '../../../shared/models/BulletData';
+import { BulletData } from '../../../shared/models';
 
 import { Angle } from '../../services/CollisionDetector';
 import gamesManager from '../../services/GamesManager';

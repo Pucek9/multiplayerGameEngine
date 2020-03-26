@@ -3,9 +3,7 @@ import * as express from 'express';
 import * as http from 'http';
 import { listen, Socket } from 'socket.io';
 
-import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
-import NewGame from '../shared/apiModels/NewGame';
-import NewUser from '../shared/apiModels/NewUser';
+import { MouseCoordinates, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
 
 import Emitter from './services/Emitter';

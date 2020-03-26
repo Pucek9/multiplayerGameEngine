@@ -1,6 +1,6 @@
 import { Unsubscribe } from 'redux';
 
-import GameInstance from '../../shared/apiModels/GameInstance';
+import { GameInstance } from '../../shared/apiModels';
 import { FREE4ALL } from '../../shared/constants';
 import { times } from '../../shared/helpers';
 

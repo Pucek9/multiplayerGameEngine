@@ -1,7 +1,6 @@
-import GameInstance from '../../shared/apiModels/GameInstance';
-import NewGame from '../../shared/apiModels/NewGame';
+import { GameInstance, NewGame } from '../../shared/apiModels';
 import { randColor } from '../../shared/helpers';
-import Team from '../../shared/models/Team';
+import { Team } from '../../shared/models';
 
 import gameTypes from '../gameTypes';
 import GameModel from '../gameTypes/GameModel';

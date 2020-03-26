@@ -1,6 +1,6 @@
-import StaticCircularObjectModel from '../models/StaticCircularObjectModel';
+import { StaticCircularObjectModel } from '../models';
 
-export default class ItemGeneratorAPI extends StaticCircularObjectModel {
+export class ItemGeneratorAPI extends StaticCircularObjectModel {
   ready: boolean;
   type: string;
   time: number;

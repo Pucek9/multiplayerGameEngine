@@ -1,4 +1,4 @@
-import PowersApiModel from '../../shared/apiModels/PowersApiModel';
+import { PowersApiModel } from '../../shared/apiModels';
 
 declare var powersList: HTMLUListElement;
 declare var rightDownPanel: HTMLDivElement;

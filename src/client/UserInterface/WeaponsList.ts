@@ -1,4 +1,4 @@
-import WeaponsApiModel from '../../shared/apiModels/WeaponsApiModel';
+import { WeaponsApiModel } from '../../shared/apiModels';
 
 declare var weaponsList: HTMLUListElement;
 declare var leftDownPanel: HTMLDivElement;

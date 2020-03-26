@@ -1,6 +1,6 @@
-import Power from '../models/Power';
+import { Power } from '../models';
 
-export default interface PowersApiModel {
+export interface PowersApiModel {
   selectedPower: Power;
   powers: Array<{
     type: string;

@@ -1,13 +1,12 @@
-import Player from '../../server/models/Player';
+import { Direction } from './Direction';
+import { PlayerModel } from './PlayerModel';
 
-import Direction from './Direction';
-
-export default interface BulletData {
+export interface BulletData {
   targetX: number;
   targetY: number;
   fromX: number;
   fromY: number;
   size: number;
-  owner: Player;
+  owner: PlayerModel;
   dir?: Direction;
 }

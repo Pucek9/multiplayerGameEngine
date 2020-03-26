@@ -7,7 +7,7 @@ import {
 } from 'three';
 
 import { PULL, PUSH } from '../../shared/constants';
-import BulletModel from '../../shared/models/BulletModel';
+import { BulletModel } from '../../shared/models';
 
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';

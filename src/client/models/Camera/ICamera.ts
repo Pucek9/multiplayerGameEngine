@@ -1,6 +1,6 @@
 import { PerspectiveCamera } from 'three';
 
-import PlayerModel from '../../../shared/models/PlayerModel';
+import { PlayerModel } from '../../../shared/models';
 
 import Cursor from '../Cursor';
 export default interface ICamera {

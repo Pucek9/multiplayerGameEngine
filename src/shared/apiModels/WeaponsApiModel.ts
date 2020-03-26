@@ -1,4 +1,4 @@
-export default interface WeaponsApiModel {
+export interface WeaponsApiModel {
   selectedWeapon: {
     type: string;
     magazines: number;

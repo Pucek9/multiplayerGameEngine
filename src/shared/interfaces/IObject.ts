@@ -1,6 +1,6 @@
-import Direction from '../models/Direction';
+import { Direction } from '../models';
 
-export default interface IObject {
+export interface IObject {
   shape: string;
   x: number;
   y: number;

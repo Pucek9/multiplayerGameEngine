@@ -1,6 +1,6 @@
 import { PerspectiveCamera, Vector3 } from 'three';
 
-import PlayerModel from '../../../shared/models/PlayerModel';
+import { PlayerModel } from '../../../shared/models';
 
 import IUpdatable from '../../interfaces/IUpdatable';
 import Cursor from '../Cursor';

@@ -1,6 +1,6 @@
-import MapModel from '../models/MapModel';
+import { MapModel } from '../models';
 
-export default interface GameInstance {
+export interface GameInstance {
   roomName: string;
   type: string;
   map: MapModel;

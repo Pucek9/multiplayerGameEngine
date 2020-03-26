@@ -1,5 +1,5 @@
-import IObject from './IObject';
+import { IObject } from './IObject';
 
-export default interface ICircle extends IObject {
+export interface ICircle extends IObject {
   size: number;
 }

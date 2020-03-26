@@ -1,7 +1,7 @@
-import { CIRCLE } from '../constants/other';
-import ICircle from '../interfaces/ICircle';
-import Direction from './Direction';
-export default class PlayerModel implements ICircle {
+import { CIRCLE } from '../constants';
+import { ICircle } from '../interfaces';
+import { Direction } from './Direction';
+export class PlayerModel implements ICircle {
   shape = CIRCLE;
   alive = false;
   bodyDirection = 0;

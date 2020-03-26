@@ -1,7 +1,6 @@
-import ItemGeneratorAPI from '../../shared/apiModels/ItemGenerator';
+import { ItemGeneratorAPI } from '../../shared/apiModels';
 import { generateId } from '../../shared/helpers';
-import Item from '../../shared/models/Item';
-import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import { Item, StaticCircularObjectModel } from '../../shared/models';
 
 import AidKit from './AidKit';
 import Player from './Player';

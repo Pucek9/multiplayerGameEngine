@@ -1,4 +1,4 @@
-export default interface Direction {
+export interface Direction {
   dx: number;
   dy: number;
 }

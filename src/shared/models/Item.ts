@@ -1,4 +1,4 @@
-export default interface Item {
+export interface Item {
   type: string;
   id: number;
 }

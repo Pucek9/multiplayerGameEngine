@@ -1,4 +1,4 @@
-export default interface BulletApiModel {
+export interface BulletApiModel {
   id: number;
   x: number;
   y: number;

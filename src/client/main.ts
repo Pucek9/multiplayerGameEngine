@@ -3,9 +3,7 @@ import { Scene, WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 
-import GameInstance from '../shared/apiModels/GameInstance';
-import NewGame from '../shared/apiModels/NewGame';
-import NewUser from '../shared/apiModels/NewUser';
+import { GameInstance, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
 import { randColor } from '../shared/helpers';
 

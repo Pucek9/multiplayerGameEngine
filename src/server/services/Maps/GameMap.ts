@@ -1,5 +1,4 @@
-import Item from '../../../shared/models/Item';
-import MapModel from '../../../shared/models/MapModel';
+import { Item, MapModel } from '../../../shared/models';
 
 import ItemGenerator from '../../models/ItemGenerator';
 import StaticCircularObject from '../../models/StaticCircularObject';
