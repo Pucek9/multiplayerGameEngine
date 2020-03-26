@@ -1,6 +1,7 @@
 import { Unsubscribe } from 'redux';
 
 import GameInstance from '../../shared/apiModels/GameInstance';
+import { FREE4ALL } from '../../shared/constants';
 import { times } from '../../shared/helpers';
 
 import { GamesListState } from '../store/gamesList/state';
@@ -12,7 +13,6 @@ import {
   userService,
 } from '../store/store';
 import { UserState } from '../store/user/state';
-import { FREE4ALL } from '../../shared/constants';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;

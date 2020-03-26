@@ -6,6 +6,7 @@ import {
   SphereGeometry,
 } from 'three';
 
+import { PULL, PUSH } from '../../shared/constants';
 import BulletModel from '../../shared/models/BulletModel';
 
 import IUpdatable from '../interfaces/IUpdatable';
@@ -13,7 +14,6 @@ import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
-import { PULL, PUSH } from '../../shared/constants';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
