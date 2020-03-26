@@ -1,13 +1,39 @@
-import { SLOW_BULLETS } from '../../../shared/constants';
+import { PULL, RED, SLOW_BULLETS, WHITE } from '../../../shared/constants';
 
 import Bullet from '../Bullet';
 import Player from '../Player';
-import Aura from './Aura';
+import ShootPower from './ShootPower';
+import { Angle } from '../../services/CollisionDetector';
 
-export default class SlowBullets extends Aura {
+export default class SlowBullets extends ShootPower {
   type = SLOW_BULLETS;
   size = 70;
   cost = 0.01;
+  minTimeBetweenBullets = 300;
+  bulletConfig = {
+    type: SLOW_BULLETS,
+    color: RED,
+    size: 70,
+    range: 100,
+    power: 0,
+    speed: 0,
+    hit() {},
+    hitFromBullet(bullet, angle: Angle) {
+      console.log(this.owner)
+      const cost = this.cost * bullet.power;
+      if (this.owner.tryUseEnergy(cost)) {
+        bullet.customFlag = false;
+        bullet.decreaseSpeedToMin(bullet.speed > 0.1 ? bullet.speed / 4 : 0.1);
+        return true;
+      } else {
+        return false;
+      }
+    },
+    additionalAction() {
+      this.x = this.owner.x;
+      this.y = this.owner.y;
+    },
+  };
 
   constructor(params?: Partial<SlowBullets>) {
     super();

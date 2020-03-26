@@ -20,6 +20,7 @@ import collisionDetector from '../services/CollisionDetector';
 import Emitter from '../services/Emitter';
 import playerService from '../services/PlayerService';
 import GameModel from './GameModel';
+import { SLOW_BULLETS } from '../../shared/constants';
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
@@ -216,16 +217,19 @@ export default class BaseGame extends GameModel {
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.getAlivePlayers()]
+      [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
         .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player) =>
-            bullet.owner !== object,
+          (object: StaticCircularObject | StaticRectangleObject | Player | Bullet) =>
+            bullet.owner !== object &&
+            object instanceof Bullet && bullet !== object && bullet.owner !== object.owner,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle);
-            bullet.hit(angle, object);
+            if (!(object instanceof Bullet && object.type === SLOW_BULLETS)) {
+              bullet.hit(angle, object);
+            }
             this.deleteBulletIfInactive(bullet, i);
           }
         });
