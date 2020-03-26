@@ -1,4 +1,4 @@
-import { PISTOL } from '../../../shared/constants/weapons';
+import { PISTOL } from '../../../shared/constants';
 
 import Weapon from './Weapon';
 

@@ -1,4 +1,4 @@
-import { SUPER_AIM } from '../../../shared/constants/powers';
+import { SUPER_AIM } from '../../../shared/constants';
 
 import Player from '../Player';
 import Aim from './Aim';

@@ -1,4 +1,4 @@
-import { TELEPORT } from '../../../shared/constants/powers';
+import { TELEPORT } from '../../../shared/constants';
 
 import Player from '../Player';
 import Accelerator from './Accelerator';

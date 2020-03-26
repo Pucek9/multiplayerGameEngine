@@ -1,4 +1,4 @@
-import { SHOTGUN } from '../../../shared/constants/weapons';
+import { SHOTGUN } from '../../../shared/constants';
 import { rand } from '../../../shared/helpers';
 import BulletData from '../../../shared/models/BulletData';
 

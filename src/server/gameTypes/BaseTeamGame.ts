@@ -1,5 +1,5 @@
 import NewUser from '../../shared/apiModels/NewUser';
-import { HEAL } from '../../shared/constants/powers';
+import { HEAL } from '../../shared/constants';
 import { compareBy, generateId } from '../../shared/helpers';
 import Team from '../../shared/models/Team';
 

@@ -1,4 +1,4 @@
-import { AIM } from '../../../shared/constants/powers';
+import { AIM } from '../../../shared/constants';
 import Power from '../../../shared/models/Power';
 
 import Player from '../Player';

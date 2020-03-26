@@ -1,4 +1,4 @@
-import { CIRCLE } from '../../shared/constants/other';
+import { CIRCLE } from '../../shared/constants';
 import { rand } from '../../shared/helpers';
 
 import Zone from '../models/Zone';

@@ -4,7 +4,6 @@ export * from './ItemGenerator';
 export * from './MouseCoordinates';
 export * from './NewGame';
 export * from './NewPlayer';
-export * from './NewPlayer';
 export * from './NewUser';
 export * from './PowersApiModel';
 export * from './WeaponsApiModel';

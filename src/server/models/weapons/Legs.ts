@@ -1,4 +1,4 @@
-import { LEGS } from '../../../shared/constants/weapons';
+import { LEGS } from '../../../shared/constants';
 
 import Knife from './Knife';
 

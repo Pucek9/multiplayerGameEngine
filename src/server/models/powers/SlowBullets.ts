@@ -1,4 +1,4 @@
-import { SLOW_BULLETS } from '../../../shared/constants/powers';
+import { SLOW_BULLETS } from '../../../shared/constants';
 
 import Bullet from '../Bullet';
 import Player from '../Player';

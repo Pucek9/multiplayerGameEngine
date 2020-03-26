@@ -1,4 +1,4 @@
-import { AID_KIT } from '../../shared/constants/other';
+import { AID_KIT } from '../../shared/constants';
 import { generateId } from '../../shared/helpers';
 import Item from '../../shared/models/Item';
 
