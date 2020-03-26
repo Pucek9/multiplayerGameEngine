@@ -42,7 +42,7 @@ export default class BaseTeamGame extends BaseGame {
           .find(
             player =>
               bullet.owner !== player &&
-              (bullet.owner.team !== player.team || bullet.type === 'Heal') &&
+              (bullet.owner.team !== player.team || bullet.type === HEAL) &&
               player.selectedPower instanceof Aura &&
               player.selectedPower.isActive() &&
               collisionDetector.detectCollision(bullet, {

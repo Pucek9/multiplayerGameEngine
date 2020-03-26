@@ -12,6 +12,7 @@ import {
   userService,
 } from '../store/store';
 import { UserState } from '../store/user/state';
+import { FREE4ALL } from '../../shared/constants';
 
 declare var gameNameInput: HTMLInputElement;
 declare var gameTypeInput: HTMLSelectElement;
@@ -65,7 +66,7 @@ export default class MenuComponent {
     gameTypeInput.value = gameState.type;
     gameTypeInput.addEventListener('change', () => {
       createGamesService.setGameType(gameTypeInput.value);
-      if (gameTypeInput.value === 'Free4all') {
+      if (gameTypeInput.value === FREE4ALL) {
         this.hideTeamsSection();
         this.clearTeamsInputsList();
         createGamesService.disableTeams();

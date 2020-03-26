@@ -13,12 +13,13 @@ import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
+import { PULL, PUSH } from '../../shared/constants';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshBasicMaterial | MeshPhysicalMaterial;
-  private transparency = this.type === 'Push' || this.type === 'Pull';
+  private transparency = this.type === PUSH || this.type === PULL;
 
   setGeometry() {
     this.geometry = new SphereGeometry(this.size, 10, 10, 3);
