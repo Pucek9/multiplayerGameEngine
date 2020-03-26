@@ -20,10 +20,8 @@ export default class SlowBullets extends Aura {
   }
 
   isActive(): boolean {
-    const z = 'f'
     return this.active;
   }
-
 
   use() {
     this.active = true;
