@@ -14,7 +14,7 @@ export default class Pull extends ShootPower {
   bulletConfig = {
     type: PULL,
     color: WHITE,
-    size: 50,
+    size: 60,
     range: 400,
     power: 0,
     speed: 10,

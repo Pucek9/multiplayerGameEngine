@@ -12,7 +12,7 @@ export default class Push extends ShootPower {
   bulletConfig = {
     type: PUSH,
     color: WHITE,
-    size: 50,
+    size: 60,
     range: 400,
     speed: 10,
     power: 0,
