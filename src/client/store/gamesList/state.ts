@@ -1,4 +1,4 @@
-import MapModel from '../../../shared/models/MapModel';
+import { MapModel } from '../../../shared/models';
 
 export interface GameConfig {
   roomName: string;
