@@ -221,7 +221,9 @@ export default class BaseGame extends GameModel {
         .filter(
           (object: StaticCircularObject | StaticRectangleObject | Player | Bullet) =>
             bullet.owner !== object &&
-            object instanceof Bullet && bullet !== object && bullet.owner !== object.owner,
+            object instanceof Bullet &&
+            bullet !== object &&
+            bullet.owner !== object.owner,
         )
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);

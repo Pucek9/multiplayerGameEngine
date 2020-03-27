@@ -19,7 +19,7 @@ export default class SlowBullets extends ShootPower {
     speed: 0,
     hit() {},
     hitFromBullet(bullet, angle: Angle) {
-      console.log(this.owner)
+      console.log(this.owner);
       const cost = this.cost * bullet.power;
       if (this.owner.tryUseEnergy(cost)) {
         bullet.customFlag = false;
