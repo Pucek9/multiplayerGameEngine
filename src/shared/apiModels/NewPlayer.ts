@@ -1,4 +1,4 @@
-export default class NewPlayer {
+export class NewPlayer {
   constructor(
     public id: string,
     public name: string,

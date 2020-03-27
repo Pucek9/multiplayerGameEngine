@@ -1,4 +1,4 @@
-import MouseCoordinates from '../../../shared/apiModels/MouseCoordinates';
+import { MouseCoordinates } from '../../../shared/apiModels';
 
 import Player from '../../models/Player';
 

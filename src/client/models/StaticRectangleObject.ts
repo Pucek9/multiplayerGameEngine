@@ -1,7 +1,7 @@
 import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 import { degToRad } from '../../shared/helpers';
-import StaticRectangleObjectModel from '../../shared/models/StaticRectangleObjectModel';
+import { StaticRectangleObjectModel } from '../../shared/models';
 
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';

@@ -1,4 +1,4 @@
-import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import { StaticCircularObjectModel } from '../../shared/models';
 
 import { Angle } from '../services/CollisionDetector';
 import Bullet from './Bullet';

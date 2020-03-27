@@ -1,7 +1,7 @@
 import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 import { degToRad } from '../../shared/helpers';
-import StaticCircularObjectModel from '../../shared/models/StaticCircularObjectModel';
+import { StaticCircularObjectModel } from '../../shared/models';
 
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';

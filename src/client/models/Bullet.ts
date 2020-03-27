@@ -6,14 +6,14 @@ import {
   SphereGeometry,
 } from 'three';
 
-import BulletModel from '../../shared/models/BulletModel';
+import { PULL, PUSH, SLOW_BULLETS } from '../../shared/constants';
+import { BulletModel } from '../../shared/models';
 
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
-import { PULL, PUSH, SLOW_BULLETS } from '../../shared/constants';
 
 export default class Bullet extends BulletModel implements IUpdatable {
   private object: Mesh;

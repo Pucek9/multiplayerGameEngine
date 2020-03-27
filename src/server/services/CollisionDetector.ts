@@ -1,6 +1,5 @@
 import { degToRad } from '../../shared/helpers';
-import ICircle from '../../shared/interfaces/ICircle';
-import IRectangle from '../../shared/interfaces/IRectangle';
+import { ICircle, IRectangle } from '../../shared/interfaces';
 
 import Bullet from '../models/Bullet';
 

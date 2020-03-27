@@ -1,4 +1,4 @@
-export default interface NewGame {
+export interface NewGame {
   roomName: string;
   type: string;
   map: string;

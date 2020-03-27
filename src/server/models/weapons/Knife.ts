@@ -1,5 +1,5 @@
-import { KNIFE } from '../../../shared/constants/weapons';
-import BulletData from '../../../shared/models/BulletData';
+import { KNIFE } from '../../../shared/constants';
+import { BulletData } from '../../../shared/models';
 
 import Bullet from '../Bullet';
 import Weapon from './Weapon';

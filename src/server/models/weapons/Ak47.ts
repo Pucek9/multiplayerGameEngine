@@ -1,5 +1,5 @@
 import { AK47 } from '../../../shared/constants';
-import BulletData from '../../../shared/models/BulletData';
+import { BulletData } from '../../../shared/models';
 
 import Bullet from '../Bullet';
 import Weapon from './Weapon';

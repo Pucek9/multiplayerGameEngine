@@ -1,7 +1,7 @@
 import { generateId } from '../helpers';
-import Item from './Item';
+import { Item } from './Item';
 
-export default abstract class Power implements Item {
+export abstract class Power implements Item {
   id: number;
   type: string;
   active: boolean;

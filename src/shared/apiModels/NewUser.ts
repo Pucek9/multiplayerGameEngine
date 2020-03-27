@@ -1,4 +1,4 @@
-export default class NewUser {
+export class NewUser {
   constructor(
     public id: string,
     public name: string,

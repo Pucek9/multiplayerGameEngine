@@ -1,6 +1,6 @@
 import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
-import MapModel from '../../shared/models/MapModel';
+import { MapModel } from '../../shared/models';
 
 import IUpdatable from '../interfaces/IUpdatable';
 import ScreenModel from '../interfaces/ScreenModel';

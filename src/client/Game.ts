@@ -1,15 +1,14 @@
-import ItemGeneratorAPI from '../shared/apiModels/ItemGenerator';
-import MouseCoordinates from '../shared/apiModels/MouseCoordinates';
-import NewPlayer from '../shared/apiModels/NewPlayer';
-import NewUser from '../shared/apiModels/NewUser';
-import PowersApiModel from '../shared/apiModels/PowersApiModel';
-import WeaponsApiModel from '../shared/apiModels/WeaponsApiModel';
-import { INVISIBLE } from '../shared/constants';
-import { CIRCLE, RECTANGLE } from '../shared/constants/other';
+import {
+  ItemGeneratorAPI,
+  MouseCoordinates,
+  NewPlayer,
+  NewUser,
+  PowersApiModel,
+  WeaponsApiModel,
+} from '../shared/apiModels';
+import { CIRCLE, INVISIBLE, RECTANGLE } from '../shared/constants';
 import { normalizeKey } from '../shared/helpers';
-import BulletModel from '../shared/models/BulletModel';
-import PlayerModel from '../shared/models/PlayerModel';
-import Team from '../shared/models/Team';
+import { BulletModel, PlayerModel, Team } from '../shared/models';
 
 import PlayerListModel from './interfaces/PlayerListModel';
 import ScreenModel from './interfaces/ScreenModel';

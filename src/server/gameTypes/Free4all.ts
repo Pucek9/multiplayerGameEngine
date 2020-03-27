@@ -1,6 +1,6 @@
-import NewUser from '../../shared/apiModels/NewUser';
+import { NewUser } from '../../shared/apiModels/NewUser';
 import { randItem } from '../../shared/helpers';
-import Power from '../../shared/models/Power';
+import { Power } from '../../shared/models/Power';
 
 import Bot from '../models/Bot';
 import Player from '../models/Player';

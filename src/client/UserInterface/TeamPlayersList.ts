@@ -1,5 +1,5 @@
 import { compareBy } from '../../shared/helpers';
-import Team from '../../shared/models/Team';
+import { Team } from '../../shared/models';
 
 import PlayerListModel from '../interfaces/PlayerListModel';
 

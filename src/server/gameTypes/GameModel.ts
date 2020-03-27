@@ -1,6 +1,6 @@
-import MouseCoordinates from '../../shared/apiModels/MouseCoordinates';
-import NewUser from '../../shared/apiModels/NewUser';
-import Team from '../../shared/models/Team';
+import { MouseCoordinates } from '../../shared/apiModels/MouseCoordinates';
+import { NewUser } from '../../shared/apiModels/NewUser';
+import { Team } from '../../shared/models/Team';
 
 import Bullet from '../models/Bullet';
 import Player from '../models/Player';

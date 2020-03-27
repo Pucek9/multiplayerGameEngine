@@ -1,7 +1,7 @@
-import NewUser from '../../shared/apiModels/NewUser';
+import { NewUser } from '../../shared/apiModels/NewUser';
 import { HEAL } from '../../shared/constants';
 import { compareBy, generateId } from '../../shared/helpers';
-import Team from '../../shared/models/Team';
+import { Team } from '../../shared/models/Team';
 
 import Bot from '../models/Bot';
 import Player from '../models/Player';

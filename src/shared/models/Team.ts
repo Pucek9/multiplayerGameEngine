@@ -1,6 +1,6 @@
 import Zone from '../../server/models/Zone';
 
-export default class Team {
+export class Team {
   public points = 0;
   public count = 0;
   public name: string;

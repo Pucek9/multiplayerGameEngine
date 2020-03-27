@@ -1,4 +1,4 @@
-export default interface MouseCoordinates {
+export interface MouseCoordinates {
   clientX: number;
   clientY: number;
   movementX?: number;
