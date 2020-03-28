@@ -12,7 +12,6 @@ import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
 import ItemGenerator from '../models/ItemGenerator';
 import Player from '../models/Player';
-import Aura from '../models/powers/Aura';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import Weapon from '../models/weapons/Weapon';

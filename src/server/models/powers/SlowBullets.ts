@@ -1,7 +1,6 @@
 import { RED, SLOW_BULLETS } from '../../../shared/constants';
 
 import { Angle } from '../../services/CollisionDetector';
-import Bullet from '../Bullet';
 import Player from '../Player';
 // import ShootPower from './ShootPower';
 import Aura from './Aura';

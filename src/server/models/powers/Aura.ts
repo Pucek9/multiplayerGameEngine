@@ -1,4 +1,3 @@
-import { Power } from '../../../shared/models';
 import ShootPower from './ShootPower';
 
 export default abstract class Aura extends ShootPower {

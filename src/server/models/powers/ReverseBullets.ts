@@ -1,10 +1,8 @@
 import { RED, REVERSE_BULLETS, SLOW_BULLETS } from '../../../shared/constants';
 
-import Bullet from '../Bullet';
-import Player from '../Player';
+import { Angle } from '../../services/CollisionDetector';
 import Aura from './Aura';
 import SlowBullets from './SlowBullets';
-import { Angle } from '../../services/CollisionDetector';
 
 export default class ReverseBullets extends SlowBullets implements Aura {
   type = REVERSE_BULLETS;

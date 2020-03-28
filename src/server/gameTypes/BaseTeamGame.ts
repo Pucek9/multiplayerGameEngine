@@ -1,11 +1,10 @@
 import { NewUser } from '../../shared/apiModels';
 import { HEAL } from '../../shared/constants';
-import { compareBy, generateId } from '../../shared/helpers';
+import { generateId } from '../../shared/helpers';
 import { Team } from '../../shared/models';
 
 import Bot from '../models/Bot';
 import Player from '../models/Player';
-import Aura from '../models/powers/Aura';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import collisionDetector from '../services/CollisionDetector';
