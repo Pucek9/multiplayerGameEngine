@@ -9,6 +9,7 @@
       "dom.iterable"
     ],
     "sourceMap": true,
+    "allowJs": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "types": [

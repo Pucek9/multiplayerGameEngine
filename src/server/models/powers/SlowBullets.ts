@@ -1,9 +1,9 @@
-import { PULL, RED, SLOW_BULLETS, WHITE } from '../../../shared/constants';
+import { RED, SLOW_BULLETS } from '../../../shared/constants';
 
+import { Angle } from '../../services/CollisionDetector';
 import Bullet from '../Bullet';
 import Player from '../Player';
 import ShootPower from './ShootPower';
-import { Angle } from '../../services/CollisionDetector';
 
 export default class SlowBullets extends ShootPower {
   type = SLOW_BULLETS;

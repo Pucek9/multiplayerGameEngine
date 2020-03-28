@@ -4,6 +4,7 @@ import {
   MouseCoordinates,
   NewUser,
 } from '../../shared/apiModels';
+import { SLOW_BULLETS } from '../../shared/constants';
 import { compareBy, generateId, rand, randColor, times } from '../../shared/helpers';
 import { BulletModel, Item, Power } from '../../shared/models';
 
@@ -20,7 +21,6 @@ import collisionDetector from '../services/CollisionDetector';
 import Emitter from '../services/Emitter';
 import playerService from '../services/PlayerService';
 import GameModel from './GameModel';
-import { SLOW_BULLETS } from '../../shared/constants';
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
