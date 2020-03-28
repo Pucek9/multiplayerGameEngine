@@ -1,9 +1,16 @@
 import { Power } from '../../../shared/models';
+import ShootPower from './ShootPower';
 
-export default abstract class Aura extends Power {
-  abstract effect(props: any);
-
+export default abstract class Aura extends ShootPower {
+  bulletId = null;
   abstract isActive(): boolean;
 
-  abstract getSize(): number;
+  generateBullets(bullets, game, owner) {
+    super.generateBullets(bullets, game, owner);
+    if (bullets.length > 0) {
+      this.bulletId = bullets[0].id;
+    } else {
+      this.bulletId = null;
+    }
+  }
 }

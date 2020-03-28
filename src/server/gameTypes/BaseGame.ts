@@ -44,7 +44,7 @@ export default class BaseGame extends GameModel {
       this.performKeysOperationForPlayers();
       this.updateBullets();
       this.detectBulletsCollision();
-      this.bulletsDetectPower();
+      // this.bulletsDetectPower();
       this.emitter.emitGameState(this);
     }, 1000 / 60);
     this.customInterval = setInterval(() => {
@@ -186,56 +186,56 @@ export default class BaseGame extends GameModel {
     });
   }
 
-  bulletsDetectPower() {
-    this.bullets
-      .filter(bullet => bullet.allowForManipulate)
-      .forEach(bullet => {
-        const foundPlayerWithAura = this.getAlivePlayers()
-          .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
-          .find(
-            player =>
-              bullet.owner !== player &&
-              player.selectedPower instanceof Aura &&
-              player.selectedPower.isActive() &&
-              collisionDetector.detectCollision(bullet, {
-                ...player,
-                size: player.selectedPower.getSize(),
-              }).collision,
-          );
-        if (
-          foundPlayerWithAura?.selectedPower.effect({
-            bullet,
-            owner: foundPlayerWithAura,
-          })
-        ) {
-          this.emitPowerInfo(foundPlayerWithAura);
-        } else {
-          bullet.customFlag = true;
-        }
-      });
-  }
+  // bulletsDetectPower() {
+  //   this.bullets
+  //     .filter(bullet => bullet.allowForManipulate)
+  //     .forEach(bullet => {
+  //       const foundPlayerWithAura = this.getAlivePlayers()
+  //         .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
+  //         .find(
+  //           player =>
+  //             bullet.owner !== player &&
+  //             player.selectedPower instanceof Aura &&
+  //             player.selectedPower.isActive() &&
+  //             collisionDetector.detectCollision(bullet, {
+  //               ...player,
+  //               size: player.selectedPower.getSize(),
+  //             }).collision,
+  //         );
+  //       if (
+  //         foundPlayerWithAura?.selectedPower.effect({
+  //           bullet,
+  //           owner: foundPlayerWithAura,
+  //         })
+  //       ) {
+  //         this.emitPowerInfo(foundPlayerWithAura);
+  //       } else {
+  //         bullet.customFlag = true;
+  //       }
+  //     });
+  // }
 
   detectBulletsCollision() {
-    this.bullets.forEach((bullet, i) => {
-      [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
-        .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player | Bullet) =>
-            bullet.owner !== object &&
-            object instanceof Bullet &&
-            bullet !== object &&
-            bullet.owner !== object.owner,
-        )
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+    this.bullets
+      .filter(bullet => bullet.type !== SLOW_BULLETS)
+      .forEach((bullet, i) => {
+        [
+          ...this.getStaticObjects(),
+          ...this.getAlivePlayers().filter(player => bullet.owner !== player),
+          ...this.bullets
+            .filter(_bullet => bullet !== _bullet && bullet.owner !== _bullet.owner)
+            .sort((bullet1, bullet2) => compareBy(bullet1.owner, bullet2.owner, { energy: 1 })),
+        ].forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
-            object.hitFromBullet(bullet, angle);
+            object.hitFromBullet(bullet, angle, this);
             if (!(object instanceof Bullet && object.type === SLOW_BULLETS)) {
               bullet.hit(angle, object);
             }
             this.deleteBulletIfInactive(bullet, i);
           }
         });
-    });
+      });
   }
 
   shoot(owner: string) {

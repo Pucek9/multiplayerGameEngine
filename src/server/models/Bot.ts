@@ -4,8 +4,8 @@ import Player from './Player';
 import Weapon from './weapons/Weapon';
 
 export default class Bot extends Player {
-  die(withDieCounter?) {
-    super.die(withDieCounter);
+  die({ withDieCounter, game }) {
+    super.die({ withDieCounter, game });
     this.keys.clear();
     this.direction = { dx: 0, dy: 0 };
   }

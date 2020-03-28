@@ -10,7 +10,7 @@ import Heal from '../models/powers/Heal';
 import Increaser from '../models/powers/Increaser';
 import Pull from '../models/powers/Pull';
 import Push from '../models/powers/Push';
-import ReverseBullets from '../models/powers/ReverseBullets';
+// import ReverseBullets from '../models/powers/ReverseBullets';
 import SlowBullets from '../models/powers/SlowBullets';
 import SuperAIM from '../models/powers/SuperAIM';
 import Teleport from '../models/powers/Teleport';
@@ -28,7 +28,7 @@ export default class Free4all extends BaseGame {
     const bot = super.createBot(index);
     const SuperPower = randItem<new (...args: any[]) => Power>([
       SuperAIM,
-      ReverseBullets,
+      // ReverseBullets,
       SlowBullets,
       Accelerator,
       Push,
@@ -47,7 +47,7 @@ export default class Free4all extends BaseGame {
     player.addPower(new Accelerator());
     player.addPower(new Teleport());
     player.addPower(new SlowBullets());
-    player.addPower(new ReverseBullets());
+    // player.addPower(new ReverseBullets());
     player.addPower(new Push());
     player.addPower(new Pull());
     player.addAndSelectPower(new Heal());

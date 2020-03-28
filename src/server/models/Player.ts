@@ -3,6 +3,7 @@ import { Direction, PlayerModel } from '../../shared/models';
 import { Angle } from '../services/CollisionDetector';
 import AidKit from './AidKit';
 import Bullet from './Bullet';
+import Aura from './powers/Aura';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
@@ -12,9 +13,12 @@ export default class Player extends PlayerModel {
     return this.alive;
   }
 
-  die(withDieCounter = true) {
+  die({ withDieCounter = true, game }) {
     if (withDieCounter) {
       this.deaths += 1;
+    }
+    if (this.selectedPower instanceof Aura) {
+      this.selectedPower.release({ game });
     }
     this.timeToRevive = this.baseTimeToRevive;
     this.alive = false;
@@ -67,7 +71,7 @@ export default class Player extends PlayerModel {
     this.kills += score;
   }
 
-  hitFromBullet(bullet: Bullet, angle?: Angle) {
+  hitFromBullet(bullet: Bullet, angle?: Angle, game?) {
     if (this.isAlive()) {
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
@@ -76,7 +80,7 @@ export default class Player extends PlayerModel {
         if (bullet.owner?.team !== this.team) {
           bullet.owner.addKills(1);
         }
-        this.die();
+        this.die({ game });
       }
     }
   }
