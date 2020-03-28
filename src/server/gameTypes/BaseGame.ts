@@ -1,11 +1,11 @@
-import { BulletApiModel } from '../../shared/apiModels/BulletApiModel';
-import { ItemGeneratorAPI } from '../../shared/apiModels/ItemGenerator';
-import { MouseCoordinates } from '../../shared/apiModels/MouseCoordinates';
-import { NewUser } from '../../shared/apiModels/NewUser';
+import {
+  BulletApiModel,
+  ItemGeneratorAPI,
+  MouseCoordinates,
+  NewUser,
+} from '../../shared/apiModels';
 import { compareBy, generateId, rand, randColor, times } from '../../shared/helpers';
-import { BulletModel } from '../../shared/models/BulletModel';
-import { Item } from '../../shared/models/Item';
-import { Power } from '../../shared/models/Power';
+import { BulletModel, Item, Power } from '../../shared/models';
 
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
