@@ -1,6 +1,6 @@
-import { NewUser } from '../../shared/apiModels/NewUser';
+import { NewUser } from '../../shared/apiModels';
 import { BALL, INVISIBLE, LEGS, WHITE } from '../../shared/constants';
-import { Team } from '../../shared/models/Team';
+import { Team } from '../../shared/models';
 
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';

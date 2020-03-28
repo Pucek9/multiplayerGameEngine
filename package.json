@@ -71,7 +71,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint && yarn prettier"
+      "pre-push": "yarn lint && yarn prettier && yarn build"
     }
   }
 }
