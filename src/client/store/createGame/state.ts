@@ -30,14 +30,26 @@ export interface CreateGameState {
 //   },
 // };
 
+// export const initialState: CreateGameState = {
+//   roomName: '',
+//   type: 'Free4all',
+//   map: 'Playground',
+//   camera: 'StaticCamera',
+//   light: 'FlashLight',
+//   steering: 'eightDirectionSteering',
+//   cursor: 'freeCursor',
+//   botsCount: 0,
+//   teams: null,
+// };
+
 export const initialState: CreateGameState = {
-  roomName: '',
+  roomName: 'test',
   type: 'Free4all',
   map: 'Playground',
   camera: 'StaticCamera',
-  light: 'FlashLight',
+  light: 'AmbientLight',
   steering: 'eightDirectionSteering',
   cursor: 'freeCursor',
-  botsCount: 0,
+  botsCount: 5,
   teams: null,
 };

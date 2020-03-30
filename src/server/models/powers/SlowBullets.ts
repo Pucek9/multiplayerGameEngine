@@ -7,22 +7,22 @@ import Aura from './Aura';
 
 export default class SlowBullets extends Aura {
   type = SLOW_BULLETS;
+  color = RED;
   size = 70;
   cost = 0.01;
   minTimeBetweenBullets = 300;
   bulletConfig = {
-    type: SLOW_BULLETS,
-    color: RED,
-    size: 70,
-    range: 100,
+    type: this.type,
+    color: this.color,
+    size: this.size,
+    range: 1,
     power: 0,
     speed: 0,
     hit() {},
+    deactivate() {},
     hitFromBullet(bullet, angle: Angle) {
       const cost = this.owner.selectedPower.cost * bullet.power;
-      console.log('bullet');
       if (this.owner.tryUseEnergy(cost)) {
-        console.log('bullet.speed', bullet.speed);
         bullet.customFlag = false;
         bullet.decreaseSpeedToMin(bullet.speed > 0.1 ? bullet.speed / 4 : 0.1);
         return true;
@@ -59,8 +59,12 @@ export default class SlowBullets extends Aura {
 
   release({ owner, game }) {
     this.active = false;
-    game.bullets.find(bullet => bullet.id === this.bulletId)?.deactivate();
-    this.bulletId = null;
+    const bullet = game.bullets.find(bullet => bullet.id === this.bulletId);
+    if (bullet) {
+      console.log(bullet.id, bullet.owner.name);
+      bullet.deactivate();
+      this.bulletId = null;
+    }
   }
 
   effect({ owner, game }) {

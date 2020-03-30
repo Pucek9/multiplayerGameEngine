@@ -20,6 +20,7 @@ import collisionDetector from '../services/CollisionDetector';
 import Emitter from '../services/Emitter';
 import playerService from '../services/PlayerService';
 import GameModel from './GameModel';
+import Aura from '../models/powers/Aura';
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';
@@ -337,7 +338,11 @@ export default class BaseGame extends GameModel {
 
   mouseRightClick(owner: string) {
     const player = this.getPlayer(owner);
-    if (player.isAlive() && player.selectedPower?.useClickPower) {
+    if (
+      player.isAlive() &&
+      player.selectedPower?.useClickPower &&
+      !(player.selectedPower instanceof Aura)
+    ) {
       player.useClickPower(this);
       this.emitPowerInfo(player);
     }
