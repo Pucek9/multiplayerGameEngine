@@ -85,6 +85,13 @@
     }
   },
   "lint-staged": {
-    "*.ts": "yarn tslint:fix"
+    "*.(ts|html|scss)": [
+      "yarn prettier:fix",
+      "git add"
+    ],
+    "*.ts": [
+      "yarn lint:fix",
+      "yarn lint"
+    ]
   }
 }
