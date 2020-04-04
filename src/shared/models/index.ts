@@ -1,4 +1,3 @@
-export * from './BulletData';
 export * from './BulletModel';
 export * from './Direction';
 export * from './Item';

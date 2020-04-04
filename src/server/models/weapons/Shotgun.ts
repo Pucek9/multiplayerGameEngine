@@ -1,8 +1,8 @@
 import { SHOTGUN } from '../../../shared/constants';
 import { rand } from '../../../shared/helpers';
-import { BulletData } from '../../../shared/models';
 
 import Bullet from '../Bullet';
+import { BulletData } from '../BulletData';
 import Weapon from './Weapon';
 
 const DISPERSION = 70;
