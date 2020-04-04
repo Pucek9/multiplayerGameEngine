@@ -85,6 +85,6 @@
     }
   },
   "lint-staged": {
-    "*.ts": "tslint --project tsconfig.json --fix"
+    "*.ts": "yarn tslint:fix"
   }
 }
