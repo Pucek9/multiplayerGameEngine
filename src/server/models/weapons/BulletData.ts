@@ -1,4 +1,4 @@
-import { Direction } from '../../../shared/models/Direction';
+import { Direction } from '../../../shared/models';
 
 import Player from '../Player';
 
