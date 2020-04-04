@@ -84,13 +84,12 @@
     }
   },
   "lint-staged": {
+    "*.ts": [
+      "yarn lint:fix"
+    ],
     "*.(ts|html|scss)": [
       "yarn prettier:fix",
       "git add"
-    ],
-    "*.ts": [
-      "yarn lint:fix",
-      "yarn lint"
     ]
   }
 }
