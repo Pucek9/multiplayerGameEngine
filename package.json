@@ -88,8 +88,7 @@
       "yarn lint:fix"
     ],
     "*.(ts|html|scss)": [
-      "yarn prettier:fix",
-      "git add"
+      "yarn prettier:fix"
     ]
   }
 }
