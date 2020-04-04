@@ -11,7 +11,7 @@ export default class Bullet extends BulletModel {
   power = 10;
   range = 500;
   type: string;
-  owner: any;
+  owner: Player;
   fromX: number;
   fromY: number;
   targetX: number;

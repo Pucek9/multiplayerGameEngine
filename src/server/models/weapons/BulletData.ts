@@ -1,5 +1,6 @@
-import { Direction } from './Direction';
-import { PlayerModel } from './PlayerModel';
+import { Direction } from '../../../shared/models/Direction';
+
+import Player from '../Player';
 
 export interface BulletData {
   targetX: number;
@@ -7,6 +8,6 @@ export interface BulletData {
   fromX: number;
   fromY: number;
   size: number;
-  owner: PlayerModel;
+  owner: Player;
   dir?: Direction;
 }

@@ -115,9 +115,11 @@ export default class Haxball extends RoundTeamBattle {
   shootGoal(goal: Goal, ball: Bullet) {
     if (goal.team !== ball.owner?.team) {
       const team = this.findTeam(ball.owner.team);
+      ball.owner.addKills(-1);
       team?.decreasePoints();
     } else {
       const team = this.findTeam(goal.team);
+      ball.owner.addKills(1);
       team?.increasePoints();
     }
     this.startRound();
