@@ -15,6 +15,7 @@ export default class ReverseBullets extends SlowBullets implements Aura {
     power: 0,
     speed: 0,
     hit() {},
+    deactivate() {},
     hitFromBullet(bullet, angle: Angle) {
       console.log('bullet');
       const cost = this.cost * bullet.power;
