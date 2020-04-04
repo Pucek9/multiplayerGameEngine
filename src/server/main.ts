@@ -1,6 +1,7 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import * as http from 'http';
+import * as ip from 'ip';
 import { listen, Socket } from 'socket.io';
 
 import { MouseCoordinates, NewGame, NewUser } from '../shared/apiModels';
@@ -11,7 +12,7 @@ import gamesManager from './services/GamesManager';
 
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
-const url = process.env.URL || 'localhost';
+const url = process.env.URL || ip.address() || 'localhost';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
@@ -25,11 +26,11 @@ app.use(express.static('dist/client'), cors(corsOptions));
 
 function connection(socket: Socket) {
   function init() {
-    const ip = socket.handshake.address;
-    console.log(`[${socket.id}] ${ip} Connected`);
+    const playerIP = socket.handshake.address;
+    console.log(`[${socket.id}] ${playerIP} Connected`);
     setTimeout(() => {
       emitter.emitGamesList();
-      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, ip]);
+      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, playerIP]);
     }, TIMEOUT);
     registerGameMenuEvents();
   }
