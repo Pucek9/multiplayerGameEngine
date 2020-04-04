@@ -76,5 +76,15 @@
     "plugins": {
       "autoprefixer": {}
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again",
+      "pre-push": "yarn lint && yarn prettier && yarn test && yarn build"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "tslint --project tsconfig.json --fix"
   }
 }
