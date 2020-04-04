@@ -17,9 +17,13 @@
     "prettier": "prettier --config ./.prettierrc.json --list-different \"src/**/*{.ts,.scss,.html}\"",
     "prettier:fix": "yarn prettier --write",
     "build": "webpack",
-    "build:dev": "webpack --watch",
+    "build:webpack:dev": "webpack --watch",
+    "build:webpack:dev:client": "webpack --watch --config-name client",
+    "build:webpack:dev:server": "webpack --watch --config-name server",
+    "build:start:dev:server": "tsnd ./src/server/main.ts",
     "start": "node dist/server/robocop.bundle.js",
     "start:dev": "nodemon --inspect dist/server/robocop.bundle.js --watch dist/server/robocop.bundle.js",
+    "dev-mode": "npm-run-all --parallel build:webpack:dev:client build:start:dev:server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michał Gruca",
@@ -36,15 +40,19 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.3",
     "ip": "^1.1.5",
+    "lint-staged": "^10.1.1",
     "node-sass": "^4.13.0",
     "nodemon": "^1.19.4",
     "nodemon-webpack-plugin": "^4.1.1",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.19.1",
     "redux-devtools-extension": "^2.13.8",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.1",
+    "ts-node": "^8.8.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
@@ -58,7 +66,7 @@
     "three": "^0.115.0"
   },
   "engines": {
-    "node": "^10.16.2"
+    "node": ">=10 <14"
   },
   "repository": {
     "type": "git",
@@ -67,11 +75,6 @@
   "postcss": {
     "plugins": {
       "autoprefixer": {}
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn lint && yarn prettier && yarn build"
     }
   }
 }
