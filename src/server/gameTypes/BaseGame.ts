@@ -12,6 +12,7 @@ import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
 import ItemGenerator from '../models/ItemGenerator';
 import Player from '../models/Player';
+import Aura from '../models/powers/Aura';
 import StaticCircularObject from '../models/StaticCircularObject';
 import StaticRectangleObject from '../models/StaticRectangleObject';
 import Weapon from '../models/weapons/Weapon';
@@ -20,7 +21,6 @@ import collisionDetector from '../services/CollisionDetector';
 import Emitter from '../services/Emitter';
 import playerService from '../services/PlayerService';
 import GameModel from './GameModel';
-import Aura from '../models/powers/Aura';
 
 export default class BaseGame extends GameModel {
   public type = 'Free for all';

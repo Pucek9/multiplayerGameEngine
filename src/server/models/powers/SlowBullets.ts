@@ -59,7 +59,7 @@ export default class SlowBullets extends Aura {
 
   release({ owner, game }) {
     this.active = false;
-    const bullet = game.bullets.find(bullet => bullet.id === this.bulletId);
+    const bullet = game.bullets.find(_bullet => _bullet.id === this.bulletId);
     if (bullet) {
       console.log(bullet.id, bullet.owner.name);
       bullet.deactivate();
