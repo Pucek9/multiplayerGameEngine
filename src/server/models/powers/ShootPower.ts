@@ -1,6 +1,7 @@
-import { BulletData, Power } from '../../../shared/models';
+import { Power } from '../../../shared/models';
 
 import Bullet from '../Bullet';
+import { BulletData } from '../BulletData';
 import Player from '../Player';
 import ClickPower from './ClickPower';
 

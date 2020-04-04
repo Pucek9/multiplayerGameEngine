@@ -1,4 +1,3 @@
-export * from '../../server/models/weapons/BulletData';
 export * from './BulletModel';
 export * from './Direction';
 export * from './Item';

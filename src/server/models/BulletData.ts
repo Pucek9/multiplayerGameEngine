@@ -1,6 +1,6 @@
-import { Direction } from '../../../shared/models';
+import { Direction } from '../../shared/models';
 
-import Player from '../Player';
+import Player from './Player';
 
 export interface BulletData {
   targetX: number;
