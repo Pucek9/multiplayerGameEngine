@@ -10,7 +10,6 @@ import { API } from '../shared/constants';
 import Emitter from './services/Emitter';
 import gamesManager from './services/GamesManager';
 
-console.log('x');
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
 const url = process.env.URL || ip.address() || 'localhost';
