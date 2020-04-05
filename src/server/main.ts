@@ -38,7 +38,7 @@ function connection(socket: Socket) {
   function registerGameMenuEvents() {
     socket.on(API.CREATE_GAME, (newGame: NewGame) => {
       newGame.ip = socket.handshake.address;
-      console.log(`[${socket.id}] Created game '${newGame.roomName}'`);
+      console.log(`[${newGame.ip}] Created game '${newGame.roomName}'`);
       gamesManager.createGame(emitter, newGame);
       emitter.emitGamesList();
     });
@@ -59,6 +59,15 @@ function connection(socket: Socket) {
       if (gameState) {
         const disconnected = gameState.getPlayer(socket.id);
         gameState.disconnectPlayer(disconnected);
+      }
+    });
+
+    socket.on(API.DELETE_GAME, (roomName: string) => {
+      const game = gamesManager.getGame(roomName);
+      if (game.ip === socket.handshake.address) {
+        console.log(`[${game.ip}] Deleted game '${roomName}'`);
+        gamesManager.deleteGame(game);
+        emitter.emitGamesList();
       }
     });
   }

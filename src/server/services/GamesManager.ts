@@ -28,6 +28,21 @@ class GamesManager {
     );
   }
 
+  deleteGame(game: GameModel) {
+    this.games.splice(this.games.indexOf(game), 1);
+    game.steering = null;
+    game.cursor = null;
+    game.emitter = null;
+    game.map = null;
+    game.players = [];
+    game.teams = [];
+    game.bullets = [];
+    // @ts-ignore
+    clearInterval(game.interval);
+    // @ts-ignore
+    clearInterval(game.customInterval);
+  }
+
   getGame(roomName: string): GameModel {
     return this.games.find(game => game.roomName === roomName);
   }

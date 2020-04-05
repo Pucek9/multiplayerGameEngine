@@ -18,11 +18,15 @@ export default abstract class GameModel {
   camera: string;
   light: string;
   botsCount: number;
-  players: Player[];
-  bullets: Bullet[];
+  players: Player[] = [];
+  bullets: Bullet[] = [];
   ip: string;
-  teams?: Team[];
+  teams?: Team[] = [];
   friendlyFire?: boolean;
+  // @ts-ignore-no-unused-variable
+  interval: NodeJS.Timeout | number;
+  // @ts-ignore-no-unused-variable
+  customInterval: NodeJS.Timeout | number;
 
   abstract getPlayer(id: string);
 

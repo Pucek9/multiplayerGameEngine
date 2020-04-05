@@ -54,6 +54,10 @@ class Main {
     // userService.selectGame(newGame);
   }
 
+  onDeleteGame(gameName: string) {
+    socket.emit(API.DELETE_GAME, gameName);
+  }
+
   onJoinGame() {
     document.body.requestFullscreen().then(() => {
       const userState = userService.getState();
