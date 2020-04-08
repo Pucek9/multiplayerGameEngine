@@ -40,10 +40,12 @@ declare var validateNick: HTMLLabelElement;
 declare var validateSelectedGame: HTMLLabelElement;
 
 export default class MenuComponent {
+  main;
   unsubscribeRender: Unsubscribe;
   listeners: any[] = [];
 
   constructor(main) {
+    this.main = main;
     const gameState = createGamesService.getState();
     this.unsubscribeRender = store.subscribe(() => this.render());
 
@@ -198,6 +200,17 @@ export default class MenuComponent {
     games.list.forEach((game: GameInstance) => {
       const roomName = document.createElement('td');
       roomName.appendChild(document.createTextNode(game.roomName));
+      console.log(user.ip, game.ip);
+      if (user.ip === game.ip) {
+        const removeButton = document.createElement('button');
+        removeButton.innerHTML = 'X';
+        const main = this.main;
+        removeButton.addEventListener('click', function inputListener() {
+          main.onDeleteGame(game.roomName);
+          removeButton.removeEventListener('click', inputListener);
+        });
+        roomName.appendChild(removeButton);
+      }
       const type = document.createElement('td');
       type.appendChild(document.createTextNode(game.type));
       const map = document.createElement('td');

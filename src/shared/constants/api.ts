@@ -18,6 +18,7 @@ export enum API {
   WELCOME_NEW_PLAYER = 'helloPlayer',
   UPDATE_DIRECTION = 'updateDirection',
   CREATE_GAME = 'createGame',
+  DELETE_GAME = 'deleteGame',
   GET_GAMES_LIST = 'getGamesList',
   GET_TEAMS_LIST = 'getTeamsList',
   LEAVE_GAME = 'leaveGame',
