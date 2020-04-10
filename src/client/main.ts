@@ -32,12 +32,12 @@ class Main {
     this.menu = new MenuComponent(this);
     mainInstance = this;
 
-    socket.on(API.WELCOME_NEW_PLAYER, function([id, ip]: [string, string]) {
+    socket.on(API.WELCOME_NEW_PLAYER, function ([id, ip]: [string, string]) {
       userService.setId(id);
       userService.setIp(ip);
     });
 
-    socket.on(API.GET_GAMES_LIST, function(gamesList: GameInstance[]) {
+    socket.on(API.GET_GAMES_LIST, function (gamesList: GameInstance[]) {
       gamesListService.clearGamesList();
       gamesList.forEach(game => gamesListService.addGame(game));
       if (gamesList.length > 0) {
@@ -224,7 +224,7 @@ class Main {
   }
 }
 
-window.onload = function() {
+window.onload = function () {
   // @ts-ignore-no-unused-variable
   const main = new Main();
 };

@@ -111,6 +111,6 @@ socketIo.on(API.CONNECTION, (socket: Socket) => {
   connection(socket);
 });
 
-httpServer.listen(parseInt(port, 0), function() {
+httpServer.listen(parseInt(port, 0), function () {
   console.log(`App listening on ${url}:${port}`);
 });
