@@ -16,9 +16,8 @@ import { gamesListService, userService } from './store/store';
 import './style.scss';
 import MenuComponent from './UserInterface/MenuComponent';
 
-// const s = process.env.NODE_ENV === 'production' ? 's' : '';
-// const url = `http${s}://${process.env.URL || 'localhost'}`;
-const url = `http://${process.env.URL || 'localhost'}`;
+const s = process.env.NODE_ENV === 'production' ? 's' : '';
+const url = `http${s}://${process.env.URL || 'localhost'}`;
 const socket = connect(url);
 
 let mainInstance: Main;
