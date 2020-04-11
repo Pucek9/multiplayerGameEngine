@@ -200,7 +200,6 @@ export default class MenuComponent {
     games.list.forEach((game: GameInstance) => {
       const roomName = document.createElement('td');
       roomName.appendChild(document.createTextNode(game.roomName));
-      console.log(user.ip, game.ip);
       if (user.ip === game.ip) {
         const removeButton = document.createElement('button');
         removeButton.innerHTML = 'X';

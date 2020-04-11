@@ -13,6 +13,7 @@ import gamesManager from './services/GamesManager';
 const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
 const url = process.env.URL || ip.address() || 'localhost';
+const env = process.env.NODE_ENV || 'development';
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = listen(httpServer);
@@ -112,5 +113,5 @@ socketIo.on(API.CONNECTION, (socket: Socket) => {
 });
 
 httpServer.listen(parseInt(port, 0), function () {
-  console.log(`App listening on ${url}:${port}`);
+  console.log(`[${env}] App listening on ${url}:${port}`);
 });

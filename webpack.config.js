@@ -9,7 +9,7 @@ const url = process.env.URL || ip.address() || 'localhost';
 const port = process.env.PORT || '80';
 const isProd = environment === 'production';
 
-console.log(`Building app for ${url}:${port}`);
+console.log(`[${environment}] Building app for ${url}:${port}`);
 const config = [
   {
     name: 'client',
