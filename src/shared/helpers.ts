@@ -1,9 +1,16 @@
-export function degToRad(deg: number): number {
-  return (deg * Math.PI) / 180;
+function* incrementer(): Generator<number> {
+  let index = 0;
+  while (true) yield Date.now() + index++;
 }
 
+const gen = incrementer();
+
 export function generateId(): number {
-  return Date.now() + Math.floor(Math.random() * 100);
+  return gen.next().value;
+}
+
+export function degToRad(deg: number): number {
+  return (deg * Math.PI) / 180;
 }
 
 export function rand(max: number, min: number = 0): number {
