@@ -37,6 +37,8 @@ export default class Bullet extends BulletModel implements Updatable {
         envMapIntensity: 1,
         depthTest: false,
         transparent: true,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
         transparency: 0.8,
       });
     } else {

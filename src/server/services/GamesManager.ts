@@ -37,8 +37,8 @@ class GamesManager {
     game.players = [];
     game.teams = [];
     game.bullets = [];
-    clearInterval(game.interval);
-    clearInterval(game.customInterval);
+    clearInterval(game.interval as NodeJS.Timeout);
+    clearInterval(game.customInterval as NodeJS.Timeout);
   }
 
   getGame(roomName: string): GameModel {

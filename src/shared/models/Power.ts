@@ -12,11 +12,11 @@ export abstract class Power implements Item {
     this.active = false;
   }
 
-  abstract use(props: any);
+  use(props: any) {}
 
-  abstract isActive();
+  isActive() {}
 
-  abstract release(props: any);
+  release(props: any) {}
 
-  abstract effect(props: any);
+  effect(props: any) {}
 }
