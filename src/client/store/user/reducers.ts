@@ -3,7 +3,7 @@ import { initialState, UserState } from './state';
 
 export function userReducer(
   state: UserState = initialState,
-  { type, payload }: { type: string; payload: any },
+  { type, payload }: { type: string; payload },
 ) {
   switch (type) {
     case UserActions.SET_NICK:

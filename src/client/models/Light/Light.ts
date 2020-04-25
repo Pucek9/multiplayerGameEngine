@@ -18,7 +18,7 @@ export abstract class Lighting implements Updatable {
 
   update() {}
 
-  abstract init?(params: any);
+  abstract init?(params);
 
   remove() {
     this.screen.scene.remove(this.light);

@@ -1,6 +1,6 @@
-import { PhisicalObject } from './PhisicalObject';
+import { ObjectModel } from './ObjectModel';
 
-export interface Rectangle extends PhisicalObject {
+export interface Rectangle extends ObjectModel {
   width: number;
   height: number;
   deg: number;

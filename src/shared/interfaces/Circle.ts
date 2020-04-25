@@ -1,5 +1,5 @@
-import { PhisicalObject } from './PhisicalObject';
+import { ObjectModel } from './ObjectModel';
 
-export interface Circle extends PhisicalObject {
+export interface Circle extends ObjectModel {
   size: number;
 }

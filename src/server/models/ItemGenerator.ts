@@ -10,7 +10,7 @@ type ParameterlessConstructor<T> = new (Item?) => T;
 
 export default class ItemGenerator<T> extends StaticCircularObjectModel {
   item: ParameterlessConstructor<Item>;
-  itemProps: any;
+  itemProps;
   ready = true;
   repeated = true;
   type: string;

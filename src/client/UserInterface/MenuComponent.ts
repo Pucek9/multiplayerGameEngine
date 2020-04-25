@@ -42,7 +42,7 @@ declare const validateSelectedGame: HTMLLabelElement;
 export default class MenuComponent {
   main;
   unsubscribeRender: Unsubscribe;
-  listeners: any[] = [];
+  listeners: [] = [];
 
   constructor(main) {
     this.main = main;
@@ -188,7 +188,7 @@ export default class MenuComponent {
       input.classList.add('input', 'create-white');
       input.addEventListener('keyup', function inputListener() {
         createGamesService.setTeamName(index, input.value);
-        listeners.push(inputListener);
+        listeners.push(inputListener as never);
       });
       teamsList.appendChild(label);
       div.appendChild(input);

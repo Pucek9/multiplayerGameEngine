@@ -5,7 +5,7 @@ import { CreateGameState, initialState } from './state';
 
 export function createGameReducer(
   state: CreateGameState = initialState,
-  { type, payload }: { type: string; payload: any },
+  { type, payload }: { type: string; payload },
 ) {
   switch (type) {
     case GamesActions.CLEAR_ROOM_NAME:

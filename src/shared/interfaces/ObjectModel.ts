@@ -1,9 +1,10 @@
 import { Direction } from '../models';
 
-export interface PhisicalObject {
+export interface ObjectModel {
   shape: string;
   x: number;
   y: number;
   direction: Direction;
   speed: number;
+  color?: string;
 }

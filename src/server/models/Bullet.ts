@@ -92,7 +92,7 @@ export default class Bullet extends BulletModel {
 
   effectOnPlayer(player: Player) {}
 
-  hit(angle: Angle, object?: any) {
+  hit(angle: Angle, object?) {
     this.deactivate();
   }
 

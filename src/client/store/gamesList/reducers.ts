@@ -3,7 +3,7 @@ import { GamesListState, initialState } from './state';
 
 export function gamesListReducer(
   state: GamesListState = initialState,
-  { type, payload }: { type: string; payload: any },
+  { type, payload }: { type: string; payload },
 ) {
   switch (type) {
     case GamesActions.ADD_GAME:

@@ -10,7 +10,7 @@ export default interface CameraModel {
 
   wheel(e: WheelEvent): void;
 
-  update(any?): void;
+  update(): void;
 
   remove(): void;
 }

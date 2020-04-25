@@ -26,7 +26,7 @@ let requestId: number;
 class Main {
   private menu: MenuComponent;
   private gameState: Game;
-  private events: any;
+  private events;
 
   constructor() {
     this.menu = new MenuComponent(this);

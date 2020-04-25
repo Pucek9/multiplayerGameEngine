@@ -8,6 +8,7 @@ import {
 } from '../shared/apiModels';
 import { CIRCLE, INVISIBLE, RECTANGLE } from '../shared/constants';
 import { normalizeKey } from '../shared/helpers';
+import { ObjectModel } from '../shared/interfaces';
 import { BulletModel, PlayerModel, Team } from '../shared/models';
 
 import PlayerListModel from './interfaces/PlayerListModel';
@@ -196,7 +197,7 @@ export default class Game {
     });
   }
 
-  appendStaticObjects(newObjects: any[]) {
+  appendStaticObjects(newObjects: Array<ObjectModel>) {
     newObjects
       .filter(newObject => newObject.color !== INVISIBLE)
       .forEach(newObject => {

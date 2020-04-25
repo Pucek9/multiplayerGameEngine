@@ -101,7 +101,7 @@ export default class BaseGame extends GameModel {
     return this.trackClosestPlayerWithCondition(player, _player => player !== _player);
   }
 
-  trackClosestPlayerWithCondition(player: Player, condition: any): Player {
+  trackClosestPlayerWithCondition(player: Player, condition: (_player) => boolean): Player {
     const players = this.getAlivePlayers().filter(condition);
     if (players?.length) {
       return players.reduce((previousPlayer, currentPlayer) => {

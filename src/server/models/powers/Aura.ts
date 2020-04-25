@@ -1,7 +1,7 @@
 import { Power } from '../../../shared/models';
 
 export default abstract class Aura extends Power {
-  abstract effect(props: any);
+  abstract effect(props);
 
   abstract isActive(): boolean;
 

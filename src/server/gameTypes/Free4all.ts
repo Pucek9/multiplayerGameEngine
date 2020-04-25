@@ -26,7 +26,7 @@ export default class Free4all extends BaseGame {
 
   createBot(index: number): Bot {
     const bot = super.createBot(index);
-    const SuperPower = randItem<new (...args: any[]) => Power>([
+    const SuperPower = randItem<new (...args: []) => Power>([
       SuperAIM,
       ReverseBullets,
       SlowBullets,

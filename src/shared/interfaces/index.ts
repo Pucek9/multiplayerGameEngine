@@ -1,3 +1,3 @@
 export * from './Circle';
-export * from './PhisicalObject';
+export * from './ObjectModel';
 export * from './Rectangle';

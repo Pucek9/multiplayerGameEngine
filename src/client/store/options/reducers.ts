@@ -3,7 +3,7 @@ import { initialState, OptionsState } from './state';
 
 export function optionsReducer(
   state: OptionsState = initialState,
-  { type, payload }: { type: string; payload: any },
+  { type, payload }: { type: string; payload },
 ) {
   switch (type) {
     case OptionsActions.SET_BLINKING:
