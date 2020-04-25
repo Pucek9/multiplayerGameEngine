@@ -1,0 +1,126 @@
+import {
+  AK47,
+  AMBIENT_LIGHT,
+  AROUND_CURSOR,
+  BOXES,
+  CAR_INDEPENDENT_STEERING,
+  CAR_STEERING,
+  CURSOR_LIGHT,
+  DYNAMIC_CAMERA,
+  EIGHT_DIRECTION_STEERING,
+  FLASH_LIGHT,
+  FREE_CURSOR,
+  FREE4ALL,
+  GRENADE,
+  GRENADE_EXPLOSION,
+  HAXBALL,
+  KNIFE,
+  LAND_MINE,
+  LEGS,
+  NO_CURSOR,
+  PISTOL,
+  PLAYGROUND,
+  RESIZER,
+  ROTATE_STEERING,
+  ROUND_TEAM_BATTLE,
+  SHOTGUN,
+  STADIUM,
+  STATIC_CAMERA,
+  TEAM_BATTLE,
+} from './constants';
+
+export const GameConfiguration = {
+  roomName: '',
+  type: [
+    { name: FREE4ALL, disabled: [{ type: 'teams' }, { type: 'weapons', values: [LEGS] }] },
+    { name: TEAM_BATTLE, friendlyFire: false, disabled: [{ type: 'weapons', values: [LEGS] }] },
+    {
+      name: ROUND_TEAM_BATTLE,
+      friendlyFire: false,
+      maxRound: 5,
+      maxRoundTime: 5 * 60 * 1000,
+      maxTime: 60 * 60 * 1000,
+      disabled: [{ type: 'weapons', values: [LEGS] }],
+    },
+    {
+      name: HAXBALL,
+      maxRound: 5,
+      maxRoundTime: 5 * 60 * 1000,
+      maxTime: 60 * 60 * 1000,
+      enabled: [{ type: 'weapons', values: [LEGS] }],
+    },
+  ],
+  weapons: {
+    modes: ['RANDOM_ONE', 'CHOSEN', 'CHOOSABLE'],
+    count: 1,
+    values: [
+      { name: AK47 },
+      { name: GRENADE },
+      { name: GRENADE_EXPLOSION },
+      { name: KNIFE },
+      { name: LAND_MINE },
+      { name: PISTOL },
+      { name: RESIZER },
+      { name: SHOTGUN },
+      { name: LEGS },
+    ],
+  },
+  powers: {
+    modes: ['RANDOM_ONE', 'CHOSEN', 'CHOOSABLE'],
+    count: 1,
+    values: [
+      { name: AK47 },
+      { name: GRENADE },
+      { name: GRENADE_EXPLOSION },
+      { name: KNIFE },
+      { name: LAND_MINE },
+      { name: PISTOL },
+      { name: RESIZER },
+      { name: SHOTGUN },
+      { name: LEGS },
+    ],
+  },
+  map: {
+    values: [{ name: PLAYGROUND }, { name: BOXES }, { name: STADIUM }],
+  },
+  light: { values: [{ name: AMBIENT_LIGHT }, { name: CURSOR_LIGHT }, { name: FLASH_LIGHT }] },
+  camera: {
+    values: [
+      { name: STATIC_CAMERA },
+      {
+        name: DYNAMIC_CAMERA,
+        disabled: [
+          { type: 'cursor', values: [FREE_CURSOR] },
+          { type: 'steering', values: [EIGHT_DIRECTION_STEERING] },
+        ],
+      },
+    ],
+  },
+  steering: {
+    values: [
+      {
+        name: CAR_INDEPENDENT_STEERING,
+        allowForStaticRotate: true,
+        sensitivity: 0.05,
+        disabled: { type: 'cursor', values: [NO_CURSOR] },
+      },
+      { name: CAR_STEERING, allowForStaticRotate: true, sensitivity: 0.05, range: 200 },
+      { name: EIGHT_DIRECTION_STEERING, disabled: { type: 'cursor', values: [NO_CURSOR] } },
+      { name: ROTATE_STEERING, disabled: { type: 'cursor', values: [NO_CURSOR] } },
+    ],
+  },
+  cursor: {
+    values: [
+      { name: AROUND_CURSOR, range: 200, sensitivity: 100 },
+      { name: FREE_CURSOR },
+      { name: NO_CURSOR },
+    ],
+  },
+  bots: {
+    count: 0,
+  },
+  teams: {
+    count: 0,
+    list: [],
+  },
+};

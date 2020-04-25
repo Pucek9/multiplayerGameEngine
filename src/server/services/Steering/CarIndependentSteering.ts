@@ -5,7 +5,7 @@ import Player from '../../models/Player';
 import Steering from './Steering';
 
 export class CarIndependentSteering extends Steering {
-  constructor(public allowForStaticRotate = true, public sensitivity = 0.05, public range = 200) {
+  constructor(public allowForStaticRotate = true, public sensitivity = 0.05) {
     super();
   }
   performSteering(game, player: Player) {

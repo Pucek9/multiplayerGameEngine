@@ -7,3 +7,7 @@ export * from './weapons';
 export * from './floors';
 export * from './items';
 export * from './games';
+export * from './cameras';
+export * from './lights';
+export * from './steerings';
+export * from './cursors';

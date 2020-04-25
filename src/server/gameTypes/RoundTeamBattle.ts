@@ -9,6 +9,7 @@ import playerService from '../services/PlayerService';
 import BaseTeamGame from './BaseTeamGame';
 
 export default class RoundTeamBattle extends BaseTeamGame {
+  maxRoundTime: number;
   maxTime: number;
   round = 0;
   maxRound = 5;
