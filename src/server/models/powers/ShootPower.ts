@@ -8,7 +8,7 @@ import ClickPower from './ClickPower';
 export default abstract class ShootPower extends Power implements ClickPower {
   ready = true;
   minTimeBetweenBullets: number;
-  bulletConfig?: Partial<BulletData>;
+  bulletConfig?: Partial<Bullet>;
 
   shoot(bulletData: BulletData, game) {
     if (this.ready) {
