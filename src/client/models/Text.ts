@@ -1,8 +1,8 @@
 import { FontLoader, Mesh, MeshPhongMaterial, TextGeometry } from 'three';
 
 import * as fontFile from '../games/balls/fonts/gentilis_bold.typeface.json';
-import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import Updatable from '../interfaces/Updatable';
 
 const loader = new FontLoader();
 const font = loader.parse(fontFile);

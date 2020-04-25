@@ -9,8 +9,8 @@ import {
 
 import { PlayerModel } from '../../shared/models';
 
-import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import Updatable from '../interfaces/Updatable';
 import { Lighting } from './Light/Light';
 
 const head = require('../games/balls/images/head.jpg');

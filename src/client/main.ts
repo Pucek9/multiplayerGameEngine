@@ -1,3 +1,4 @@
+import './style.scss';
 import { connect } from 'socket.io-client';
 import { Scene, WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
@@ -13,7 +14,6 @@ import Camera from './models/Camera';
 import shaderService from './ShaderService';
 import { GameConfig } from './store/gamesList/state';
 import { gamesListService, userService } from './store/store';
-import './style.scss';
 import MenuComponent from './UserInterface/MenuComponent';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';

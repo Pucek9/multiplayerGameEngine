@@ -15,8 +15,8 @@ import {
 import { degToRad } from '../../shared/helpers';
 import { StaticCircularObjectModel } from '../../shared/models';
 
-import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import Updatable from '../interfaces/Updatable';
 
 const loader = new FBXLoader();
 const models = {

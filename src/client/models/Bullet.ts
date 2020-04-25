@@ -9,8 +9,8 @@ import {
 import { PULL, PUSH } from '../../shared/constants';
 import { BulletModel } from '../../shared/models';
 
-import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import Updatable from '../interfaces/Updatable';
 import { optionsService } from '../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';

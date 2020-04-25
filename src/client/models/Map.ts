@@ -2,8 +2,8 @@ import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
 import { MapModel } from '../../shared/models';
 
-import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
+import Updatable from '../interfaces/Updatable';
 
 export default class Map implements Updatable, MapModel {
   public src: string;

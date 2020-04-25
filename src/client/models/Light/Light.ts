@@ -1,7 +1,7 @@
 import { Color, Light } from 'three';
 
-import Updatable from '../../interfaces/Updatable';
 import ScreenModel from '../../interfaces/ScreenModel';
+import Updatable from '../../interfaces/Updatable';
 import Cursor from '../Cursor';
 
 export interface Source {
