@@ -1,26 +1,26 @@
 import { ItemGeneratorAPI } from '../../shared/apiModels';
 import { generateId } from '../../shared/helpers';
-import { Item, StaticCircularObjectModel } from '../../shared/models';
+import { StaticCircularObjectModel } from '../../shared/models';
+import { ParameterlessConstructor } from '../../shared/types';
 
 import AidKit from './AidKit';
 import Player from './Player';
 import Weapon from './weapons/Weapon';
 
-type ParameterlessConstructor<T> = new (Item?) => T;
-
-export default class ItemGenerator<T> extends StaticCircularObjectModel {
-  item: ParameterlessConstructor<Item>;
-  itemProps;
+export default class ItemGenerator<ItemClass> extends StaticCircularObjectModel {
+  ItemClass: ParameterlessConstructor<ItemClass>;
+  itemProps: Partial<ItemClass>;
   ready = true;
   repeated = true;
   type: string;
   time: number;
   id: number;
 
-  constructor(params: Partial<ItemGenerator<Item>>) {
+  constructor(params: Partial<ItemGenerator<ItemClass>>) {
     super(params);
     this.id = params.id || generateId();
     this.itemProps = params.itemProps || {};
+    this.type = this.ItemClass.name;
     Object.assign(this, params);
     Object.seal(this);
   }
@@ -37,8 +37,8 @@ export default class ItemGenerator<T> extends StaticCircularObjectModel {
     this.ready = false;
   }
 
-  generateItem(): Item {
-    return new this.item(this.itemProps);
+  generateItem(): ItemClass {
+    return new this.ItemClass(this.itemProps);
   }
 
   pickup(game, player: Player) {

@@ -1,3 +1,5 @@
+import { SubType } from './types';
+
 function* incrementer(): Generator<number> {
   let index = 0;
   while (true) yield Date.now() + index++;
@@ -47,13 +49,6 @@ export function createArrayFilledValue<T>(length: number, value: T): Array<T> {
 export function hasKeys(set: Set<string>, keys: Array<string>): boolean {
   return keys.some((key: string) => set.has(key));
 }
-
-type SubType<Base, Condition> = Pick<
-  Base,
-  {
-    [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
-  }[keyof Base]
->;
 
 export function compareBy<T>(
   obj1: T,
