@@ -1,8 +1,8 @@
 import { PowersApiModel } from '../../shared/apiModels';
 
-declare var powersList: HTMLUListElement;
-declare var rightDownPanel: HTMLDivElement;
-declare var powersHeader: HTMLSpanElement;
+declare const powersList: HTMLUListElement;
+declare const rightDownPanel: HTMLDivElement;
+declare const powersHeader: HTMLSpanElement;
 
 export default class PowersListComponent {
   constructor() {}

@@ -1,13 +1,13 @@
 import { FontLoader, Mesh, MeshPhongMaterial, TextGeometry } from 'three';
 
 import * as fontFile from '../games/balls/fonts/gentilis_bold.typeface.json';
-import IUpdatable from '../interfaces/IUpdatable';
+import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
 
 const loader = new FontLoader();
 const font = loader.parse(fontFile);
 
-export default class Text implements IUpdatable {
+export default class Text implements Updatable {
   public x: number;
   public y: number;
   public object: Mesh;

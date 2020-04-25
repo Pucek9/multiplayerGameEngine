@@ -2,11 +2,11 @@ import { PerspectiveCamera, Vector3 } from 'three';
 
 import { PlayerModel } from '../../../shared/models';
 
-import IUpdatable from '../../interfaces/IUpdatable';
+import Updatable from '../../interfaces/Updatable';
 import Cursor from '../Cursor';
-import ICamera from './ICamera';
+import CameraModel from './CameraModel';
 
-export default class DynamicCamera implements IUpdatable, ICamera {
+export default class DynamicCamera implements Updatable, CameraModel {
   public object: PerspectiveCamera;
   private activePlayer: PlayerModel;
   private cursor: Cursor;

@@ -55,7 +55,7 @@ export default class Haxball extends RoundTeamBattle {
   }
 
   setupGoals() {
-    const goals = <Array<Goal>>this.getStaticObjects().filter(object => object instanceof Goal);
+    const goals = this.getStaticObjects().filter(object => object instanceof Goal) as Array<Goal>;
     if (goals.length === this.teams.length) {
       this.teams.forEach((team: Team, index: number) => {
         goals[index].team = team.name;

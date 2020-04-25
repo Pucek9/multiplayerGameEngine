@@ -225,6 +225,5 @@ class Main {
 }
 
 window.onload = function () {
-  // @ts-ignore-no-unused-variable
   const main = new Main();
 };

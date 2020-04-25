@@ -67,7 +67,7 @@ export default class BaseGame extends GameModel {
   }
 
   getBots(): Array<Bot> {
-    return <Array<Bot>>this.players.filter(player => player instanceof Bot);
+    return this.players.filter(player => player instanceof Bot) as Array<Bot>;
   }
 
   updateBots() {

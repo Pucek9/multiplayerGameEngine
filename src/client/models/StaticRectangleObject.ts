@@ -3,13 +3,12 @@ import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 import { degToRad } from '../../shared/helpers';
 import { StaticRectangleObjectModel } from '../../shared/models';
 
-import IUpdatable from '../interfaces/IUpdatable';
+import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
 
 const box = require('../games/balls/images/box.png');
 
-export default class StaticRectangleObject extends StaticRectangleObjectModel
-  implements IUpdatable {
+export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
   private object: Mesh;
 
   init(screen: ScreenModel) {

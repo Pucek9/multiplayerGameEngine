@@ -1,7 +1,7 @@
 import { WeaponsApiModel } from '../../shared/apiModels';
 
-declare var weaponsList: HTMLUListElement;
-declare var leftDownPanel: HTMLDivElement;
+declare const weaponsList: HTMLUListElement;
+declare const leftDownPanel: HTMLDivElement;
 
 export default class WeaponsListComponent {
   constructor() {}

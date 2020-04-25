@@ -1,6 +1,6 @@
 import { Color, Light } from 'three';
 
-import IUpdatable from '../../interfaces/IUpdatable';
+import Updatable from '../../interfaces/Updatable';
 import ScreenModel from '../../interfaces/ScreenModel';
 import Cursor from '../Cursor';
 
@@ -9,7 +9,7 @@ export interface Source {
   y: number;
 }
 
-export abstract class Lighting implements IUpdatable {
+export abstract class Lighting implements Updatable {
   light: Light;
   source?: Source;
   dest?: Cursor;

@@ -35,7 +35,7 @@ export default class Game {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  // camera: ICamera;
+  // camera: CameraModel;
   light: Lighting;
   playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
@@ -45,7 +45,7 @@ export default class Game {
   playersListString = '';
   bullets: Bullet[] = [];
   keys: Set<string> = new Set([]);
-  staticObjects: any[] = [];
+  staticObjects = [];
   itemGenerators: Item[] = [];
   map: Map;
   cursor: Cursor;
@@ -55,7 +55,7 @@ export default class Game {
     this.user = user;
     this.screen = screen;
     this.light = new Lights[gameConfig.light](this.screen);
-    this.teams = <Team[]>gameConfig.teams;
+    this.teams = gameConfig.teams as Team[];
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
       : new PlayerListComponent();

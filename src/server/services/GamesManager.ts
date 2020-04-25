@@ -37,9 +37,7 @@ class GamesManager {
     game.players = [];
     game.teams = [];
     game.bullets = [];
-    // @ts-ignore
     clearInterval(game.interval);
-    // @ts-ignore
     clearInterval(game.customInterval);
   }
 

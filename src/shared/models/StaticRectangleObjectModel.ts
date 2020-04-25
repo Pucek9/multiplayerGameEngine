@@ -1,7 +1,7 @@
 import { RECTANGLE } from '../constants';
-import { IRectangle } from '../interfaces';
+import { Rectangle } from '../interfaces';
 
-export class StaticRectangleObjectModel implements IRectangle {
+export class StaticRectangleObjectModel implements Rectangle {
   shape = RECTANGLE;
   x: number;
   y: number;

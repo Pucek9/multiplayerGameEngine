@@ -9,13 +9,13 @@ import {
 import { PULL, PUSH } from '../../shared/constants';
 import { BulletModel } from '../../shared/models';
 
-import IUpdatable from '../interfaces/IUpdatable';
+import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
 import { optionsService } from '../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
 
-export default class Bullet extends BulletModel implements IUpdatable {
+export default class Bullet extends BulletModel implements Updatable {
   private object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshBasicMaterial | MeshPhysicalMaterial;
@@ -36,9 +36,8 @@ export default class Bullet extends BulletModel implements IUpdatable {
         // envMap: hdrCubeRenderTarget.texture,
         envMapIntensity: 1,
         depthTest: false,
-        // @ts-ignore
-        transparency: 0.8,
         transparent: true,
+        transparency: 0.8,
       });
     } else {
       this.material = new MeshBasicMaterial({ color: this.color });

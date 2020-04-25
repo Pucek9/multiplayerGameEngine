@@ -26,14 +26,36 @@ const corsOptions = {
 app.use(express.static('dist/client'), cors(corsOptions));
 
 function connection(socket: Socket) {
-  function init() {
-    const playerIP = socket.handshake.address;
-    console.log(`[${socket.id}] ${playerIP} Connected`);
-    setTimeout(() => {
-      emitter.emitGamesList();
-      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, playerIP]);
-    }, TIMEOUT);
-    registerGameMenuEvents();
+  function joinToRoom(roomName: string) {
+    socket.join(roomName);
+  }
+
+  function initNewPlayer(newPlayer, gameState) {
+    const player = gameState.connectPlayer(newPlayer);
+    socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
+    socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
+    socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getNormalizedBullets());
+    socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
+    socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
+    emitter.emitGamesList();
+  }
+
+  function registerPlayerEvents(gameState) {
+    socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
+      gameState.updateKeys(socket.id, keys);
+    });
+    socket.on(API.MOUSE_CLICK, (owner: string) => {
+      gameState.mouseClick(owner);
+    });
+    socket.on(API.MOUSE_RIGHT_CLICK, (owner: string) => {
+      gameState.mouseRightClick(owner);
+    });
+    socket.on(API.MOUSE_UP, (owner: string) => {
+      gameState.mouseUp(owner);
+    });
+    socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
+      gameState.updateCursor(mouseCoordinates);
+    });
   }
 
   function registerGameMenuEvents() {
@@ -73,36 +95,14 @@ function connection(socket: Socket) {
     });
   }
 
-  function joinToRoom(roomName: string) {
-    socket.join(roomName);
-  }
-
-  function initNewPlayer(newPlayer, gameState) {
-    const player = gameState.connectPlayer(newPlayer);
-    socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
-    socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
-    socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getNormalizedBullets());
-    socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
-    socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
-    emitter.emitGamesList();
-  }
-
-  function registerPlayerEvents(gameState) {
-    socket.on(API.UPDATE_KEYS, (keys: Array<string>) => {
-      gameState.updateKeys(socket.id, keys);
-    });
-    socket.on(API.MOUSE_CLICK, (owner: string) => {
-      gameState.mouseClick(owner);
-    });
-    socket.on(API.MOUSE_RIGHT_CLICK, (owner: string) => {
-      gameState.mouseRightClick(owner);
-    });
-    socket.on(API.MOUSE_UP, (owner: string) => {
-      gameState.mouseUp(owner);
-    });
-    socket.on(API.UPDATE_DIRECTION, (mouseCoordinates: MouseCoordinates) => {
-      gameState.updateCursor(mouseCoordinates);
-    });
+  function init() {
+    const playerIP = socket.handshake.address;
+    console.log(`[${socket.id}] ${playerIP} Connected`);
+    setTimeout(() => {
+      emitter.emitGamesList();
+      socketIo.to(socket.id).emit(API.WELCOME_NEW_PLAYER, [socket.id, playerIP]);
+    }, TIMEOUT);
+    registerGameMenuEvents();
   }
 
   init();

@@ -1,10 +1,10 @@
 import { Scene, WebGLRenderer } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 
-import ICamera from '../models/Camera/ICamera';
+import CameraModel from '../models/Camera/CameraModel';
 export default interface ScreenModel {
   scene: Scene;
   renderer: WebGLRenderer;
-  camera: ICamera;
+  camera: CameraModel;
   composer: EffectComposer;
 }

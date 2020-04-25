@@ -2,10 +2,10 @@ import { PerspectiveCamera } from 'three';
 
 import { PlayerModel } from '../../../shared/models';
 
-import IUpdatable from '../../interfaces/IUpdatable';
-import ICamera from './ICamera';
+import Updatable from '../../interfaces/Updatable';
+import CameraModel from './CameraModel';
 
-export default class StaticCamera implements IUpdatable, ICamera {
+export default class StaticCamera implements Updatable, CameraModel {
   public object: PerspectiveCamera;
   private activePlayer: PlayerModel;
 

@@ -166,7 +166,7 @@ export default class Player extends PlayerModel {
     return false;
   }
 
-  decreaseSpeedToDefault(value: number = 0.2) {
+  decreaseSpeedToDefault(value = 0.2) {
     if (this.speed - value > this.baseSpeed) {
       this.speed -= value;
     } else {
@@ -174,7 +174,7 @@ export default class Player extends PlayerModel {
     }
   }
 
-  increaseSpeedTo(maxSpeed: number, value: number = 0.2) {
+  increaseSpeedTo(maxSpeed: number, value = 0.2) {
     if (maxSpeed > this.speed + value) {
       this.speed += value;
     } else {
@@ -195,7 +195,7 @@ export default class Player extends PlayerModel {
     return this.direction.dx !== 0 || this.direction.dy !== 0;
   }
 
-  decreaseTimeToRevive(time: number = 1) {
+  decreaseTimeToRevive(time = 1) {
     if (this.timeToRevive > 0) {
       this.timeToRevive -= time;
     }

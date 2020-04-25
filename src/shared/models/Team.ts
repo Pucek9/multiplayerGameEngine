@@ -11,7 +11,7 @@ export class Team {
     this.color = color;
   }
 
-  setZone(zone: Zone) {
+  setZone(zone: Zone): void {
     this.zone = zone;
   }
 

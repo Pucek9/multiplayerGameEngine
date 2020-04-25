@@ -1,7 +1,7 @@
 import { CIRCLE } from '../constants';
-import { ICircle } from '../interfaces';
+import { Circle } from '../interfaces';
 
-export abstract class StaticCircularObjectModel implements ICircle {
+export abstract class StaticCircularObjectModel implements Circle {
   shape = CIRCLE;
   x: number;
   y: number;

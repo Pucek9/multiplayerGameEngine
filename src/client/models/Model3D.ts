@@ -15,7 +15,7 @@ import {
 import { degToRad } from '../../shared/helpers';
 import { StaticCircularObjectModel } from '../../shared/models';
 
-import IUpdatable from '../interfaces/IUpdatable';
+import Updatable from '../interfaces/Updatable';
 import ScreenModel from '../interfaces/ScreenModel';
 
 const loader = new FBXLoader();
@@ -29,7 +29,7 @@ const models = {
   [LAND_MINE]: { scale: 80, rotation: { x: 90, z: 0, y: 0 } },
 };
 
-export default class Model3D extends StaticCircularObjectModel implements IUpdatable {
+export default class Model3D extends StaticCircularObjectModel implements Updatable {
   public type: string;
   protected object: Group;
 

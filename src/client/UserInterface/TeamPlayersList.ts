@@ -3,7 +3,7 @@ import { Team } from '../../shared/models';
 
 import PlayerListModel from '../interfaces/PlayerListModel';
 
-declare var teamsPlayersListPanel: HTMLUListElement;
+declare const teamsPlayersListPanel: HTMLUListElement;
 
 export default class TeamPlayerListComponent {
   constructor() {}

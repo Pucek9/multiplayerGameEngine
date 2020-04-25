@@ -1,5 +1,5 @@
 import { degToRad } from '../../shared/helpers';
-import { ICircle, IRectangle } from '../../shared/interfaces';
+import { Circle, Rectangle } from '../../shared/interfaces';
 
 import Bullet from '../models/Bullet';
 
@@ -26,7 +26,7 @@ export class CollisionDetector {
     return Math.sqrt((o1.x - o2.x + o1.direction.dx) ** 2 + (o1.y - o2.y + o1.direction.dy) ** 2);
   }
 
-  detectCollision(object1: ICircle | IRectangle, object2: ICircle | IRectangle): CollisionInfo;
+  detectCollision(object1: Circle | Rectangle, object2: Circle | Rectangle): CollisionInfo;
 
   detectCollision(object1, object2) {
     switch ([object1.shape, object2.shape].join()) {
@@ -41,7 +41,7 @@ export class CollisionDetector {
     }
   }
 
-  detectCircularCollision(o1: ICircle, o2: ICircle): CollisionInfo {
+  detectCircularCollision(o1: Circle, o2: Circle): CollisionInfo {
     const distance = this.getCartesianDistance(o1, o2);
     let [x, y] = [-1, -1];
     if (o1 instanceof Bullet) {
@@ -61,7 +61,7 @@ export class CollisionDetector {
     return { collision: distance < o1.size + o2.size, angle: { x, y }, distance };
   }
 
-  detectRectangleCollision(o1: IRectangle, o2: IRectangle): CollisionInfo {
+  detectRectangleCollision(o1: Rectangle, o2: Rectangle): CollisionInfo {
     return {
       collision:
         o2.x + o2.width > o1.x &&
@@ -71,7 +71,7 @@ export class CollisionDetector {
     };
   }
 
-  detectRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
+  detectRectangleAndCircleCollision(circle: Circle, rect: Rectangle): CollisionInfo {
     if (rect.deg === 0) {
       return this.detectUnRotatedRectangleAndCircleCollision(circle, rect);
     } else {
@@ -79,7 +79,7 @@ export class CollisionDetector {
     }
   }
 
-  detectUnRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
+  detectUnRotatedRectangleAndCircleCollision(circle: Circle, rect: Rectangle): CollisionInfo {
     const { deltaX, deltaY, distance } = this.getManhattanDistance(
       circle.x + circle.direction.dx,
       circle.y + circle.direction.dy,
@@ -97,7 +97,7 @@ export class CollisionDetector {
     };
   }
 
-  detectRotatedRectangleAndCircleCollision(circle: ICircle, rect: IRectangle): CollisionInfo {
+  detectRotatedRectangleAndCircleCollision(circle: Circle, rect: Rectangle): CollisionInfo {
     let cx, cy;
     const angleOfRad = degToRad(-rect.deg);
     const rectCenterX = rect.x + rect.width / 2;
@@ -151,8 +151,8 @@ export class CollisionDetector {
   }
 
   detectObjectCollisionWithOtherObjects(
-    target: ICircle | IRectangle,
-    objects: (ICircle | IRectangle)[],
+    target: Circle | Rectangle,
+    objects: (Circle | Rectangle)[],
   ): boolean {
     return objects.some(object => this.detectCollision(target, object).collision);
   }

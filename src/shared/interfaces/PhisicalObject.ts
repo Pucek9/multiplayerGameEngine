@@ -1,6 +1,6 @@
 import { Direction } from '../models';
 
-export interface IObject {
+export interface PhisicalObject {
   shape: string;
   x: number;
   y: number;

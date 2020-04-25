@@ -38,7 +38,7 @@ export default class Bullet extends BulletModel {
     Object.seal(this);
   }
 
-  decreaseSpeedToMin(value: number = 2) {
+  decreaseSpeedToMin(value = 2) {
     if (!this.isMinSpeed()) {
       if (this.speed > value) {
         this.speed -= value;
@@ -56,7 +56,7 @@ export default class Bullet extends BulletModel {
     return this.speed === this.minSpeed;
   }
 
-  increaseSpeedToDefault(value: number = 1) {
+  increaseSpeedToDefault(value = 1) {
     if (!this.isDefaultSpeed()) {
       if (this.defaultSpeed > this.speed + value) {
         this.speed += value;

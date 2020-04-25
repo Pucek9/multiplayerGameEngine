@@ -1,3 +1,3 @@
-export * from './ICircle';
-export * from './IObject';
-export * from './IRectangle';
+export * from './Circle';
+export * from './PhisicalObject';
+export * from './Rectangle';

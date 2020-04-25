@@ -13,7 +13,7 @@ export function degToRad(deg: number): number {
   return (deg * Math.PI) / 180;
 }
 
-export function rand(max: number, min: number = 0): number {
+export function rand(max: number, min = 0): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -59,7 +59,7 @@ export function compareBy<T>(
   obj1: T,
   obj2: T,
   conditions: { [P in keyof SubType<T, number>]?: 1 | -1 },
-  index: number = 0,
+  index = 0,
 ): number {
   const condition = Object.keys(conditions)[index];
   const sign = conditions[condition];
