@@ -75,9 +75,13 @@ export enum ConfigType {
   BOOLEAN = 'boolean',
 }
 
-export interface Selector {
-  type: Configs;
-  values?: Array<string>;
+export interface OptionSelector {
+  option: Configs;
+  values: Array<string>;
+}
+
+export interface ConfigSelector {
+  config: Configs;
 }
 
 export interface Config {
@@ -90,8 +94,8 @@ export interface Config {
 export interface Option {
   name: string;
   configuration?: Config[];
-  disabled?: Array<Selector>;
-  enabled?: Array<Selector>;
+  disabled?: Array<ConfigSelector | OptionSelector>;
+  enabled?: Array<ConfigSelector | OptionSelector>;
 }
 
 export const gameConfiguration: Config[] = [
@@ -108,15 +112,15 @@ export const gameConfiguration: Config[] = [
       {
         name: FREE4ALL,
         disabled: [
-          { type: Configs.TEAMS },
-          { type: Configs.TEAMS_COUNT },
-          { type: Configs.TEAMS_COLORS },
-          { type: Configs.WEAPONS, values: [LEGS] },
+          { config: Configs.TEAMS },
+          { config: Configs.TEAMS_COUNT },
+          { config: Configs.TEAMS_COLORS },
+          { option: Configs.WEAPONS, values: [LEGS] },
         ],
       },
       {
         name: TEAM_BATTLE,
-        disabled: [{ type: Configs.WEAPONS, values: [LEGS] }, { type: Configs.PLAYER_COLOR }],
+        disabled: [{ option: Configs.WEAPONS, values: [LEGS] }, { config: Configs.PLAYER_COLOR }],
         configuration: [
           {
             name: 'friendlyFire',
@@ -127,7 +131,7 @@ export const gameConfiguration: Config[] = [
       },
       {
         name: ROUND_TEAM_BATTLE,
-        disabled: [{ type: Configs.WEAPONS, values: [LEGS] }, { type: Configs.PLAYER_COLOR }],
+        disabled: [{ option: Configs.WEAPONS, values: [LEGS] }, { config: Configs.PLAYER_COLOR }],
         configuration: [
           {
             name: 'friendlyFire',
@@ -153,8 +157,8 @@ export const gameConfiguration: Config[] = [
       },
       {
         name: HAXBALL,
-        enabled: [{ type: Configs.WEAPONS, values: [LEGS] }],
-        disabled: [{ type: Configs.PLAYER_COLOR }],
+        enabled: [{ option: Configs.WEAPONS, values: [LEGS] }],
+        disabled: [{ config: Configs.PLAYER_COLOR }],
         configuration: [
           {
             name: 'maxRound',
@@ -255,8 +259,8 @@ export const gameConfiguration: Config[] = [
       {
         name: DYNAMIC_CAMERA,
         disabled: [
-          { type: Configs.CURSOR, values: [FREE_CURSOR] },
-          { type: Configs.STEERING, values: [EIGHT_DIRECTION_STEERING] },
+          { option: Configs.CURSOR, values: [FREE_CURSOR] },
+          { option: Configs.STEERING, values: [EIGHT_DIRECTION_STEERING] },
         ],
       },
     ],
@@ -268,7 +272,7 @@ export const gameConfiguration: Config[] = [
     values: [
       {
         name: CAR_INDEPENDENT_STEERING,
-        disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }],
+        disabled: [{ option: Configs.CURSOR, values: [NO_CURSOR] }],
         configuration: [
           {
             name: 'allowForStaticRotate',
@@ -302,8 +306,11 @@ export const gameConfiguration: Config[] = [
           },
         ],
       },
-      { name: EIGHT_DIRECTION_STEERING, disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }] },
-      { name: ROTATE_STEERING, disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }] },
+      {
+        name: EIGHT_DIRECTION_STEERING,
+        disabled: [{ option: Configs.CURSOR, values: [NO_CURSOR] }],
+      },
+      { name: ROTATE_STEERING, disabled: [{ option: Configs.CURSOR, values: [NO_CURSOR] }] },
     ],
     defaultValue: EIGHT_DIRECTION_STEERING,
   },
