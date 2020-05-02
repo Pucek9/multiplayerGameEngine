@@ -1,4 +1,6 @@
 import {
+  ACCELELATOR,
+  AIM,
   AK47,
   AMBIENT_LIGHT,
   AROUND_CURSOR,
@@ -12,51 +14,190 @@ import {
   FREE_CURSOR,
   FREE4ALL,
   GRENADE,
-  GRENADE_EXPLOSION,
   HAXBALL,
+  HEAL,
+  INCREASER,
   KNIFE,
   LAND_MINE,
   LEGS,
   NO_CURSOR,
   PISTOL,
   PLAYGROUND,
+  PULL,
+  PUSH,
   RESIZER,
+  REVERSE_BULLETS,
   ROTATE_STEERING,
   ROUND_TEAM_BATTLE,
   SHOTGUN,
+  SLOW_BULLETS,
   STADIUM,
   STATIC_CAMERA,
+  SUPER_AIM,
   TEAM_BATTLE,
+  TELEPORT,
 } from './constants';
 
-export const GameConfiguration = {
-  roomName: '',
-  type: [
-    { name: FREE4ALL, disabled: [{ type: 'teams' }, { type: 'weapons', values: [LEGS] }] },
-    { name: TEAM_BATTLE, friendlyFire: false, disabled: [{ type: 'weapons', values: [LEGS] }] },
-    {
-      name: ROUND_TEAM_BATTLE,
-      friendlyFire: false,
-      maxRound: 5,
-      maxRoundTime: 5 * 60 * 1000,
-      maxTime: 60 * 60 * 1000,
-      disabled: [{ type: 'weapons', values: [LEGS] }],
-    },
-    {
-      name: HAXBALL,
-      maxRound: 5,
-      maxRoundTime: 5 * 60 * 1000,
-      maxTime: 60 * 60 * 1000,
-      enabled: [{ type: 'weapons', values: [LEGS] }],
-    },
-  ],
-  weapons: {
-    modes: ['RANDOM_ONE', 'CHOSEN', 'CHOOSABLE'],
-    count: 1,
+export enum Configs {
+  ROOM_NAME = 'roomName',
+  TYPE = 'type',
+  PLAYER_COLOR = 'playerColor',
+  WEAPONS_MODE = 'weaponsMode',
+  WEAPONS_COUNT = 'weaponsCount',
+  WEAPONS = 'weapons',
+  POWERS_MODE = 'powersMode',
+  POWERS_COUNT = 'powersCount',
+  POWERS = 'powers',
+  MAP = 'map',
+  LIGHT = 'light',
+  CAMERA = 'camera',
+  STEERING = 'steering',
+  CURSOR = 'cursor',
+  BOTS = 'bots',
+  TEAMS = 'teams',
+  TEAMS_COUNT = 'teamsCount',
+  TEAMS_COLORS = 'teamsColor',
+}
+
+export enum Mode {
+  RANDOM_ONE = 'RANDOM_ONE',
+  CHOSEN = 'CHOSEN',
+  CHOOSABLE = 'CHOOSABLE',
+}
+
+export enum ConfigType {
+  TEXT = 'text',
+  NUMBER = 'number',
+  SELECT = 'select',
+  MULTIPLE_SELECT = 'multipleSelect',
+  TAGS = 'tags',
+  COLOR = 'color',
+  BOOLEAN = 'boolean',
+}
+
+export interface Selector {
+  type: Configs;
+  values?: Array<string>;
+}
+
+export interface Config {
+  name: Configs | string;
+  type: ConfigType;
+  values?: Array<Option | Mode>;
+  defaultValue: any;
+}
+
+export interface Option {
+  name: string;
+  configuration?: Config[];
+  disabled?: Array<Selector>;
+  enabled?: Array<Selector>;
+}
+
+export const gameConfiguration: Config[] = [
+  {
+    name: Configs.ROOM_NAME,
+    type: ConfigType.TEXT,
+    defaultValue: '',
+  },
+  {
+    name: Configs.TYPE,
+    type: ConfigType.SELECT,
+    defaultValue: FREE4ALL,
+    values: [
+      {
+        name: FREE4ALL,
+        disabled: [
+          { type: Configs.TEAMS },
+          { type: Configs.TEAMS_COUNT },
+          { type: Configs.TEAMS_COLORS },
+          { type: Configs.WEAPONS, values: [LEGS] },
+        ],
+      },
+      {
+        name: TEAM_BATTLE,
+        disabled: [{ type: Configs.WEAPONS, values: [LEGS] }, { type: Configs.PLAYER_COLOR }],
+        configuration: [
+          {
+            name: 'friendlyFire',
+            type: ConfigType.BOOLEAN,
+            defaultValue: false,
+          },
+        ],
+      },
+      {
+        name: ROUND_TEAM_BATTLE,
+        disabled: [{ type: Configs.WEAPONS, values: [LEGS] }, { type: Configs.PLAYER_COLOR }],
+        configuration: [
+          {
+            name: 'friendlyFire',
+            type: ConfigType.BOOLEAN,
+            defaultValue: false,
+          },
+          {
+            name: 'maxRound',
+            type: ConfigType.NUMBER,
+            defaultValue: 5,
+          },
+          {
+            name: 'maxRoundTime',
+            type: ConfigType.NUMBER,
+            defaultValue: 5 * 60 * 1000,
+          },
+          {
+            name: 'maxTime',
+            type: ConfigType.NUMBER,
+            defaultValue: 60 * 60 * 1000,
+          },
+        ],
+      },
+      {
+        name: HAXBALL,
+        enabled: [{ type: Configs.WEAPONS, values: [LEGS] }],
+        disabled: [{ type: Configs.PLAYER_COLOR }],
+        configuration: [
+          {
+            name: 'maxRound',
+            type: ConfigType.NUMBER,
+            defaultValue: 5,
+          },
+          {
+            name: 'maxRoundTime',
+            type: ConfigType.NUMBER,
+            defaultValue: 5 * 60 * 1000,
+          },
+          {
+            name: 'maxTime',
+            type: ConfigType.NUMBER,
+            defaultValue: 60 * 60 * 1000,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: Configs.PLAYER_COLOR,
+    type: ConfigType.COLOR,
+    values: [Mode.RANDOM_ONE, Mode.CHOOSABLE],
+    defaultValue: Mode.RANDOM_ONE,
+  },
+  {
+    name: Configs.WEAPONS_MODE,
+    type: ConfigType.SELECT,
+    values: [Mode.RANDOM_ONE, Mode.CHOSEN, Mode.CHOOSABLE],
+    defaultValue: Mode.RANDOM_ONE,
+  },
+  {
+    name: Configs.WEAPONS_COUNT,
+    type: ConfigType.NUMBER,
+    defaultValue: 1,
+  },
+  {
+    name: Configs.WEAPONS,
+    type: ConfigType.MULTIPLE_SELECT,
     values: [
       { name: AK47 },
       { name: GRENADE },
-      { name: GRENADE_EXPLOSION },
       { name: KNIFE },
       { name: LAND_MINE },
       { name: PISTOL },
@@ -64,63 +205,150 @@ export const GameConfiguration = {
       { name: SHOTGUN },
       { name: LEGS },
     ],
+    defaultValue: [KNIFE],
   },
-  powers: {
-    modes: ['RANDOM_ONE', 'CHOSEN', 'CHOOSABLE'],
-    count: 1,
+  {
+    name: Configs.POWERS_MODE,
+    type: ConfigType.SELECT,
+    values: [Mode.RANDOM_ONE, Mode.CHOSEN, Mode.CHOOSABLE],
+    defaultValue: Mode.RANDOM_ONE,
+  },
+  {
+    name: Configs.POWERS_COUNT,
+    type: ConfigType.NUMBER,
+    defaultValue: 1,
+  },
+  {
+    name: Configs.POWERS,
+    type: ConfigType.MULTIPLE_SELECT,
     values: [
-      { name: AK47 },
-      { name: GRENADE },
-      { name: GRENADE_EXPLOSION },
-      { name: KNIFE },
-      { name: LAND_MINE },
-      { name: PISTOL },
-      { name: RESIZER },
-      { name: SHOTGUN },
-      { name: LEGS },
+      { name: ACCELELATOR },
+      { name: AIM },
+      { name: HEAL },
+      { name: INCREASER },
+      { name: PULL },
+      { name: PUSH },
+      { name: REVERSE_BULLETS },
+      { name: SLOW_BULLETS },
+      { name: SUPER_AIM },
+      { name: TELEPORT },
     ],
+    defaultValue: [],
   },
-  map: {
+  {
+    name: Configs.MAP,
+    type: ConfigType.SELECT,
     values: [{ name: PLAYGROUND }, { name: BOXES }, { name: STADIUM }],
+    defaultValue: PLAYGROUND,
   },
-  light: { values: [{ name: AMBIENT_LIGHT }, { name: CURSOR_LIGHT }, { name: FLASH_LIGHT }] },
-  camera: {
+  {
+    name: Configs.LIGHT,
+    type: ConfigType.SELECT,
+    values: [{ name: AMBIENT_LIGHT }, { name: CURSOR_LIGHT }, { name: FLASH_LIGHT }],
+    defaultValue: AMBIENT_LIGHT,
+  },
+  {
+    name: Configs.CAMERA,
+    type: ConfigType.SELECT,
     values: [
       { name: STATIC_CAMERA },
       {
         name: DYNAMIC_CAMERA,
         disabled: [
-          { type: 'cursor', values: [FREE_CURSOR] },
-          { type: 'steering', values: [EIGHT_DIRECTION_STEERING] },
+          { type: Configs.CURSOR, values: [FREE_CURSOR] },
+          { type: Configs.STEERING, values: [EIGHT_DIRECTION_STEERING] },
         ],
       },
     ],
+    defaultValue: DYNAMIC_CAMERA,
   },
-  steering: {
+  {
+    name: Configs.STEERING,
+    type: ConfigType.SELECT,
     values: [
       {
         name: CAR_INDEPENDENT_STEERING,
-        allowForStaticRotate: true,
-        sensitivity: 0.05,
-        disabled: { type: 'cursor', values: [NO_CURSOR] },
+        disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }],
+        configuration: [
+          {
+            name: 'allowForStaticRotate',
+            type: ConfigType.BOOLEAN,
+            defaultValue: true,
+          },
+          {
+            name: 'sensitivity',
+            type: ConfigType.NUMBER,
+            defaultValue: 0.5,
+          },
+        ],
       },
-      { name: CAR_STEERING, allowForStaticRotate: true, sensitivity: 0.05, range: 200 },
-      { name: EIGHT_DIRECTION_STEERING, disabled: { type: 'cursor', values: [NO_CURSOR] } },
-      { name: ROTATE_STEERING, disabled: { type: 'cursor', values: [NO_CURSOR] } },
+      {
+        name: CAR_STEERING,
+        configuration: [
+          {
+            name: 'allowForStaticRotate',
+            type: ConfigType.BOOLEAN,
+            defaultValue: true,
+          },
+          {
+            name: 'sensitivity',
+            type: ConfigType.NUMBER,
+            defaultValue: 0.5,
+          },
+          {
+            name: 'range',
+            type: ConfigType.NUMBER,
+            defaultValue: 200,
+          },
+        ],
+      },
+      { name: EIGHT_DIRECTION_STEERING, disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }] },
+      { name: ROTATE_STEERING, disabled: [{ type: Configs.CURSOR, values: [NO_CURSOR] }] },
     ],
+    defaultValue: EIGHT_DIRECTION_STEERING,
   },
-  cursor: {
+  {
+    name: Configs.CURSOR,
+    type: ConfigType.SELECT,
     values: [
-      { name: AROUND_CURSOR, range: 200, sensitivity: 100 },
+      {
+        name: AROUND_CURSOR,
+        configuration: [
+          {
+            name: 'sensitivity',
+            type: ConfigType.NUMBER,
+            defaultValue: 100,
+          },
+          {
+            name: 'range',
+            type: ConfigType.NUMBER,
+            defaultValue: 200,
+          },
+        ],
+      },
       { name: FREE_CURSOR },
       { name: NO_CURSOR },
     ],
+    defaultValue: FREE_CURSOR,
   },
-  bots: {
-    count: 0,
+  {
+    name: Configs.BOTS,
+    type: ConfigType.NUMBER,
+    defaultValue: 0,
   },
-  teams: {
-    count: 0,
-    list: [],
+  {
+    name: Configs.TEAMS_COUNT,
+    type: ConfigType.NUMBER,
+    defaultValue: 0,
   },
-};
+  {
+    name: Configs.TEAMS,
+    type: ConfigType.TAGS,
+    defaultValue: [],
+  },
+  {
+    name: Configs.TEAMS_COLORS,
+    type: ConfigType.TAGS,
+    defaultValue: [],
+  },
+];
