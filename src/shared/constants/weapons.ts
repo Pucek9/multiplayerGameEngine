@@ -8,3 +8,4 @@ export const PISTOL = 'Pistol';
 export const RESIZER = 'Resizer';
 export const SHOTGUN = 'Shotgun';
 export const BALL = 'Ball';
+export const DUPA = 'Dupa';
