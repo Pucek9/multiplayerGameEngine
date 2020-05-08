@@ -33,11 +33,15 @@ export function randColor(): string {
   return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
+export function forGregory(): string {
+  return 'Hello';
+}
+
 export function times(
-  count: number,
+  counter: number,
   callback: (value: number, index?: number, array?: Array<number>) => void,
 ) {
-  Array.from(Array(count).keys()).forEach(callback);
+  Array.from(Array(counter).keys()).forEach(callback);
 }
 
 export function createArrayFilledValue<T>(length: number, value: T): Array<T> {
