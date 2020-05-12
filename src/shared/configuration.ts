@@ -57,6 +57,13 @@ export enum Configs {
   TEAMS = 'teams',
   TEAMS_COUNT = 'teamsCount',
   TEAMS_COLORS = 'teamsColor',
+  FRIENDLY_FIRE = 'friendlyFire',
+  MAX_ROUND = 'maxRound',
+  MAX_ROUND_TIME = 'maxRoundTime',
+  MAX_TIME = 'maxTime',
+  ALLOW_FOR_STATIC_ROTATE = 'allowForStaticRotate',
+  SENSIVITY = 'sensivity',
+  RANGE = 'range',
 }
 
 export enum Mode {
@@ -123,7 +130,7 @@ export const gameConfiguration: Config[] = [
         disabled: [{ option: Configs.WEAPONS, values: [LEGS] }, { config: Configs.PLAYER_COLOR }],
         configuration: [
           {
-            name: 'friendlyFire',
+            name: Configs.FRIENDLY_FIRE,
             type: ConfigType.BOOLEAN,
             defaultValue: false,
           },
@@ -134,22 +141,22 @@ export const gameConfiguration: Config[] = [
         disabled: [{ option: Configs.WEAPONS, values: [LEGS] }, { config: Configs.PLAYER_COLOR }],
         configuration: [
           {
-            name: 'friendlyFire',
+            name: Configs.FRIENDLY_FIRE,
             type: ConfigType.BOOLEAN,
             defaultValue: false,
           },
           {
-            name: 'maxRound',
+            name: Configs.MAX_ROUND,
             type: ConfigType.NUMBER,
             defaultValue: 5,
           },
           {
-            name: 'maxRoundTime',
+            name: Configs.MAX_ROUND_TIME,
             type: ConfigType.NUMBER,
             defaultValue: 5 * 60 * 1000,
           },
           {
-            name: 'maxTime',
+            name: Configs.MAX_TIME,
             type: ConfigType.NUMBER,
             defaultValue: 60 * 60 * 1000,
           },
@@ -161,17 +168,17 @@ export const gameConfiguration: Config[] = [
         disabled: [{ config: Configs.PLAYER_COLOR }],
         configuration: [
           {
-            name: 'maxRound',
+            name: Configs.MAX_ROUND,
             type: ConfigType.NUMBER,
             defaultValue: 5,
           },
           {
-            name: 'maxRoundTime',
+            name: Configs.MAX_ROUND_TIME,
             type: ConfigType.NUMBER,
             defaultValue: 5 * 60 * 1000,
           },
           {
-            name: 'maxTime',
+            name: Configs.MAX_TIME,
             type: ConfigType.NUMBER,
             defaultValue: 60 * 60 * 1000,
           },
@@ -275,12 +282,12 @@ export const gameConfiguration: Config[] = [
         disabled: [{ option: Configs.CURSOR, values: [NO_CURSOR] }],
         configuration: [
           {
-            name: 'allowForStaticRotate',
+            name: Configs.ALLOW_FOR_STATIC_ROTATE,
             type: ConfigType.BOOLEAN,
             defaultValue: true,
           },
           {
-            name: 'sensitivity',
+            name: Configs.SENSIVITY,
             type: ConfigType.NUMBER,
             defaultValue: 0.5,
           },
@@ -290,17 +297,17 @@ export const gameConfiguration: Config[] = [
         name: CAR_STEERING,
         configuration: [
           {
-            name: 'allowForStaticRotate',
+            name: Configs.ALLOW_FOR_STATIC_ROTATE,
             type: ConfigType.BOOLEAN,
             defaultValue: true,
           },
           {
-            name: 'sensitivity',
+            name: Configs.SENSIVITY,
             type: ConfigType.NUMBER,
             defaultValue: 0.5,
           },
           {
-            name: 'range',
+            name: Configs.RANGE,
             type: ConfigType.NUMBER,
             defaultValue: 200,
           },
@@ -322,12 +329,12 @@ export const gameConfiguration: Config[] = [
         name: AROUND_CURSOR,
         configuration: [
           {
-            name: 'sensitivity',
+            name: Configs.SENSIVITY,
             type: ConfigType.NUMBER,
             defaultValue: 100,
           },
           {
-            name: 'range',
+            name: Configs.RANGE,
             type: ConfigType.NUMBER,
             defaultValue: 200,
           },
