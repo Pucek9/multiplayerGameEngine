@@ -1,4 +1,4 @@
-import Updatable from '../interfaces/Updatable';
+import Updatable from '../../../interfaces/Updatable';
 import Model3D from './Model3D';
 
 export default class Item extends Model3D implements Updatable {

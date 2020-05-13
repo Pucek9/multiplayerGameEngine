@@ -6,12 +6,12 @@ import {
   SphereGeometry,
 } from 'three';
 
-import { PULL, PUSH } from '../../shared/constants';
-import { BulletModel } from '../../shared/models';
+import { PULL, PUSH } from '../../../../shared/constants';
+import { BulletModel } from '../../../../shared/models';
 
-import ScreenModel from '../interfaces/ScreenModel';
-import Updatable from '../interfaces/Updatable';
-import { optionsService } from '../store/store';
+import ScreenModel from '../../../interfaces/ScreenModel';
+import Updatable from '../../../interfaces/Updatable';
+import { optionsService } from '../../../store/store';
 import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
 

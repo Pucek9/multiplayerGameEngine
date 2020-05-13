@@ -11,12 +11,12 @@ import {
   PISTOL,
   RESIZER,
   SHOTGUN,
-} from '../../shared/constants';
-import { degToRad } from '../../shared/helpers';
-import { StaticCircularObjectModel } from '../../shared/models';
+} from '../../../../shared/constants';
+import { degToRad } from '../../../../shared/helpers';
+import { StaticCircularObjectModel } from '../../../../shared/models';
 
-import ScreenModel from '../interfaces/ScreenModel';
-import Updatable from '../interfaces/Updatable';
+import ScreenModel from '../../../interfaces/ScreenModel';
+import Updatable from '../../../interfaces/Updatable';
 
 const loader = new FBXLoader();
 const models = {
@@ -35,7 +35,7 @@ export default class Model3D extends StaticCircularObjectModel implements Updata
 
   init(screen: ScreenModel) {
     const model = models[this.type];
-    loader.load(require(`../games/balls/assets/${this.type}.fbx`), object => {
+    loader.load(require(`../../../games/balls/assets/${this.type}.fbx`), object => {
       this.object = object;
       this.object.rotation.x = degToRad(model.rotation.x);
       this.object.rotation.z = degToRad(model.rotation.z);

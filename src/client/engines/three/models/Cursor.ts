@@ -1,7 +1,7 @@
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
-import ScreenModel from '../interfaces/ScreenModel';
-import Updatable from '../interfaces/Updatable';
+import ScreenModel from '../../../interfaces/ScreenModel';
+import Updatable from '../../../interfaces/Updatable';
 export default class Cursor implements Updatable {
   public x: number;
   public y: number;

@@ -7,13 +7,13 @@ import {
   TextureLoader,
 } from 'three';
 
-import { PlayerModel } from '../../shared/models';
+import { PlayerModel } from '../../../../shared/models';
 
-import ScreenModel from '../interfaces/ScreenModel';
-import Updatable from '../interfaces/Updatable';
+import ScreenModel from '../../../interfaces/ScreenModel';
+import Updatable from '../../../interfaces/Updatable';
 import { Lighting } from './Light/Light';
 
-const head = require('../games/balls/images/head.jpg');
+const head = require('../../../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements Updatable {

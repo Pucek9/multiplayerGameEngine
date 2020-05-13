@@ -11,19 +11,19 @@ import { normalizeKey } from '../shared/helpers';
 import { ObjectModel } from '../shared/interfaces';
 import { BulletModel, PlayerModel, Team } from '../shared/models';
 
+import Bullet from './engines/three/models/Bullet';
+import Cursor from './engines/three/models/Cursor';
+import Item from './engines/three/models/Item';
+import Lights from './engines/three/models/Light/index';
+import { Lighting } from './engines/three/models/Light/Light';
+import Map from './engines/three/models/Map';
+import Player from './engines/three/models/Player';
+import StaticCircularObject from './engines/three/models/StaticCircularObject';
+import StaticRectangleObject from './engines/three/models/StaticRectangleObject';
+import Text from './engines/three/models/Text';
+import shaderService from './engines/three/ShaderService';
 import PlayerListModel from './interfaces/PlayerListModel';
 import ScreenModel from './interfaces/ScreenModel';
-import Bullet from './models/Bullet';
-import Cursor from './models/Cursor';
-import Item from './models/Item';
-import Lights from './models/Light/index';
-import { Lighting } from './models/Light/Light';
-import Map from './models/Map';
-import Player from './models/Player';
-import StaticCircularObject from './models/StaticCircularObject';
-import StaticRectangleObject from './models/StaticRectangleObject';
-import Text from './models/Text';
-import shaderService from './ShaderService';
 import { GameConfig } from './store/gamesList/state';
 import PlayerListComponent from './UserInterface/PlayersList';
 import PowersListComponent from './UserInterface/PowersList';
@@ -55,13 +55,13 @@ export default class Game {
   constructor(user: NewUser, screen: ScreenModel, gameConfig: GameConfig) {
     this.user = user;
     this.screen = screen;
-    this.light = new Lights[gameConfig.light](this.screen);
     this.teams = gameConfig.teams as Team[];
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
       : new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
+    this.light = new Lights[gameConfig.light](this.screen);
     this.text = new Text();
     this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
