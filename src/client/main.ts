@@ -5,10 +5,7 @@ import { GameInstance, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
 import { randColor } from '../shared/helpers';
 
-import { prepareTreeJSScreen } from './engines/three/scene';
 import Game from './Game';
-import ScreenModel from './interfaces/ScreenModel';
-import { GameConfig } from './store/gamesList/state';
 import { gamesListService, userService } from './store/store';
 import MenuComponent from './UserInterface/MenuComponent';
 
@@ -68,8 +65,7 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      const screen = this.prepareScreen(gameConfig);
-      this.gameState = new Game(newPlayer, screen, gameConfig);
+      this.gameState = new Game(newPlayer, gameConfig);
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();
@@ -179,10 +175,6 @@ class Main {
     window.addEventListener('wheel', this.events.wheel);
 
     window.addEventListener('resize', mainInstance.gameState.handleResize, false);
-  }
-
-  prepareScreen(gameConfig: GameConfig): ScreenModel {
-    return prepareTreeJSScreen(gameConfig);
   }
 
   run() {

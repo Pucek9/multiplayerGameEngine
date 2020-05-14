@@ -21,6 +21,7 @@ import Player from './engines/three/models/Player';
 import StaticCircularObject from './engines/three/models/StaticCircularObject';
 import StaticRectangleObject from './engines/three/models/StaticRectangleObject';
 import Text from './engines/three/models/Text';
+import { prepareTreeJSScreen } from './engines/three/scene';
 import shaderService from './engines/three/ShaderService';
 import PlayerListModel from './interfaces/PlayerListModel';
 import ScreenModel from './interfaces/ScreenModel';
@@ -52,9 +53,9 @@ export default class Game {
   cursor: Cursor;
   text: Text;
 
-  constructor(user: NewUser, screen: ScreenModel, gameConfig: GameConfig) {
+  constructor(user: NewUser, gameConfig: GameConfig) {
     this.user = user;
-    this.screen = screen;
+    this.screen = prepareTreeJSScreen(gameConfig);
     this.teams = gameConfig.teams as Team[];
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
