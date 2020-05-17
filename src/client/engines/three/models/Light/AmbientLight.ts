@@ -1,9 +1,10 @@
 import { HemisphereLight } from 'three';
 
+import { Source } from '../../../../interfaces/LightModel';
 import Cursor from '../Cursor';
-import { Lighting, Source } from './Light';
+import { BaseLight } from './BaseLight';
 
-export default class AmbientLight extends Lighting {
+export default class AmbientLight extends BaseLight {
   light: HemisphereLight;
 
   init({

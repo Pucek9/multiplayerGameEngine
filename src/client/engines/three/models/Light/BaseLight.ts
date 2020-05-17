@@ -1,24 +1,19 @@
 import { Color, Light } from 'three';
 
+import CursorModel from '../../../../interfaces/CursorModel';
+import { LightModel, Source } from '../../../../interfaces/LightModel';
 import ScreenModel from '../../../../interfaces/ScreenModel';
-import Updatable from '../../../../interfaces/Updatable';
-import Cursor from '../Cursor';
 
-export interface Source {
-  x: number;
-  y: number;
-}
-
-export abstract class Lighting implements Updatable {
+export abstract class BaseLight implements LightModel {
   light: Light;
   source?: Source;
-  dest?: Cursor;
+  dest?: CursorModel;
 
   constructor(public screen: ScreenModel) {}
 
   update() {}
 
-  abstract init?(params);
+  abstract init(params);
 
   remove() {
     this.screen.scene.remove(this.light);

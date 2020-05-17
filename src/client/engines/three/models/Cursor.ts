@@ -1,21 +1,18 @@
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
+import CursorModel from '../../../interfaces/CursorModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
-import Updatable from '../../../interfaces/Updatable';
-export default class Cursor implements Updatable {
+const cursorPNG = require('../../../games/balls/images/pointer.jpg');
+
+export default class Cursor implements CursorModel {
   public x: number;
   public y: number;
-  public object: Mesh;
   public z = 50;
+  public object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
 
-  constructor(public src: string) {
-    // this.img = new Image();
-    // this.img.src = src;
-    // this.img.material.depthTest = false;
-    // this.img.material.depthWrite = false;
-  }
+  constructor(public src: string = cursorPNG) {}
 
   setGeometry() {
     this.geometry = new SphereGeometry(10, 10, 10, 1);

@@ -1,9 +1,10 @@
 import { SpotLight } from 'three';
 
+import { Source } from '../../../../interfaces/LightModel';
 import Cursor from '../Cursor';
-import { Lighting, Source } from './Light';
+import { BaseLight } from './BaseLight';
 
-export default class FlashLight extends Lighting {
+export default class FlashLight extends BaseLight {
   light: SpotLight;
 
   init({

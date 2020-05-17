@@ -1,9 +1,9 @@
 import { PointLight } from 'three';
 
 import Cursor from '../Cursor';
-import { Lighting } from './Light';
+import { BaseLight } from './BaseLight';
 
-export default class CursorLight extends Lighting {
+export default class CursorLight extends BaseLight {
   light: PointLight;
 
   init({ cursor, intensity = 10 }: { cursor: Cursor; intensity?: number }) {

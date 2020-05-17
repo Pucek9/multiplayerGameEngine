@@ -5,7 +5,8 @@ import { GameInstance, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
 import { randColor } from '../shared/helpers';
 
-import Game from './Game';
+import Game2D from './engines/canvas/Game2D';
+import Game3D from './engines/three/Game3D';
 import { gamesListService, userService } from './store/store';
 import MenuComponent from './UserInterface/MenuComponent';
 
@@ -18,7 +19,8 @@ let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  private gameState: Game;
+  // private gameState: Game3D;
+  private gameState: Game2D;
   private events;
 
   constructor() {
@@ -65,7 +67,8 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      this.gameState = new Game(newPlayer, gameConfig);
+      // this.gameState = new Game3D(newPlayer, gameConfig);
+      this.gameState = new Game2D(newPlayer, gameConfig);
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();
@@ -78,7 +81,7 @@ class Main {
     this.menu.requestFullscreen(e, 'F11');
   }
 
-  registerEvents(gameState: Game) {
+  registerEvents(gameState: Game3D | Game2D) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));

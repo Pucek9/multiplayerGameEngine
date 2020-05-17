@@ -5,40 +5,72 @@ import {
   NewUser,
   PowersApiModel,
   WeaponsApiModel,
-} from '../shared/apiModels';
-import { CIRCLE, INVISIBLE, RECTANGLE } from '../shared/constants';
-import { normalizeKey } from '../shared/helpers';
-import { ObjectModel } from '../shared/interfaces';
-import { BulletModel, PlayerModel, Team } from '../shared/models';
+} from '../../../shared/apiModels';
+import { CIRCLE, INVISIBLE, RECTANGLE } from '../../../shared/constants';
+import { normalizeKey } from '../../../shared/helpers';
+import { ObjectModel } from '../../../shared/interfaces';
+import { BulletModel, PlayerModel, Team } from '../../../shared/models';
 
-import Bullet from './engines/three/models/Bullet';
-import Cursor from './engines/three/models/Cursor';
-import Item from './engines/three/models/Item';
-import Lights from './engines/three/models/Light/index';
-import { Lighting } from './engines/three/models/Light/Light';
-import Map from './engines/three/models/Map';
-import Player from './engines/three/models/Player';
-import StaticCircularObject from './engines/three/models/StaticCircularObject';
-import StaticRectangleObject from './engines/three/models/StaticRectangleObject';
-import Text from './engines/three/models/Text';
-import { prepareTreeJSScreen } from './engines/three/scene';
-import shaderService from './engines/three/ShaderService';
-import PlayerListModel from './interfaces/PlayerListModel';
-import ScreenModel from './interfaces/ScreenModel';
-import { GameConfig } from './store/gamesList/state';
-import PlayerListComponent from './UserInterface/PlayersList';
-import PowersListComponent from './UserInterface/PowersList';
-import TeamPlayerListComponent from './UserInterface/TeamPlayersList';
-import WeaponsListComponent from './UserInterface/WeaponsList';
+import CameraModel from '../../interfaces/CameraModel';
+import { LightModel } from '../../interfaces/LightModel';
+import PlayerListModel from '../../interfaces/PlayerListModel';
+import ScreenModel from '../../interfaces/ScreenModel';
+import { GameConfig } from '../../store/gamesList/state';
+import PlayerListComponent from '../../UserInterface/PlayersList';
+import PowersListComponent from '../../UserInterface/PowersList';
+import TeamPlayerListComponent from '../../UserInterface/TeamPlayersList';
+import WeaponsListComponent from '../../UserInterface/WeaponsList';
+// import Camera from '../three/models/Camera';
+// import shaderService from '../three/ShaderService';
+import Bullet from './models/Bullet';
+import { Camera2D } from './models/Camera2D';
+import Cleaner from './models/Cleaner';
+import Cursor from './models/Cursor';
+import Item from './models/Item';
+import Map from './models/Map';
+import Player from './models/Player';
+import StaticCircularObject from './models/StaticCircularObject';
+import StaticRectangleObject from './models/StaticRectangleObject';
+import Text from './models/Text';
+// import { prepareCanvasScreen } from './scene';
 
-const cursorPNG = require('./games/balls/images/pointer.jpg');
+const cursorPNG = require('../../games/balls/images/pointer.jpg');
 
-export default class Game {
+export class CanvasRenderer {
+  public domElement: HTMLCanvasElement;
+  public ctx: CanvasRenderingContext2D;
+
+  constructor() {
+    this.domElement = document.createElement('canvas');
+    this.domElement.setAttribute('id', 'canvas');
+    this.setSize(window.innerWidth - 10, window.innerHeight - 10);
+    this.ctx = this.domElement.getContext('2d');
+  }
+
+  setSize(width: number, height: number) {
+    this.domElement.setAttribute('width', width.toString());
+    this.domElement.setAttribute('height', height.toString());
+  }
+}
+export function prepareCanvasScreen(gameConfig: GameConfig): ScreenModel {
+  const scene = new Set();
+  const renderer = new CanvasRenderer();
+  const camera = new Camera2D();
+  document.body.appendChild(renderer.domElement);
+
+  return {
+    scene,
+    renderer,
+    camera,
+  };
+}
+
+export default class Game2D {
   user: NewUser;
   screen: ScreenModel;
   currentPlayer: Player;
-  // camera: CameraModel;
-  light: Lighting;
+  camera: CameraModel;
+  light: LightModel;
   playersListComponent: PlayerListComponent | TeamPlayerListComponent;
   weaponsListComponent: WeaponsListComponent;
   powersListComponent: PowersListComponent;
@@ -52,23 +84,26 @@ export default class Game {
   map: Map;
   cursor: Cursor;
   text: Text;
+  cleaner: Cleaner;
 
   constructor(user: NewUser, gameConfig: GameConfig) {
     this.user = user;
-    this.screen = prepareTreeJSScreen(gameConfig);
+    this.screen = prepareCanvasScreen(gameConfig);
     this.teams = gameConfig.teams as Team[];
     this.playersListComponent = this.teams
       ? new TeamPlayerListComponent()
       : new PlayerListComponent();
     this.weaponsListComponent = new WeaponsListComponent();
     this.powersListComponent = new PowersListComponent();
-    this.light = new Lights[gameConfig.light](this.screen);
+    // this.light = new Lights[gameConfig.light](this.screen);
     this.text = new Text();
     this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
+    this.cleaner = new Cleaner();
     this.map.init(this.screen);
     this.text.init(this.screen);
     this.cursor.init(this.screen);
+    this.cleaner.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
     this.powersListComponent.show();
@@ -90,16 +125,19 @@ export default class Game {
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
-      this.screen.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
-      this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
-      this.currentPlayer.setLight(this.light);
+      this.screen.camera.init({
+        activePlayer: this.currentPlayer,
+        cursor: this.cursor,
+        map: this.map,
+      });
+      // this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
+      // this.currentPlayer.setLight(this.light);
     }
   }
 
   handleResize = () => {
-    if (this.screen?.camera?.object) {
-      this.screen.camera.object.aspect = window.innerWidth / window.innerHeight;
-      this.screen.camera.object.updateProjectionMatrix();
+    if (this.screen?.camera) {
+      this.screen.camera.handleResize();
       this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     }
   };
@@ -156,15 +194,15 @@ export default class Game {
     this.players.forEach(player => {
       const foundPlayer = _players.find(_player => player.id === _player.id);
       if (foundPlayer?.id === this.currentPlayer?.id) {
-        const diff = {
-          x: player.x - foundPlayer.x,
-          y: player.y - foundPlayer.y,
-        };
-        if (foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
-          shaderService.turnOnShaders();
-        } else {
-          shaderService.turnOffShaders();
-        }
+        // const diff = {
+        //   x: player.x - foundPlayer.x,
+        //   y: player.y - foundPlayer.y,
+        // };
+        // if (foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
+        //   shaderService.turnOnShaders();
+        // } else {
+        //   shaderService.turnOffShaders();
+        // }
 
         this.cursor.x = foundPlayer.cursor.x;
         this.cursor.y = foundPlayer.cursor.y;
@@ -176,7 +214,7 @@ export default class Game {
         const size = player.size;
         Object.assign(player, foundPlayer);
         if (player.size !== size) {
-          player.updateObjectGeometry();
+          // player.update();
         }
       }
     });
@@ -189,10 +227,10 @@ export default class Game {
         const size = bullet.size;
         Object.assign(bullet, foundBullet);
         if (bullet.size !== size) {
-          bullet.updateObjectGeometry();
+          // bullet.update();
         }
       } else {
-        bullet.remove(this.screen);
+        bullet.remove();
         this.bullets.splice(this.bullets.indexOf(bullet), 1);
       }
     });
@@ -217,9 +255,9 @@ export default class Game {
 
   appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
     newItemGenerators.forEach((newItemGenerator: ItemGeneratorAPI) => {
-      const itemGenerator = new Item(newItemGenerator);
-      itemGenerator.init(this.screen);
-      this.itemGenerators.push(itemGenerator);
+      // const itemGenerator = new Item(newItemGenerator);
+      // itemGenerator.init(this.screen);
+      // this.itemGenerators.push(itemGenerator);
     });
   }
 
@@ -271,11 +309,14 @@ export default class Game {
   updateObjects() {
     if (this.currentPlayer) {
       [
+        this.cleaner,
         this.screen.camera,
+        this.map,
+        ...this.staticObjects,
         ...this.bullets,
         ...this.players,
         this.cursor,
-        this.light,
+        // this.light,
         this.text,
       ].forEach(object => object.update());
     }
@@ -284,7 +325,13 @@ export default class Game {
   render() {
     // if (this.screen.camera?.object) {
     // this.screen.renderer.render(this.screen.scene, this.screen.camera.object);
-    this.screen.composer.render();
+
+    // this.screen.composer.render();
+    this.update();
+    // this.map.update();
+    // this.cursor.update();
+    // this.players.forEach(player => player.update());
+    // this.cleaner.update();
     // }
   }
 

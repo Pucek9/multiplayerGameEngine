@@ -2,9 +2,9 @@ import { PerspectiveCamera, Vector3 } from 'three';
 
 import { PlayerModel } from '../../../../../shared/models';
 
+import CameraModel from '../../../../interfaces/CameraModel';
+import Cursor from '../../../../interfaces/CursorModel';
 import Updatable from '../../../../interfaces/Updatable';
-import Cursor from '../Cursor';
-import CameraModel from './CameraModel';
 
 export default class DynamicCamera implements Updatable, CameraModel {
   public object: PerspectiveCamera;
@@ -43,5 +43,10 @@ export default class DynamicCamera implements Updatable, CameraModel {
 
   remove() {
     this.object.remove();
+  }
+
+  handleResize() {
+    this.object.aspect = window.innerWidth / window.innerHeight;
+    this.object.updateProjectionMatrix();
   }
 }

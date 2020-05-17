@@ -2,8 +2,8 @@ import { PerspectiveCamera } from 'three';
 
 import { PlayerModel } from '../../../../../shared/models';
 
+import CameraModel from '../../../../interfaces/CameraModel';
 import Updatable from '../../../../interfaces/Updatable';
-import CameraModel from './CameraModel';
 
 export default class StaticCamera implements Updatable, CameraModel {
   public object: PerspectiveCamera;
@@ -33,5 +33,10 @@ export default class StaticCamera implements Updatable, CameraModel {
 
   remove() {
     this.object.remove();
+  }
+
+  handleResize() {
+    this.object.aspect = window.innerWidth / window.innerHeight;
+    this.object.updateProjectionMatrix();
   }
 }

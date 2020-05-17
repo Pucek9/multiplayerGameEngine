@@ -11,7 +11,7 @@ import { PlayerModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
-import { Lighting } from './Light/Light';
+import { BaseLight } from './Light/Light';
 
 const head = require('../../../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
@@ -19,14 +19,14 @@ const texture = new TextureLoader().load(head);
 export default class Player extends PlayerModel implements Updatable {
   public object: Mesh;
   public objectLegs: Mesh;
-  private light: Lighting;
+  private light: BaseLight;
   private screen: ScreenModel;
   private geometry: SphereGeometry;
   private geometryLegs: BoxGeometry;
   private material: MeshPhongMaterial;
   private initiated = false;
 
-  setLight(light: Lighting) {
+  setLight(light: BaseLight) {
     this.light = light;
   }
 
