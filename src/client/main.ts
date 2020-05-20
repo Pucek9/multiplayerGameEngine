@@ -19,8 +19,8 @@ let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  // private gameState: Game3D;
-  private gameState: Game2D;
+  private gameState: Game2D | Game3D;
+  // private gameState: Game2D;
   private events;
 
   constructor() {
@@ -67,8 +67,8 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      // this.gameState = new Game3D(newPlayer, gameConfig);
-      this.gameState = new Game2D(newPlayer, gameConfig);
+      this.gameState = new Game3D(newPlayer, gameConfig);
+      // this.gameState = new Game2D(newPlayer, gameConfig);
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();

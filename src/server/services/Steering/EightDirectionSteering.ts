@@ -15,11 +15,11 @@ export class EightDirectionSteering extends Steering {
 
     if (up && !down && !left && !right) {
       direction.dx = 0;
-      direction.dy = player.speed;
+      direction.dy = -player.speed;
     }
     if (!up && down && !left && !right) {
       direction.dx = 0;
-      direction.dy = -player.speed;
+      direction.dy = player.speed;
     }
     if (!up && !down && left && !right) {
       direction.dx = -player.speed;
@@ -31,20 +31,20 @@ export class EightDirectionSteering extends Steering {
     }
     if (up && !down && left && !right) {
       direction.dx = -ZERO_SEVEN * player.speed;
-      direction.dy = ZERO_SEVEN * player.speed;
+      direction.dy = -ZERO_SEVEN * player.speed;
     }
     if (up && !down && !left && right) {
       direction.dx = ZERO_SEVEN * player.speed;
-      direction.dy = ZERO_SEVEN * player.speed;
+      direction.dy = -ZERO_SEVEN * player.speed;
     }
 
     if (!up && down && left && !right) {
       direction.dx = -ZERO_SEVEN * player.speed;
-      direction.dy = -ZERO_SEVEN * player.speed;
+      direction.dy = ZERO_SEVEN * player.speed;
     }
     if (!up && down && !left && right) {
       direction.dx = ZERO_SEVEN * player.speed;
-      direction.dy = -ZERO_SEVEN * player.speed;
+      direction.dy = ZERO_SEVEN * player.speed;
     }
     const lastDirection = { ...player.direction };
     player.direction = direction;

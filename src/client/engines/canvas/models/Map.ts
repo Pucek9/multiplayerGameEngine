@@ -31,10 +31,6 @@ export default class Map implements Updatable, MapModel {
   //   );
   // }
   update() {
-    this.screen.renderer.ctx.drawImage(
-      this.img,
-      this.screen.renderer.domElement.width / 2 - this.screen.camera.x,
-      this.screen.renderer.domElement.height / 2 - this.screen.camera.y,
-    );
+    this.screen.renderer.ctx.drawImage(this.img, -this.screen.camera.x, -this.screen.camera.y);
   }
 }
