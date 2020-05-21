@@ -11,7 +11,7 @@ export default class StaticCamera implements Updatable, CameraModel {
 
   constructor() {
     this.object = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    this.object.position.z = 400;
+    this.object.position.z = 1000;
   }
 
   init({ activePlayer }: { activePlayer: PlayerModel }) {
@@ -24,6 +24,7 @@ export default class StaticCamera implements Updatable, CameraModel {
     } else {
       this.object.position.z -= 10;
     }
+    console.log(this.object.position.z);
   }
 
   update() {
