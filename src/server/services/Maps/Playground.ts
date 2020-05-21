@@ -8,6 +8,7 @@ import {
   GREEN,
   GRENADE,
   LAND_MINE,
+  PINK,
   PISTOL,
   PLAYGROUND,
   PURPLE,
@@ -112,7 +113,7 @@ export default class Playground extends GameMap {
         width: 400,
         height: 400,
         depth: 10,
-        color: 'pink',
+        color: PINK,
       }),
       new StaticRectangleObject({
         x: -400,
@@ -121,7 +122,7 @@ export default class Playground extends GameMap {
         width: 300,
         height: 300,
         depth: 10,
-        color: 'pink',
+        color: PINK,
         deg: -70,
       }),
       new StaticRectangleObject({

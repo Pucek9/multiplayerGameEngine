@@ -23,14 +23,13 @@ export default class Map implements Updatable, MapModel {
     this.screen.scene.add(this);
   }
 
-  // update() {
-  //   this.screen.renderer.ctx.drawImage(
-  //     this.img,
-  //     this.screen.renderer.domElement.width,
-  //     this.screen.renderer.domElement.height,
-  //   );
-  // }
   update() {
-    this.screen.renderer.ctx.drawImage(this.img, -this.screen.camera.x, -this.screen.camera.y);
+    this.screen.renderer.ctx.drawImage(
+      this.img,
+      -this.screen.camera.x,
+      this.screen.camera.y,
+      this.width,
+      this.height,
+    );
   }
 }

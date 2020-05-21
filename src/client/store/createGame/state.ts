@@ -35,7 +35,7 @@ export const initialState: CreateGameState = {
   type: 'Free4all',
   map: 'Playground',
   camera: 'StaticCamera',
-  light: 'FlashLight',
+  light: 'AmbientLight',
   steering: 'eightDirectionSteering',
   cursor: 'freeCursor',
   botsCount: 0,

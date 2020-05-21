@@ -27,7 +27,7 @@ export default class Bullet extends BulletModel implements Updatable {
     renderer.ctx.beginPath();
     renderer.ctx.arc(
       renderer.domElement.width / 2 - (camera.x - this.x),
-      renderer.domElement.height / 2 - (camera.y - this.y),
+      renderer.domElement.height / 2 + (camera.y - this.y),
       2,
       0,
       2 * Math.PI,

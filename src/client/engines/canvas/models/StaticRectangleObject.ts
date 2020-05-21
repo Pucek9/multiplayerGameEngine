@@ -30,9 +30,9 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     renderer.ctx.fillStyle = this.color;
     renderer.ctx.fillRect(
       renderer.domElement.width / 2 - (camera.x - this.x),
-      renderer.domElement.height / 2 - (camera.y - this.y),
+      renderer.domElement.height / 2 + (camera.y - this.y),
       this.width,
-      this.height,
+      -this.height,
     );
   }
 
@@ -66,12 +66,12 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
 
     const angleOfDeg = this.deg,
       x = this.screen.renderer.domElement.width / 2 - (this.screen.camera.x - this.x),
-      y = this.screen.renderer.domElement.height / 2 - (this.screen.camera.y - this.y),
+      y = this.screen.renderer.domElement.height / 2 + (this.screen.camera.y - this.y),
       centerX = x + this.width / 2,
-      centerY = y + this.height / 2,
+      centerY = y + -this.height / 2,
       w = this.width,
-      h = this.height,
-      angleOfRad = degToRad(angleOfDeg);
+      h = -this.height,
+      angleOfRad = -degToRad(angleOfDeg);
 
     const leftTop = [x, y],
       rightTop = [x + w, y],

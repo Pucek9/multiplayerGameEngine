@@ -23,7 +23,7 @@ export default class Cursor implements Updatable {
     this.screen.renderer.ctx.drawImage(
       this.img,
       this.screen.renderer.domElement.width / 2 - (this.screen.camera.x - this.x),
-      this.screen.renderer.domElement.height / 2 - (this.screen.camera.y - this.y),
+      this.screen.renderer.domElement.height / 2 + (this.screen.camera.y - this.y),
     );
   }
 }

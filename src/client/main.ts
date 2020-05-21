@@ -67,8 +67,11 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      this.gameState = new Game3D(newPlayer, gameConfig);
-      // this.gameState = new Game2D(newPlayer, gameConfig);
+      if (userState.nick === '2d') {
+        this.gameState = new Game2D(newPlayer, gameConfig);
+      } else {
+        this.gameState = new Game3D(newPlayer, gameConfig);
+      }
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();
