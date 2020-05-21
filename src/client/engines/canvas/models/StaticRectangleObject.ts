@@ -13,7 +13,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    screen.scene.add(this);
+    screen.scene.add(this.id);
   }
 
   update() {

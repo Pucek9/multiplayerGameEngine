@@ -11,12 +11,12 @@ export default class Bullet extends BulletModel implements Updatable {
   init(screen: ScreenModel) {
     const options = optionsService.getState();
     this.screen = screen;
-    screen.scene.add(this);
+    screen.scene.add(this.id);
     this.update();
   }
 
   remove() {
-    this.screen.scene.delete(this);
+    this.screen.scene.delete(this.id);
   }
 
   update() {

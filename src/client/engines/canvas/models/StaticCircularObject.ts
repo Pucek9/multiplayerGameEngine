@@ -10,7 +10,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    screen.scene.add(this);
+    screen.scene.add(this.id);
   }
 
   update() {

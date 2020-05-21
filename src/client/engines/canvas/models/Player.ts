@@ -35,7 +35,7 @@ export default class Player extends PlayerModel implements Updatable {
   setAsCurrent() {}
 
   isOnScene() {
-    return this.screen.scene.has(this);
+    return this.screen.scene.has(this.id);
   }
 
   isAlive() {
@@ -43,7 +43,7 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   addToScene() {
-    this.screen.scene.add(this);
+    this.screen.scene.add(this.id);
     // this.screen.scene.add(this.objectLegs);
   }
 
@@ -79,7 +79,7 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   remove() {
-    this.screen.scene.delete(this);
+    this.screen.scene.delete(this.id);
     // this.screen.scene.remove(this.objectLegs);
   }
 }

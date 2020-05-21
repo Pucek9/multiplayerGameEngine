@@ -255,9 +255,9 @@ export default class Game2D {
 
   appendItemGenerators(newItemGenerators: ItemGeneratorAPI[]) {
     newItemGenerators.forEach((newItemGenerator: ItemGeneratorAPI) => {
-      // const itemGenerator = new Item(newItemGenerator);
-      // itemGenerator.init(this.screen);
-      // this.itemGenerators.push(itemGenerator);
+      const itemGenerator = new Item(newItemGenerator);
+      itemGenerator.init(this.screen);
+      this.itemGenerators.push(itemGenerator);
     });
   }
 
@@ -315,6 +315,7 @@ export default class Game2D {
         ...this.staticObjects,
         ...this.bullets,
         ...this.players,
+        ...this.itemGenerators,
         this.cursor,
         // this.light,
         this.text,

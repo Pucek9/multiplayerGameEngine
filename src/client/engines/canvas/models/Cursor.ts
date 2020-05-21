@@ -16,7 +16,7 @@ export default class Cursor implements Updatable {
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    this.screen.scene.add(this);
+    this.screen.scene.add(this.id);
   }
 
   update() {

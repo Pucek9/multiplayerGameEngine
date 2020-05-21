@@ -53,14 +53,14 @@ export default class Text implements Updatable {
   }
 
   isOnScene() {
-    return this.screen.scene.has(this.object);
+    return this.screen.scene.has(this.id);
   }
 
   addToScene() {
-    this.screen.scene.add(this.object);
+    this.screen.scene.add(this.id);
   }
 
   remove() {
-    this.screen.scene.delete(this.object);
+    this.screen.scene.delete(this.id);
   }
 }
