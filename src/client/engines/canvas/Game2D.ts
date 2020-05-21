@@ -227,7 +227,7 @@ export default class Game2D {
         const size = bullet.size;
         Object.assign(bullet, foundBullet);
         if (bullet.size !== size) {
-          // bullet.update();
+          bullet.update();
         }
       } else {
         bullet.remove();

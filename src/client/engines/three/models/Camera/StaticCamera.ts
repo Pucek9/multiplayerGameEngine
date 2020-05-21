@@ -24,7 +24,6 @@ export default class StaticCamera implements Updatable, CameraModel {
     } else {
       this.object.position.z -= 10;
     }
-    console.log(this.object.position.z);
   }
 
   update() {

@@ -1,6 +1,3 @@
-import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
-
-import { degToRad } from '../../../../shared/helpers';
 import { StaticCircularObjectModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -9,12 +6,11 @@ import Updatable from '../../../interfaces/Updatable';
 const cumin = require('../../../games/balls/images/cumin.jpg');
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements Updatable {
-  protected object: Mesh;
   public screen: ScreenModel;
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    screen.scene.add(this.object);
+    screen.scene.add(this);
   }
 
   update() {
