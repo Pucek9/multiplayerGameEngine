@@ -24,6 +24,9 @@ export default class Bullet extends BulletModel implements Updatable {
     const camera = this.screen.camera;
     renderer.ctx.save();
     renderer.ctx.fillStyle = this.color;
+    if (this.transparency) {
+      renderer.ctx.globalAlpha = 0.2;
+    }
     renderer.ctx.beginPath();
     renderer.ctx.arc(
       renderer.domElement.width / 2 - (camera.x - this.x),

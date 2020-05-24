@@ -54,6 +54,9 @@ export default class Player extends PlayerModel implements Updatable {
     const camera = this.screen.camera;
     renderer.ctx.save();
     renderer.ctx.fillStyle = this.color;
+    if (!this.isAlive()) {
+      renderer.ctx.globalAlpha = 0.2;
+    }
     renderer.ctx.beginPath();
     renderer.ctx.arc(
       renderer.domElement.width / 2 - (camera.x - this.x),

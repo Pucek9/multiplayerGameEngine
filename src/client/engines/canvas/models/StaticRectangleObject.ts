@@ -27,6 +27,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
   renderUnRotated() {
     const renderer = this.screen.renderer;
     const camera = this.screen.camera;
+    renderer.ctx.save();
     renderer.ctx.fillStyle = this.color;
     renderer.ctx.fillRect(
       renderer.domElement.width / 2 - (camera.x - this.x),
@@ -34,6 +35,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
       this.width,
       -this.height,
     );
+    renderer.ctx.restore();
   }
 
   renderRotated() {
