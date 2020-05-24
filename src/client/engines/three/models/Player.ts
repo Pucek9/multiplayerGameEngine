@@ -59,7 +59,7 @@ export default class Player extends PlayerModel implements Updatable {
       this.object.name = this.id;
       this.object.position.z = this.size;
       this.object.receiveShadow = true;
-      this.die();
+      this.setAsDied();
       this.addToScene();
       this.initiated = true;
     }
@@ -114,9 +114,9 @@ export default class Player extends PlayerModel implements Updatable {
   update() {
     if (this.isInitiated()) {
       if (!this.object.material.transparent && !this.isAlive()) {
-        this.die();
+        this.setAsDied();
       } else if (this.object.material.transparent && this.isAlive()) {
-        this.revive();
+        this.setAsAlive();
       }
       this.updateBody();
     }
@@ -126,7 +126,7 @@ export default class Player extends PlayerModel implements Updatable {
     this.screen.scene.remove(this.object);
   }
 
-  die() {
+  setAsDied() {
     this.light?.setColor(0xff0000); //red
     this.object.material.transparent = true;
     this.objectLegs.material.transparent = true;
@@ -138,7 +138,7 @@ export default class Player extends PlayerModel implements Updatable {
     // this.screen.scene.remove(this.objectLegs);
   }
 
-  revive() {
+  setAsAlive() {
     this.light?.setColor(0xffffff); //white
     this.object.material.transparent = false;
     this.objectLegs.material.transparent = false;
