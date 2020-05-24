@@ -2,7 +2,7 @@ import {
   BoxGeometry,
   BufferGeometry,
   Mesh,
-  MeshPhongMaterial,
+  MeshPhongMaterial, MeshPhysicalMaterial,
   SphereGeometry,
   TextureLoader,
 } from 'three';
@@ -11,7 +11,7 @@ import { PlayerModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
-import { BaseLight } from './Light/Light';
+import { BaseLight } from './Light/BaseLight';
 
 const head = require('../../../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
@@ -42,9 +42,10 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   setMaterial() {
-    this.material = new MeshPhongMaterial({
+    this.material = new MeshPhysicalMaterial({
       map: texture,
       color: this.color,
+      transparency: 1;
     });
   }
 
@@ -58,6 +59,8 @@ export default class Player extends PlayerModel implements Updatable {
       this.object.name = this.id;
       this.object.position.z = this.size;
       this.object.receiveShadow = true;
+      this.die();
+      this.addToScene();
       this.initiated = true;
     }
   }
@@ -96,20 +99,52 @@ export default class Player extends PlayerModel implements Updatable {
     this.objectLegs.rotation.z = Math.atan2(this.direction.dy, this.direction.dx);
   }
 
+  // update() {
+  //   if (this.isOnScene() && !this.isAlive()) {
+  //     this.remove();
+  //     this.light?.setColor(0xff0000); //red
+  //   } else if (!this.isOnScene() && this.isAlive()) {
+  //     this.addToScene();
+  //     this.light?.setColor(0xffffff); //white
+  //   } else {
+  //     this.updateBody();
+  //   }
+  // }
+
   update() {
-    if (this.isOnScene() && !this.isAlive()) {
-      this.remove();
-      this.light?.setColor(0xff0000);
-    } else if (!this.isOnScene() && this.isAlive()) {
-      this.addToScene();
-      this.light?.setColor(0xffffff);
-    } else {
+    if (this.isInitiated()) {
+      if (!this.object.material.transparent && !this.isAlive()) {
+        this.die();
+      } else if (this.object.material.transparent && this.isAlive()) {
+        this.revive();
+      }
       this.updateBody();
     }
   }
 
   remove() {
     this.screen.scene.remove(this.object);
+  }
+
+  die() {
+    this.light?.setColor(0xff0000); //red
+    this.object.material.transparent = true;
+    this.objectLegs.material.transparent = true;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    this.object.material.transparency = 0.8;
+    this.objectLegs.material.transparency = 0.8;
+    // this.screen.scene.remove(this.object);
     // this.screen.scene.remove(this.objectLegs);
+  }
+
+  revive() {
+    this.light?.setColor(0xffffff); //white
+    this.object.material.transparent = false;
+    this.objectLegs.material.transparent = false;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // this.object.material.transparency = 1;
+    // this.objectLegs.material.transparency = 1;
   }
 }

@@ -27,7 +27,7 @@ export default class Ak47 extends Weapon {
   shoot(bulletData: BulletData, game) {
     const interval = setInterval(() => {
       const owner = game.getPlayer(bulletData.owner.id);
-      if (owner.isMouseDown()) {
+      if (owner?.isMouseDown()) {
         if (this.bulletsInMagazine >= this.shootBulletsCount) {
           this.bulletsInMagazine -= this.shootBulletsCount;
           if (this.bulletsInMagazine < this.shootBulletsCount) {

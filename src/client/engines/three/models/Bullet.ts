@@ -26,23 +26,16 @@ export default class Bullet extends BulletModel implements Updatable {
   }
 
   setMaterial() {
+    this.material = new MeshPhysicalMaterial({
+      color: this.color,
+      // @ts-ignore
+      transparency: 1,
+    });
     if (this.transparency) {
-      this.material = new MeshPhysicalMaterial({
-        color: this.color,
-        metalness: 0,
-        roughness: 0,
-        // alphaMap: texture,
-        alphaTest: 0.5,
-        // envMap: hdrCubeRenderTarget.texture,
-        envMapIntensity: 1,
-        depthTest: false,
-        transparent: true,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        transparency: 0.8,
-      });
-    } else {
-      this.material = new MeshBasicMaterial({ color: this.color });
+      this.material.transparent = true;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      this.material.transparency = 0.8;
     }
   }
 
