@@ -24,6 +24,7 @@ export default class Player extends PlayerModel implements Updatable {
   private geometry: SphereGeometry;
   private geometryLegs: BoxGeometry;
   private material: MeshPhysicalMaterial;
+  private current: boolean;
   private initiated = false;
 
   setLight(light: BaseLight) {
@@ -70,7 +71,7 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   setAsCurrent() {
-    this.object.castShadow = false;
+    this.current = true;
   }
 
   isOnScene() {
@@ -87,7 +88,7 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   setAsEnemy() {
-    this.object.castShadow = true;
+    this.current = false;
   }
 
   updateBody() {
@@ -127,6 +128,7 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   setAsDied() {
+    this.object.castShadow = false;
     this.light?.setColor(0xff0000); //red
     this.object.material.transparent = true;
     this.objectLegs.material.transparent = true;
@@ -139,6 +141,9 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   setAsAlive() {
+    if (!this.current) {
+      this.object.castShadow = true;
+    }
     this.light?.setColor(0xffffff); //white
     this.object.material.transparent = false;
     this.objectLegs.material.transparent = false;
