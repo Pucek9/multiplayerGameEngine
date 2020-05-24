@@ -2,7 +2,7 @@ import {
   BoxGeometry,
   BufferGeometry,
   Mesh,
-  MeshPhongMaterial, MeshPhysicalMaterial,
+  MeshPhysicalMaterial,
   SphereGeometry,
   TextureLoader,
 } from 'three';
@@ -23,7 +23,7 @@ export default class Player extends PlayerModel implements Updatable {
   private screen: ScreenModel;
   private geometry: SphereGeometry;
   private geometryLegs: BoxGeometry;
-  private material: MeshPhongMaterial;
+  private material: MeshPhysicalMaterial;
   private initiated = false;
 
   setLight(light: BaseLight) {
@@ -45,7 +45,7 @@ export default class Player extends PlayerModel implements Updatable {
     this.material = new MeshPhysicalMaterial({
       map: texture,
       color: this.color,
-      transparency: 1;
+      transparency: 1,
     });
   }
 
