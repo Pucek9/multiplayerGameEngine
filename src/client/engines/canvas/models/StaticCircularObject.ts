@@ -3,30 +3,38 @@ import { StaticCircularObjectModel } from '../../../../shared/models';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const cumin = require('../../../games/balls/images/cumin.jpg');
-
 export default class StaticCircularObject extends StaticCircularObjectModel implements Updatable {
   public screen: ScreenModel;
+  private img: HTMLImageElement;
+  private patt: CanvasPattern;
 
   init(screen: ScreenModel) {
     this.screen = screen;
     screen.scene.add(this.id);
+    this.img = new Image();
+    this.img.src = require('../../../games/balls/images/cumin.jpg');
+    this.img.onload = () => {
+      this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
+    };
   }
 
   update() {
-    const renderer = this.screen.renderer;
+    const ctx = this.screen.renderer.ctx;
     const camera = this.screen.camera;
-    renderer.ctx.save();
-    renderer.ctx.fillStyle = this.color;
-    renderer.ctx.beginPath();
-    renderer.ctx.arc(
-      renderer.domElement.width / 2 - (camera.x - this.x),
-      renderer.domElement.height / 2 + (camera.y - this.y),
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(
+      this.screen.renderer.domElement.width / 2 - (camera.x - this.x),
+      this.screen.renderer.domElement.height / 2 + (camera.y - this.y),
       this.size,
       0,
       2 * Math.PI,
     );
-    renderer.ctx.fill();
-    renderer.ctx.restore();
+    ctx.fillStyle = this.patt;
+    ctx.fill();
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.restore();
   }
 }

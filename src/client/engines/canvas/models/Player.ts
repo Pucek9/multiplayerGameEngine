@@ -25,7 +25,10 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isInitiated()) {
       this.img = new Image();
       this.img.src = head;
-      this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
+      // this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
+      this.img.onload = () => {
+        this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
+      };
       this.initiated = true;
     }
   }

@@ -16,7 +16,9 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     screen.scene.add(this.id);
     this.img = new Image();
     this.img.src = require('../../../games/balls/images/box.png');
-    this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
+    this.img.onload = () => {
+      this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
+    };
   }
 
   update() {
@@ -37,8 +39,10 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
       this.width,
       -this.height,
     );
+    renderer.ctx.fillStyle = this.patt;
+    renderer.ctx.fill();
+    renderer.ctx.globalAlpha = 0.5;
     renderer.ctx.fillStyle = this.color;
-    // renderer.ctx.fillStyle = this.patt;
     renderer.ctx.fill();
     renderer.ctx.restore();
   }
@@ -47,8 +51,10 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     const ctx = this.screen.renderer.ctx;
     this.getPathOfShape();
     ctx.save();
+    ctx.fillStyle = this.patt;
+    ctx.fill();
+    ctx.globalAlpha = 0.5;
     ctx.fillStyle = this.color;
-    // ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.restore();
   }
