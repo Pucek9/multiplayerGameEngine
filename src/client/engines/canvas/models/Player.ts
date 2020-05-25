@@ -11,6 +11,8 @@ export default class Player extends PlayerModel implements Updatable {
   // public objectLegs: Mesh;
   // private light: Lighting;
   private screen: ScreenModel;
+  private img: HTMLImageElement;
+  private patt: CanvasPattern;
 
   private initiated = false;
 
@@ -21,9 +23,9 @@ export default class Player extends PlayerModel implements Updatable {
   init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      // this.object.name = this.id;
-      // this.object.position.z = this.size;
-      // this.object.receiveShadow = true;
+      this.img = new Image();
+      this.img.src = head;
+      this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
       this.initiated = true;
     }
   }
@@ -53,7 +55,6 @@ export default class Player extends PlayerModel implements Updatable {
     const renderer = this.screen.renderer;
     const camera = this.screen.camera;
     renderer.ctx.save();
-    renderer.ctx.fillStyle = this.color;
     if (!this.isAlive()) {
       renderer.ctx.globalAlpha = 0.2;
     }
@@ -65,6 +66,8 @@ export default class Player extends PlayerModel implements Updatable {
       0,
       2 * Math.PI,
     );
+    renderer.ctx.fillStyle = this.color;
+    // renderer.ctx.fillStyle = this.patt;
     renderer.ctx.fill();
     renderer.ctx.restore();
   }

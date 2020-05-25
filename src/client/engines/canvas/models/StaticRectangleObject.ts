@@ -6,14 +6,17 @@ import { StaticRectangleObjectModel } from '../../../../shared/models';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const box = require('../../../games/balls/images/box.png');
-
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
   screen: ScreenModel;
+  private img: HTMLImageElement;
+  private patt: CanvasPattern;
 
   init(screen: ScreenModel) {
     this.screen = screen;
     screen.scene.add(this.id);
+    this.img = new Image();
+    this.img.src = require('../../../games/balls/images/box.png');
+    this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
   }
 
   update() {
@@ -28,13 +31,15 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     const renderer = this.screen.renderer;
     const camera = this.screen.camera;
     renderer.ctx.save();
-    renderer.ctx.fillStyle = this.color;
-    renderer.ctx.fillRect(
+    renderer.ctx.rect(
       renderer.domElement.width / 2 - (camera.x - this.x),
       renderer.domElement.height / 2 + (camera.y - this.y),
       this.width,
       -this.height,
     );
+    renderer.ctx.fillStyle = this.color;
+    // renderer.ctx.fillStyle = this.patt;
+    renderer.ctx.fill();
     renderer.ctx.restore();
   }
 
@@ -43,6 +48,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     this.getPathOfShape();
     ctx.save();
     ctx.fillStyle = this.color;
+    // ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.restore();
   }
