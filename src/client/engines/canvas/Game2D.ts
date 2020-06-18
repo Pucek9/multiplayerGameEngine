@@ -23,7 +23,7 @@ import WeaponsListComponent from '../../UserInterface/WeaponsList';
 // import Camera from '../three/models/Camera';
 // import shaderService from '../three/ShaderService';
 import Bullet from './models/Bullet';
-import { Camera2D } from './models/Camera2D';
+import Camera from './models/Camera';
 import Cleaner from './models/Cleaner';
 import Cursor from './models/Cursor';
 import Item from './models/Item';
@@ -55,7 +55,7 @@ export class CanvasRenderer {
 export function prepareCanvasScreen(gameConfig: GameConfig): ScreenModel {
   const scene = new Set();
   const renderer = new CanvasRenderer();
-  const camera = new Camera2D();
+  const camera = new Camera[gameConfig.camera]();
   document.body.appendChild(renderer.domElement);
 
   return {

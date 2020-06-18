@@ -18,6 +18,7 @@ declare const gameNameInput: HTMLInputElement;
 declare const gameTypeInput: HTMLSelectElement;
 declare const gameMapInput: HTMLSelectElement;
 declare const gameLightInput: HTMLSelectElement;
+declare const renderEngineInput: HTMLSelectElement;
 declare const cameraInput: HTMLSelectElement;
 declare const steeringInput: HTMLSelectElement;
 declare const cursorInput: HTMLSelectElement;
@@ -82,6 +83,11 @@ export default class MenuComponent {
     gameLightInput.value = gameState.light;
     gameLightInput.addEventListener('change', () => {
       createGamesService.setLight(gameLightInput.value);
+    });
+
+    renderEngineInput.value = gameState.renderEngine;
+    renderEngineInput.addEventListener('change', () => {
+      createGamesService.setRenderEngine(renderEngineInput.value);
     });
 
     cameraInput.value = gameState.camera;

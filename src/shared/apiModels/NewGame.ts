@@ -5,6 +5,7 @@ export interface NewGame {
   camera: string;
   light: string;
   steering: string;
+  renderEngine: string;
   cursor: string;
   botsCount: number;
   teams?: Array<{

@@ -15,6 +15,7 @@ export default abstract class GameModel {
   map: GameMap;
   roomName: string;
   type: string;
+  renderEngine: string;
   camera: string;
   light: string;
   botsCount: number;

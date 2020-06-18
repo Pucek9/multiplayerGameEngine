@@ -5,8 +5,7 @@ import { GameInstance, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
 import { randColor } from '../shared/helpers';
 
-import Game2D from './engines/canvas/Game2D';
-import Game3D from './engines/three/Game3D';
+import Game from './engines/index';
 import { gamesListService, userService } from './store/store';
 import MenuComponent from './UserInterface/MenuComponent';
 
@@ -19,8 +18,9 @@ let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  private gameState: Game2D | Game3D;
-  // private gameState: Game2D;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  private gameState: Game.Canvas | Game.Three;
   private events;
 
   constructor() {
@@ -67,11 +67,8 @@ class Main {
         .getState()
         .list.find(game => game.roomName === userState.chosenGame);
       socket.emit(API.CREATE_PLAYER, newPlayer);
-      if (userState.nick === '2d') {
-        this.gameState = new Game2D(newPlayer, gameConfig);
-      } else {
-        this.gameState = new Game3D(newPlayer, gameConfig);
-      }
+      this.gameState = new Game[gameConfig.renderEngine](newPlayer, gameConfig);
+
       this.registerEvents(this.gameState);
       this.menu.hide();
       this.run();
@@ -84,7 +81,9 @@ class Main {
     this.menu.requestFullscreen(e, 'F11');
   }
 
-  registerEvents(gameState: Game3D | Game2D) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  registerEvents(gameState: Game.Canvas | Game.Three) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));
 
     socket.on(API.ADD_PLAYERS, gameState.appendPlayers.bind(gameState));

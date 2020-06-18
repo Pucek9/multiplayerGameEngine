@@ -60,6 +60,7 @@ class GamesManager {
         roomName: game.roomName,
         type: game.type,
         map: { mapName, width, height, floor },
+        renderEngine: game.renderEngine,
         camera: game.camera,
         light: game.light,
         count: game.players.length,

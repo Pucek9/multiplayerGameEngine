@@ -5,6 +5,7 @@ export const SET_GAME_NAME = 'SET_GAME_NAME';
 export const SET_GAME_TYPE = 'SET_GAME_TYPE';
 export const SET_GAME_MAP = 'SET_GAME_MAP';
 export const SET_CAMERA = 'SET_CAMERA';
+export const SET_RENDER_ENGINE = 'SET_RENDER_ENGINE';
 export const SET_LIGHT = 'SET_LIGHT';
 export const SET_STEERING = 'SET_STEERING';
 export const SET_CURSOR = 'SET_CURSOR';
@@ -33,6 +34,12 @@ export class SetGameType implements Action {
 
 export class SetGameMap implements Action {
   readonly type = SET_GAME_MAP;
+
+  constructor(public payload: string) {}
+}
+
+export class SetRenderEngine implements Action {
+  readonly type = SET_RENDER_ENGINE;
 
   constructor(public payload: string) {}
 }
@@ -102,6 +109,7 @@ export type GamesActions =
   | SetGameName
   | SetGameType
   | SetGameMap
+  | SetRenderEngine
   | SetCamera
   | SetLight
   | SetSteering

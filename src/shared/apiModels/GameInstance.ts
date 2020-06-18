@@ -4,6 +4,7 @@ export interface GameInstance {
   roomName: string;
   type: string;
   map: MapModel;
+  renderEngine: string;
   camera: string;
   light: string;
   count: number;

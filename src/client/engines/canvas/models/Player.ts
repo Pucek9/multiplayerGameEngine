@@ -3,7 +3,8 @@ import { PlayerModel } from '../../../../shared/models';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const head = require('../../../games/balls/images/head.jpg');
+// const head = require('../../../games/balls/images/head.jpg');
+const head = require('../../../games/robocop/images/robocop0/xxx.png');
 // const texture = new TextureLoader().load(head);
 
 export default class Player extends PlayerModel implements Updatable {
@@ -25,10 +26,9 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isInitiated()) {
       this.img = new Image();
       this.img.src = head;
-      // this.patt = this.screen.renderer.ctx.createPattern(this.img, 'no-repeat');
-      this.img.onload = () => {
-        this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
-      };
+      // this.img.onload = () => {
+      //   this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
+      // };
       this.initiated = true;
     }
   }
@@ -61,17 +61,12 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isAlive()) {
       renderer.ctx.globalAlpha = 0.2;
     }
-    renderer.ctx.beginPath();
-    renderer.ctx.arc(
+    renderer.ctx.translate(
       renderer.domElement.width / 2 - (camera.x - this.x),
       renderer.domElement.height / 2 + (camera.y - this.y),
-      this.size,
-      0,
-      2 * Math.PI,
     );
-    renderer.ctx.fillStyle = this.color;
-    // renderer.ctx.fillStyle = this.patt;
-    renderer.ctx.fill();
+    renderer.ctx.rotate(-this.bodyDirection);
+    renderer.ctx.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
     renderer.ctx.restore();
   }
 

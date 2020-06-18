@@ -1,20 +1,6 @@
-import { MapModel } from '../../../shared/models';
+import { GameInstance } from '../../../shared/apiModels/GameInstance';
 
-export interface GameConfig {
-  roomName: string;
-  type: string;
-  map: MapModel;
-  camera: string;
-  light: string;
-  count: number;
-  teams?: Array<{
-    name: string;
-    color: string;
-    points: number;
-    count: number;
-  }>;
-  ip: string;
-}
+export type GameConfig = GameInstance;
 
 export interface GamesListState {
   list: GameConfig[];

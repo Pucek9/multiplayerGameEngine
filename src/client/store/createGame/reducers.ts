@@ -79,6 +79,12 @@ export function createGameReducer(
         light: payload,
       };
 
+    case GamesActions.SET_RENDER_ENGINE:
+      return {
+        ...state,
+        renderEngine: payload,
+      };
+
     case GamesActions.SET_CAMERA:
       return {
         ...state,

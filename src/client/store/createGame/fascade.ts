@@ -33,6 +33,13 @@ export class CreateGamesService {
     });
   }
 
+  setRenderEngine(renderEngine: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_RENDER_ENGINE,
+      payload: renderEngine,
+    });
+  }
+
   setCamera(map: string) {
     this.store.dispatch({
       type: GamesListActions.SET_CAMERA,
