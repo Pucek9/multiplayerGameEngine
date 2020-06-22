@@ -6,6 +6,8 @@ export function drawCircle(ctx, camera, x, y, size) {
 
 export function drawUnRotatedRectangle(ctx, camera, x, y, width, height) {
   ctx.rect(-(camera.x - x), camera.y - y, width, -height);
+  // ctx.translate(-(camera.x - x), camera.y - y);
+  // ctx.rect(0, 0, width, -height);
 }
 
 export function renderImage(ctx, camera, img, x, y, width, height, deg) {

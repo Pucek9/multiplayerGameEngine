@@ -12,7 +12,7 @@ export default class DynamicCamera implements CameraModel {
   activePlayer;
   cursor;
   renderer;
-  diff;
+  diff = -1.56;
   direction: number;
   init({
     activePlayer,
@@ -57,10 +57,11 @@ export default class DynamicCamera implements CameraModel {
 
       this.diff = this.direction - this.diff ?? 0;
 
-      if (this.diff !== 0) {
-        this.renderer.ctx.rotate(this.diff);
-        this.diff = 0;
-      }
+      // if (this.diff !== 0) {
+      this.renderer.ctx.rotate(this.diff);
+      // console.log(this.diff);
+      this.diff = 1.56;
+      // }
     }
   }
 
