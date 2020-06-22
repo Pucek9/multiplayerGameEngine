@@ -24,10 +24,9 @@ export default class Map implements Updatable, MapModel {
   }
 
   update() {
-    this.screen.renderer.ctx.drawImage(
-      this.img,
-      this.screen.renderer.domElement.width / 2 - this.screen.camera.x - this.width / 2,
-      this.screen.renderer.domElement.height / 2 + this.screen.camera.y - this.height / 2,
-    );
+    const ctx = this.screen.renderer.ctx;
+    ctx.save();
+    this.screen.camera.renderMap(ctx, this.img, this.width, this.height);
+    ctx.restore();
   }
 }

@@ -15,6 +15,16 @@ export function degToRad(deg: number): number {
   return (deg * Math.PI) / 180;
 }
 
+export function rotatePoint(pivot, point, angle) {
+  const x = Math.round(
+      Math.cos(angle) * (point[0] - pivot[0]) - Math.sin(angle) * (point[1] - pivot[1]) + pivot[0],
+    ),
+    y = Math.round(
+      Math.sin(angle) * (point[0] - pivot[0]) + Math.cos(angle) * (point[1] - pivot[1]) + pivot[1],
+    );
+  return { x, y };
+}
+
 export function rand(max: number, min = 0): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }

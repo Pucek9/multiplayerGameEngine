@@ -55,19 +55,14 @@ export default class Player extends PlayerModel implements Updatable {
   setAsEnemy() {}
 
   updateBody() {
-    const renderer = this.screen.renderer;
+    const ctx = this.screen.renderer.ctx;
     const camera = this.screen.camera;
-    renderer.ctx.save();
+    ctx.save();
     if (!this.isAlive()) {
-      renderer.ctx.globalAlpha = 0.2;
+      ctx.globalAlpha = 0.2;
     }
-    renderer.ctx.translate(
-      renderer.domElement.width / 2 - (camera.x - this.x),
-      renderer.domElement.height / 2 + (camera.y - this.y),
-    );
-    renderer.ctx.rotate(-this.bodyDirection);
-    renderer.ctx.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
-    renderer.ctx.restore();
+    camera.renderImage(ctx, this.img, this.x, this.y, this.size, this.size, -this.bodyDirection);
+    ctx.restore();
   }
 
   update() {

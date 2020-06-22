@@ -23,13 +23,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     const camera = this.screen.camera;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(
-      this.screen.renderer.domElement.width / 2 - (camera.x - this.x),
-      this.screen.renderer.domElement.height / 2 + (camera.y - this.y),
-      this.size,
-      0,
-      2 * Math.PI,
-    );
+    camera.drawCircle(ctx, this.x, this.y, this.size);
     ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.globalAlpha = 0.5;

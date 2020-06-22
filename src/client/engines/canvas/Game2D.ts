@@ -307,6 +307,7 @@ export default class Game2D {
   }
 
   updateObjects() {
+    this.screen.renderer.ctx.save();
     if (this.currentPlayer) {
       [
         this.cleaner,
@@ -319,8 +320,9 @@ export default class Game2D {
         this.cursor,
         // this.light,
         this.text,
-      ].forEach(object => object.update());
+      ].forEach(object => object.update(this.screen.renderer));
     }
+    this.screen.renderer.ctx.restore();
   }
 
   render() {

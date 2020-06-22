@@ -20,10 +20,17 @@ export default class Cursor implements Updatable {
   }
 
   update() {
-    this.screen.renderer.ctx.drawImage(
+    const ctx = this.screen.renderer.ctx;
+    ctx.save();
+    this.screen.camera.renderImage(
+      ctx,
       this.img,
-      this.screen.renderer.domElement.width / 2 - (this.screen.camera.x - this.x),
-      this.screen.renderer.domElement.height / 2 + (this.screen.camera.y - this.y),
+      this.x,
+      this.y,
+      this.img.width,
+      this.img.height,
+      0,
     );
+    ctx.restore();
   }
 }

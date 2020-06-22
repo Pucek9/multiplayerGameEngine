@@ -21,20 +21,14 @@ export default class Item extends StaticCircularObjectModel implements Updatable
 
   update() {
     if (this.ready) {
-      const renderer = this.screen.renderer;
+      const ctx = this.screen.renderer.ctx;
       const camera = this.screen.camera;
-      renderer.ctx.save();
-      renderer.ctx.fillStyle = this.color;
-      renderer.ctx.beginPath();
-      renderer.ctx.arc(
-        renderer.domElement.width / 2 - (camera.x - this.x),
-        renderer.domElement.height / 2 + (camera.y - this.y),
-        10,
-        0,
-        2 * Math.PI,
-      );
-      renderer.ctx.fill();
-      renderer.ctx.restore();
+      ctx.save();
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      camera.drawCircle(ctx, this.x, this.y, this.size);
+      ctx.fill();
+      ctx.restore();
     }
   }
 }
