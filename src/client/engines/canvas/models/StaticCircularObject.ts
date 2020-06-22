@@ -1,3 +1,4 @@
+import { drawCircle } from '../../../../shared/canvasHelpers';
 import { StaticCircularObjectModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -23,7 +24,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     const camera = this.screen.camera;
     ctx.save();
     ctx.beginPath();
-    camera.drawCircle(ctx, this.x, this.y, this.size);
+    drawCircle(ctx, camera, this.x, this.y, this.size);
     ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.globalAlpha = 0.5;

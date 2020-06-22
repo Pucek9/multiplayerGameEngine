@@ -1,3 +1,4 @@
+import { drawCircle } from '../../../../shared/canvasHelpers';
 import { PULL, PUSH } from '../../../../shared/constants';
 import { BulletModel } from '../../../../shared/models';
 
@@ -28,7 +29,7 @@ export default class Bullet extends BulletModel implements Updatable {
       ctx.globalAlpha = 0.2;
     }
     ctx.beginPath();
-    camera.drawCircle(ctx, this.x, this.y, this.size);
+    drawCircle(ctx, camera, this.x, this.y, this.size);
     ctx.fill();
     ctx.restore();
   }

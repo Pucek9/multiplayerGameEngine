@@ -1,3 +1,4 @@
+import { renderImage } from '../../../../shared/canvasHelpers';
 import { PlayerModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -61,7 +62,7 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isAlive()) {
       ctx.globalAlpha = 0.2;
     }
-    camera.renderImage(ctx, this.img, this.x, this.y, this.size, this.size, -this.bodyDirection);
+    renderImage(ctx, camera, this.img, this.x, this.y, this.size, this.size, -this.bodyDirection);
     ctx.restore();
   }
 

@@ -1,5 +1,6 @@
 import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
+import { drawRotatedRectangle, drawUnRotatedRectangle } from '../../../../shared/canvasHelpers';
 import { degToRad } from '../../../../shared/helpers';
 import { StaticRectangleObjectModel } from '../../../../shared/models';
 
@@ -26,8 +27,8 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     const camera = this.screen.camera;
     ctx.save();
     this.deg === 0
-      ? camera.drawUnRotatedRectangle(ctx, this.x, this.y, this.width, this.height)
-      : camera.drawRotatedRectangle(ctx, this.x, this.y, this.width, this.height, this.deg);
+      ? drawUnRotatedRectangle(ctx, camera, this.x, this.y, this.width, this.height)
+      : drawRotatedRectangle(ctx, camera, this.x, this.y, this.width, this.height, this.deg);
     ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.globalAlpha = 0.5;

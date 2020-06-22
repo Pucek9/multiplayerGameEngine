@@ -1,3 +1,4 @@
+import { drawCircle } from '../../../../shared/canvasHelpers';
 import { StaticCircularObjectModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -26,7 +27,7 @@ export default class Item extends StaticCircularObjectModel implements Updatable
       ctx.save();
       ctx.fillStyle = this.color;
       ctx.beginPath();
-      camera.drawCircle(ctx, this.x, this.y, this.size);
+      drawCircle(ctx, camera, this.x, this.y, this.size);
       ctx.fill();
       ctx.restore();
     }

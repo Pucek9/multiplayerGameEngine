@@ -1,3 +1,4 @@
+import { renderMap } from '../../../../shared/canvasHelpers';
 import { MapModel, PlayerModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -25,8 +26,9 @@ export default class Map implements Updatable, MapModel {
 
   update() {
     const ctx = this.screen.renderer.ctx;
+    const camera = this.screen.camera;
     ctx.save();
-    this.screen.camera.renderMap(ctx, this.img, this.width, this.height);
+    renderMap(ctx, camera, this.img, this.width, this.height);
     ctx.restore();
   }
 }

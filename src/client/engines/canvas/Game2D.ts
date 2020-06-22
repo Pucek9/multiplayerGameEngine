@@ -20,11 +20,9 @@ import PlayerListComponent from '../../UserInterface/PlayersList';
 import PowersListComponent from '../../UserInterface/PowersList';
 import TeamPlayerListComponent from '../../UserInterface/TeamPlayersList';
 import WeaponsListComponent from '../../UserInterface/WeaponsList';
-// import Camera from '../three/models/Camera';
 // import shaderService from '../three/ShaderService';
 import Bullet from './models/Bullet';
 import Camera from './models/Camera';
-import Cleaner from './models/Cleaner';
 import Cursor from './models/Cursor';
 import Item from './models/Item';
 import Map from './models/Map';
@@ -84,7 +82,6 @@ export default class Game2D {
   map: Map;
   cursor: Cursor;
   text: Text;
-  cleaner: Cleaner;
 
   constructor(user: NewUser, gameConfig: GameConfig) {
     this.user = user;
@@ -99,11 +96,9 @@ export default class Game2D {
     this.text = new Text();
     this.map = new Map(gameConfig.map);
     this.cursor = new Cursor(cursorPNG);
-    this.cleaner = new Cleaner();
     this.map.init(this.screen);
     this.text.init(this.screen);
     this.cursor.init(this.screen);
-    this.cleaner.init(this.screen);
     this.playersListComponent.show();
     this.weaponsListComponent.show();
     this.powersListComponent.show();
@@ -129,6 +124,7 @@ export default class Game2D {
         activePlayer: this.currentPlayer,
         cursor: this.cursor,
         map: this.map,
+        renderer: this.screen.renderer,
       });
       // this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       // this.currentPlayer.setLight(this.light);
@@ -307,10 +303,9 @@ export default class Game2D {
   }
 
   updateObjects() {
-    this.screen.renderer.ctx.save();
+    // this.screen.renderer.ctx.save();
     if (this.currentPlayer) {
       [
-        this.cleaner,
         this.screen.camera,
         this.map,
         ...this.staticObjects,
@@ -320,9 +315,9 @@ export default class Game2D {
         this.cursor,
         // this.light,
         this.text,
-      ].forEach(object => object.update(this.screen.renderer));
+      ].forEach(object => object.update());
     }
-    this.screen.renderer.ctx.restore();
+    // this.screen.renderer.ctx.restore();
   }
 
   render() {

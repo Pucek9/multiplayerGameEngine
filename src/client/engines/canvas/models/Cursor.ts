@@ -1,3 +1,5 @@
+import { renderImage } from '../../../../shared/canvasHelpers';
+
 const cursorPNG = require('../../../games/balls/images/pointer.jpg');
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -21,16 +23,9 @@ export default class Cursor implements Updatable {
 
   update() {
     const ctx = this.screen.renderer.ctx;
+    const camera = this.screen.camera;
     ctx.save();
-    this.screen.camera.renderImage(
-      ctx,
-      this.img,
-      this.x,
-      this.y,
-      this.img.width,
-      this.img.height,
-      0,
-    );
+    renderImage(ctx, camera, this.img, this.x, this.y, this.img.width, this.img.height, 0);
     ctx.restore();
   }
 }
