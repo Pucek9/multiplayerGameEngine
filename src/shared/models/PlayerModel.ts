@@ -16,7 +16,7 @@ export class PlayerModel implements Circle {
   size: number;
   energy: number;
   timeToRevive: number;
-  cursor = { x: 0, y: 0, down: false };
+  cursor = { x: 0, y: 0, z: 0, down: false };
 
   constructor(
     public id: string,

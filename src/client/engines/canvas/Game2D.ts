@@ -122,7 +122,6 @@ export default class Game2D {
       this.currentPlayer.setAsCurrent();
       this.screen.camera.init({
         activePlayer: this.currentPlayer,
-        cursor: this.cursor,
         map: this.map,
         renderer: this.screen.renderer,
       });

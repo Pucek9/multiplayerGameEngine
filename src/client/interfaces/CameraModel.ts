@@ -1,10 +1,9 @@
 import { PlayerModel } from '../../shared/models';
 
-import Cursor from './CursorModel';
 export default interface CameraModel {
   object?;
 
-  init(params: { activePlayer: PlayerModel; cursor?: Cursor; map? }): void;
+  init(params: { activePlayer: PlayerModel; map?; renderer? }): void;
 
   wheel(e: WheelEvent): void;
 

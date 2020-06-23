@@ -86,7 +86,7 @@ export default class Game3D {
     if (!this.currentPlayer) {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
-      this.screen.camera.init({ activePlayer: this.currentPlayer, cursor: this.cursor });
+      this.screen.camera.init({ activePlayer: this.currentPlayer });
       this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });
       this.currentPlayer.setLight(this.light);
     }

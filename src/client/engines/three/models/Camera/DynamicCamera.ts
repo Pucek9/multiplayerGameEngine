@@ -17,9 +17,8 @@ export default class DynamicCamera implements Updatable, CameraModel {
     this.object.position.z = 300;
   }
 
-  init({ activePlayer, cursor }: { activePlayer: PlayerModel; cursor: Cursor }) {
+  init({ activePlayer }: { activePlayer: PlayerModel }) {
     this.activePlayer = activePlayer;
-    this.cursor = cursor;
   }
 
   wheel(e: WheelEvent) {
@@ -32,11 +31,12 @@ export default class DynamicCamera implements Updatable, CameraModel {
 
   update() {
     const range = 200;
+    const cursor = this.activePlayer.cursor;
     this.object.position.x =
       this.activePlayer.x - range * Math.cos(this.activePlayer.bodyDirection);
     this.object.position.y =
       this.activePlayer.y - range * Math.sin(this.activePlayer.bodyDirection);
-    this.object.lookAt(this.cursor.x, this.cursor.y, this.cursor.z);
+    this.object.lookAt(cursor.x, cursor.y, cursor.z);
     // this.object.position.x = this.activePlayer.x;
     // this.object.position.y = this.activePlayer.y;
   }
