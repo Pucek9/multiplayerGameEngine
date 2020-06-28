@@ -45,7 +45,7 @@ export default class ItemGenerator<ItemClass> extends StaticCircularObjectModel 
     this.deactivate();
     const timeout = setTimeout(() => {
       this.activate();
-      game.emitter.updateItemGenerator(game.roomName, new ItemGeneratorAPI(this));
+      game.emitter?.updateItemGenerator(game.roomName, new ItemGeneratorAPI(this));
     }, this.time);
     const item = this.generateItem();
     if (item instanceof Weapon) {
@@ -55,7 +55,7 @@ export default class ItemGenerator<ItemClass> extends StaticCircularObjectModel 
       player.takeAidKit(item);
       game.emitPowerInfo(player);
     }
-    game.emitter.updateItemGenerator(game.roomName, new ItemGeneratorAPI(this));
+    game.emitter?.updateItemGenerator(game.roomName, new ItemGeneratorAPI(this));
     if (!this.repeated) {
       clearTimeout(timeout);
       game.deleteItemGenerator(this);

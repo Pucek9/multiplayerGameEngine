@@ -1,3 +1,4 @@
+export const AWP = 'ArcticWarfarePolice';
 export const AK47 = 'Ak47';
 export const GRENADE = 'Grenade';
 export const GRENADE_EXPLOSION = 'GrenadeExplosion';

@@ -25,6 +25,7 @@ import ItemGenerator from '../../models/ItemGenerator';
 import StaticCircularObject from '../../models/StaticCircularObject';
 import StaticRectangleObject from '../../models/StaticRectangleObject';
 import Ak47 from '../../models/weapons/Ak47';
+import ArcticWarfarePolice from '../../models/weapons/ArcticWarfarePolice';
 import Grenade from '../../models/weapons/Grenade';
 import LandMine from '../../models/weapons/LandMine';
 import Pistol from '../../models/weapons/Pistol';
@@ -242,7 +243,7 @@ export default class Playground extends GameMap {
         size: 4,
         color: BROWN,
         time: 10000,
-        ItemClass: Pistol,
+        ItemClass: ArcticWarfarePolice,
       }),
       new ItemGenerator({
         ItemClass: Shotgun,
@@ -274,7 +275,7 @@ export default class Playground extends GameMap {
         y: 800,
         size: 4,
         color: WHITE,
-        time: 5000,
+        time: 25000,
       }),
       new ItemGenerator({
         ItemClass: AidKit,
