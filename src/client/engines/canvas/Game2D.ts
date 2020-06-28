@@ -121,7 +121,7 @@ export default class Game2D {
       this.currentPlayer = this.players.find(_player => _player.id === this.user.id);
       this.currentPlayer.setAsCurrent();
       this.screen.camera.init({
-        activePlayer: this.currentPlayer,
+        observedObject: this.currentPlayer,
         map: this.map,
         renderer: this.screen.renderer,
       });

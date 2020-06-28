@@ -9,9 +9,10 @@ import {
 
 import { PlayerModel } from '../../../../shared/models';
 
+import { LightModel } from '../../../interfaces/LightModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
-import { BaseLight } from './Light/BaseLight';
+// import { BaseLight } from './Light/BaseLight';
 
 const head = require('../../../games/balls/images/head.jpg');
 const texture = new TextureLoader().load(head);
@@ -19,7 +20,7 @@ const texture = new TextureLoader().load(head);
 export default class Player extends PlayerModel implements Updatable {
   public object: Mesh;
   public objectLegs: Mesh;
-  private light: BaseLight;
+  private light: LightModel;
   private screen: ScreenModel;
   private geometry: SphereGeometry;
   private geometryLegs: BoxGeometry;
@@ -27,7 +28,7 @@ export default class Player extends PlayerModel implements Updatable {
   private current: boolean;
   private initiated = false;
 
-  setLight(light: BaseLight) {
+  setLight(light: LightModel) {
     this.light = light;
   }
 
@@ -46,6 +47,8 @@ export default class Player extends PlayerModel implements Updatable {
     this.material = new MeshPhysicalMaterial({
       map: texture,
       color: this.color,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       transparency: 1,
     });
   }

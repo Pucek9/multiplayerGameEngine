@@ -1,9 +1,9 @@
-import { PlayerModel } from '../../shared/models';
+import Model3D from './Model3D';
 
 export default interface CameraModel {
   object?;
 
-  init(params: { activePlayer: PlayerModel; map?; renderer? }): void;
+  init(params: { observedObject: Model3D; renderer? }): void;
 
   wheel(e: WheelEvent): void;
 

@@ -1,14 +1,10 @@
 import CursorModel from './CursorModel';
+import Model3D from './Model3D';
 import Updatable from './Updatable';
-
-export interface Source {
-  x: number;
-  y: number;
-}
 
 export interface LightModel extends Updatable {
   light;
-  source?: Source;
+  source?: Model3D;
   dest?: CursorModel;
 
   init(params);

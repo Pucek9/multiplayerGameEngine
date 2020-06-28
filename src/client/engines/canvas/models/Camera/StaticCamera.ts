@@ -1,28 +1,9 @@
-import { degToRad, rotatePoint } from '../../../../../shared/helpers';
-import { MapModel, PlayerModel } from '../../../../../shared/models';
+import BaseCamera from './BaseCamera';
 
-import CameraModel from '../../../../interfaces/CameraModel';
-
-export default class StaticCamera implements CameraModel {
-  public x = 0;
-  public y = 0;
-
-  map;
-  activePlayer;
-  renderer;
-
-  init({ activePlayer, map, renderer }: { activePlayer: PlayerModel; map: MapModel; renderer }) {
-    this.activePlayer = activePlayer;
-    this.renderer = renderer;
-    this.map = map;
-    this.x = activePlayer.x;
-    this.y = activePlayer.y;
-    this.renderer.ctx.save();
-  }
-
+export default class StaticCamera extends BaseCamera {
   update() {
-    this.x = this.activePlayer.x;
-    this.y = this.activePlayer.y;
+    this.x = this.observedObject.x;
+    this.y = this.observedObject.y;
     this.renderer.ctx.restore();
     this.renderer.ctx.clearRect(
       0,

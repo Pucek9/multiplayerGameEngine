@@ -1,6 +1,6 @@
 import { SpotLight } from 'three';
 
-import { Source } from '../../../../interfaces/LightModel';
+import Model3D from '../../../../interfaces/Model3D';
 import Cursor from '../Cursor';
 import { BaseLight } from './BaseLight';
 
@@ -13,7 +13,7 @@ export default class FlashLight extends BaseLight {
     intensity = 20,
     color = 0xffffff,
   }: {
-    source: Source;
+    source: Model3D;
     cursor: Cursor;
     intensity?: number;
     color?: number;
