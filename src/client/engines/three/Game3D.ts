@@ -93,9 +93,8 @@ export default class Game3D {
   }
 
   handleResize = () => {
-    if (this.screen?.camera?.object) {
-      this.screen.camera.object.aspect = window.innerWidth / window.innerHeight;
-      this.screen.camera.object.updateProjectionMatrix();
+    if (this.screen?.camera) {
+      this.screen.camera.handleResize();
       this.screen.renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
     }
   };
