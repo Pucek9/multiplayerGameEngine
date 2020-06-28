@@ -1,12 +1,13 @@
 import { PlayerModel } from '../../../../../shared/models';
 
 import CameraModel from '../../../../interfaces/CameraModel';
+import Model3D from '../../../../interfaces/Model3D';
 
 export default class BaseCamera implements CameraModel {
   public x = 0;
   public y = 0;
 
-  protected observedObject: { x: number; y: number; z?: number };
+  protected observedObject: Model3D;
   protected renderer;
 
   init({ observedObject, renderer }: { observedObject: PlayerModel; renderer }) {

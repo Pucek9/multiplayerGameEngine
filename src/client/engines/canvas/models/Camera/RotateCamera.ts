@@ -20,8 +20,8 @@ export default class RotateCamera extends BaseCamera {
     );
     this.renderer.ctx.save();
     this.renderer.ctx.translate(
-      this.renderer.domElement.width / 2 - (this.x - this.x),
-      this.renderer.domElement.height / 2 + (this.x - this.x),
+      this.renderer.domElement.width / 2,
+      this.renderer.domElement.height / 2,
     );
 
     const dx = this.observedObject.cursor.x - this.x;

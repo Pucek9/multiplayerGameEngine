@@ -1,14 +1,17 @@
 import { PlayerModel } from '../../../../../shared/models';
 
-import BaseCamera from './BaseCamera';
+import StaticCamera from './StaticCamera';
 
-export default class DynamicCamera extends BaseCamera {
-  protected range = 200;
+export default class CursorCamera extends StaticCamera {
   protected observedObject: PlayerModel;
 
+  constructor() {
+    super();
+  }
+
   update() {
-    this.x = this.observedObject.x + this.range * Math.cos(this.observedObject.bodyDirection);
-    this.y = this.observedObject.y + this.range * Math.sin(this.observedObject.bodyDirection);
+    this.x = this.observedObject.cursor.x;
+    this.y = this.observedObject.cursor.y;
     this.renderer.ctx.restore();
     this.renderer.ctx.clearRect(
       0,
@@ -22,8 +25,4 @@ export default class DynamicCamera extends BaseCamera {
       this.renderer.domElement.height / 2,
     );
   }
-
-  wheel() {}
-  remove() {}
-  handleResize() {}
 }
