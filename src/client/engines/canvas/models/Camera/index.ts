@@ -1,4 +1,5 @@
 import DynamicCamera from './DynamicCamera';
+import RotateCamera from './RotateCamera';
 import StaticCamera from './StaticCamera';
 
-export default { DynamicCamera, StaticCamera };
+export default { DynamicCamera, StaticCamera, RotateCamera };
