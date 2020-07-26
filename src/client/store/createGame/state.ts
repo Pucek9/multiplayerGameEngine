@@ -9,6 +9,7 @@ export interface CreateGameState {
   };
   botsCount: number;
   map: string;
+  textures: string;
   renderEngine: string;
   camera: string;
   light: string;
@@ -35,6 +36,7 @@ export const initialState: CreateGameState = {
   roomName: '',
   type: 'Free4all',
   map: 'Playground',
+  textures: 'balls',
   botsCount: 0,
   teams: null,
   renderEngine: 'Three',

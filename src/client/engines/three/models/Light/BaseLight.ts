@@ -1,4 +1,4 @@
-import { Color, Light } from 'three';
+import { Color, Light, Scene } from 'three';
 
 import CursorModel from '../../../../interfaces/CursorModel';
 import { LightModel } from '../../../../interfaces/LightModel';

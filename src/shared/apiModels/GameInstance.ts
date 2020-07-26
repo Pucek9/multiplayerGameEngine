@@ -4,6 +4,9 @@ export interface GameInstance {
   roomName: string;
   type: string;
   map: MapModel;
+  textures: string;
+  steering: string;
+  cursor: string;
   renderEngine: string;
   camera: string;
   light: string;

@@ -3,6 +3,7 @@ import { StaticCircularObjectModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
+import { CanvasRenderer } from '../Game2D';
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements Updatable {
   public screen: ScreenModel;
@@ -11,16 +12,16 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    screen.scene.add(this.id);
+    // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = require('../../../games/balls/images/cumin.jpg');
+    this.img.src = require('../../../assets/textures/others/cumin.jpg');
     this.img.onload = () => {
-      this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
+      this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };
   }
 
   update() {
-    const ctx = this.screen.renderer.ctx;
+    const ctx = (this.screen.renderer as CanvasRenderer).ctx;
     const camera = this.screen.camera;
     ctx.save();
     ctx.beginPath();

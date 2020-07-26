@@ -19,6 +19,7 @@ declare const gameTypeInput: HTMLSelectElement;
 declare const gameMapInput: HTMLSelectElement;
 declare const gameLightInput: HTMLSelectElement;
 declare const renderEngineInput: HTMLSelectElement;
+declare const texturesInput: HTMLSelectElement;
 declare const cameraInput: HTMLSelectElement;
 declare const steeringInput: HTMLSelectElement;
 declare const cursorInput: HTMLSelectElement;
@@ -88,6 +89,11 @@ export default class MenuComponent {
     renderEngineInput.value = gameState.renderEngine;
     renderEngineInput.addEventListener('change', () => {
       createGamesService.setRenderEngine(renderEngineInput.value);
+    });
+
+    texturesInput.value = gameState.textures;
+    texturesInput.addEventListener('change', () => {
+      createGamesService.setTextures(texturesInput.value);
     });
 
     cameraInput.value = gameState.camera;
@@ -227,6 +233,7 @@ export default class MenuComponent {
         userService.selectGame(game);
         this.toggleSelectTeamSection();
       });
+      row.title = JSON.stringify(game, undefined, 2);
       if (user.chosenGame === game.roomName) {
         row.classList.add('active');
       }

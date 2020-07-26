@@ -6,7 +6,7 @@ import { StaticRectangleObjectModel } from '../../../../shared/models';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const box = require('../../../games/balls/images/box.png');
+const box = require('../../../assets/textures/others/box.png');
 
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
   private object: Mesh;

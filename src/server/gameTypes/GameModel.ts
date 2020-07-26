@@ -14,6 +14,7 @@ export default abstract class GameModel {
   emitter: Emitter;
   map: GameMap;
   roomName: string;
+  textures: string;
   type: string;
   renderEngine: string;
   camera: string;

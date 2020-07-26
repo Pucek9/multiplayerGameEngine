@@ -37,7 +37,7 @@ export default class Model3D extends StaticCircularObjectModel implements Updata
 
   init(screen: ScreenModel) {
     const model = models[this.type];
-    loader.load(require(`../../../games/balls/assets/${this.type}.fbx`), object => {
+    loader.load(require(`../../../assets/3DModels/items/${this.type}.fbx`), object => {
       this.object = object;
       this.object.rotation.x = degToRad(model.rotation.x);
       this.object.rotation.z = degToRad(model.rotation.z);

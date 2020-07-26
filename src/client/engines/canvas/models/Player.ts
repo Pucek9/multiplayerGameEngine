@@ -3,10 +3,10 @@ import { PlayerModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
+import { CanvasRenderer } from '../Game2D';
 
-// const head = require('../../../games/balls/images/head.jpg');
-const head = require('../../../games/robocop/images/robocop0/xxx.png');
-// const texture = new TextureLoader().load(head);
+const head = require('../../../assets/textures/games/balls/2d/head.png');
+// const legs = require('../../../assets/textures/games/balls/2d/legs.png');
 
 export default class Player extends PlayerModel implements Updatable {
   // public object: Mesh;
@@ -40,23 +40,23 @@ export default class Player extends PlayerModel implements Updatable {
 
   setAsCurrent() {}
 
-  isOnScene() {
-    return this.screen.scene.has(this.id);
-  }
-
+  // isOnScene() {
+  //   return (this.screen.scene as Set<string>).has(this.id);
+  // }
+  //
   isAlive() {
     return this.alive;
   }
 
   addToScene() {
-    this.screen.scene.add(this.id);
-    // this.screen.scene.add(this.objectLegs);
+    // this.screen.scene.add(this.id);
+    // this.screen.scene.add(this.objectLegsId);
   }
 
   setAsEnemy() {}
 
   updateBody() {
-    const ctx = this.screen.renderer.ctx;
+    const ctx = (this.screen.renderer as CanvasRenderer).ctx;
     const camera = this.screen.camera;
     ctx.save();
     if (!this.isAlive()) {
@@ -67,19 +67,19 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   update() {
-    if (this.isOnScene() && !this.isAlive()) {
-      this.remove();
-      // this.light?.setColor(0xff0000);
-    } else if (!this.isOnScene() && this.isAlive()) {
-      this.addToScene();
-      // this.light?.setColor(0xffffff);
-    } else {
-      this.updateBody();
-    }
+    // if (this.isOnScene() && !this.isAlive()) {
+    //   this.remove();
+    // this.light?.setColor(0xff0000);
+    // } else if (!this.isOnScene() && this.isAlive()) {
+    //   this.addToScene();
+    // this.light?.setColor(0xffffff);
+    // } else {
+    this.updateBody();
+    // }
   }
 
   remove() {
-    this.screen.scene.delete(this.id);
+    // this.screen.scene.delete(this.id);
     // this.screen.scene.remove(this.objectLegs);
   }
 }

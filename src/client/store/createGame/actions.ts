@@ -4,6 +4,7 @@ export const CLEAR_ROOM_NAME = 'CLEAR_ROOM_NAME';
 export const SET_GAME_NAME = 'SET_GAME_NAME';
 export const SET_GAME_TYPE = 'SET_GAME_TYPE';
 export const SET_GAME_MAP = 'SET_GAME_MAP';
+export const SET_TEXTURES = 'SET_TEXTURES';
 export const SET_CAMERA = 'SET_CAMERA';
 export const SET_RENDER_ENGINE = 'SET_RENDER_ENGINE';
 export const SET_LIGHT = 'SET_LIGHT';
@@ -34,6 +35,12 @@ export class SetGameType implements Action {
 
 export class SetGameMap implements Action {
   readonly type = SET_GAME_MAP;
+
+  constructor(public payload: string) {}
+}
+
+export class SetTextures implements Action {
+  readonly type = SET_TEXTURES;
 
   constructor(public payload: string) {}
 }

@@ -33,6 +33,13 @@ export class CreateGamesService {
     });
   }
 
+  setTextures(textures: string) {
+    this.store.dispatch({
+      type: GamesListActions.SET_TEXTURES,
+      payload: textures,
+    });
+  }
+
   setRenderEngine(renderEngine: string) {
     this.store.dispatch({
       type: GamesListActions.SET_RENDER_ENGINE,

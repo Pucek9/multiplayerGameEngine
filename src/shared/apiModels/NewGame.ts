@@ -4,6 +4,7 @@ export interface NewGame {
   map: string;
   camera: string;
   light: string;
+  textures: string;
   steering: string;
   renderEngine: string;
   cursor: string;

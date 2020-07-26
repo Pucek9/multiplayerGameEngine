@@ -1,9 +1,10 @@
 import { renderImage } from '../../../../shared/canvasHelpers';
 
-const cursorPNG = require('../../../games/balls/images/pointer.jpg');
+const cursorPNG = require('../../../assets/textures/games/balls/2d/pointer.png');
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
+import { CanvasRenderer } from '../Game2D';
 export default class Cursor implements Updatable {
   public x: number;
   public y: number;
@@ -18,11 +19,11 @@ export default class Cursor implements Updatable {
 
   init(screen: ScreenModel) {
     this.screen = screen;
-    this.screen.scene.add(this.id);
+    // this.screen.scene.add(this.id);
   }
 
   update() {
-    const ctx = this.screen.renderer.ctx;
+    const ctx = (this.screen.renderer as CanvasRenderer).ctx;
     const camera = this.screen.camera;
     ctx.save();
     renderImage(ctx, camera, this.img, this.x, this.y, this.img.width, this.img.height, 0);

@@ -1,4 +1,4 @@
-// import * as fontFile from '../../../games/balls/fonts/gentilis_bold.typeface.json';
+// import * as fontFile from '../../../assets/fonts/gentilis_bold.typeface.json';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
@@ -19,9 +19,9 @@ export default class Text implements Updatable {
   setGeometry() {}
 
   setText(text: string) {
-    if (this.isOnScene()) {
-      this.remove();
-    }
+    // if (this.isOnScene()) {
+    //   this.remove();
+    // }
     this.text = text;
     this.setGeometry();
     this.setMaterial();
@@ -53,14 +53,14 @@ export default class Text implements Updatable {
   }
 
   isOnScene() {
-    return this.screen.scene.has(this.id);
+    // return this.screen.scene.has(this.id);
   }
 
   addToScene() {
-    this.screen.scene.add(this.id);
+    // this.screen.scene.add(this.id);
   }
 
   remove() {
-    this.screen.scene.delete(this.id);
+    // this.screen.scene.delete(this.id);
   }
 }

@@ -25,6 +25,11 @@ export function createGameReducer(
         ...state,
         type: payload,
       };
+    case GamesActions.SET_TEXTURES:
+      return {
+        ...state,
+        textures: payload,
+      };
 
     case GamesActions.SET_TEAMS_COUNT:
       return {

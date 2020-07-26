@@ -4,7 +4,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { CanvasRenderer } from '../engines/canvas/Game2D';
 import CameraModel from './CameraModel';
 export default interface ScreenModel {
-  scene: Scene | Set<any>;
+  scene?: Scene;
   renderer: WebGLRenderer | CanvasRenderer;
   camera: CameraModel;
   composer?: EffectComposer;

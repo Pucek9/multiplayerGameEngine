@@ -15,7 +15,7 @@ export default class Map implements Updatable, MapModel {
 
   constructor(props: MapModel) {
     Object.assign(this, props);
-    this.src = require(`../../../games/balls/images/${this.floor}.jpg`);
+    this.src = require(`../../../assets/textures/floors/${this.floor}.jpg`);
   }
 
   init(screen: ScreenModel) {

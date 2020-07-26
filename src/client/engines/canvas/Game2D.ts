@@ -32,8 +32,6 @@ import StaticRectangleObject from './models/StaticRectangleObject';
 import Text from './models/Text';
 // import { prepareCanvasScreen } from './scene';
 
-const cursorPNG = require('../../games/balls/images/pointer.jpg');
-
 export class CanvasRenderer {
   public domElement: HTMLCanvasElement;
   public ctx: CanvasRenderingContext2D;
@@ -51,13 +49,11 @@ export class CanvasRenderer {
   }
 }
 export function prepareCanvasScreen(gameConfig: GameConfig): ScreenModel {
-  const scene = new Set();
   const renderer = new CanvasRenderer();
   const camera = new Camera[gameConfig.camera]();
   document.body.appendChild(renderer.domElement);
 
   return {
-    scene,
     renderer,
     camera,
   };
@@ -95,7 +91,7 @@ export default class Game2D {
     // this.light = new Lights[gameConfig.light](this.screen);
     this.text = new Text();
     this.map = new Map(gameConfig.map);
-    this.cursor = new Cursor(cursorPNG);
+    this.cursor = new Cursor();
     this.map.init(this.screen);
     this.text.init(this.screen);
     this.cursor.init(this.screen);
@@ -122,7 +118,7 @@ export default class Game2D {
       this.currentPlayer.setAsCurrent();
       this.screen.camera.init({
         observedObject: this.currentPlayer,
-        map: this.map,
+        // map: this.map,
         renderer: this.screen.renderer,
       });
       // this.light.init({ source: this.currentPlayer, cursor: this.cursor, color: 0xff0000 });

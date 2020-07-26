@@ -49,23 +49,22 @@ class GamesManager {
     return this.games.find(game => game.getPlayer(id));
   }
 
-  // getGamesList(): GameInstance[] {
-  //   return this.games.map(game => ({ ...game, map: game.map.mapName, count: game.players.length }));
-  // }
-
   getGamesList(): GameInstance[] {
     return this.games.map(game => {
       const { mapName, width, height, floor } = game.map;
       return {
         roomName: game.roomName,
         type: game.type,
-        map: { mapName, width, height, floor },
         renderEngine: game.renderEngine,
+        textures: game.textures,
         camera: game.camera,
         light: game.light,
-        count: game.players.length,
         teams: game.teams,
         ip: game.ip,
+        steering: game.steering.constructor.name,
+        cursor: game.cursor.constructor.name,
+        map: { mapName, width, height, floor },
+        count: game.players.length,
       };
     });
   }
