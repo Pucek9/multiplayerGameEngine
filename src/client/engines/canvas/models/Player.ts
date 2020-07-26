@@ -15,6 +15,7 @@ export default class Player extends PlayerModel implements Updatable {
   // private light: Lighting;
   private screen: ScreenModel;
   private img: HTMLImageElement;
+  private imgLegs: HTMLImageElement;
   private patt: CanvasPattern;
 
   private initiated = false;
@@ -27,10 +28,9 @@ export default class Player extends PlayerModel implements Updatable {
     this.screen = screen;
     if (!this.isInitiated()) {
       this.img = new Image();
+      this.imgLegs = new Image();
       this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
-      // this.img.onload = () => {
-      //   this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
-      // };
+      this.imgLegs.src = await this.screen.texture.getTexture(TEXTURE.LEGS);
       this.initiated = true;
     }
   }
@@ -56,9 +56,25 @@ export default class Player extends PlayerModel implements Updatable {
 
   setAsEnemy() {}
 
-  updateBody() {
-    const ctx = (this.screen.renderer as CanvasRenderer).ctx;
-    const camera = this.screen.camera;
+  updateLegs(ctx, camera) {
+    ctx.save();
+    if (!this.isAlive()) {
+      ctx.globalAlpha = 0.2;
+    }
+    renderImage(
+      ctx,
+      camera,
+      this.imgLegs,
+      this.x,
+      this.y,
+      this.size,
+      this.size,
+      -Math.atan2(this.direction.dy, this.direction.dx),
+    );
+    ctx.restore();
+  }
+
+  updateBody(ctx, camera) {
     ctx.save();
     if (!this.isAlive()) {
       ctx.globalAlpha = 0.2;
@@ -68,6 +84,8 @@ export default class Player extends PlayerModel implements Updatable {
   }
 
   update() {
+    const ctx = (this.screen.renderer as CanvasRenderer).ctx;
+    const camera = this.screen.camera;
     // if (this.isOnScene() && !this.isAlive()) {
     //   this.remove();
     // this.light?.setColor(0xff0000);
@@ -75,7 +93,8 @@ export default class Player extends PlayerModel implements Updatable {
     //   this.addToScene();
     // this.light?.setColor(0xffffff);
     // } else {
-    this.updateBody();
+    this.updateLegs(ctx, camera);
+    this.updateBody(ctx, camera);
     // }
   }
 
