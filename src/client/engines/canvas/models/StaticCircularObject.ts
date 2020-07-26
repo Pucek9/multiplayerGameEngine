@@ -14,7 +14,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     this.screen = screen;
     // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = require('../../../assets/textures/others/cumin.jpg');
+    this.img.src = require('../../../assets/textures/others/cumin.jpg').default;
     this.img.onload = () => {
       this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };

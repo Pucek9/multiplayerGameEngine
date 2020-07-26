@@ -10,7 +10,7 @@ export default class FlashLight extends BaseLight {
   init({
     source,
     cursor,
-    intensity = 20,
+    intensity = 4,
     color = 0xffffff,
   }: {
     source: Model3D;

@@ -33,7 +33,6 @@ export default class Bullet extends BulletModel implements Updatable {
     });
     if (this.transparency) {
       this.material.transparent = true;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       this.material.transparency = 0.8;
     }

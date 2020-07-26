@@ -10,7 +10,7 @@ export default class AmbientLight extends BaseLight {
   init({
     source,
     cursor,
-    intensity = 8,
+    intensity = 1,
     color = 0xffffff,
   }: {
     source: Model3D;

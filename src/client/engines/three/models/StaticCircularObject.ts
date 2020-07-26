@@ -6,7 +6,7 @@ import { StaticCircularObjectModel } from '../../../../shared/models';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const cumin = require('../../../assets/textures/others/cumin.jpg');
+const cumin = require('../../../assets/textures/others/cumin.jpg').default;
 
 export default class StaticCircularObject extends StaticCircularObjectModel implements Updatable {
   protected object: Mesh;

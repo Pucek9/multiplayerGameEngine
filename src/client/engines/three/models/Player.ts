@@ -15,8 +15,8 @@ import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 // import { BaseLight } from './Light/BaseLight';
 
-const head = require('../../../assets/textures/games/balls/3d/head.jpg');
-const legs = require('../../../assets/textures/games/balls/3d/legs.png');
+const head = require('../../../assets/textures/games/balls/3d/head.jpg').default;
+const legs = require('../../../assets/textures/games/balls/3d/legs.png').default;
 const headTexture = new TextureLoader().load(head);
 const legsTexture = new TextureLoader().load(legs);
 
@@ -51,7 +51,6 @@ export default class Player extends PlayerModel implements Updatable {
     this.material = new MeshPhysicalMaterial({
       map: headTexture,
       color: this.color,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       transparency: 1,
     });
@@ -59,7 +58,6 @@ export default class Player extends PlayerModel implements Updatable {
     this.legsMaterial = new MeshPhysicalMaterial({
       map: legsTexture,
       color: this.color,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       transparency: 1,
     });
@@ -75,6 +73,7 @@ export default class Player extends PlayerModel implements Updatable {
       this.object.name = this.id;
       this.object.position.z = this.size;
       this.object.receiveShadow = true;
+      this.objectLegs.receiveShadow = true;
       this.setAsDied();
       this.addToScene();
       this.initiated = true;
@@ -144,6 +143,7 @@ export default class Player extends PlayerModel implements Updatable {
 
   setAsDied() {
     this.object.castShadow = false;
+    this.objectLegs.castShadow = false;
     this.light?.setColor(0xff0000); //red
     (this.object.material as Material).transparent = true;
     (this.objectLegs.material as Material).transparent = true;
@@ -162,8 +162,6 @@ export default class Player extends PlayerModel implements Updatable {
     this.light?.setColor(0xffffff); //white
     (this.object.material as Material).transparent = false;
     (this.objectLegs.material as Material).transparent = false;
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // this.object.material.transparency = 1;
     // this.objectLegs.material.transparency = 1;
   }

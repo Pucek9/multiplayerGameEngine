@@ -18,7 +18,6 @@ let requestId: number;
 
 class Main {
   private menu: MenuComponent;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   private gameState: Game.Canvas | Game.Three;
   private events;
@@ -81,7 +80,6 @@ class Main {
     this.menu.requestFullscreen(e, 'F11');
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   registerEvents(gameState: Game.Canvas | Game.Three) {
     socket.on(API.ADD_NEW_PLAYER, gameState.appendNewPlayer.bind(gameState));

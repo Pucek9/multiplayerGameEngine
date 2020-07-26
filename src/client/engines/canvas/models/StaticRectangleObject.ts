@@ -17,7 +17,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     this.screen = screen;
     // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = require('../../../assets/textures/others/box.png');
+    this.img.src = require('../../../assets/textures/others/box.png').default;
     this.img.onload = () => {
       this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };

@@ -6,7 +6,7 @@ import { BaseLight } from './BaseLight';
 export default class CursorLight extends BaseLight {
   light: PointLight;
 
-  init({ cursor, intensity = 10 }: { cursor: Cursor; intensity?: number }) {
+  init({ cursor, intensity = 8 }: { cursor: Cursor; intensity?: number }) {
     this.dest = cursor;
     //
     this.light = new PointLight(0xffffff, intensity);

@@ -2,7 +2,7 @@ import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
 import CursorModel from '../../../interfaces/CursorModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
-const cursorPNG = require('../../../assets/textures/games/balls/3d/pointer.png');
+const cursorPNG = require('../../../assets/textures/games/balls/3d/pointer.png').default;
 
 export default class Cursor implements CursorModel {
   public x: number;

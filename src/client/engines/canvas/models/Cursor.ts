@@ -1,6 +1,6 @@
 import { renderImage } from '../../../../shared/canvasHelpers';
 
-const cursorPNG = require('../../../assets/textures/games/balls/2d/pointer.png');
+const cursorPNG = require('../../../assets/textures/games/balls/2d/pointer.png').default;
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';

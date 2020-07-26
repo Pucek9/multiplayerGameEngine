@@ -5,7 +5,7 @@ import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
 
-const head = require('../../../assets/textures/games/balls/2d/head.png');
+const head = require('../../../assets/textures/games/balls/2d/head.png').default;
 // const legs = require('../../../assets/textures/games/balls/2d/legs.png');
 
 export default class Player extends PlayerModel implements Updatable {
