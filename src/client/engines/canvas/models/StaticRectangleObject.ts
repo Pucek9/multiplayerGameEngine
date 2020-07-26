@@ -1,9 +1,7 @@
-import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
-
 import { drawRotatedRectangle, drawUnRotatedRectangle } from '../../../../shared/canvasHelpers';
-import { degToRad } from '../../../../shared/helpers';
 import { StaticRectangleObjectModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
@@ -13,11 +11,11 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
   private img: HTMLImageElement;
   private patt: CanvasPattern;
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
     // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = require('../../../assets/textures/others/box.png').default;
+    this.img.src = await this.screen.texture.getTexture(TEXTURE.BOX);
     this.img.onload = () => {
       this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };

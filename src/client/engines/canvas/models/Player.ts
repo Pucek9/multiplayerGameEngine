@@ -1,11 +1,12 @@
 import { renderImage } from '../../../../shared/canvasHelpers';
 import { PlayerModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
 
-const head = require('../../../assets/textures/games/balls/2d/head.png').default;
+// const head = require('../../../assets/textures/games/balls/head.png').default;
 // const legs = require('../../../assets/textures/games/balls/2d/legs.png');
 
 export default class Player extends PlayerModel implements Updatable {
@@ -22,11 +23,11 @@ export default class Player extends PlayerModel implements Updatable {
   // this.light = light;
   // }
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
       this.img = new Image();
-      this.img.src = head;
+      this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
       // this.img.onload = () => {
       //   this.patt = this.screen.renderer.ctx.createPattern(this.img, 'repeat');
       // };

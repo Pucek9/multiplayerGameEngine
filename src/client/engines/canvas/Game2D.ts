@@ -20,6 +20,7 @@ import PlayerListComponent from '../../UserInterface/PlayersList';
 import PowersListComponent from '../../UserInterface/PowersList';
 import TeamPlayerListComponent from '../../UserInterface/TeamPlayersList';
 import WeaponsListComponent from '../../UserInterface/WeaponsList';
+import { TextureService } from '../TextureService';
 // import shaderService from '../three/ShaderService';
 import Bullet from './models/Bullet';
 import Camera from './models/Camera';
@@ -48,12 +49,15 @@ export class CanvasRenderer {
     this.domElement.setAttribute('height', height.toString());
   }
 }
+
 export function prepareCanvasScreen(gameConfig: GameConfig): ScreenModel {
   const renderer = new CanvasRenderer();
   const camera = new Camera[gameConfig.camera]();
+  const texture = new TextureService(gameConfig.textures);
   document.body.appendChild(renderer.domElement);
 
   return {
+    texture,
     renderer,
     camera,
   };

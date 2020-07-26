@@ -1,6 +1,7 @@
 import { drawCircle } from '../../../../shared/canvasHelpers';
 import { StaticCircularObjectModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
@@ -10,11 +11,11 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
   private img: HTMLImageElement;
   private patt: CanvasPattern;
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
     // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = require('../../../assets/textures/others/cumin.jpg').default;
+    this.img.src = await this.screen.texture.getTexture(TEXTURE.CUMIN);
     this.img.onload = () => {
       this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };

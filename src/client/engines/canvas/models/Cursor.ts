@@ -1,10 +1,10 @@
 import { renderImage } from '../../../../shared/canvasHelpers';
 
-const cursorPNG = require('../../../assets/textures/games/balls/2d/pointer.png').default;
-
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
+
 export default class Cursor implements Updatable {
   public x: number;
   public y: number;
@@ -12,13 +12,13 @@ export default class Cursor implements Updatable {
   public screen: ScreenModel;
   public img: HTMLImageElement;
 
-  constructor(public src: string = cursorPNG) {
+  constructor() {
     this.img = new Image();
-    this.img.src = src;
   }
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
+    this.img.src = await this.screen.texture.getTexture(TEXTURE.POINTER);
     // this.screen.scene.add(this.id);
   }
 

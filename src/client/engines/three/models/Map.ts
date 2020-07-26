@@ -2,6 +2,7 @@ import { Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader } from 'three';
 
 import { MapModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
@@ -15,10 +16,10 @@ export default class Map implements Updatable, MapModel {
 
   constructor(props: MapModel) {
     Object.assign(this, props);
-    this.src = require(`../../../assets/textures/floors/${this.floor}.jpg`).default;
   }
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
+    this.src = await screen.texture.getTexture(TEXTURE[this.floor]);
     this.object = new Mesh(
       new PlaneGeometry(this.width, this.height, 0),
       new MeshPhongMaterial({

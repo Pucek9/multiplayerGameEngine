@@ -3,16 +3,18 @@ import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three'
 import { degToRad } from '../../../../shared/helpers';
 import { StaticCircularObjectModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const cumin = require('../../../assets/textures/others/cumin.jpg').default;
-
 export default class StaticCircularObject extends StaticCircularObjectModel implements Updatable {
   protected object: Mesh;
+  private screen: ScreenModel;
 
-  init(screen: ScreenModel) {
-    const texture = new TextureLoader().load(cumin);
+  async init(screen: ScreenModel) {
+    this.screen = screen;
+    const path = await this.screen.texture.getTexture(TEXTURE.CUMIN);
+    const texture = new TextureLoader().load(path);
     const geometry = new CylinderGeometry(this.size, this.size, 80, 32);
     const material = new MeshPhongMaterial({
       map: texture,

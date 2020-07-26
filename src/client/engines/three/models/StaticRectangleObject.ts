@@ -3,16 +3,18 @@ import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 import { degToRad } from '../../../../shared/helpers';
 import { StaticRectangleObjectModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-const box = require('../../../assets/textures/others/box.png').default;
-
 export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
   private object: Mesh;
+  private screen: ScreenModel;
 
-  init(screen: ScreenModel) {
-    const texture = new TextureLoader().load(box);
+  async init(screen: ScreenModel) {
+    this.screen = screen;
+    const path = await this.screen.texture.getTexture(TEXTURE.BOX);
+    const texture = new TextureLoader().load(path);
     const geometry = new BoxGeometry(this.width, this.height, this.depth);
     const material = new MeshPhongMaterial({
       map: texture,

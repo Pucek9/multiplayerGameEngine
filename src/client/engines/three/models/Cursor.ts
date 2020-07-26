@@ -1,8 +1,8 @@
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
+import { TEXTURE3D } from '../../../assets/textures';
 import CursorModel from '../../../interfaces/CursorModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
-const cursorPNG = require('../../../assets/textures/games/balls/3d/pointer.png').default;
 
 export default class Cursor implements CursorModel {
   public x: number;
@@ -11,20 +11,23 @@ export default class Cursor implements CursorModel {
   public object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshPhongMaterial;
+  private screen: ScreenModel;
 
-  constructor(public src: string = cursorPNG) {}
+  constructor() {}
 
   setGeometry() {
     this.geometry = new SphereGeometry(10, 10, 10, 1);
   }
 
-  setMaterial() {
+  async setMaterial() {
+    const map = await this.screen.texture.getTexture(TEXTURE3D.POINTER);
     this.material = new MeshPhongMaterial({
-      map: new TextureLoader().load(this.src),
+      map: new TextureLoader().load(map),
     });
   }
 
   init(screen: ScreenModel) {
+    this.screen = screen;
     this.setGeometry();
     this.setMaterial();
     this.object = new Mesh(this.geometry, this.material);

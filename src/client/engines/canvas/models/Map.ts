@@ -1,6 +1,7 @@
 import { renderMap } from '../../../../shared/canvasHelpers';
-import { MapModel, PlayerModel } from '../../../../shared/models';
+import { MapModel } from '../../../../shared/models';
 
+import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
@@ -12,19 +13,16 @@ export default class Map implements Updatable, MapModel {
   mapName: string;
   width: number;
   height: number;
-  floor: string;
+  floor: TEXTURE;
 
   constructor(props: MapModel) {
     Object.assign(this, props);
     this.img = new Image();
-    const src = require(`../../../assets/textures/floors/${this.floor}.jpg`).default;
-    console.log(src);
-    this.img.src = src;
   }
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
-    // this.screen.scene.add(this.id);
+    this.img.src = await screen.texture.getTexture(TEXTURE[this.floor]);
   }
 
   update() {

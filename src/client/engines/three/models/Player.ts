@@ -10,15 +10,10 @@ import {
 
 import { PlayerModel } from '../../../../shared/models';
 
+import { TEXTURE3D } from '../../../assets/textures';
 import { LightModel } from '../../../interfaces/LightModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
-// import { BaseLight } from './Light/BaseLight';
-
-const head = require('../../../assets/textures/games/balls/3d/head.jpg').default;
-const legs = require('../../../assets/textures/games/balls/3d/legs.png').default;
-const headTexture = new TextureLoader().load(head);
-const legsTexture = new TextureLoader().load(legs);
 
 export default class Player extends PlayerModel implements Updatable {
   public object: Mesh;
@@ -47,27 +42,29 @@ export default class Player extends PlayerModel implements Updatable {
     this.objectLegs.geometry = new BufferGeometry().fromGeometry(this.geometryLegs);
   }
 
-  setMaterial() {
+  setMaterial(headTexture, legsTexture) {
     this.material = new MeshPhysicalMaterial({
-      map: headTexture,
+      map: new TextureLoader().load(headTexture),
       color: this.color,
       // @ts-ignore
       transparency: 1,
     });
     // my tu byli i pili 18.07.2020
     this.legsMaterial = new MeshPhysicalMaterial({
-      map: legsTexture,
+      map: new TextureLoader().load(legsTexture),
       color: this.color,
       // @ts-ignore
       transparency: 1,
     });
   }
 
-  init(screen: ScreenModel) {
+  async init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
+      const headTexture = await this.screen.texture.getTexture(TEXTURE3D.HEAD);
+      const legsTexture = await this.screen.texture.getTexture(TEXTURE3D.LEGS);
       this.setGeometry();
-      this.setMaterial();
+      this.setMaterial(headTexture, legsTexture);
       this.object = new Mesh(this.geometry, this.material);
       this.objectLegs = new Mesh(this.geometryLegs, this.legsMaterial);
       this.object.name = this.id;

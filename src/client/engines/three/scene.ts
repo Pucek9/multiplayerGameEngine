@@ -4,6 +4,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 
 import ScreenModel from '../../interfaces/ScreenModel';
 import { GameConfig } from '../../store/gamesList/state';
+import { TextureService } from '../TextureService';
 import Camera from './models/Camera';
 import shaderService from './ShaderService';
 
@@ -11,6 +12,7 @@ export function prepareTreeJSScreen(gameConfig: GameConfig): ScreenModel {
   const scene = new Scene();
   const renderer = new WebGLRenderer({ antialias: true });
   const camera = new Camera[gameConfig.camera]();
+  const texture = new TextureService(gameConfig.textures);
 
   renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
   renderer.autoClear = true;
@@ -27,6 +29,7 @@ export function prepareTreeJSScreen(gameConfig: GameConfig): ScreenModel {
   composer.addPass(shaderService.outputPass);
 
   return {
+    texture,
     scene,
     renderer,
     camera,

@@ -13,11 +13,15 @@ export function drawUnRotatedRectangle(ctx, camera, x, y, width, height) {
 export function renderImage(ctx, camera, img, x, y, width, height, deg) {
   ctx.translate(-(camera.x - x), camera.y - y);
   ctx.rotate(deg);
-  ctx.drawImage(img, -img.width / 2, -img.height / 2);
+  if (img.src) {
+    ctx.drawImage(img, -img.width / 2, -img.height / 2);
+  }
 }
 
 export function renderMap(ctx, camera, img, width, height) {
-  ctx.drawImage(img, -camera.x - width / 2, camera.y - height / 2);
+  if (img.src) {
+    ctx.drawImage(img, -camera.x - width / 2, camera.y - height / 2);
+  }
 }
 
 export function drawRotatedRectangle(ctx, camera, x, y, width, height, deg) {
