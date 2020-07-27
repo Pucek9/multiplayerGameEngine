@@ -43,5 +43,17 @@ export default abstract class Steering {
     if (player.keys.has('Escape')) {
       game.disconnectPlayer(player);
     }
+
+    // if (player.keys.has('N')) {
+    //   player.speed = 10;
+    //   player.setSteering();
+    //   player.setCursor();
+    // }
+    //
+    // if (player.keys.has('M')) {
+    //   player.speed = player.baseSpeed;
+    //   player.removeSteering();
+    //   player.removeCursor();
+    // }
   }
 }

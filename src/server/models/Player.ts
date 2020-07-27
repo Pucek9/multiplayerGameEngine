@@ -1,12 +1,32 @@
 import { Direction, PlayerModel } from '../../shared/models';
 
 import { Angle } from '../services/CollisionDetector';
+import Cursor from '../services/Cursor/Cursor';
+import Steering from '../services/Steering/Steering';
 import AidKit from './AidKit';
 import Bullet from './Bullet';
 
 export default class Player extends PlayerModel {
   public keys: Set<string> = new Set();
   public regeneration = 2.5;
+  steering?: Steering;
+  cursorLogic?: Cursor;
+
+  setSteering(steering: Steering) {
+    this.steering = steering;
+  }
+
+  removeSteering() {
+    this.steering = null;
+  }
+
+  setCursor(cursor: Cursor) {
+    this.cursorLogic = cursor;
+  }
+
+  removeCursor() {
+    this.cursorLogic = null;
+  }
 
   isAlive() {
     return this.alive;

@@ -302,15 +302,23 @@ export default class BaseGame extends GameModel {
 
   performKeysOperation(player: Player) {
     if (player) {
-      this.steering.performKeysOperation(this, player);
+      if (player.steering) {
+        player.steering.performKeysOperation(this, player);
+      } else {
+        this.steering.performKeysOperation(this, player);
+      }
     }
   }
 
   updateCursor(mouseCoordinates: MouseCoordinates) {
-    const owner = this.getPlayer(mouseCoordinates.owner);
-    if (owner) {
-      this.cursor.updateCursor(mouseCoordinates, owner);
-      owner.updateDirection();
+    const player = this.getPlayer(mouseCoordinates.owner);
+    if (player) {
+      if (player.cursorLogic) {
+        player.cursorLogic.updateCursor(mouseCoordinates, player);
+      } else {
+        this.cursor.updateCursor(mouseCoordinates, player);
+      }
+      player.updateDirection();
     }
   }
 
