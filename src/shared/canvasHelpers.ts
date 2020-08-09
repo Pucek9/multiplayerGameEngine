@@ -10,11 +10,25 @@ export function drawUnRotatedRectangle(ctx, camera, x, y, width, height) {
   // ctx.rect(0, 0, width, -height);
 }
 
-export function renderImage(ctx, camera, img, x, y, width, height, deg) {
+// export function renderImage(ctx: CanvasRenderingContext2D, camera, img, x, y, width, height, deg) {
+//   ctx.translate(-(camera.x - x), camera.y - y);
+//   ctx.rotate(deg);
+//   if (img.src) {
+//     ctx.drawImage(img, width, height);
+//   }
+// }
+
+export function renderImage(ctx: CanvasRenderingContext2D, camera, img, x, y, width, height, deg) {
   ctx.translate(-(camera.x - x), camera.y - y);
   ctx.rotate(deg);
   if (img.src) {
-    ctx.drawImage(img, -img.width / 2, -img.height / 2);
+    ctx.drawImage(
+      img,
+      (-width * camera.zoom) / 2,
+      (-height * camera.zoom) / 2,
+      width * camera.zoom,
+      height * camera.zoom,
+    );
   }
 }
 

@@ -33,8 +33,4 @@ export default class RotateCamera extends BaseCamera {
     this.renderer.ctx.rotate(this.diff);
     this.diff = DEFAULT_ROTATE;
   }
-
-  wheel() {}
-  remove() {}
-  handleResize() {}
 }

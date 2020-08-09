@@ -6,6 +6,7 @@ import Model3D from '../../../../interfaces/Model3D';
 export default class BaseCamera implements CameraModel {
   public x = 0;
   public y = 0;
+  public zoom = 2;
 
   protected observedObject: Model3D;
   protected renderer;
@@ -20,7 +21,13 @@ export default class BaseCamera implements CameraModel {
 
   update() {}
 
-  wheel() {}
+  wheel(e: WheelEvent) {
+    if (e.deltaY > 0) {
+      this.zoom += 0.1;
+    } else {
+      this.zoom -= 0.1;
+    }
+  }
   remove() {}
   handleResize() {}
 }

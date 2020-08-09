@@ -22,8 +22,4 @@ export default class DynamicCamera extends BaseCamera {
       this.renderer.domElement.height / 2,
     );
   }
-
-  wheel() {}
-  remove() {}
-  handleResize() {}
 }

@@ -17,8 +17,4 @@ export default class StaticCamera extends BaseCamera {
       this.renderer.domElement.height / 2,
     );
   }
-
-  wheel() {}
-  remove() {}
-  handleResize() {}
 }
