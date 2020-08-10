@@ -45,6 +45,15 @@ export function randColor(): string {
   return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
+export function getColors(rgb: string) {
+  const [red, green, blue] = rgb
+    .replace('rgb(', '')
+    .replace(')', '')
+    .split(',')
+    .map(text => parseInt(text, 10));
+  return { red, green, blue };
+}
+
 export function times(
   count: number,
   callback: (value: number, index?: number, array?: Array<number>) => void,

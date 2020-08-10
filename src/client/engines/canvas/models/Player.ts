@@ -1,4 +1,4 @@
-import { renderImage } from '../../../../shared/canvasHelpers';
+import { convertImage, renderImage } from '../../../../shared/canvasHelpers';
 import { PlayerModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
@@ -30,7 +30,9 @@ export default class Player extends PlayerModel implements Updatable {
       this.img = new Image();
       this.imgLegs = new Image();
       this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
-      this.imgLegs.src = await this.screen.texture.getTexture(TEXTURE.LEGS);
+      const legsSrc = await this.screen.texture.getTexture(TEXTURE.LEGS);
+      console.log(this.color);
+      this.imgLegs.src = await convertImage(legsSrc, this.color);
       this.initiated = true;
     }
   }
@@ -56,7 +58,7 @@ export default class Player extends PlayerModel implements Updatable {
 
   setAsEnemy() {}
 
-  updateLegs(ctx, camera) {
+  updateLegs(ctx: CanvasRenderingContext2D, camera) {
     ctx.save();
     if (!this.isAlive()) {
       ctx.globalAlpha = 0.2;

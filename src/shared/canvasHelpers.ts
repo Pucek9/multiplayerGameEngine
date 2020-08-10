@@ -1,4 +1,4 @@
-import { degToRad, rotatePoint } from './helpers';
+import { degToRad, getColors, rotatePoint } from './helpers';
 
 export function drawCircle(ctx, camera, x, y, size) {
   ctx.arc(-(camera.x - x), camera.y - y, size, 0, 2 * Math.PI);
@@ -63,4 +63,76 @@ export function drawRotatedRectangle(ctx, camera, x, y, width, height, deg) {
   ctx.lineTo(rotateRightBottom.x, rotateRightBottom.y);
   ctx.lineTo(rotateLeftBottom.x, rotateLeftBottom.y);
   ctx.closePath();
+}
+
+const filters = {
+  grayscale: (pixels, args?) => {
+    const d = pixels.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const r = d[i];
+      const g = d[i + 1];
+      const b = d[i + 2];
+      // CIE luminance for the RGB
+      // The human eye is bad at seeing red and blue, so we de-emphasize them.
+      const v = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      d[i] = d[i + 1] = d[i + 2] = v;
+    }
+    return pixels;
+  },
+
+  brightness: (pixels, adjustment?) => {
+    const d = pixels.data;
+    for (let i = 0; i < d.length; i += 4) {
+      d[i] += adjustment;
+      d[i + 1] += adjustment;
+      d[i + 2] += adjustment;
+    }
+    return pixels;
+  },
+
+  RGB: (pixels, args?) => {
+    const data = pixels.data,
+      nPixels = data.length,
+      red = args.red,
+      green = args.green,
+      blue = args.blue;
+
+    for (let i = 0; i < nPixels; i += 4) {
+      const brightness = (0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2]) / 255;
+      data[i] = brightness * red; // r
+      data[i + 1] = brightness * green; // g
+      data[i + 2] = brightness * blue; // b
+      data[i + 3] = data[i + 3]; // alpha
+    }
+    return pixels;
+  },
+};
+
+export async function convertImage(src, color?) {
+  const image = await addImageProcess(src);
+  const myCanvas = document.createElement('canvas');
+  const myCanvasContext = myCanvas.getContext('2d');
+
+  const imgWidth = image.width || image.naturalWidth;
+  const imgHeight = image.height || image.naturalHeight;
+  // set the width and height to the same as the image
+  myCanvas.width = imgWidth;
+  myCanvas.height = imgHeight;
+
+  // draw the image
+  myCanvasContext.drawImage(image, 0, 0);
+  // get all the image data into an array
+  const imageData = myCanvasContext.getImageData(0, 0, imgWidth, imgHeight);
+  filters.RGB(imageData, getColors(color));
+  myCanvasContext.putImageData(imageData, 0, 0, 0, 0, imageData.width, imageData.height);
+  return myCanvas.toDataURL('image/png');
+}
+
+async function addImageProcess(src): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
 }

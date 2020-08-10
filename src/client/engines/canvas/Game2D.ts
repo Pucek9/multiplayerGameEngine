@@ -193,9 +193,12 @@ export default class Game2D {
         //   x: player.x - foundPlayer.x,
         //   y: player.y - foundPlayer.y,
         // };
+        // const ctx = (this.screen.renderer as CanvasRenderer).ctx;
         // if (foundPlayer.speed > foundPlayer.baseSpeed && (diff.x !== 0 || diff.y !== 0)) {
         //   shaderService.turnOnShaders();
+        //   ctx.filter = 'blur(10px)';
         // } else {
+        //   ctx.filter = 'none';
         //   shaderService.turnOffShaders();
         // }
 

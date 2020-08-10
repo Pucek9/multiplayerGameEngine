@@ -11,6 +11,7 @@ export default class Cursor implements Updatable {
   public z = 50;
   public screen: ScreenModel;
   public img: HTMLImageElement;
+  public size = 5;
 
   constructor() {
     this.img = new Image();
@@ -26,7 +27,7 @@ export default class Cursor implements Updatable {
     const ctx = (this.screen.renderer as CanvasRenderer).ctx;
     const camera = this.screen.camera;
     ctx.save();
-    renderImage(ctx, camera, this.img, this.x, this.y, this.img.width, this.img.height, 0);
+    renderImage(ctx, camera, this.img, this.x, this.y, this.size, this.size, 0);
     ctx.restore();
   }
 }
