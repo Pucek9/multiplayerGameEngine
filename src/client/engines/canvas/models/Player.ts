@@ -1,13 +1,12 @@
+import { rgb } from '../../../../shared/canvasFilters';
 import { convertImage, renderImage } from '../../../../shared/canvasHelpers';
+import { getColors } from '../../../../shared/helpers';
 import { PlayerModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
-
-// const head = require('../../../assets/textures/games/balls/head.png').default;
-// const legs = require('../../../assets/textures/games/balls/2d/legs.png');
 
 export default class Player extends PlayerModel implements Updatable {
   // public object: Mesh;
@@ -31,8 +30,7 @@ export default class Player extends PlayerModel implements Updatable {
       this.imgLegs = new Image();
       this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
       const legsSrc = await this.screen.texture.getTexture(TEXTURE.LEGS);
-      console.log(this.color);
-      this.imgLegs.src = await convertImage(legsSrc, this.color);
+      this.imgLegs.src = await convertImage(legsSrc, rgb, getColors(this.color));
       this.initiated = true;
     }
   }

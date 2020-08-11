@@ -1,4 +1,4 @@
-import { SubType } from './types';
+import { Colors, SubType } from './types';
 
 function* incrementer(): Generator<number> {
   let index = 0;
@@ -45,7 +45,7 @@ export function randColor(): string {
   return `rgb(${randRGB()},${randRGB()},${randRGB()})`;
 }
 
-export function getColors(rgb: string) {
+export function getColors(rgb: string): Colors {
   const [red, green, blue] = rgb
     .replace('rgb(', '')
     .replace(')', '')
