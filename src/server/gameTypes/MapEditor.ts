@@ -24,13 +24,14 @@ export default class MapEditor extends BaseGame {
     const object = collisionDetector.detectObjectByCollision(player.cursor, allObjects);
     if (object) {
       this.pickupObjects.set(player.id, object);
+    } else {
+      this.pickupObjects.delete(player.id);
     }
   }
 
   mouseUp(owner: string) {
     const player = this.getPlayer(owner);
     player?.setMouseUp();
-    this.pickupObjects.delete(owner);
   }
 
   updateCursor(mouseCoordinates: MouseCoordinates) {
