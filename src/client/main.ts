@@ -108,6 +108,8 @@ class Main {
 
     socket.on(API.GET_POWER_DETAILS, gameState.updatePowersInfo.bind(gameState));
 
+    socket.on(API.MESSAGE, gameState.message.bind(gameState));
+
     socket.on(API.LEAVE_GAME, () => {
       this.leaveGame();
     });

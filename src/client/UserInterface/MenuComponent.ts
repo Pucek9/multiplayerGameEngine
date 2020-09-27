@@ -1,7 +1,7 @@
 import { Unsubscribe } from 'redux';
 
 import { GameInstance } from '../../shared/apiModels';
-import { FREE4ALL } from '../../shared/constants';
+import { HAXBALL, ROUND_TEAM_BATTLE, TEAM_BATTLE } from '../../shared/constants';
 import { times } from '../../shared/helpers';
 
 import { GamesListState } from '../store/gamesList/state';
@@ -70,14 +70,18 @@ export default class MenuComponent {
     gameTypeInput.value = gameState.type;
     gameTypeInput.addEventListener('change', () => {
       createGamesService.setGameType(gameTypeInput.value);
-      if (gameTypeInput.value === FREE4ALL) {
-        this.hideTeamsSection();
-        this.clearTeamsInputsList();
-        createGamesService.disableTeams();
-      } else {
+      if (
+        gameTypeInput.value === TEAM_BATTLE ||
+        gameTypeInput.value === HAXBALL ||
+        gameTypeInput.value === ROUND_TEAM_BATTLE
+      ) {
         createGamesService.enableTeams();
         this.showTeamsSection();
         this.prepareTeamSection();
+      } else {
+        this.hideTeamsSection();
+        this.clearTeamsInputsList();
+        createGamesService.disableTeams();
       }
     });
 

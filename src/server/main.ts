@@ -36,7 +36,7 @@ function connection(socket: Socket) {
     socketIo.to(gameState.roomName).emit(API.ADD_NEW_PLAYER, player);
     socketIo.to(newPlayer.id).emit(API.ADD_PLAYERS, gameState.getPlayers());
     socketIo.to(newPlayer.id).emit(API.ADD_NEW_BULLET, gameState.getNormalizedBullets());
-    socketIo.to(newPlayer.id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
+    emitter.emitStaticObjects(newPlayer.id, gameState);
     socketIo.to(newPlayer.id).emit(API.GET_ITEM_GENERATORS, gameState.getItemGeneratorsAPI());
     emitter.emitGamesList();
   }

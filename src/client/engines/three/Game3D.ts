@@ -194,6 +194,10 @@ export default class Game3D {
   }
 
   appendStaticObjects(newObjects: Array<ObjectModel>) {
+    if (this.staticObjects.length > 0) {
+      this.staticObjects.forEach(object => object.remove());
+      this.staticObjects = [];
+    }
     newObjects
       .filter(newObject => newObject.color !== INVISIBLE)
       .forEach(newObject => {
@@ -315,5 +319,9 @@ export default class Game3D {
 
   updatePowersInfo(info: PowersApiModel) {
     this.powersListComponent.render(info);
+  }
+
+  message(object: any) {
+    console.log('MESSAGE', object);
   }
 }

@@ -34,4 +34,8 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
   }
 
   update() {}
+
+  remove() {
+    this.screen.scene.remove(this.object);
+  }
 }

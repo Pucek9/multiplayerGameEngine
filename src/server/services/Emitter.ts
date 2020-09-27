@@ -42,6 +42,10 @@ export default class Emitter {
     this.socketIo.to(gameState.roomName).emit(API.GET_TEAMS_LIST, gameState.teams);
   }
 
+  emitStaticObjects(id: string, gameState) {
+    this.socketIo.to(id).emit(API.GET_STATIC_OBJECTS, gameState.getStaticObjects());
+  }
+
   disconnectPlayer(roomName: string, disconnected: Player) {
     const id = disconnected.id;
     console.log(`[${id}] Player '${disconnected.name}' left '${roomName}'`);
@@ -58,5 +62,9 @@ export default class Emitter {
       socket.removeAllListeners(API.UPDATE_DIRECTION);
       socket.leave(roomName);
     }
+  }
+
+  emitMessage(id: string, object: any) {
+    this.socketIo.to(id).emit(API.MESSAGE, object);
   }
 }

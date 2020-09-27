@@ -235,6 +235,7 @@ export default class Game2D {
   }
 
   appendStaticObjects(newObjects: Array<ObjectModel>) {
+    this.staticObjects = [];
     newObjects
       .filter(newObject => newObject.color !== INVISIBLE)
       .forEach(newObject => {
@@ -366,5 +367,9 @@ export default class Game2D {
 
   updatePowersInfo(info: PowersApiModel) {
     this.powersListComponent.render(info);
+  }
+
+  message(object: any) {
+    console.log('MESSAGE', object);
   }
 }

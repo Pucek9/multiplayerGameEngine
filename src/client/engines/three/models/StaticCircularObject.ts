@@ -30,4 +30,8 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
   }
 
   update() {}
+
+  remove() {
+    this.screen.scene.remove(this.object);
+  }
 }

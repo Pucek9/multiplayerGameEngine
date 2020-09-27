@@ -156,6 +156,13 @@ export class CollisionDetector {
   ): boolean {
     return objects.some(object => this.detectCollision(target, object).collision);
   }
+
+  detectObjectByCollision(
+    target: Circle | Rectangle,
+    objects: (Circle | Rectangle)[],
+  ): Circle | Rectangle {
+    return objects.find(object => this.detectCollision(target, object)?.collision);
+  }
 }
 
 const collisionDetector = new CollisionDetector();
