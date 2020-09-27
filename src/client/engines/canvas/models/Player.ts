@@ -16,7 +16,7 @@ export default class Player extends PlayerModel implements Updatable {
   private img: HTMLImageElement;
   private imgLegs: HTMLImageElement;
   private patt: CanvasPattern;
-
+  private headScale: number;
   private initiated = false;
 
   // setLight(light: Lighting) {
@@ -28,8 +28,11 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isInitiated()) {
       this.img = new Image();
       this.imgLegs = new Image();
-      this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
+      // this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
+      const src = await this.screen.texture.getTexture(TEXTURE.HEAD);
+      this.headScale = this.screen.texture.getScale(TEXTURE.HEAD);
       const legsSrc = await this.screen.texture.getTexture(TEXTURE.LEGS);
+      this.img.src = await convertImage(src, rgb, getColors(this.color));
       this.imgLegs.src = await convertImage(legsSrc, rgb, getColors(this.color));
       this.initiated = true;
     }
@@ -79,7 +82,16 @@ export default class Player extends PlayerModel implements Updatable {
     if (!this.isAlive()) {
       ctx.globalAlpha = 0.2;
     }
-    renderImage(ctx, camera, this.img, this.x, this.y, this.size, this.size, -this.bodyDirection);
+    renderImage(
+      ctx,
+      camera,
+      this.img,
+      this.x,
+      this.y,
+      this.size * this.headScale,
+      this.size * this.headScale,
+      -this.bodyDirection,
+    );
     ctx.restore();
   }
 

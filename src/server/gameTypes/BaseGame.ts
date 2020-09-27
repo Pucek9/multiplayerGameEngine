@@ -218,7 +218,7 @@ export default class BaseGame extends GameModel {
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
-            object.hitFromBullet(bullet, angle);
+            object.hitFromBullet(bullet, angle, this);
             bullet.hit(angle, object);
             this.deleteBulletIfInactive(bullet, i);
           }

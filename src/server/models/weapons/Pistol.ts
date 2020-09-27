@@ -10,6 +10,7 @@ export default class Pistol extends Weapon {
   minTimeBetweenBullets = 200;
   reloadTime = 1500;
   shootBulletsCount = 1;
+  offset = -0.2;
   bulletConfig = {
     type: PISTOL,
     size: 3,

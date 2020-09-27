@@ -1,50 +1,48 @@
-import { TEXTURE, TEXTURE3D } from '../assets/textures';
+import { renderMapping, TEXTURE, textureConfig } from '../assets/textures';
 
 export class TextureService {
-  gamePath: string;
+  constructor(public game: string, public gameEngine: string) {}
 
-  constructor(textures: string) {
-    this.gamePath = textures;
-  }
-
-  // setTexture(img, texture: TEXTURE) {
-  //   function setSrc(data) {
-  //     img.src = data.default;
+  // async getTexture(texture: TEXTURE) {
+  //   let file;
+  //   try {
+  //     file = await import(`../assets/textures/games/${this.game}/${texture}`);
+  //   } catch (e) {
+  //     console.warn(`Missing texture ../assets/textures/games/${this.game}/${texture}`);
+  //     file = await import(`../assets/textures/default/${texture}`);
   //   }
-  //
-  //   const gamePath = this.gamePath;
-  //   import(`../assets/textures/games/${gamePath}/${texture}`)
-  //     .then(setSrc)
-  //     .catch(() => {
-  //       console.warn(`Missing texture ../assets/textures/games/${gamePath}/${texture}`);
-  //       return import(`../assets/textures/default/${texture}`);
-  //     })
-  //     .then(setSrc)
-  //     .catch(() => {
-  //       console.warn(`Missing texture ../assets/textures/default/${texture}`);
-  //     });
+  //   return file.default;
   // }
 
-  async getTexture(texture: TEXTURE | TEXTURE3D) {
-    const gamePath = this.gamePath;
-    let path;
+  async getTexture(texture: TEXTURE) {
+    let file;
+    const gameEngine = renderMapping[this.gameEngine];
     try {
-      path = await import(`../assets/textures/games/${gamePath}/${texture}`);
+      file = await this.getTexturePath(texture);
     } catch (e) {
-      console.warn(`Missing texture ../assets/textures/games/${gamePath}/${texture}`);
-      path = await import(`../assets/textures/default/${texture}`);
+      console.warn(
+        `Missing configuration for texture ${texture} in ../assets/textures/${
+          textureConfig[this.game].path
+        }/`,
+      );
+      file = await this.getTexturePath(texture, 'default');
     }
-    return path.default;
-    //
-    // import(`../assets/textures/games/${gamePath}/${texture}`)
-    //     .then(setSrc)
-    //     .catch(() => {
-    //       console.warn(`Missing texture ../assets/textures/games/${gamePath}/${texture}`);
-    //       return import(`../assets/textures/default/${texture}`);
-    //     })
-    //     .then(setSrc)
-    //     .catch(() => {
-    //       console.warn(`Missing texture ../assets/textures/default/${texture}`);
-    //     });
+    return file.default;
+  }
+
+  async getTexturePath(texture, game = this.game) {
+    const config = textureConfig[game];
+    const gameEngine = renderMapping[this.gameEngine];
+    return await import(
+      `../assets/textures/${config.path}/${
+        config[gameEngine]?.textures?.[texture]?.fileName ?? config.textures?.[texture]?.fileName
+      }`
+    );
+  }
+
+  getScale(texture, game = this.game) {
+    const config = textureConfig[game];
+    const gameEngine = renderMapping[this.gameEngine];
+    return config[gameEngine]?.textures?.[texture]?.scale ?? config.textures?.[texture]?.scale ?? 1;
   }
 }

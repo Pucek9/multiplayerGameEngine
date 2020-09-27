@@ -17,7 +17,7 @@ export default class Knife extends Weapon {
     flash: false,
     size: 8,
     speed: 1,
-    power: 15,
+    power: 6,
     range: 40,
     allowForManipulate: false,
     hit(angle?: { x: number; y: number }, object?) {},

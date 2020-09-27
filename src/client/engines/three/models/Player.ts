@@ -10,7 +10,7 @@ import {
 
 import { PlayerModel } from '../../../../shared/models';
 
-import { TEXTURE3D } from '../../../assets/textures';
+import { TEXTURE } from '../../../assets/textures';
 import { LightModel } from '../../../interfaces/LightModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
@@ -61,8 +61,8 @@ export default class Player extends PlayerModel implements Updatable {
   async init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      const headTexture = await this.screen.texture.getTexture(TEXTURE3D.HEAD);
-      const legsTexture = await this.screen.texture.getTexture(TEXTURE3D.LEGS);
+      const headTexture = await this.screen.texture.getTexture(TEXTURE.HEAD);
+      const legsTexture = await this.screen.texture.getTexture(TEXTURE.LEGS);
       this.setGeometry();
       this.setMaterial(headTexture, legsTexture);
       this.object = new Mesh(this.geometry, this.material);

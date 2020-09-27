@@ -8,6 +8,7 @@ export default abstract class Weapon implements Item {
   type: string;
   ready = true;
   loaded = true;
+  offset = 0;
   magazines: number;
   bulletsInMagazine: number;
   maxBulletsInMagazine: number;

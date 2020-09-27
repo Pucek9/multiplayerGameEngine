@@ -1,6 +1,6 @@
 import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
 
-import { TEXTURE3D } from '../../../assets/textures';
+import { TEXTURE } from '../../../assets/textures';
 import CursorModel from '../../../interfaces/CursorModel';
 import ScreenModel from '../../../interfaces/ScreenModel';
 
@@ -20,7 +20,7 @@ export default class Cursor implements CursorModel {
   }
 
   async setMaterial() {
-    const map = await this.screen.texture.getTexture(TEXTURE3D.POINTER);
+    const map = await this.screen.texture.getTexture(TEXTURE.POINTER);
     this.material = new MeshPhongMaterial({
       map: new TextureLoader().load(map),
     });

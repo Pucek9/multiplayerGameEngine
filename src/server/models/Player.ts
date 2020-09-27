@@ -87,8 +87,13 @@ export default class Player extends PlayerModel {
     this.kills += score;
   }
 
-  hitFromBullet(bullet: Bullet, angle?: Angle) {
+  hitFromBullet(bullet: Bullet, angle?: Angle, game?) {
     if (this.isAlive()) {
+      this.direction.dx = bullet.direction.dx;
+      this.direction.dy = bullet.direction.dy;
+      if (bullet.power > 0 && !game.detectPlayerCollisionWithObjects(this)) {
+        this.go();
+      }
       this.hp -= bullet.power;
       bullet.effectOnPlayer(this);
       if (this.hp <= 0) {
@@ -105,8 +110,8 @@ export default class Player extends PlayerModel {
     this.selectedWeapon?.shoot(
       {
         owner: this,
-        fromX: this.x + this.size * Math.cos(this.bodyDirection),
-        fromY: this.y + this.size * Math.sin(this.bodyDirection),
+        fromX: this.x + this.size * Math.cos(this.bodyDirection + this.selectedWeapon.offset),
+        fromY: this.y + this.size * Math.sin(this.bodyDirection + this.selectedWeapon.offset),
         targetX: this.cursor.x,
         targetY: this.cursor.y,
         dir: this.isMoving() ? this.direction : { dx: 0, dy: 0 },

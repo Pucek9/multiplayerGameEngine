@@ -6,9 +6,15 @@ export default class Item extends Model3D implements Updatable {
   time: number;
   id: number;
 
-  update() {
+  setVisibility() {
     if (this.object) {
       this.object.visible = this.ready;
+    }
+  }
+
+  update() {
+    if (this.object) {
+      this.object.rotation.y += 0.05;
     }
   }
 }

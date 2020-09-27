@@ -10,6 +10,7 @@ export default class ArcticWarfarePolice extends Weapon {
   minTimeBetweenBullets = 1000;
   reloadTime = 1500;
   shootBulletsCount = 1;
+  offset = -0.25;
   bulletConfig = {
     type: AWP,
     size: 4,

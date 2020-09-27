@@ -53,7 +53,7 @@ export class CanvasRenderer {
 export function prepareCanvasScreen(gameConfig: GameConfig): ScreenModel {
   const renderer = new CanvasRenderer();
   const camera = new Camera[gameConfig.camera]();
-  const texture = new TextureService(gameConfig.textures);
+  const texture = new TextureService(gameConfig.textures, gameConfig.renderEngine);
   document.body.appendChild(renderer.domElement);
 
   return {

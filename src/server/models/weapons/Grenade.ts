@@ -11,6 +11,7 @@ export default class Grenade extends Weapon {
   maxBulletsInMagazine = 5;
   bulletsInMagazine = 5;
   minTimeBetweenBullets = 500;
+  offset = -0.25;
   reloadTime = 1000;
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {

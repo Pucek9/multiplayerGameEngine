@@ -224,7 +224,7 @@ export default class Game3D {
     );
     if (itemGenerator) {
       itemGenerator.ready = updatedItemGenerator.ready;
-      itemGenerator.update();
+      itemGenerator.setVisibility();
     }
   }
 
@@ -269,6 +269,7 @@ export default class Game3D {
         this.screen.camera,
         ...this.bullets,
         ...this.players,
+        ...this.itemGenerators,
         this.cursor,
         this.light,
         this.text,

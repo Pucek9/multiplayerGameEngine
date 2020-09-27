@@ -60,7 +60,7 @@ export default class RoundTeamBattle extends BaseTeamGame {
         .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
-            object.hitFromBullet(bullet, angle);
+            object.hitFromBullet(bullet, angle, this);
             bullet.hit(angle, object);
             if (object instanceof Player && !object.isAlive()) {
               const team = this.findTeam(bullet.owner.team);

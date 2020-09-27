@@ -15,6 +15,7 @@ export default class Shotgun extends Weapon {
   minTimeBetweenBullets = 500;
   reloadTime = 2000;
   shootBulletsCount = 5;
+  offset = -0.25;
   bulletConfig = {
     type: SHOTGUN,
     size: 2,

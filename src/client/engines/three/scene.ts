@@ -12,7 +12,7 @@ export function prepareTreeJSScreen(gameConfig: GameConfig): ScreenModel {
   const scene = new Scene();
   const renderer = new WebGLRenderer({ antialias: true });
   const camera = new Camera[gameConfig.camera]();
-  const texture = new TextureService(gameConfig.textures);
+  const texture = new TextureService(gameConfig.textures, gameConfig.renderEngine);
 
   renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
   renderer.autoClear = true;
