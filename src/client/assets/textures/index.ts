@@ -7,6 +7,7 @@ export enum TEXTURE {
   GRASS = 'GRASS',
   STADIUM_GRASS = 'STADIUM_GRASS',
   CIRCUIT_BOARD = 'CIRCUIT_BOARD',
+  CITY = 'CITY',
 }
 
 // export enum TEXTURE {
@@ -55,6 +56,7 @@ export const textureConfig: TextureConfig = {
       GRASS: { fileName: 'grass.jpg' },
       STADIUM_GRASS: { fileName: 'stadiumGrass.jpg' },
       CIRCUIT_BOARD: { fileName: 'circuitBoard.jpg' },
+      CITY: { fileName: 'city.png' },
     },
   },
   soldiers: {
