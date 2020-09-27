@@ -61,8 +61,8 @@ export default class Player extends PlayerModel implements Updatable {
   async init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      const headTexture = await this.screen.texture.getTexture(TEXTURE.HEAD);
-      const legsTexture = await this.screen.texture.getTexture(TEXTURE.LEGS);
+      const headTexture = await this.screen.texture.getTextureSrc(TEXTURE.HEAD);
+      const legsTexture = await this.screen.texture.getTextureSrc(TEXTURE.LEGS);
       this.setGeometry();
       this.setMaterial(headTexture, legsTexture);
       this.object = new Mesh(this.geometry, this.material);

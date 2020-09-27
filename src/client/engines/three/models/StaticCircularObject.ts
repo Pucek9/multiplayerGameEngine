@@ -13,7 +13,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
 
   async init(screen: ScreenModel) {
     this.screen = screen;
-    const path = await this.screen.texture.getTexture(TEXTURE.CUMIN);
+    const path = await this.screen.texture.getTextureSrc(TEXTURE.CUMIN);
     const texture = new TextureLoader().load(path);
     const geometry = new CylinderGeometry(this.size, this.size, 80, 32);
     const material = new MeshPhongMaterial({

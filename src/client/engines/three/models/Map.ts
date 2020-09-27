@@ -19,7 +19,7 @@ export default class Map implements Updatable, MapModel {
   }
 
   async init(screen: ScreenModel) {
-    this.src = await screen.texture.getTexture(TEXTURE[this.floor]);
+    this.src = await screen.texture.getTextureSrc(TEXTURE[this.floor]);
     this.object = new Mesh(
       new PlaneGeometry(this.width, this.height, 0),
       new MeshPhongMaterial({

@@ -13,10 +13,11 @@ export default class Player extends PlayerModel implements Updatable {
   // public objectLegs: Mesh;
   // private light: Lighting;
   private screen: ScreenModel;
-  private img: HTMLImageElement;
-  private imgLegs: HTMLImageElement;
+  private img: HTMLImageElement = new Image();
+  private imgLegs: HTMLImageElement = new Image();
   private patt: CanvasPattern;
   private headScale: number;
+  private legsScale: number;
   private initiated = false;
 
   // setLight(light: Lighting) {
@@ -26,16 +27,16 @@ export default class Player extends PlayerModel implements Updatable {
   async init(screen: ScreenModel) {
     this.screen = screen;
     if (!this.isInitiated()) {
-      this.img = new Image();
-      this.imgLegs = new Image();
-      // this.img.src = await this.screen.texture.getTexture(TEXTURE.HEAD);
-      const src = await this.screen.texture.getTexture(TEXTURE.HEAD);
-      this.headScale = this.screen.texture.getScale(TEXTURE.HEAD);
-      const legsSrc = await this.screen.texture.getTexture(TEXTURE.LEGS);
-      this.img.src = await convertImage(src, rgb, getColors(this.color));
-      this.imgLegs.src = await convertImage(legsSrc, rgb, getColors(this.color));
+      this.headScale = await this.initImage(this.img, TEXTURE.HEAD);
+      this.legsScale = await this.initImage(this.imgLegs, TEXTURE.LEGS);
       this.initiated = true;
     }
+  }
+
+  async initImage(img, texture) {
+    const { src, scale } = await this.screen.texture.getTextureInfo(texture);
+    img.src = await convertImage(src, rgb, getColors(this.color));
+    return scale;
   }
 
   isInitiated() {

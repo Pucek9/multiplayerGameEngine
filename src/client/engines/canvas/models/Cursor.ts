@@ -19,7 +19,7 @@ export default class Cursor implements Updatable {
 
   async init(screen: ScreenModel) {
     this.screen = screen;
-    this.img.src = await this.screen.texture.getTexture(TEXTURE.POINTER);
+    this.img.src = await this.screen.texture.getTextureSrc(TEXTURE.POINTER);
     // this.screen.scene.add(this.id);
   }
 

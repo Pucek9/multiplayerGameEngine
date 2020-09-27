@@ -22,7 +22,7 @@ export default class Map implements Updatable, MapModel {
 
   async init(screen: ScreenModel) {
     this.screen = screen;
-    this.img.src = await screen.texture.getTexture(TEXTURE[this.floor]);
+    this.img.src = await screen.texture.getTextureSrc(TEXTURE[this.floor]);
   }
 
   update() {

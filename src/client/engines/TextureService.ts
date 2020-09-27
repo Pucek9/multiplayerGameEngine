@@ -3,7 +3,7 @@ import { renderMapping, TEXTURE, textureConfig } from '../assets/textures';
 export class TextureService {
   constructor(public game: string, public gameEngine: string) {}
 
-  // async getTexture(texture: TEXTURE) {
+  // async getTextureSrc(texture: TEXTURE) {
   //   let file;
   //   try {
   //     file = await import(`../assets/textures/games/${this.game}/${texture}`);
@@ -14,7 +14,16 @@ export class TextureService {
   //   return file.default;
   // }
 
-  async getTexture(texture: TEXTURE) {
+  async getTextureInfo(texture): Promise<{ src: string; scale: number }> {
+    const src = await this.getTextureSrc(texture);
+    const scale = this.getScale(texture);
+    return {
+      src,
+      scale,
+    };
+  }
+
+  async getTextureSrc(texture: TEXTURE): Promise<string> {
     let file;
     const gameEngine = renderMapping[this.gameEngine];
     try {

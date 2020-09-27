@@ -15,7 +15,7 @@ export default class StaticCircularObject extends StaticCircularObjectModel impl
     this.screen = screen;
     // screen.scene.add(this.id);
     this.img = new Image();
-    this.img.src = await this.screen.texture.getTexture(TEXTURE.CUMIN);
+    this.img.src = await this.screen.texture.getTextureSrc(TEXTURE.CUMIN);
     this.img.onload = () => {
       this.patt = (this.screen.renderer as CanvasRenderer).ctx.createPattern(this.img, 'repeat');
     };

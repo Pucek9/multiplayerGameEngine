@@ -20,7 +20,7 @@ export default class Cursor implements CursorModel {
   }
 
   async setMaterial() {
-    const map = await this.screen.texture.getTexture(TEXTURE.POINTER);
+    const map = await this.screen.texture.getTextureSrc(TEXTURE.POINTER);
     this.material = new MeshPhongMaterial({
       map: new TextureLoader().load(map),
     });

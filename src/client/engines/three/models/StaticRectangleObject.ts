@@ -13,7 +13,7 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
 
   async init(screen: ScreenModel) {
     this.screen = screen;
-    const path = await this.screen.texture.getTexture(TEXTURE.BOX);
+    const path = await this.screen.texture.getTextureSrc(TEXTURE.BOX);
     const texture = new TextureLoader().load(path);
     const geometry = new BoxGeometry(this.width, this.height, this.depth);
     const material = new MeshPhongMaterial({
