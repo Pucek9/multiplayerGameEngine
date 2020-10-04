@@ -5,7 +5,7 @@ import { Team } from '../../shared/models';
 import gameTypes from '../gameTypes';
 import GameModel from '../gameTypes/GameModel';
 import Cursors from './Cursor';
-import Maps from './Maps';
+import GameMap from './GameMap';
 import Steerings from './Steering';
 
 class GamesManager {
@@ -23,7 +23,7 @@ class GamesManager {
         // teams && teams.map(name => new Team({ name, color: randColor() })),
         steering: Steerings[steering],
         cursor: Cursors[cursor],
-        map: new Maps[map](),
+        map: new GameMap(map),
       }),
     );
   }

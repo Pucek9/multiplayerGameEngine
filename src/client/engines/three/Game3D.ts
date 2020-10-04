@@ -324,4 +324,25 @@ export default class Game3D {
   message(object: any) {
     console.log('MESSAGE', object);
   }
+
+  downloadMap(data) {
+    const fileName = `${data.mapName}.json`;
+    const file = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    if (window.navigator.msSaveOrOpenBlob)
+      // IE10+
+      window.navigator.msSaveOrOpenBlob(file, fileName);
+    else {
+      // Others
+      const a = document.createElement('a'),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  }
 }

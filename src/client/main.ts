@@ -110,6 +110,8 @@ class Main {
 
     socket.on(API.MESSAGE, gameState.message.bind(gameState));
 
+    socket.on(API.SERIALIZE_MAP, gameState.downloadMap.bind(gameState));
+
     socket.on(API.LEAVE_GAME, () => {
       this.leaveGame();
     });

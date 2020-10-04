@@ -1,5 +1,7 @@
-import { MouseCoordinates } from '../../shared/apiModels';
+import { MouseCoordinates, NewUser } from '../../shared/apiModels';
 
+import Player from '../models/Player';
+import SaveMap from '../models/powers/SaveMap';
 import collisionDetector from '../services/CollisionDetector';
 import Emitter from '../services/Emitter';
 import BaseGame from './BaseGame';
@@ -9,6 +11,13 @@ export default class MapEditor extends BaseGame {
 
   constructor(public emitter: Emitter, params: Partial<MapEditor>) {
     super(emitter, params);
+  }
+
+  connectPlayer(newPlayer: NewUser): Player {
+    const player = super.connectPlayer(newPlayer);
+    player.addAndSelectPower(new SaveMap());
+    this.emitPowerInfo(player);
+    return player;
   }
 
   mouseClick(owner: string) {
@@ -34,6 +43,14 @@ export default class MapEditor extends BaseGame {
     player?.setMouseUp();
   }
 
+  mouseRightClick(owner: string) {
+    const player = this.getPlayer(owner);
+    if (player.selectedPower?.useClickPower) {
+      player.useClickPower(this);
+      this.emitPowerInfo(player);
+    }
+  }
+
   updateCursor(mouseCoordinates: MouseCoordinates) {
     super.updateCursor(mouseCoordinates);
     const player = this.getPlayer(mouseCoordinates.owner);
@@ -45,6 +62,4 @@ export default class MapEditor extends BaseGame {
       this.emitter.emitStaticObjects(this.roomName, this);
     }
   }
-
-  mouseMove;
 }

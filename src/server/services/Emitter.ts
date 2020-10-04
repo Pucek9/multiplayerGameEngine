@@ -67,4 +67,8 @@ export default class Emitter {
   emitMessage(id: string, object: any) {
     this.socketIo.to(id).emit(API.MESSAGE, object);
   }
+
+  emitMap(id: string, object: any) {
+    this.socketIo.to(id).emit(API.SERIALIZE_MAP, object);
+  }
 }

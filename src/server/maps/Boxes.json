@@ -1,0 +1,176 @@
+{
+  "mapName": "BOXES",
+  "floor": "GRASS",
+  "width": 2920,
+  "height": 2004,
+  "staticObjects": [
+    {
+      "type": "StaticRectangleObject",
+      "x": 1200,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 800,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 400,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 0,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -400,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -800,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1200,
+      "y": 30,
+      "z": 0,
+      "width": 100,
+      "height": 800,
+      "depth": 10,
+      "color": "YELLOW"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 1450,
+      "y": -1000,
+      "z": 0,
+      "width": 100,
+      "height": 2000,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": -1000,
+      "z": 0,
+      "width": 100,
+      "height": 2000,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": 1000,
+      "z": 0,
+      "width": 3100,
+      "height": 100,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": -1050,
+      "z": 0,
+      "width": 3100,
+      "height": 100,
+      "depth": 100,
+      "color": "RED"
+    }
+  ],
+  "itemGenerators": [
+    {
+      "ItemClass": "Ak47",
+      "x": -1000,
+      "y": 800,
+      "size": 4,
+      "time": 5000
+    },
+    {
+      "ItemClass": "Pistol",
+      "x": -1000,
+      "y": 0,
+      "size": 4,
+      "time": 10000
+    },
+    {
+      "ItemClass": "Shotgun",
+      "x": -1000,
+      "y": -800,
+      "size": 4,
+      "time": 20000
+    },
+    {
+      "ItemClass": "Ak47",
+      "x": 1000,
+      "y": 800,
+      "size": 4,
+      "time": 5000
+    },
+    {
+      "ItemClass": "Pistol",
+      "x": 1000,
+      "y": 0,
+      "size": 4,
+      "time": 10000
+    },
+    {
+      "ItemClass": "Shotgun",
+      "x": 1000,
+      "y": -800,
+      "size": 4,
+      "time": 20000
+    }
+  ],
+  "zones": [
+    {
+      "x": -1000,
+      "y": 0,
+      "width": 100,
+      "height": 1000
+    },
+    {
+      "x": 1000,
+      "y": 0,
+      "width": 100,
+      "height": 1000
+    }
+  ]
+}

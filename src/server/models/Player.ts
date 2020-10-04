@@ -74,9 +74,9 @@ export default class Player extends PlayerModel {
   }
 
   useClickPower(game) {
-    if (this.isAlive()) {
-      this.selectedPower?.useClickPower({ owner: this, game });
-    }
+    // if (this.isAlive()) {
+    this.selectedPower?.useClickPower({ owner: this, game });
+    // }
   }
 
   releasePower(game) {

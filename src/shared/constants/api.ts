@@ -26,4 +26,5 @@ export enum API {
   GET_POWER_DETAILS = 'getPowerDetails',
   UPDATE_TIME_TO_REVIVE = 'updateTimeToRevive',
   MESSAGE = 'message',
+  SERIALIZE_MAP = 'serializeMap',
 }

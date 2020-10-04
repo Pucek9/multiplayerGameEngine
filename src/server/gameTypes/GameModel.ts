@@ -5,7 +5,7 @@ import Bullet from '../models/Bullet';
 import Player from '../models/Player';
 import Cursor from '../services/Cursor/Cursor';
 import Emitter from '../services/Emitter';
-import GameMap from '../services/Maps/GameMap';
+import GameMap from '../services/GameMap';
 import Steering from '../services/Steering/Steering';
 
 export default abstract class GameModel {

@@ -1,0 +1,269 @@
+{
+  "mapName": "PLAYGROUND",
+  "floor": "GRASS",
+  "width": 2920,
+  "height": 2004,
+  "staticObjects": [
+    { "x": 100, "y": 250, "size": 100, "color": "red", "type": "StaticCircularObject" },
+    { "x": 1000, "y": 250, "size": 90, "color": "blue", "type": "StaticCircularObject" },
+    { "x": 500, "y": 450, "size": 30, "color": "purple", "type": "StaticCircularObject" },
+    { "x": -1050, "y": -180, "size": 120, "color": "red", "type": "StaticCircularObject" },
+    { "x": -600, "y": -600, "size": 100, "color": "blue", "type": "StaticCircularObject" },
+    { "x": -200, "y": -700, "size": 130, "color": "yellow", "type": "StaticCircularObject" },
+    { "x": 500, "y": -700, "size": 80, "color": "red", "type": "StaticCircularObject" },
+    { "x": -1200, "y": 850, "size": 90, "color": "green", "type": "StaticCircularObject" },
+
+    {
+      "type": "StaticRectangleObject",
+      "x": 500,
+      "y": 350,
+      "z": 0,
+      "width": 500,
+      "height": 100,
+      "depth": 200,
+      "color": "green",
+      "deg": 45
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 230,
+      "y": 220,
+      "z": 0,
+      "width": 200,
+      "height": 80,
+      "depth": 80,
+      "color": "blue",
+      "deg": -30
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -230,
+      "y": 420,
+      "z": 0,
+      "width": 80,
+      "height": 300,
+      "depth": 80,
+      "color": "yellow",
+      "deg": 50
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -920,
+      "y": 600,
+      "z": 0,
+      "width": 400,
+      "height": 150,
+      "depth": 80,
+      "color": "red",
+      "deg": -130
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -730,
+      "y": 220,
+      "z": 0,
+      "width": 200,
+      "height": 120,
+      "depth": 120,
+      "color": "blue",
+      "deg": 120
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 900,
+      "y": -500,
+      "z": 0,
+      "width": 400,
+      "height": 400,
+      "depth": 10,
+      "color": "PINK"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -400,
+      "y": -450,
+      "z": 0,
+      "width": 300,
+      "height": 300,
+      "depth": 10,
+      "color": "PINK",
+      "deg": -70
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 1300,
+      "y": 170,
+      "z": 0,
+      "width": 100,
+      "height": 300,
+      "depth": 100,
+      "color": "yellow"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1200,
+      "y": -390,
+      "z": 0,
+      "width": 600,
+      "height": 80,
+      "depth": 120,
+      "color": "green",
+      "deg": 40
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 1450,
+      "y": -1000,
+      "z": 0,
+      "width": 100,
+      "height": 2000,
+      "depth": 100,
+      "color": "red"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": -1000,
+      "z": 0,
+      "width": 100,
+      "height": 2000,
+      "depth": 100,
+      "color": "red"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": 1000,
+      "z": 0,
+      "width": 3100,
+      "height": 100,
+      "depth": 100,
+      "color": "red"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": -1050,
+      "z": 0,
+      "width": 3100,
+      "height": 100,
+      "depth": 100,
+      "color": "red"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1550,
+      "y": 0,
+      "z": 0,
+      "width": 400,
+      "height": 100,
+      "depth": 100,
+      "color": "blue"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": -1000,
+      "y": 0,
+      "z": 0,
+      "width": 2000,
+      "height": 100,
+      "depth": 100,
+      "color": "blue"
+    },
+    {
+      "type": "StaticRectangleObject",
+      "x": 1150,
+      "y": 0,
+      "z": 0,
+      "width": 400,
+      "height": 100,
+      "depth": 100,
+      "color": "blue"
+    }
+  ],
+  "itemGenerators": [
+    {
+      "ItemClass": "Pistol",
+      "x": 1350,
+      "y": 150,
+      "size": 4,
+      "color": "brown",
+      "time": 10000
+    },
+    {
+      "ItemClass": "Shotgun",
+      "x": 200,
+      "y": 500,
+      "size": 4,
+      "color": "red",
+      "time": 20000
+    },
+    {
+      "ItemClass": "Resizer",
+      "x": -500,
+      "y": 200,
+      "size": 4,
+      "color": "yellow",
+      "time": 30000
+    },
+    {
+      "x": -800,
+      "y": -600,
+      "size": 4,
+      "color": "brown",
+      "time": 10000,
+      "ItemClass": "ArcticWarfarePolice"
+    },
+    {
+      "ItemClass": "Shotgun",
+      "x": 1350,
+      "y": -500,
+      "size": 4,
+      "color": "red",
+      "time": 20000
+    },
+    {
+      "ItemClass": "Grenade",
+      "x": -1200,
+      "y": -900,
+      "size": 8,
+      "color": "black",
+      "time": 10000
+    },
+    {
+      "ItemClass": "LandMine",
+      "x": 1350,
+      "y": 900,
+      "size": 8,
+      "color": "black",
+      "time": 10000
+    },
+    {
+      "ItemClass": "Ak47",
+      "x": -1000,
+      "y": 800,
+      "size": 4,
+      "color": "white",
+      "time": 25000
+    },
+    {
+      "ItemClass": "AidKit",
+      "itemProps": { "hp": 50, "energy": 100, "speed": true, "size": true },
+      "x": 1350,
+      "y": -900,
+      "size": 4,
+      "color": "white",
+      "time": 5000
+    },
+    {
+      "ItemClass": "AidKit",
+      "itemProps": { "hp": 50, "energy": 100, "speed": true, "size": true },
+      "x": -1350,
+      "y": 900,
+      "size": 4,
+      "color": "white",
+      "time": 5000
+    }
+  ],
+  "zones": []
+}
