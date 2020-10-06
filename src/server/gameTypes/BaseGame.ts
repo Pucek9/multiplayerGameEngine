@@ -9,11 +9,11 @@ import { BulletModel, Item, Power } from '../../shared/models';
 
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
+import CircularObject from '../models/CircularObject';
 import ItemGenerator from '../models/ItemGenerator';
 import Player from '../models/Player';
 import Aura from '../models/powers/Aura';
-import StaticCircularObject from '../models/StaticCircularObject';
-import StaticRectangleObject from '../models/StaticRectangleObject';
+import RectangleObject from '../models/RectangleObject';
 import Weapon from '../models/weapons/Weapon';
 import Zone from '../models/Zone';
 import collisionDetector from '../services/CollisionDetector';
@@ -150,7 +150,7 @@ export default class BaseGame extends GameModel {
     return this.map.getMapName();
   }
 
-  getStaticObjects(): Array<StaticRectangleObject | StaticCircularObject> {
+  getStaticObjects(): Array<RectangleObject | CircularObject> {
     return this.map.getStaticObjects();
   }
 
@@ -211,11 +211,8 @@ export default class BaseGame extends GameModel {
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers()]
-        .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player) =>
-            bullet.owner !== object,
-        )
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+        .filter((object: CircularObject | RectangleObject | Player) => bullet.owner !== object)
+        .forEach((object: CircularObject | RectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle, this);

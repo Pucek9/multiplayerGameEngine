@@ -4,6 +4,6 @@ export * from './Item';
 export * from './MapModel';
 export * from './PlayerModel';
 export * from './Power';
-export * from './StaticCircularObjectModel';
-export * from './StaticRectangleObjectModel';
+export * from './CircularObjectModel';
+export * from './RectangleObjectModel';
 export * from './Team';

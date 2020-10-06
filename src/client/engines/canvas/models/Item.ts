@@ -1,11 +1,11 @@
 import { drawCircle } from '../../../../shared/canvasHelpers';
-import { StaticCircularObjectModel } from '../../../../shared/models';
+import { CircularObjectModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
 
-export default class Item extends StaticCircularObjectModel implements Updatable {
+export default class Item extends CircularObjectModel implements Updatable {
   ready: boolean;
   time: number;
   id: number;

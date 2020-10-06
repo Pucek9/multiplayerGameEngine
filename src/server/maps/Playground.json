@@ -4,17 +4,17 @@
   "width": 2920,
   "height": 2004,
   "staticObjects": [
-    { "x": 100, "y": 250, "size": 100, "color": "red", "type": "StaticCircularObject" },
-    { "x": 1000, "y": 250, "size": 90, "color": "blue", "type": "StaticCircularObject" },
-    { "x": 500, "y": 450, "size": 30, "color": "purple", "type": "StaticCircularObject" },
-    { "x": -1050, "y": -180, "size": 120, "color": "red", "type": "StaticCircularObject" },
-    { "x": -600, "y": -600, "size": 100, "color": "blue", "type": "StaticCircularObject" },
-    { "x": -200, "y": -700, "size": 130, "color": "yellow", "type": "StaticCircularObject" },
-    { "x": 500, "y": -700, "size": 80, "color": "red", "type": "StaticCircularObject" },
-    { "x": -1200, "y": 850, "size": 90, "color": "green", "type": "StaticCircularObject" },
+    { "x": 100, "y": 250, "size": 100, "color": "red", "type": "CircularObject" },
+    { "x": 1000, "y": 250, "size": 90, "color": "blue", "type": "CircularObject" },
+    { "x": 500, "y": 450, "size": 30, "color": "purple", "type": "CircularObject" },
+    { "x": -1050, "y": -180, "size": 120, "color": "red", "type": "CircularObject" },
+    { "x": -600, "y": -600, "size": 100, "color": "blue", "type": "CircularObject" },
+    { "x": -200, "y": -700, "size": 130, "color": "yellow", "type": "CircularObject" },
+    { "x": 500, "y": -700, "size": 80, "color": "red", "type": "CircularObject" },
+    { "x": -1200, "y": 850, "size": 90, "color": "green", "type": "CircularObject" },
 
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 500,
       "y": 350,
       "z": 0,
@@ -25,7 +25,7 @@
       "deg": 45
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 230,
       "y": 220,
       "z": 0,
@@ -36,7 +36,7 @@
       "deg": -30
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -230,
       "y": 420,
       "z": 0,
@@ -47,7 +47,7 @@
       "deg": 50
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -920,
       "y": 600,
       "z": 0,
@@ -58,7 +58,7 @@
       "deg": -130
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -730,
       "y": 220,
       "z": 0,
@@ -69,28 +69,28 @@
       "deg": 120
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 900,
       "y": -500,
       "z": 0,
       "width": 400,
       "height": 400,
       "depth": 10,
-      "color": "PINK"
+      "color": "pink"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -400,
       "y": -450,
       "z": 0,
       "width": 300,
       "height": 300,
       "depth": 10,
-      "color": "PINK",
+      "color": "pink",
       "deg": -70
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 1300,
       "y": 170,
       "z": 0,
@@ -100,7 +100,7 @@
       "color": "yellow"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1200,
       "y": -390,
       "z": 0,
@@ -111,7 +111,7 @@
       "deg": 40
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 1450,
       "y": -1000,
       "z": 0,
@@ -121,7 +121,7 @@
       "color": "red"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": -1000,
       "z": 0,
@@ -131,7 +131,7 @@
       "color": "red"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": 1000,
       "z": 0,
@@ -141,7 +141,7 @@
       "color": "red"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": -1050,
       "z": 0,
@@ -151,7 +151,7 @@
       "color": "red"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": 0,
       "z": 0,
@@ -161,7 +161,7 @@
       "color": "blue"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1000,
       "y": 0,
       "z": 0,
@@ -171,7 +171,7 @@
       "color": "blue"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 1150,
       "y": 0,
       "z": 0,

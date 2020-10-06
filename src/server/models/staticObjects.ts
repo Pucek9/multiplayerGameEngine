@@ -1,4 +1,4 @@
+import CircularObject from './CircularObject';
 import Goal from './Goal';
-import StaticCircularObject from './StaticCircularObject';
-import StaticRectangleObject from './StaticRectangleObject';
-export { StaticCircularObject, StaticRectangleObject, Goal };
+import RectangleObject from './RectangleObject';
+export { CircularObject, RectangleObject, Goal };

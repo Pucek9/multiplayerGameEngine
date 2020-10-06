@@ -1,9 +1,9 @@
 import { NewUser } from '../../shared/apiModels';
 
 import Bot from '../models/Bot';
+import CircularObject from '../models/CircularObject';
 import Player from '../models/Player';
-import StaticCircularObject from '../models/StaticCircularObject';
-import StaticRectangleObject from '../models/StaticRectangleObject';
+import RectangleObject from '../models/RectangleObject';
 import collisionDetector from '../services/CollisionDetector';
 import playerService from '../services/PlayerService';
 import BaseTeamGame from './BaseTeamGame';
@@ -52,12 +52,12 @@ export default class RoundTeamBattle extends BaseTeamGame {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers()]
         .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player) =>
+          (object: CircularObject | RectangleObject | Player) =>
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
             (this.friendlyFire && bullet.owner !== object),
         )
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+        .forEach((object: CircularObject | RectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle, this);

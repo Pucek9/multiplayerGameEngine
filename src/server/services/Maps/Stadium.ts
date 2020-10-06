@@ -1,8 +1,8 @@
 // import { INVISIBLE, RED, STADIUM, STADIUM_GRASS } from '../../../shared/constants';
 //
 // import Goal from '../../models/Goal';
-// import StaticCircularObject from '../../models/StaticCircularObject';
-// import StaticRectangleObject from '../../models/StaticRectangleObject';
+// import CircularObject from '../../models/CircularObject';
+// import RectangleObject from '../../models/RectangleObject';
 // import Zone from '../../models/Zone';
 // import GameMap from '../GameMap';
 //
@@ -31,13 +31,13 @@
 //         color: RED,
 //         team: '',
 //       }),
-//       new StaticCircularObject({
+//       new CircularObject({
 //         x: 512,
 //         y: 57,
 //         size: 5,
 //         color: RED,
 //       }),
-//       new StaticCircularObject({
+//       new CircularObject({
 //         x: 512,
 //         y: -57,
 //         size: 5,
@@ -53,20 +53,20 @@
 //         color: RED,
 //         team: '',
 //       }),
-//       new StaticCircularObject({
+//       new CircularObject({
 //         x: -512,
 //         y: 57,
 //         size: 5,
 //         color: RED,
 //       }),
-//       new StaticCircularObject({
+//       new CircularObject({
 //         x: -512,
 //         y: -57,
 //         size: 5,
 //         color: RED,
 //       }),
 //       //right
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 600,
 //         y: -400,
 //         z: 0,
@@ -75,7 +75,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 514,
 //         y: -400,
 //         z: 0,
@@ -85,7 +85,7 @@
 //         color: INVISIBLE,
 //       }),
 //       //left
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -700,
 //         y: -400,
 //         z: 0,
@@ -94,7 +94,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -614,
 //         y: -400,
 //         z: 0,
@@ -104,7 +104,7 @@
 //         color: INVISIBLE,
 //       }),
 //       //up
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -700,
 //         y: 390,
 //         z: 0,
@@ -113,7 +113,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -700,
 //         y: 345,
 //         z: 0,
@@ -123,7 +123,7 @@
 //         color: INVISIBLE,
 //       }),
 //       //down
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -700,
 //         y: -490,
 //         z: 0,
@@ -132,7 +132,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -700,
 //         y: -450,
 //         z: 0,

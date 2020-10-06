@@ -1,13 +1,13 @@
 import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 import { degToRad } from '../../../../shared/helpers';
-import { StaticRectangleObjectModel } from '../../../../shared/models';
+import { RectangleObjectModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
+export default class RectangleObject extends RectangleObjectModel implements Updatable {
   private object: Mesh;
   private screen: ScreenModel;
 

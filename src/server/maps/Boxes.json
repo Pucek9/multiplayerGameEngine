@@ -5,7 +5,7 @@
   "height": 2004,
   "staticObjects": [
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 1200,
       "y": 30,
       "z": 0,
@@ -15,7 +15,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 800,
       "y": 30,
       "z": 0,
@@ -25,7 +25,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 400,
       "y": 30,
       "z": 0,
@@ -35,7 +35,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 0,
       "y": 30,
       "z": 0,
@@ -45,7 +45,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -400,
       "y": 30,
       "z": 0,
@@ -55,7 +55,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -800,
       "y": 30,
       "z": 0,
@@ -65,7 +65,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1200,
       "y": 30,
       "z": 0,
@@ -75,7 +75,7 @@
       "color": "YELLOW"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": 1450,
       "y": -1000,
       "z": 0,
@@ -85,7 +85,7 @@
       "color": "RED"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": -1000,
       "z": 0,
@@ -95,7 +95,7 @@
       "color": "RED"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": 1000,
       "z": 0,
@@ -105,7 +105,7 @@
       "color": "RED"
     },
     {
-      "type": "StaticRectangleObject",
+      "type": "RectangleObject",
       "x": -1550,
       "y": -1050,
       "z": 0,

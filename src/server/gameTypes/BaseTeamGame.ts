@@ -4,10 +4,10 @@ import { compareBy, generateId } from '../../shared/helpers';
 import { Team } from '../../shared/models';
 
 import Bot from '../models/Bot';
+import CircularObject from '../models/CircularObject';
 import Player from '../models/Player';
 import Aura from '../models/powers/Aura';
-import StaticCircularObject from '../models/StaticCircularObject';
-import StaticRectangleObject from '../models/StaticRectangleObject';
+import RectangleObject from '../models/RectangleObject';
 import collisionDetector from '../services/CollisionDetector';
 import playerService from '../services/PlayerService';
 import BaseGame from './BaseGame';
@@ -67,13 +67,13 @@ export default class BaseTeamGame extends BaseGame {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers()]
         .filter(
-          (object: StaticCircularObject | StaticRectangleObject | Player) =>
+          (object: CircularObject | RectangleObject | Player) =>
             !(object instanceof Player) ||
             (!this.friendlyFire && object instanceof Player && bullet.owner.team !== object.team) ||
             (this.friendlyFire && bullet.owner !== object) ||
             bullet.type === HEAL,
         )
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player) => {
+        .forEach((object: CircularObject | RectangleObject | Player) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             object.hitFromBullet(bullet, angle, this);

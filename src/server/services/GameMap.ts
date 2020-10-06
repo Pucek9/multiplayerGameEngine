@@ -1,10 +1,10 @@
 import { Item, MapModel } from '../../shared/models';
 
+import CircularObject from '../models/CircularObject';
 import ItemGenerator from '../models/ItemGenerator';
 import * as items from '../models/items';
-import StaticCircularObject from '../models/StaticCircularObject';
+import RectangleObject from '../models/RectangleObject';
 import * as objects from '../models/staticObjects';
-import StaticRectangleObject from '../models/StaticRectangleObject';
 import Zone from '../models/Zone';
 
 export default class GameMap implements MapModel {
@@ -12,7 +12,7 @@ export default class GameMap implements MapModel {
   floor: string;
   width: number;
   height: number;
-  staticObjects: (StaticRectangleObject | StaticCircularObject)[] = [];
+  staticObjects: (RectangleObject | CircularObject)[] = [];
   itemGenerators: ItemGenerator<Item>[] = [];
   zones: Zone[] = [];
 
@@ -71,7 +71,7 @@ export default class GameMap implements MapModel {
     return this.mapName;
   }
 
-  getStaticObjects(): (StaticRectangleObject | StaticCircularObject)[] {
+  getStaticObjects(): (RectangleObject | CircularObject)[] {
     return this.staticObjects;
   }
 

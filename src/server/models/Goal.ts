@@ -1,6 +1,6 @@
-import StaticRectangleObject from './StaticRectangleObject';
+import RectangleObject from './RectangleObject';
 
-export default class Goal extends StaticRectangleObject {
+export default class Goal extends RectangleObject {
   team: string;
 
   constructor(params: Partial<Goal>) {

@@ -24,12 +24,12 @@ import { TextureService } from '../TextureService';
 // import shaderService from '../three/ShaderService';
 import Bullet from './models/Bullet';
 import Camera from './models/Camera';
+import CircularObject from './models/CircularObject';
 import Cursor from './models/Cursor';
 import Item from './models/Item';
 import Map from './models/Map';
 import Player from './models/Player';
-import StaticCircularObject from './models/StaticCircularObject';
-import StaticRectangleObject from './models/StaticRectangleObject';
+import RectangleObject from './models/RectangleObject';
 import Text from './models/Text';
 // import { prepareCanvasScreen } from './scene';
 
@@ -241,9 +241,9 @@ export default class Game2D {
       .forEach(newObject => {
         let staticObject;
         if (newObject.shape === RECTANGLE) {
-          staticObject = new StaticRectangleObject(newObject);
+          staticObject = new RectangleObject(newObject);
         } else if (newObject.shape === CIRCLE) {
-          staticObject = new StaticCircularObject(newObject);
+          staticObject = new CircularObject(newObject);
         }
         if (staticObject) {
           staticObject.init(this.screen);

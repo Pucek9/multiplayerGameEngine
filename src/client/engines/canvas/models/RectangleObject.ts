@@ -1,12 +1,12 @@
 import { drawRotatedRectangle, drawUnRotatedRectangle } from '../../../../shared/canvasHelpers';
-import { StaticRectangleObjectModel } from '../../../../shared/models';
+import { RectangleObjectModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
-
-export default class StaticRectangleObject extends StaticRectangleObjectModel implements Updatable {
+const z = new Set();
+export default class RectangleObject extends RectangleObjectModel implements Updatable {
   screen: ScreenModel;
   private img: HTMLImageElement;
   private patt: CanvasPattern;
@@ -31,8 +31,10 @@ export default class StaticRectangleObject extends StaticRectangleObjectModel im
     ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.globalAlpha = 0.5;
+    if (!z.has(this.id)) console.log(this);
     ctx.fillStyle = this.color;
     ctx.fill();
+    z.add(this.id);
     ctx.restore();
   }
 }

@@ -11,7 +11,7 @@
 // } from '../../../shared/constants';
 //
 // import ItemGenerator from '../../models/ItemGenerator';
-// import StaticRectangleObject from '../../models/StaticRectangleObject';
+// import RectangleObject from '../../models/RectangleObject';
 // import Ak47 from '../../models/weapons/Ak47';
 // import Pistol from '../../models/weapons/Pistol';
 // import Shotgun from '../../models/weapons/Shotgun';
@@ -33,7 +33,7 @@
 //
 //   setStaticObjects() {
 //     this.staticObjects = [
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 1200,
 //         y: 30,
 //         z: 0,
@@ -42,7 +42,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 800,
 //         y: 30,
 //         z: 0,
@@ -51,7 +51,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 400,
 //         y: 30,
 //         z: 0,
@@ -60,7 +60,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 0,
 //         y: 30,
 //         z: 0,
@@ -69,7 +69,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -400,
 //         y: 30,
 //         z: 0,
@@ -78,7 +78,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -800,
 //         y: 30,
 //         z: 0,
@@ -87,7 +87,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1200,
 //         y: 30,
 //         z: 0,
@@ -96,7 +96,7 @@
 //         depth: 10,
 //         color: YELLOW,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 1450,
 //         y: -1000,
 //         z: 0,
@@ -105,7 +105,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: -1000,
 //         z: 0,
@@ -114,7 +114,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: 1000,
 //         z: 0,
@@ -123,7 +123,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: -1050,
 //         z: 0,

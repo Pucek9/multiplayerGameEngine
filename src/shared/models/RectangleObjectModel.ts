@@ -1,8 +1,12 @@
 import { RECTANGLE } from '../constants';
+import { generateId } from '../helpers';
 import { Rectangle } from '../interfaces';
+import { Item } from './Item';
 
-export class StaticRectangleObjectModel implements Rectangle {
+export class RectangleObjectModel implements Rectangle, Item {
   shape = RECTANGLE;
+  id: number;
+  type: string;
   x: number;
   y: number;
   z: number;
@@ -14,7 +18,8 @@ export class StaticRectangleObjectModel implements Rectangle {
   speed = 0;
   direction = { dx: 0, dy: 0 };
 
-  constructor(params: Partial<StaticRectangleObjectModel>) {
+  constructor(params: Partial<RectangleObjectModel>) {
+    this.id = params.id || generateId();
     Object.assign(this, params);
   }
 }

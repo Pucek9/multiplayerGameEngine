@@ -4,11 +4,11 @@ import { Team } from '../../shared/models';
 
 import Bot from '../models/Bot';
 import Bullet from '../models/Bullet';
+import CircularObject from '../models/CircularObject';
 import Goal from '../models/Goal';
 import Player from '../models/Player';
 import Accelerator from '../models/powers/Accelerator';
-import StaticCircularObject from '../models/StaticCircularObject';
-import StaticRectangleObject from '../models/StaticRectangleObject';
+import RectangleObject from '../models/RectangleObject';
 import Legs from '../models/weapons/Legs';
 import collisionDetector from '../services/CollisionDetector';
 import RoundTeamBattle from './RoundTeamBattle';
@@ -84,7 +84,7 @@ export default class Haxball extends RoundTeamBattle {
     this.bullets.forEach((bullet, i) => {
       [...this.getStaticObjects(), ...this.getAlivePlayers(), ...this.bullets]
         .filter(object => bullet !== object && !(bullet.owner === object && bullet.type === LEGS))
-        .forEach((object: StaticCircularObject | StaticRectangleObject | Player | Bullet) => {
+        .forEach((object: CircularObject | RectangleObject | Player | Bullet) => {
           const { collision, angle } = collisionDetector.detectCollision(bullet, object);
           if (collision) {
             if (object instanceof Bullet && object.type === LEGS && bullet.type === BALL) {

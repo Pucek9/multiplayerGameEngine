@@ -1,13 +1,13 @@
 import { ItemGeneratorAPI } from '../../shared/apiModels';
 import { generateId } from '../../shared/helpers';
-import { StaticCircularObjectModel } from '../../shared/models';
+import { CircularObjectModel } from '../../shared/models';
 import { ParameterlessConstructor } from '../../shared/types';
 
 import AidKit from './AidKit';
 import Player from './Player';
 import Weapon from './weapons/Weapon';
 
-export default class ItemGenerator<ItemClass> extends StaticCircularObjectModel {
+export default class ItemGenerator<ItemClass> extends CircularObjectModel {
   ItemClass: ParameterlessConstructor<ItemClass>;
   itemProps: Partial<ItemClass>;
   ready = true;

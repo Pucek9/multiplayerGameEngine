@@ -2,8 +2,8 @@
 // import { Item } from '../../../shared/models';
 //
 // import ItemGenerator from '../../models/ItemGenerator';
-// import StaticCircularObject from '../../models/StaticCircularObject';
-// import StaticRectangleObject from '../../models/StaticRectangleObject';
+// import CircularObject from '../../models/CircularObject';
+// import RectangleObject from '../../models/RectangleObject';
 // import GameMap from '../GameMap';
 //
 // export default class City extends GameMap {
@@ -11,7 +11,7 @@
 //   floor = ROBOCOP_CITY;
 //   width = 2680;
 //   height = 3200;
-//   staticObjects: (StaticRectangleObject | StaticCircularObject)[];
+//   staticObjects: (RectangleObject | CircularObject)[];
 //   itemGenerators: ItemGenerator<Item>[];
 //
 //   constructor() {
@@ -22,7 +22,7 @@
 //
 //   setStaticObjects() {
 //     this.staticObjects = [
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 1450,
 //         y: -1000,
 //         z: 0,
@@ -31,7 +31,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: -1000,
 //         z: 0,
@@ -40,7 +40,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: 1000,
 //         z: 0,
@@ -49,7 +49,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: -1050,
 //         z: 0,
@@ -58,7 +58,7 @@
 //         depth: 100,
 //         color: RED,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1550,
 //         y: 0,
 //         z: 0,
@@ -67,7 +67,7 @@
 //         depth: 100,
 //         color: BLUE,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: -1000,
 //         y: 0,
 //         z: 0,
@@ -76,7 +76,7 @@
 //         depth: 100,
 //         color: BLUE,
 //       }),
-//       new StaticRectangleObject({
+//       new RectangleObject({
 //         x: 1150,
 //         y: 0,
 //         z: 0,

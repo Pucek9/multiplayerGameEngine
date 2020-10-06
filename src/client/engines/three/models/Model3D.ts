@@ -2,7 +2,7 @@ import { Group, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { degToRad } from '../../../../shared/helpers';
-import { StaticCircularObjectModel } from '../../../../shared/models';
+import { CircularObjectModel } from '../../../../shared/models';
 
 import { modelsConfig } from '../../../assets/3DModels/items/models.config';
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -10,7 +10,7 @@ import Updatable from '../../../interfaces/Updatable';
 
 const loader = new FBXLoader();
 
-export default class Model3D extends StaticCircularObjectModel implements Updatable {
+export default class Model3D extends CircularObjectModel implements Updatable {
   public type: string;
   protected object: Group;
 

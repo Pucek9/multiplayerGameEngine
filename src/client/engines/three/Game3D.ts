@@ -20,13 +20,13 @@ import PowersListComponent from '../../UserInterface/PowersList';
 import TeamPlayerListComponent from '../../UserInterface/TeamPlayersList';
 import WeaponsListComponent from '../../UserInterface/WeaponsList';
 import Bullet from './models/Bullet';
+import CircularObject from './models/CircularObject';
 import Cursor from './models/Cursor';
 import Item from './models/Item';
 import Lights from './models/Light';
 import Map from './models/Map';
 import Player from './models/Player';
-import StaticCircularObject from './models/StaticCircularObject';
-import StaticRectangleObject from './models/StaticRectangleObject';
+import RectangleObject from './models/RectangleObject';
 import Text from './models/Text';
 import { prepareTreeJSScreen } from './scene';
 import shaderService from './ShaderService';
@@ -203,9 +203,9 @@ export default class Game3D {
       .forEach(newObject => {
         let staticObject;
         if (newObject.shape === RECTANGLE) {
-          staticObject = new StaticRectangleObject(newObject);
+          staticObject = new RectangleObject(newObject);
         } else if (newObject.shape === CIRCLE) {
-          staticObject = new StaticCircularObject(newObject);
+          staticObject = new CircularObject(newObject);
         }
         if (staticObject) {
           staticObject.init(this.screen);
