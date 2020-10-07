@@ -34,6 +34,12 @@ export function randItem<T>(items: Array<T>): T {
 }
 
 export function normalizeKey(key: string): string {
+  const unexpectedKeys = '!@#$%^&*()_+'.split('');
+  const expectedKeys = '1234567890-='.split('');
+  const unexpectedKeyIndex = unexpectedKeys.findIndex(unexpectedKey => unexpectedKey === key);
+  if (unexpectedKeyIndex !== -1) {
+    return expectedKeys[unexpectedKeyIndex];
+  }
   return key.length !== 1 ? key : key.toUpperCase();
 }
 

@@ -12,8 +12,8 @@ export default abstract class Steering {
 
   performWeaponChange(game, player) {
     const shift = player.keys.has('Shift');
-    const weaponKeys = '1234567890';
-    const weapons = weaponKeys.split('').map(index => player.keys.has(index));
+    const weaponKeys = '1234567890'.split('');
+    const weapons = weaponKeys.map(index => player.keys.has(index));
     const weaponPressed = weapons.some(has => has);
     if (!shift && weaponPressed) {
       player.selectWeapon(weapons.findIndex(Boolean));
@@ -23,8 +23,8 @@ export default abstract class Steering {
 
   performPowerChange(game, player) {
     const shift = player.keys.has('Shift');
-    const powerKeys = '!@#$%^&*()';
-    const powers = powerKeys.split('').map(index => player.keys.has(index));
+    const powerKeys = '1234567890'.split('');
+    const powers = powerKeys.map(index => player.keys.has(index));
     const powerPressed = powers.some(has => has);
     if (shift) {
       if (powerPressed) {
