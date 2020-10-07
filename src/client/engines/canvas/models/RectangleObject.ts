@@ -5,7 +5,7 @@ import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
-const z = new Set();
+
 export default class RectangleObject extends RectangleObjectModel implements Updatable {
   screen: ScreenModel;
   private img: HTMLImageElement;
@@ -25,16 +25,12 @@ export default class RectangleObject extends RectangleObjectModel implements Upd
     const ctx = (this.screen.renderer as CanvasRenderer).ctx;
     const camera = this.screen.camera;
     ctx.save();
-    this.deg === 0
-      ? drawUnRotatedRectangle(ctx, camera, this.x, this.y, this.width, this.height)
-      : drawRotatedRectangle(ctx, camera, this.x, this.y, this.width, this.height, this.deg);
+    drawRotatedRectangle(ctx, camera, this.x, this.y, this.width, this.height, this.deg);
     ctx.fillStyle = this.patt;
     ctx.fill();
     ctx.globalAlpha = 0.5;
-    if (!z.has(this.id)) console.log(this);
     ctx.fillStyle = this.color;
     ctx.fill();
-    z.add(this.id);
     ctx.restore();
   }
 }
