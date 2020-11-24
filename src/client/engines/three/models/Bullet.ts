@@ -6,7 +6,7 @@ import {
   SphereGeometry,
 } from 'three';
 
-import { PULL, PUSH } from '../../../../shared/constants';
+import { PULL, PUSH, REVERSE_BULLETS, SLOW_BULLETS } from '../../../../shared/constants';
 import { BulletModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -16,10 +16,11 @@ import Cursor from './Cursor';
 import FlashLight from './Light/FlashLight';
 
 export default class Bullet extends BulletModel implements Updatable {
+  protected transparentBullets = [PUSH, PULL, SLOW_BULLETS, REVERSE_BULLETS];
   private object: Mesh;
   private geometry: SphereGeometry;
   private material: MeshBasicMaterial | MeshPhysicalMaterial;
-  private transparency = this.type === PUSH || this.type === PULL;
+  private transparency = this.transparentBullets.includes(this.type);
 
   setGeometry() {
     this.geometry = new SphereGeometry(this.size, 10, 10, 3);

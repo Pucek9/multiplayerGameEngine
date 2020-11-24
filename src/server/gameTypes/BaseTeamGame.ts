@@ -33,35 +33,35 @@ export default class BaseTeamGame extends BaseGame {
     team?.leaveTeam();
   }
 
-  bulletsDetectPower() {
-    this.bullets
-      .filter(bullet => bullet.allowForManipulate)
-      .forEach(bullet => {
-        const foundPlayerWithAura = this.getAlivePlayers()
-          .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
-          .find(
-            player =>
-              bullet.owner !== player &&
-              (bullet.owner.team !== player.team || bullet.type === HEAL) &&
-              player.selectedPower instanceof Aura &&
-              player.selectedPower.isActive() &&
-              collisionDetector.detectCollision(bullet, {
-                ...player,
-                size: player.selectedPower.getSize(),
-              }).collision,
-          );
-        if (
-          foundPlayerWithAura?.selectedPower.effect({
-            bullet,
-            owner: foundPlayerWithAura,
-          })
-        ) {
-          this.emitPowerInfo(foundPlayerWithAura);
-        } else {
-          bullet.customFlag = true;
-        }
-      });
-  }
+  // bulletsDetectPower() {
+  //   this.bullets
+  //     .filter(bullet => bullet.allowForManipulate)
+  //     .forEach(bullet => {
+  //       const foundPlayerWithAura = this.getAlivePlayers()
+  //         .sort((player1, player2) => compareBy(player1, player2, { energy: 1 }))
+  //         .find(
+  //           player =>
+  //             bullet.owner !== player &&
+  //             (bullet.owner.team !== player.team || bullet.type === HEAL) &&
+  //             player.selectedPower instanceof Aura &&
+  //             player.selectedPower.isActive() &&
+  //             collisionDetector.detectCollision(bullet, {
+  //               ...player,
+  //               size: player.selectedPower.getSize(),
+  //             }).collision,
+  //         );
+  //       if (
+  //         foundPlayerWithAura?.selectedPower.effect({
+  //           bullet,
+  //           owner: foundPlayerWithAura,
+  //         })
+  //       ) {
+  //         this.emitPowerInfo(foundPlayerWithAura);
+  //       } else {
+  //         bullet.manipulated = false;
+  //       }
+  //     });
+  // }
 
   detectBulletsCollision() {
     this.bullets.forEach((bullet, i) => {

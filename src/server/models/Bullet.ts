@@ -20,7 +20,7 @@ export default class Bullet extends BulletModel {
   reverseX = 1;
   reverseY = 1;
   vectorFT: number;
-  customFlag = true;
+  manipulated = false;
   allowForManipulate = true;
   direction = {
     dx: 0,
@@ -85,14 +85,14 @@ export default class Bullet extends BulletModel {
   }
 
   additionalAction() {
-    if (this.customFlag) {
+    if (!this.manipulated) {
       this.increaseSpeedToDefault();
     }
   }
 
   effectOnPlayer(player: Player) {}
 
-  hit(angle: Angle, object?) {
+  hit(angle?: Angle, object?) {
     this.deactivate();
   }
 

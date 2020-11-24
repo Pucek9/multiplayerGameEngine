@@ -1,11 +1,10 @@
 import { TELEPORT } from '../../../shared/constants';
-import { Power } from '../../../shared/models';
 
 import Player from '../Player';
 import Accelerator from './Accelerator';
 import ClickPower from './ClickPower';
 
-export default class Teleport extends Power implements ClickPower {
+export default class Teleport extends Accelerator implements ClickPower {
   type = TELEPORT;
   costOfTeleport = 20;
 
@@ -17,6 +16,7 @@ export default class Teleport extends Power implements ClickPower {
 
   useClickPower({ owner, game }: { owner: Player; game }): boolean {
     if (
+      owner.speed > this.speed / 2 &&
       !game.detectPlayerCollisionWithObjects(({
         x: owner.cursor.x,
         y: owner.cursor.y,

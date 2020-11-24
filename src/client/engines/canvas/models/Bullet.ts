@@ -1,5 +1,5 @@
 import { drawCircle } from '../../../../shared/canvasHelpers';
-import { PULL, PUSH } from '../../../../shared/constants';
+import { PULL, PUSH, REVERSE_BULLETS, SLOW_BULLETS } from '../../../../shared/constants';
 import { BulletModel } from '../../../../shared/models';
 
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -8,7 +8,8 @@ import { optionsService } from '../../../store/store';
 import { CanvasRenderer } from '../Game2D';
 
 export default class Bullet extends BulletModel implements Updatable {
-  private transparency = this.type === PUSH || this.type === PULL;
+  protected transparentBullets = [PUSH, PULL, SLOW_BULLETS, REVERSE_BULLETS];
+  private transparency = this.transparentBullets.includes(this.type);
   screen: ScreenModel;
   init(screen: ScreenModel) {
     const options = optionsService.getState();

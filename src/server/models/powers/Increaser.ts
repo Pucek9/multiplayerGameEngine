@@ -20,7 +20,7 @@ export default class Increaser extends ShootPower {
     },
     additionalAction() {
       this.size += 0.1;
-      if (this.customFlag) {
+      if (!this.manipulated) {
         this.increaseSpeedToDefault();
       }
     },

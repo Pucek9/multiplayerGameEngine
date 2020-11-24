@@ -32,7 +32,7 @@ export default class Player extends PlayerModel {
     return this.alive;
   }
 
-  die(withDieCounter = true) {
+  die({ withDieCounter = true, game }) {
     if (withDieCounter) {
       this.deaths += 1;
     }
@@ -41,6 +41,7 @@ export default class Player extends PlayerModel {
     this.speed = this.baseSpeed;
     this.size = this.baseSize;
     this.cursor.down = false;
+    this.selectedPower?.release({ owner: this, game });
   }
 
   revive() {
@@ -64,7 +65,9 @@ export default class Player extends PlayerModel {
   }
 
   regenerate(value?: number) {
-    this.takeAidKit({ energy: value ?? this.regeneration });
+    if (!this.selectedPower?.active) {
+      this.takeAidKit({ energy: value ?? this.regeneration });
+    }
   }
 
   usePower(game) {
@@ -101,7 +104,7 @@ export default class Player extends PlayerModel {
         if (bullet.owner?.team !== this.team) {
           bullet.owner.addKills(1);
         }
-        this.die();
+        this.die({ game });
       }
     }
   }

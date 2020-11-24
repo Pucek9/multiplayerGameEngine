@@ -16,7 +16,7 @@ export default class GrenadeExplosion extends Weapon {
     range: 200,
     flash: false,
     additionalAction() {
-      if (this.customFlag) {
+      if (!this.manipulated) {
         this.increaseSpeedToDefault();
         if (this.power > 1) {
           this.power -= 1;

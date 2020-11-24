@@ -13,17 +13,9 @@ export default class Aim extends Power {
     Object.seal(this);
   }
 
-  isActive(): boolean {
-    return this.active;
-  }
-
   use({ owner, game }: { owner: Player; game }) {
     this.active = true;
     this.effect({ owner, game });
-  }
-
-  release({ owner }: { owner: Player }) {
-    this.active = false;
   }
 
   effect({ owner, game }: { owner: Player; game }): boolean {

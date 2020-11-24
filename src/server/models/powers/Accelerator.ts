@@ -14,10 +14,6 @@ export default class Accelerator extends Power {
     // Object.seal(this);
   }
 
-  isActive(): boolean {
-    return this.active;
-  }
-
   use({ owner }: { owner: Player }) {
     this.active = true;
     this.effect({ owner });

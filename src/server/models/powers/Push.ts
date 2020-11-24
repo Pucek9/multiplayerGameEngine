@@ -7,11 +7,12 @@ import ShootPower from './ShootPower';
 
 export default class Push extends ShootPower {
   type = PUSH;
+  color = WHITE;
   minTimeBetweenBullets = 300;
   cost = 10;
   bulletConfig = {
-    type: PUSH,
-    color: WHITE,
+    type: this.type,
+    color: this.color,
     size: 60,
     range: 400,
     speed: 10,
