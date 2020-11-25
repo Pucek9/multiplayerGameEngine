@@ -280,7 +280,6 @@ export default class BaseGame extends GameModel {
     const player = this.getPlayer(id);
     if (player) {
       player.keys = new Set(keys);
-      this.performKeysOperation(player);
     }
   }
 
