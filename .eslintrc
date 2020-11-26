@@ -16,8 +16,8 @@
     "simple-import-sort/imports": [
       "error",
       { "groups": [["^(?!\\.).*"], ["(shared|client|server)"], ["^\\."]] }
-    ]
-//    "sort-imports": "off",
-//    "import/order": "off"
+    ],
+    "sort-imports": "off",
+    "import/order": "off"
   }
 }
