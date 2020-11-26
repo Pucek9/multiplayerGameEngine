@@ -1,3 +1,5 @@
+import { Server } from 'socket.io';
+
 import { ItemGeneratorAPI, PowersApiModel, WeaponsApiModel } from '../../shared/apiModels';
 import { API } from '../../shared/constants';
 import { BulletModel } from '../../shared/models';
@@ -7,7 +9,7 @@ import Player from '../models/Player';
 import gamesManager from './GamesManager';
 
 export default class Emitter {
-  constructor(private socketIo: SocketIO.Server) {}
+  constructor(private socketIo: Server) {}
 
   emitGameState(gameState: GameModel) {
     this.socketIo.to(gameState.roomName).emit(API.GET_PLAYERS_STATE, gameState.getPlayers());
@@ -53,7 +55,7 @@ export default class Emitter {
     this.socketIo.to(id).emit(API.LEAVE_GAME);
     this.emitGamesList();
 
-    const socket = this.socketIo.sockets.connected[id];
+    const socket = this.socketIo.sockets.sockets.get(id);
     if (socket) {
       socket.removeAllListeners(API.UPDATE_KEYS);
       socket.removeAllListeners(API.MOUSE_CLICK);

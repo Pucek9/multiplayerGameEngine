@@ -1,5 +1,5 @@
 import './style.scss';
-import { connect } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { GameInstance, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
@@ -11,7 +11,7 @@ import MenuComponent from './UserInterface/MenuComponent';
 
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
-const socket = connect(url);
+const socket = io(url);
 
 let mainInstance: Main;
 let requestId: number;

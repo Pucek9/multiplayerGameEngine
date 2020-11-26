@@ -2,7 +2,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as http from 'http';
 import * as ip from 'ip';
-import { listen, Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 import { MouseCoordinates, NewGame, NewUser } from '../shared/apiModels';
 import { API } from '../shared/constants';
@@ -17,7 +17,7 @@ const env = process.env.NODE_ENV || 'development';
 const s = process.env.NODE_ENV === 'production' ? 's' : '';
 const app = express();
 const httpServer = http.createServer(app);
-const socketIo = listen(httpServer);
+const socketIo = new Server(httpServer);
 const emitter = new Emitter(socketIo);
 const corsOptions = {
   origin: true,
