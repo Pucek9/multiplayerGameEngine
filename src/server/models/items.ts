@@ -10,6 +10,7 @@ import Resizer from './weapons/Resizer';
 import Shotgun from './weapons/Shotgun';
 
 export {
+  AidKit,
   Ak47,
   ArcticWarfarePolice,
   Grenade,
@@ -19,5 +20,4 @@ export {
   Pistol,
   Resizer,
   Shotgun,
-  AidKit,
 };
