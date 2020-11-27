@@ -15,7 +15,6 @@ export default class LandMine extends Weapon {
   shootBulletsCount = 1;
   bulletConfig: Partial<Bullet> = {
     type: LAND_MINE,
-    flash: false,
     color: WHITE,
     size: 15,
     power: 0,

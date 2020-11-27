@@ -15,6 +15,7 @@ export default class Ak47 extends Weapon {
   offset = -0.25;
   bulletConfig = {
     type: AK47,
+    flash: true,
     size: 3,
     power: 20,
     range: 800,

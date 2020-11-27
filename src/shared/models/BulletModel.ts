@@ -8,7 +8,7 @@ export class BulletModel implements Circle {
   type: string;
   color = BLACK;
   size = 1;
-  flash = true;
+  flash = false;
   id: number;
   x: number;
   y: number;

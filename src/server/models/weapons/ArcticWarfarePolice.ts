@@ -13,6 +13,7 @@ export default class ArcticWarfarePolice extends Weapon {
   offset = -0.25;
   bulletConfig = {
     type: AWP,
+    flash: true,
     size: 4,
     power: 90,
     range: 2000,

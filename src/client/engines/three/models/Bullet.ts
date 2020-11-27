@@ -29,13 +29,11 @@ export default class Bullet extends BulletModel implements Updatable {
   setMaterial() {
     this.material = new MeshPhysicalMaterial({
       color: this.color,
-      // @ts-ignore
-      transparency: 1,
+      transmission: 1,
     });
     if (this.transparency) {
       this.material.transparent = true;
-      // @ts-ignore
-      this.material.transparency = 0.8;
+      this.material.transmission = 0.8;
     }
   }
 
@@ -76,7 +74,7 @@ export default class Bullet extends BulletModel implements Updatable {
           position: { x: this.targetX, y: this.targetY, z: this.object.position.z },
         },
       } as unknown) as Cursor,
-      intensity: 20,
+      intensity: 5,
     });
 
     setTimeout(() => {

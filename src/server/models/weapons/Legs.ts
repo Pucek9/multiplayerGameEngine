@@ -12,7 +12,6 @@ export default class Legs extends Knife {
   shootBulletsCount = 1;
   bulletConfig = {
     type: LEGS,
-    flash: false,
     size: 20,
     power: 0,
     range: 30,

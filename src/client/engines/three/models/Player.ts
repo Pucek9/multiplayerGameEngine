@@ -46,15 +46,13 @@ export default class Player extends PlayerModel implements Updatable {
     this.material = new MeshPhysicalMaterial({
       map: new TextureLoader().load(headTexture),
       color: this.color,
-      // @ts-ignore
-      transparency: 1,
+      transmission: 1,
     });
     // my tu byli i pili 18.07.2020
     this.legsMaterial = new MeshPhysicalMaterial({
       map: new TextureLoader().load(legsTexture),
       color: this.color,
-      // @ts-ignore
-      transparency: 1,
+      transmission: 1,
     });
   }
 
@@ -145,9 +143,9 @@ export default class Player extends PlayerModel implements Updatable {
     (this.object.material as Material).transparent = true;
     (this.objectLegs.material as Material).transparent = true;
     // @ts-ignore
-    (this.object.material as Material).transparency = 0.8;
+    (this.object.material as Material).transmission = 0.8;
     // @ts-ignore
-    (this.objectLegs.material as Material).transparency = 0.8;
+    (this.objectLegs.material as Material).transmission = 0.8;
     // this.screen.scene.remove(this.object);
     // this.screen.scene.remove(this.objectLegs);
   }

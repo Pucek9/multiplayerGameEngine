@@ -13,6 +13,7 @@ export default class Pistol extends Weapon {
   offset = -0.2;
   bulletConfig = {
     type: PISTOL,
+    flash: true,
     size: 3,
     power: 20,
     range: 700,
