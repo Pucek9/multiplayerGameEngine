@@ -1,0 +1,135 @@
+{
+  "mapName": "STADIUM",
+  "floor": "STADIUM_GRASS",
+  "width": 1184,
+  "height": 762,
+  "staticObjects": [
+    {
+      "type": "Goal",
+      "x": 512,
+      "y": -57,
+      "width": 20,
+      "height": 112,
+      "z": 0,
+      "depth": 50,
+      "color": "RED",
+      "team": ""
+    },
+    {
+      "type": "CircularObject",
+      "x": 512,
+      "y": 57,
+      "size": 5,
+      "color": "RED"
+    },
+    { "type": "CircularObject", "x": 512, "y": -57, "size": 5, "color": "RED" },
+    {
+      "type": "Goal",
+      "x": -532,
+      "y": -57,
+      "width": 20,
+      "height": 112,
+      "z": 0,
+      "depth": 50,
+      "color": "RED",
+      "team": ""
+    },
+    { "type": "CircularObject", "x": -512, "y": 57, "size": 5, "color": "RED" },
+    { "type": "CircularObject", "x": -512, "y": -57, "size": 5, "color": "RED" },
+    {
+      "type": "RectangleObject",
+      "x": 600,
+      "y": -400,
+      "z": 0,
+      "width": 100,
+      "height": 900,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "RectangleObject",
+      "x": 514,
+      "y": -400,
+      "z": 0,
+      "width": 100,
+      "height": 900,
+      "depth": 10,
+      "color": "invisible"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -700,
+      "y": -400,
+      "z": 0,
+      "width": 100,
+      "height": 900,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -614,
+      "y": -400,
+      "z": 0,
+      "width": 100,
+      "height": 900,
+      "depth": 10,
+      "color": "invisible"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -700,
+      "y": 390,
+      "z": 0,
+      "width": 1400,
+      "height": 100,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -700,
+      "y": 345,
+      "z": 0,
+      "width": 1400,
+      "height": 100,
+      "depth": 10,
+      "color": "invisible"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -700,
+      "y": -490,
+      "z": 0,
+      "width": 1400,
+      "height": 100,
+      "depth": 100,
+      "color": "RED"
+    },
+    {
+      "type": "RectangleObject",
+      "x": -700,
+      "y": -450,
+      "z": 0,
+      "width": 1400,
+      "height": 100,
+      "depth": 10,
+      "color": "invisible"
+    }
+  ],
+  "itemGenerators": [],
+  "zones": [
+    {
+      "x": -600,
+      "y": -500,
+      "width": 600,
+      "height": 800
+    },
+    {
+      "x": 0,
+      "y": -500,
+      "width": 600,
+      "height": 800
+    }
+  ]
+}
