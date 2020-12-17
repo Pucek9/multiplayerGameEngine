@@ -24,7 +24,7 @@
     "start": "node dist/server/robocop.bundle.js",
     "start:dev": "nodemon --inspect dist/server/robocop.bundle.js --watch dist/server/robocop.bundle.js",
     "dev-mode": "npm-run-all --parallel build:webpack:dev:client build:start:dev:server",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0"
   },
   "author": "Michał Gruca",
   "license": "Beerware",
