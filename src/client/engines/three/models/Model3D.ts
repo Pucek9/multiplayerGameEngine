@@ -16,6 +16,7 @@ export default class Model3D extends CircularObjectModel implements Updatable {
 
   init(screen: ScreenModel) {
     const model = modelsConfig[this.type];
+    console.log(`../../../assets/3DModels/items/${this.type}.fbx`, this.type);
     loader.load(require(`../../../assets/3DModels/items/${this.type}.fbx`).default, object => {
       this.object = object;
       this.object.rotation.x = degToRad(model.rotation.x);
