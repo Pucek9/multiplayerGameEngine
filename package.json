@@ -70,7 +70,7 @@
     "three": "^0.121.1"
   },
   "engines": {
-    "node": ">=10 <14"
+    "node": ">=10 <11"
   },
   "repository": {
     "type": "git",
