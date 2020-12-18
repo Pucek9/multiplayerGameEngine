@@ -9,7 +9,7 @@ import Game from './engines/index';
 import { gamesListService, userService } from './store/store';
 import MenuComponent from './UserInterface/MenuComponent';
 
-const s = process.env.NODE_ENV === 'production' ? 's' : '';
+const s = process.env.HTTPS === 'true' ? 's' : '';
 const url = `http${s}://${process.env.URL || 'localhost'}`;
 const socket = io(url);
 

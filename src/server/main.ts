@@ -14,7 +14,8 @@ const TIMEOUT = 1000;
 const port = process.env.PORT || '80';
 const url = process.env.URL || ip.address() || 'localhost';
 const env = process.env.NODE_ENV || 'development';
-const s = process.env.NODE_ENV === 'production' ? 's' : '';
+const s = process.env.HTTPS === 'true' ? 's' : '';
+
 const app = express();
 const httpServer = http.createServer(app);
 const socketIo = new Server(httpServer);

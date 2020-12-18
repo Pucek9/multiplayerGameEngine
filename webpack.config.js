@@ -7,9 +7,12 @@ const ip = require('ip');
 const environment = process.env.NODE_ENV || 'development';
 const url = process.env.URL || ip.address() || 'localhost';
 const port = process.env.PORT || '80';
+const https = process.env.HTTPS || 'false';
 const isProd = environment === 'production';
 
-console.log(`[${environment}] Building app for ${url}:${port}`);
+console.log(
+  `[${environment}] Building app for http${https === 'true' ? 's' : ''}://${url}:${port}`,
+);
 const config = [
   {
     name: 'client',
@@ -51,6 +54,7 @@ const config = [
         'process.env': {
           URL: JSON.stringify(url),
           NODE_ENV: JSON.stringify(environment),
+          HTTPS: JSON.stringify(https),
         },
       }),
     ],
