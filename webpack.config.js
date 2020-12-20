@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const ip = require('ip');
 
 const environment = process.env.NODE_ENV || 'development';
@@ -125,6 +126,23 @@ const config = [
     devtool: 'cheap-module-source-map',
 
     plugins: [new TsConfigPathsPlugin({ configFileName: 'tsconfig.json' }), new CheckerPlugin()],
+
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          parallel: true,
+          terserOptions: {
+            mangle: false,
+            keep_classnames: true,
+            keep_fnames: true,
+            output: {
+              comments: false,
+            },
+          },
+        }),
+      ],
+    },
   },
 ];
 
