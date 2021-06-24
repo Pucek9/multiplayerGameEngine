@@ -1,3 +1,5 @@
+import { convertRectangle } from '../../shared/canvasHelpers';
+import { RECTANGLE } from '../../shared/constants';
 import { Item, MapModel } from '../../shared/models';
 
 import CircularObject from '../models/CircularObject';
@@ -55,6 +57,9 @@ export default class GameMap implements MapModel {
     this.staticObjects = staticObjects.map(
       staticObject => new objects[staticObject.type](staticObject),
     );
+    this.staticObjects
+      .filter(o => o.shape === RECTANGLE)
+      .forEach(object => console.log(convertRectangle(object as RectangleObject)));
   }
   setItemsGenerators(itemGenerators) {
     this.itemGenerators = itemGenerators.map(

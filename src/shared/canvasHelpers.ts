@@ -39,6 +39,33 @@ export function renderMap(ctx, camera, img, width, height) {
   }
 }
 
+export function convertRectangle({ x, y, width, height, deg }) {
+  const realX = x,
+    realY = y,
+    centerX = realX + width / 2,
+    centerY = realY + -height / 2,
+    w = width,
+    h = -height,
+    angleOfRad = -degToRad(deg);
+
+  const leftTop = [realX, realY],
+    rightTop = [realX + w, realY],
+    rightBottom = [realX + w, realY + h],
+    leftBottom = [realX, realY + h];
+
+  const rotateLeftTop = rotatePoint([centerX, centerY], leftTop, angleOfRad),
+    rotateRightTop = rotatePoint([centerX, centerY], rightTop, angleOfRad),
+    rotateRightBottom = rotatePoint([centerX, centerY], rightBottom, angleOfRad),
+    rotateLeftBottom = rotatePoint([centerX, centerY], leftBottom, angleOfRad);
+
+  return [
+    { x: rotateLeftTop.x, y: rotateLeftTop.y },
+    { x: rotateRightTop.x, y: rotateRightTop.y },
+    { x: rotateRightBottom.x, y: rotateRightBottom.y },
+    { x: rotateLeftBottom.x, y: rotateLeftBottom.y },
+  ];
+}
+
 export function drawRotatedRectangle(ctx, camera, x, y, width, height, deg) {
   const realX = -(camera.x - x),
     realY = +(camera.y - y),
