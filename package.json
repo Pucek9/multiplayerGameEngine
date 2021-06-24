@@ -85,7 +85,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "if git-branch-is develop; yarn lint && yarn prettier && yarn test && yarn build; fi"
+      "pre-push": "(git-branch-is develop && yarn lint && yarn prettier && yarn test && yarn build) || true"
     }
   },
   "lint-staged": {
