@@ -1,9 +1,9 @@
+import { Body } from 'detect-collisions';
+
 import { Direction } from '../models';
 
 export interface ObjectModel {
-  shape: string;
-  x: number;
-  y: number;
+  body: Body;
   direction: Direction;
   speed: number;
   color?: string;

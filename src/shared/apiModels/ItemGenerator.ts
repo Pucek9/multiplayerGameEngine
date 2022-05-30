@@ -1,6 +1,6 @@
-import { CircularObjectModel } from '../models';
+import { CommonObjectModel } from '../models';
 
-export class ItemGeneratorAPI extends CircularObjectModel {
+export class ItemGeneratorAPI extends CommonObjectModel {
   ready: boolean;
   type: string;
   time: number;

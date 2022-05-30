@@ -4,14 +4,15 @@
   "width": 2920,
   "height": 2004,
   "staticObjects": [
-    { "x": 100, "y": 250, "size": 100, "color": "red", "type": "CircularObject" },
-    { "x": 1000, "y": 250, "size": 90, "color": "blue", "type": "CircularObject" },
-    { "x": 500, "y": 450, "size": 30, "color": "purple", "type": "CircularObject" },
-    { "x": -1050, "y": -180, "size": 120, "color": "red", "type": "CircularObject" },
-    { "x": -600, "y": -600, "size": 100, "color": "blue", "type": "CircularObject" },
-    { "x": -200, "y": -700, "size": 130, "color": "yellow", "type": "CircularObject" },
-    { "x": 500, "y": -700, "size": 80, "color": "red", "type": "CircularObject" },
-    { "x": -1200, "y": 850, "size": 90, "color": "green", "type": "CircularObject" },
+//    { "x": 100, "y": 250, "size": 100, "color": "red", "type": "CircularObject" },
+//    { "x": 1000, "y": 250, "size": 90, "color": "blue", "type": "CircularObject" },
+//    { "x": 500, "y": 450, "size": 30, "color": "purple", "type": "CircularObject" },
+//    { "x": -1050, "y": -180, "size": 120, "color": "red", "type": "CircularObject" },
+//    { "x": -600, "y": -600, "size": 100, "color": "blue", "type": "CircularObject" },
+//    { "x": -200, "y": -700, "size": 130, "color": "yellow", "type": "CircularObject" },
+//    { "x": 500, "y": -700, "size": 80, "color": "red", "type": "CircularObject" },
+//    { "x": -1200, "y": 850, "size": 90, "color": "green", "type": "CircularObject" },
+    { "x":609,  "y":512, "polygons": [[-60, -20], [60, -20], [60, 20], [-60, 20]], "color": "green", "type": "RectangleObject"}
 //    [
 //      { x: 609, y: 512 },
 //      { x: 962, y: 159 },
@@ -108,174 +109,174 @@
 //      { x: 1550, y: -100 },
 //      { x: 1150, y: -100 }
 //    ],
-
-    {
-      "type": "RectangleObject",
-      "x": 500,
-      "y": 350,
-      "z": 0,
-      "width": 500,
-      "height": 100,
-      "depth": 200,
-      "color": "green",
-      "deg": 45
-    },
-    {
-      "type": "RectangleObject",
-      "x": 230,
-      "y": 220,
-      "z": 0,
-      "width": 200,
-      "height": 80,
-      "depth": 80,
-      "color": "blue",
-      "deg": -30
-    },
-    {
-      "type": "RectangleObject",
-      "x": -230,
-      "y": 420,
-      "z": 0,
-      "width": 80,
-      "height": 300,
-      "depth": 80,
-      "color": "yellow",
-      "deg": 50
-    },
-    {
-      "type": "RectangleObject",
-      "x": -920,
-      "y": 600,
-      "z": 0,
-      "width": 400,
-      "height": 150,
-      "depth": 80,
-      "color": "red",
-      "deg": -130
-    },
-    {
-      "type": "RectangleObject",
-      "x": -730,
-      "y": 220,
-      "z": 0,
-      "width": 200,
-      "height": 120,
-      "depth": 120,
-      "color": "blue",
-      "deg": 120
-    },
-    {
-      "type": "RectangleObject",
-      "x": 900,
-      "y": -500,
-      "z": 0,
-      "width": 400,
-      "height": 400,
-      "depth": 10,
-      "color": "pink"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -400,
-      "y": -450,
-      "z": 0,
-      "width": 300,
-      "height": 300,
-      "depth": 10,
-      "color": "pink",
-      "deg": -70
-    },
-    {
-      "type": "RectangleObject",
-      "x": 1300,
-      "y": 170,
-      "z": 0,
-      "width": 100,
-      "height": 300,
-      "depth": 100,
-      "color": "yellow"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1200,
-      "y": -390,
-      "z": 0,
-      "width": 600,
-      "height": 80,
-      "depth": 120,
-      "color": "green",
-      "deg": 40
-    },
-    {
-      "type": "RectangleObject",
-      "x": 1450,
-      "y": -1000,
-      "z": 0,
-      "width": 100,
-      "height": 2000,
-      "depth": 100,
-      "color": "red"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1550,
-      "y": -1000,
-      "z": 0,
-      "width": 100,
-      "height": 2000,
-      "depth": 100,
-      "color": "red"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1550,
-      "y": 1000,
-      "z": 0,
-      "width": 3100,
-      "height": 100,
-      "depth": 100,
-      "color": "red"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1550,
-      "y": -1050,
-      "z": 0,
-      "width": 3100,
-      "height": 100,
-      "depth": 100,
-      "color": "red"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1550,
-      "y": 0,
-      "z": 0,
-      "width": 400,
-      "height": 100,
-      "depth": 100,
-      "color": "blue"
-    },
-    {
-      "type": "RectangleObject",
-      "x": -1000,
-      "y": 0,
-      "z": 0,
-      "width": 2000,
-      "height": 100,
-      "depth": 100,
-      "color": "blue"
-    },
-    {
-      "type": "RectangleObject",
-      "x": 1150,
-      "y": 0,
-      "z": 0,
-      "width": 400,
-      "height": 100,
-      "depth": 100,
-      "color": "blue"
-    }
+//
+//    {
+//      "type": "RectangleObject",
+//      "x": 500,
+//      "y": 350,
+//      "z": 0,
+//      "width": 500,
+//      "height": 100,
+//      "depth": 200,
+//      "color": "green",
+//      "deg": 45
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": 230,
+//      "y": 220,
+//      "z": 0,
+//      "width": 200,
+//      "height": 80,
+//      "depth": 80,
+//      "color": "blue",
+//      "deg": -30
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -230,
+//      "y": 420,
+//      "z": 0,
+//      "width": 80,
+//      "height": 300,
+//      "depth": 80,
+//      "color": "yellow",
+//      "deg": 50
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -920,
+//      "y": 600,
+//      "z": 0,
+//      "width": 400,
+//      "height": 150,
+//      "depth": 80,
+//      "color": "red",
+//      "deg": -130
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -730,
+//      "y": 220,
+//      "z": 0,
+//      "width": 200,
+//      "height": 120,
+//      "depth": 120,
+//      "color": "blue",
+//      "deg": 120
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": 900,
+//      "y": -500,
+//      "z": 0,
+//      "width": 400,
+//      "height": 400,
+//      "depth": 10,
+//      "color": "pink"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -400,
+//      "y": -450,
+//      "z": 0,
+//      "width": 300,
+//      "height": 300,
+//      "depth": 10,
+//      "color": "pink",
+//      "deg": -70
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": 1300,
+//      "y": 170,
+//      "z": 0,
+//      "width": 100,
+//      "height": 300,
+//      "depth": 100,
+//      "color": "yellow"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1200,
+//      "y": -390,
+//      "z": 0,
+//      "width": 600,
+//      "height": 80,
+//      "depth": 120,
+//      "color": "green",
+//      "deg": 40
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": 1450,
+//      "y": -1000,
+//      "z": 0,
+//      "width": 100,
+//      "height": 2000,
+//      "depth": 100,
+//      "color": "red"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1550,
+//      "y": -1000,
+//      "z": 0,
+//      "width": 100,
+//      "height": 2000,
+//      "depth": 100,
+//      "color": "red"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1550,
+//      "y": 1000,
+//      "z": 0,
+//      "width": 3100,
+//      "height": 100,
+//      "depth": 100,
+//      "color": "red"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1550,
+//      "y": -1050,
+//      "z": 0,
+//      "width": 3100,
+//      "height": 100,
+//      "depth": 100,
+//      "color": "red"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1550,
+//      "y": 0,
+//      "z": 0,
+//      "width": 400,
+//      "height": 100,
+//      "depth": 100,
+//      "color": "blue"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": -1000,
+//      "y": 0,
+//      "z": 0,
+//      "width": 2000,
+//      "height": 100,
+//      "depth": 100,
+//      "color": "blue"
+//    },
+//    {
+//      "type": "RectangleObject",
+//      "x": 1150,
+//      "y": 0,
+//      "z": 0,
+//      "width": 400,
+//      "height": 100,
+//      "depth": 100,
+//      "color": "blue"
+//    }
   ],
   "itemGenerators": [
     {

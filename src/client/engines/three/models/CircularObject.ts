@@ -1,13 +1,13 @@
 import { CylinderGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 
 import { degToRad } from '../../../../shared/helpers';
-import { CircularObjectModel } from '../../../../shared/models';
+import { CommonObjectModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 
-export default class CircularObject extends CircularObjectModel implements Updatable {
+export default class CircularObject extends CommonObjectModel implements Updatable {
   protected object: Mesh;
   private screen: ScreenModel;
 

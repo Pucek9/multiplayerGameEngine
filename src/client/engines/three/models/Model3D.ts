@@ -2,7 +2,7 @@ import { Group, Mesh, MeshPhongMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { degToRad } from '../../../../shared/helpers';
-import { CircularObjectModel } from '../../../../shared/models';
+import { CommonObjectModel } from '../../../../shared/models';
 
 import { modelsConfig } from '../../../assets/3DModels/items/models.config';
 import ScreenModel from '../../../interfaces/ScreenModel';
@@ -10,7 +10,7 @@ import Updatable from '../../../interfaces/Updatable';
 
 const loader = new FBXLoader();
 
-export default class Model3D extends CircularObjectModel implements Updatable {
+export default class Model3D extends CommonObjectModel implements Updatable {
   public type: string;
   protected object: Group;
 
@@ -22,8 +22,8 @@ export default class Model3D extends CircularObjectModel implements Updatable {
       this.object.rotation.z = degToRad(model.rotation.z);
       this.object.rotation.y = degToRad(model.rotation.y);
       this.object.scale.set(model.scale, model.scale, model.scale);
-      this.object.position.y = this.y;
-      this.object.position.x = this.x;
+      this.object.position.y = this.body.y;
+      this.object.position.x = this.body.x;
       this.object.position.z = 15;
       this.object.castShadow = true;
       this.object.receiveShadow = true;

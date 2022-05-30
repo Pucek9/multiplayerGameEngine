@@ -1,12 +1,12 @@
 import { drawCircle } from '../../../../shared/canvasHelpers';
-import { CircularObjectModel } from '../../../../shared/models';
+import { CommonObjectModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
 
-export default class CircularObject extends CircularObjectModel implements Updatable {
+export default class CircularObject extends CommonObjectModel implements Updatable {
   public screen: ScreenModel;
   private img: HTMLImageElement;
   private patt: CanvasPattern;

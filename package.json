@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "detect-collisions": "^3.2.6",
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "redux": "^4.0.5",

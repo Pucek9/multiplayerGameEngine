@@ -1,12 +1,12 @@
 import { drawRotatedRectangle, drawUnRotatedRectangle } from '../../../../shared/canvasHelpers';
-import { RectangleObjectModel } from '../../../../shared/models';
+import { CommonObjectModel } from '../../../../shared/models';
 
 import { TEXTURE } from '../../../assets/textures';
 import ScreenModel from '../../../interfaces/ScreenModel';
 import Updatable from '../../../interfaces/Updatable';
 import { CanvasRenderer } from '../Game2D';
 
-export default class RectangleObject extends RectangleObjectModel implements Updatable {
+export default class RectangleObject extends CommonObjectModel implements Updatable {
   screen: ScreenModel;
   private img: HTMLImageElement;
   private patt: CanvasPattern;
